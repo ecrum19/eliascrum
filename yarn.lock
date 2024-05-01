@@ -1792,6 +1792,11 @@
   optionalDependencies:
     prettier "^1.18.2 || ^2.0.0"
 
+"@vue/devtools-api@^6.5.1":
+  version "6.6.1"
+  resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.6.1.tgz#7c14346383751d9f6ad4bea0963245b30220ef83"
+  integrity sha512-LgPscpE3Vs0x96PzSSB4IGVSZXZBZHpfxs+ZA1d+VEPwHdOXowy/Y2CsvCAIFrf+ssVU1pD1jidj505EpUnfbA==
+
 "@vue/eslint-config-typescript@^9.1.0":
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/@vue/eslint-config-typescript/-/eslint-config-typescript-9.1.0.tgz#b98a64352b312085444a08b98728962e2a8425ab"
@@ -6183,6 +6188,13 @@ vue-loader@^17.0.0:
     hash-sum "^2.0.0"
     watchpack "^2.4.0"
 
+vue-router@^4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.3.2.tgz#08096c7765dacc6832f58e35f7a081a8b34116a7"
+  integrity sha512-hKQJ1vDAZ5LVkKEnHhmm1f9pMiWIBNGF5AwU67PdH7TyXCj/a4hTccuUuYCAMgJK6rO/NVYtQIEN3yL8CECa7Q==
+  dependencies:
+    "@vue/devtools-api" "^6.5.1"
+
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.3:
   version "4.1.3"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-4.1.3.tgz#6d55863a51fa757ab24e89d9371465072aa7bc35"
@@ -6206,6 +6218,11 @@ vue@^3.2.13:
     "@vue/runtime-dom" "3.4.21"
     "@vue/server-renderer" "3.4.21"
     "@vue/shared" "3.4.21"
+
+vuetify@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.6.1.tgz#bd26f1ee53c532a4f9880a5f376064f53efd9947"
+  integrity sha512-fzcY9LNuLZUwXG4XyklkGJwFv/ejQaERAgE5e+U5M9dtbF9ZRs56mGi2uqOhQOv6o+vbikpHZ/rfHfhb/XlO0g==
 
 watchpack@^2.4.0:
   version "2.4.1"
