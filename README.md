@@ -1,24 +1,9 @@
-# personal_website
+# Things to do:
 
-## Project setup
-```
-yarn install
-```
+## Add footer with LinkedIn + GitHub links
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## Get a domain and deploy
 
-### Compiles and minifies for production
-```
-yarn build
-```
+## Add Home page / About Me page / Publications Page
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Add section for personal stuff (make this part require some sort of authorization) -- photos / grpahic design / book reviews / ...
