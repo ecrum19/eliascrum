@@ -1,24 +1,26 @@
-# personal_website
+# personal_website README
 
-## Project setup
-```
-yarn install
-```
+## This is an early version of eliascrum.com: 
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
 
-### Compiles and minifies for production
-```
-yarn build
-```
+#### Made possible by:
+- [Vue.js](hhttps://vuejs.org/)
+- [Vuetify](https://vuetifyjs.com/en/)
+- [ScholarMarkdown](https://github.com/rubensworks/ScholarMarkdown)
 
-### Lints and fixes files
-```
-yarn lint
-```
+#### Website Components:
+1. About Me:
+2. My Work (Pubs / Pptx / Posters / etc.)
+3. Blogs
+4. Photography
+5. Book reviews?
+6. Other stuff i like?
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+#### To Do:
+**General issues:**
+- Need to fix backgorund to actually be the background
+- Convert publications to HTML
+- Ruben V / Sabrina / Ruben T as templates
+
+
