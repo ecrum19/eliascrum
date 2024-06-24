@@ -1,30 +1,39 @@
 <template>
-  <header>
-    <router-view name="header"></router-view>
-  </header>
-  <nav>
-    <router-view name="navBar"></router-view>
-  </nav>
+  <the-header />
+  <page-selector />
   <main id="app">
     <router-view></router-view>
   </main>
-  <footer>
-    <router-view name="footer"></router-view>
-  </footer>
   <div class="background">
     <video
+      id="background-video"
       src="./assets/Abstract DNA Medical Animation.mp4"
       muted
       loop
       autoplay
     ></video>
   </div>
+  <the-footer />
 </template>
 
 <script lang="ts">
+import TheHeader from './components/TheHeader.vue';
+import PageSelector from './components/PageSelector.vue';
+import TheFooter from './components/TheFooter.vue';
+
 export default {
   name: "App",
-  components: {},
+  components: {
+    TheHeader,
+    PageSelector,
+    TheFooter,
+  },
+  mounted() {
+    // this.$nextTick(() => {
+    //   const video = document.getElementById('background-video') as HTMLVideoElement;
+    //   video.playbackRate = 0.5; // 0.5 is half the normal speed
+    // });
+  },
 };
 </script>
 
@@ -47,4 +56,5 @@ export default {
 body {
   color: white;
 }
+
 </style>

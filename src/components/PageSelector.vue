@@ -2,14 +2,18 @@
   <v-card>
     <nav>
       <v-tabs
-        class="theNav"
         v-model="tab"
         align-tabs="center"
         color="red-accent-4"
+        bg-color="#9fbbdf"
         fixed-tabs
       >
-        <v-tab v-for="tabName in items" :key="tabName">
-          <router-link :to="{ name: tabName }">{{ tabName }}</router-link>
+        <v-tab
+          border="sm"
+          v-for="tabName in items"
+          :key="tabName"
+          :to="{ name: tabName }"
+        >{{ tabName }}
         </v-tab>
       </v-tabs>
     </nav>
@@ -20,7 +24,7 @@
 export default {
   data: () => ({
     tab: null,
-    items: ["About Me", "Publications", "Blogs"],
+    items: ["About Me", "My Work", "Blogs"],
   }),
 };
 </script>
@@ -31,7 +35,8 @@ a:not(.router-link-active) {
   text-decoration: none;
 }
 
-.theNav {
-  color: white !important;
+.v-tab {
+  color: #9fbbdf !important;
 }
+
 </style>
