@@ -1,9 +1,6 @@
 <template>
   <the-header />
   <page-selector />
-  <main id="app">
-    <router-view></router-view>
-  </main>
   <div class="background">
     <video
       id="background-video"
@@ -13,6 +10,9 @@
       autoplay
     ></video>
   </div>
+  <main id="app">
+    <router-view></router-view>
+  </main>
   <the-footer />
 </template>
 
