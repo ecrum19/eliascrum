@@ -1,6 +1,5 @@
 <template>
   <the-header />
-  <page-selector />
   <div class="background">
     <video
       id="background-video"
@@ -18,21 +17,17 @@
 
 <script lang="ts">
 import TheHeader from './components/TheHeader.vue';
-import PageSelector from './components/PageSelector.vue';
 import TheFooter from './components/TheFooter.vue';
 
 export default {
   name: "App",
   components: {
     TheHeader,
-    PageSelector,
     TheFooter,
   },
   mounted() {
-    // this.$nextTick(() => {
-    //   const video = document.getElementById('background-video') as HTMLVideoElement;
-    //   video.playbackRate = 0.5; // 0.5 is half the normal speed
-    // });
+    const video: HTMLVideoElement = document.querySelector('video')!;
+    video.playbackRate = 0.45;
   },
 };
 </script>

@@ -40,7 +40,7 @@ div.stuff {
   left: 50px;
   opacity: 0.7;
   outline: 2px solid white;
-  width: 50%;
+  width: 40%;
   padding: 2%;
 }
 

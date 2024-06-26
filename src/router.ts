@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+import HomePage from "./components/HomePage.vue";
 import AboutMe from "./components/AboutMe.vue";
 import MyPublications from "./components/MyPublications.vue";
 import MyBlogs from "./components/MyBlogs.vue";
@@ -13,7 +14,12 @@ const router = createRouter({
     {
       name: "root",
       path: "/",
-      redirect: { name: "About Me" }
+      redirect: { name: "Home" }
+    },
+    {
+      name: "Home",
+      path: "/home",
+      components: { default: HomePage },
     },
     {
       name: "About Me",
