@@ -1,32 +1,44 @@
 <template>
   <!-- Footer -->
   <footer
-    class="w3-center w3-black w3-padding-64 w3-opacity"
+    class="w3-center w3-bottom w3-opacity"
     id="myFooter"
   >
-    <div>{{ new Date().getFullYear() }} — <strong>Elias D. Crum</strong></div>
-    
-    <div class="w3-xlarge w3-section">
-      <i class="fa fa-twitter w3-hover-opacity"></i>
-      <i class="fa fa-github w3-hover-opacity"></i>
-      <i class="fa fa-linkedin w3-hover-opacity"></i>
+  <div id="icons" class="w3-xlarge w3-bottom w3-section">
+      <a href="https://github.com/ecrum19"><i class="fa fa-github w3-hover-opacity"></i></a>
+      <a href="https://www.linkedin.com/in/elias-crum-413178142/"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
     </div>
+  <div>{{ new Date().getFullYear() }} — Elias D. Crum</div>
+    
   </footer>
 </template>
 
 <script lang="ts">
 export default {
-  data: () => ({
-    icons: ["mdi-linkedin", "mdi-github"],
-  }),
+  data: () => ({}),
 };
 </script>
 
 <style scoped>
+
+div {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+#icons a {
+  position: relative;
+  background: rgba(0, 0, 0, 0);
+  margin-right: 10px;
+  bottom: 25px;
+}
+
 #myFooter {
+  
   position: absolute;
-  bottom: 0px;
-  margin-left: 45%;
+  bottom: 20px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0);
+
 }
 
 </style>
