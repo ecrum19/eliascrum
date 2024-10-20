@@ -40,22 +40,63 @@
             <p class="w3-large">
               <b
                 ><i
+                  class="fa fa-globe fa-fw w3-xlarge w3-margin-right w3-text-green"
+                ></i
+                >Affiliations</b
+              >
+            </p>
+            <ul id="orgs">
+              <li>
+                <a href="https://www.fwo.be/en/about-fwo/">
+                  <img
+                    src="./assets/Logo_(FWO).png"
+                    alt="Research Foundation - Flanders (FWO)"
+                  />
+                </a>
+              </li>
+              <li>
+                <a href="https://www.ugent.be/en"
+                  ><img src="./assets/logo_UGent_white.png" alt="Ghent University"
+                /></a>
+              </li>
+              <li>
+                <a href="https://knows.idlab.ugent.be/"
+                  ><img
+                    src="./assets/KNoWS_logo.png"
+                    alt="KNowledge on the Web Scale (KNoWS)"
+                /></a>
+              </li>
+              <li>
+                <a href="https://vito.be/en"
+                  ><img src="./assets/vito-logo_white_blue_background_1.png" alt="VITO NV"
+                /></a>
+              </li>
+            </ul>
+
+            <hr />
+
+            <p class="w3-large">
+              <b
+                ><i
                   class="fa fa-graduation-cap fa-fw w3-xlarge w3-margin-right w3-text-blue"
                 ></i
                 >Research Topics</b
               >
             </p>
             <ul id="keywords">
+              <li>Clinical Genomics</li>
+              <li>Knowledge Representation</li>
+              <li>Semantic Web</li>
               <li><a href="https://solidproject.org/">Solid</a></li>
               <li>
                 <a href="https://comunica.dev/">Decentralized Querying</a>
               </li>
-              <li>Data Privacy Policies</li>
               <li>Linked Data</li>
               <li>Knowledge Graph Generation</li>
               <li>Ontology Generation</li>
-              <li>Clinical Genomics</li>
             </ul>
+
+            <br />
 
             <br />
 
@@ -109,10 +150,7 @@
 
       <!-- Right Column -->
       <div class="w3-twothird">
-        <div
-          id="aboutMe"
-          class="w3-container w3-card w3-black"
-        >
+        <div id="aboutMe" class="w3-container w3-card w3-black">
           <h1 class="w3-panel" id="about">About Me</h1>
           <div class="w3-container" id="intro-container">
             <body id="intro">
@@ -122,7 +160,10 @@
               group of
               <a href="https://vito.be/en/theme/sustainable-health"
                 ><u>VITO NV</u></a
-              >.
+              >. 
+              
+              I funded through the <a href="https://www.fwo.be/en/support-programmes/all-calls/phd/phd-fellowship-strategic-basic-research/">
+                PhD fellowship - strategic basic research</a> from the Research Foundation - Flanders (FWO).
               <br />
               <br />
               My PhD, PErsoNal Genome QUery IN health care and clinical practice
@@ -138,9 +179,7 @@
               More generally, I am passionate about building things that improve
               the world around me, especially in the realms of genomics and
               healthcare.
-              
             </body>
-            
           </div>
         </div>
       </div>
@@ -205,6 +244,25 @@ a {
 #keywords {
   font-size: 15pt;
   margin-left: 30px;
+}
+
+#orgs {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+#orgs li {
+  flex: 0 0 48%;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+#orgs li img {
+  width: 100px;
+  height: auto;
 }
 
 div.school {

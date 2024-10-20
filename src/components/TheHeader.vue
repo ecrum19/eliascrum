@@ -12,9 +12,6 @@
       >
         <i class="fa fa-bars"></i>
       </a>
-      <a href="/home" class="w3-bar-item w3-button w3-hover-black w3-opacity w3-hover-opacity-off"
-        ><i class="fa fa-home"></i> HOME </a
-      >
       <a href="/about" class="w3-bar-item w3-button w3-hide-small w3-hover-black w3-opacity w3-hover-opacity-off"
         ><i class="fa fa-user"></i> ABOUT </a
       >
