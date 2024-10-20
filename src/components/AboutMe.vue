@@ -106,7 +106,7 @@
                   class="fa fa-address-card fa-fw w3-xlarge w3-margin-right w3-text-red"
                 ></i>
                 <a
-                  href="https://scholar.google.com/citations?user=fAJsN2kAAAAJ&hl=en"
+                  href="/about/cv"
                   >Curriculum Vitae</a
                 ></b
               >

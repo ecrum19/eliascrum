@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import HomePage from "./components/HomePage.vue";
 import AboutMe from "./components/AboutMe.vue";
 import MyPublications from "./components/MyPublications.vue";
 import MyBlogs from "./components/MyBlogs.vue";
+import MyCV from "./components/CurrentCv.vue";
 
 /**
  * The router here allows for navigation between different pages of the website
@@ -31,6 +31,11 @@ const router = createRouter({
       path: "/blogs",
       components: { default: MyBlogs },
     },
+    {
+      name: 'My CV',
+      path: '/about/cv',
+      component: MyCV
+    }
   ],
 });
 
