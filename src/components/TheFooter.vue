@@ -7,8 +7,9 @@
   <div id="icons" class="w3-xlarge w3-bottom w3-section">
       <a href="https://github.com/ecrum19"><i class="fa fa-github w3-hover-opacity"></i></a>
       <a href="https://www.linkedin.com/in/elias-crum-413178142/"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
+      <div id="runner">{{ new Date().getFullYear() }} — Elias D. Crum</div>
     </div>
-  <div>{{ new Date().getFullYear() }} — Elias D. Crum</div>
+  
     
   </footer>
 </template>
@@ -29,16 +30,17 @@ div {
   position: relative;
   background: rgba(0, 0, 0, 0);
   margin-right: 10px;
-  bottom: 25px;
+}
+
+#runner {
+  font-size: 16px;
 }
 
 #myFooter {
-  
   position: absolute;
   bottom: 20px;
   width: 100%;
   background: rgba(0, 0, 0, 0);
-
 }
 
 </style>
