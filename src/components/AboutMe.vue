@@ -7,7 +7,7 @@
     <div id="entry" class="w3-row-padding">
       <!-- Left Column -->
       <div class="w3-third">
-        <div id="genInfo" class="w3-text-white w3-card-4">
+        <div id="genInfo" class="w3-card-4">
           <div class="w3-container">
             <p>
               <a
@@ -56,7 +56,7 @@
               </li>
               <li>
                 <a href="https://www.ugent.be/en"
-                  ><img src="./assets/logo_UGent_white.png" alt="Ghent University"
+                  ><img class="ugent-logo" src="./assets/logo_UGent_white.png" alt="Ghent University"
                 /></a>
               </li>
               <li>
@@ -121,6 +121,7 @@
                 ></i>
                 <a
                   href="https://scholar.google.com/citations?user=fAJsN2kAAAAJ&hl=en"
+                  target="_blank"
                   >Publications</a
                 ></b
               >
@@ -134,7 +135,8 @@
                   class="fa fa-bullhorn fa-fw w3-xlarge w3-margin-right w3-text-orange"
                 ></i>
                 <a
-                  href="https://scholar.google.com/citations?user=fAJsN2kAAAAJ&hl=en"
+                  href="https://drive.google.com/drive/folders/1QWyqEYoFDszYWHMKqK-xS06cC3sy6Jbe?usp=sharing"
+                  target="_blank"
                   >Presentations</a
                 ></b
               >
@@ -150,7 +152,30 @@
 
       <!-- Right Column -->
       <div class="w3-twothird">
-        <div id="aboutMe" class="w3-container w3-card w3-black">
+        <div id="recentWork" class="w3-container w3-card">
+          <h2 class="w3-panel" id="recentWorkTitle">Recent Work</h2>
+          <div
+            class="recentWorkItem"
+            v-for="item in recentUpdates"
+            :key="item.title"
+          >
+            <div class="recentWorkMeta">
+              <span class="recentWorkType">{{ item.type }}</span>
+              <span class="recentWorkDate">{{ item.date }}</span>
+            </div>
+            <h3 class="recentWorkHeading">{{ item.title }}</h3>
+            <p class="recentWorkSummary">{{ item.summary }}</p>
+            <a
+              class="recentWorkLink"
+              :href="item.link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ item.linkLabel }}
+            </a>
+          </div>
+        </div>
+        <div id="aboutMe" class="w3-container w3-card">
           <h1 class="w3-panel" id="about">About Me</h1>
           <div class="w3-container" id="intro-container">
             <body id="intro">
@@ -190,51 +215,145 @@
 
 <script>
 export default {
-  data: () => ({}),
+  data() {
+    // Edit this array to keep the "Recent Work" dialogue box up to date.
+    return {
+      recentUpdates: [
+        {
+          type: "Publication",
+          date: "2025",
+          title: "New Publication (ScienceDirect)",
+          summary:
+            "Latest peer-reviewed publication is now available on ScienceDirect.",
+          link: "https://www.sciencedirect.com/science/article/pii/S0010482525016890",
+          linkLabel: "Read the paper",
+        },
+      ],
+    };
+  },
   methods: {},
 };
 </script>
 
 <style>
 #introduction {
-  top: 160px;
-  position: relative;
   font-size: 16pt;
 }
 
 #aboutMe {
-  background: rgba(0, 0, 0, 0.8);
-  outline: 2px solid rgba(255, 255, 255, 0.8);
+  background: var(--surface-bg);
+  outline: 2px solid var(--surface-outline);
   align-items: center;
 }
 
+#recentWork {
+  background: var(--surface-bg);
+  outline: 2px solid var(--surface-outline);
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+#recentWorkTitle {
+  background: transparent;
+  color: var(--page-text);
+  margin: 10px 0 4px;
+  font-family: var(--content-heading-font);
+  font-size: var(--content-h2-size);
+  font-weight: 600;
+}
+
+.recentWorkItem {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 4px solid rgba(80, 203, 255, 0.58);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+
+[data-theme="light"] .recentWorkItem {
+  background: rgba(16, 36, 59, 0.06);
+  border-left-color: rgba(13, 79, 136, 0.55);
+}
+
+.recentWorkMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.recentWorkType,
+.recentWorkDate {
+  font-size: 0.9rem;
+  border: 1px solid var(--surface-outline);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+
+.recentWorkHeading {
+  margin: 0;
+  color: var(--page-text);
+  font-size: 1.2rem;
+}
+
+.recentWorkSummary {
+  margin: 8px 0 0;
+  line-height: 1.45;
+}
+
+.recentWorkLink {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
 #entry {
-  color: white;
-  background: rgba(0, 0, 0, 0);
+  color: var(--page-text);
+  background: transparent;
 }
 
 a {
   text-decoration: none;
 }
 
-#genInfo {
-  background: rgba(0, 0, 0, 0.8);
-  outline: 2px solid rgba(255, 255, 255, 0.8);
-  padding-top: 5%;
+#entry a {
+  color: var(--link-color);
 }
+
+#genInfo {
+  background: var(--surface-bg);
+  outline: 2px solid var(--surface-outline);
+  padding-top: 5%;
+  font-size: 1.12rem;
+}
+
+#genInfo i.w3-text-white {
+  color: var(--page-text) !important;
+}
+
 #genInfo p {
-  font-size: 16pt;
+  font-size: 1.12rem;
+  line-height: 1.45;
+}
+
+#genInfo p.w3-large {
+  font-size: 1.28rem !important;
 }
 
 #about {
-  background: rgba(0, 0, 0, 0);
+  background: transparent;
+  color: var(--page-text);
   margin-top: 10px;
+  font-family: var(--content-heading-font);
+  font-size: var(--content-h1-size);
+  font-weight: 600;
 }
 
 #intro {
   font-size: 22pt;
   font-family: "KoHo", sans-serif;
-  background: rgba(0, 0, 0, 0);
+  background: transparent;
+  color: var(--page-text);
 }
 
 #intro-container {
@@ -242,8 +361,13 @@ a {
 }
 
 #keywords {
-  font-size: 15pt;
+  font-size: 1.08rem;
+  line-height: 1.5;
   margin-left: 30px;
+}
+
+#keywords li {
+  margin-bottom: 4px;
 }
 
 #orgs {
@@ -265,13 +389,22 @@ a {
   height: auto;
 }
 
+.ugent-logo {
+  filter: none;
+}
+
+[data-theme="light"] .ugent-logo {
+  filter: brightness(0) saturate(100%) invert(21%) sepia(74%) saturate(1841%)
+    hue-rotate(192deg) brightness(96%) contrast(91%);
+}
+
 div.school {
-  background: rgba(0, 0, 0, 0.8);
+  background: var(--surface-bg);
   position: flex;
   top: 0px;
   left: 550px;
   opacity: 0.8;
-  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline: 2px solid var(--surface-outline);
   width: 40%;
   padding: 2%;
 }

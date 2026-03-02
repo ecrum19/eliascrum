@@ -1,0 +1,35 @@
+name: Build On Push
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Regenerate Talks Data (if slide sources exist)
+        run: |
+          if [ -d slides ] && [ -d posters ]; then
+            npm run build:slides
+          else
+            echo "Skipping build:slides because slides/ or posters/ is missing."
+          fi
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build

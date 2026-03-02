@@ -4,12 +4,14 @@ import AboutMe from "./components/AboutMe.vue";
 import MyPublications from "./components/MyPublications.vue";
 import MyBlogs from "./components/MyBlogs.vue";
 import MyCV from "./components/CurrentCv.vue";
+import MySlides from "./components/MySlides.vue";
+import SlideDetail from "./components/SlideDetail.vue";
 
 /**
  * The router here allows for navigation between different pages of the website
  */
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       name: "root",
@@ -30,6 +32,16 @@ const router = createRouter({
       name: "Blogs",
       path: "/blogs",
       components: { default: MyBlogs },
+    },
+    {
+      name: "Talks",
+      path: "/talks",
+      component: MySlides,
+    },
+    {
+      name: "Talk Detail",
+      path: "/talks/:slug",
+      component: SlideDetail,
     },
     {
       name: 'My CV',
