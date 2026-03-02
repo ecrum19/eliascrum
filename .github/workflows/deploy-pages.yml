@@ -40,10 +40,10 @@ jobs:
 
       - name: Regenerate Talks Data (if slide sources exist)
         run: |
-          if [ -d slides ] && [ -d posters ]; then
+          if [ -f .talk-assets/slides.tar.gz ] || [ -d slides ]; then
             npm run build:slides
           else
-            echo "Skipping build:slides because slides/ or posters/ is missing."
+            echo "Skipping build:slides because no slide source was found (expected .talk-assets/slides.tar.gz or ./slides)."
           fi
 
       - name: Compute Vite base path

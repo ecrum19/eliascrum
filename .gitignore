@@ -2,11 +2,6 @@
 node_modules
 /dist
 
-posters/
-slides/
-!public/talks/posters/
-!public/talks/slides/
-
 # local env files
 .env.local
 .env.*.local
