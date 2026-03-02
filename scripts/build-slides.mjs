@@ -155,7 +155,23 @@ async function listFiles(dir, extension) {
   try {
     const entries = await fs.readdir(dir, { withFileTypes: true });
     return entries
-      .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(extension))
+      .filter((entry) => {
+        if (!entry.isFile()) {
+          return false;
+        }
+
+        const lowerName = entry.name.toLowerCase();
+        if (!lowerName.endsWith(extension)) {
+          return false;
+        }
+
+        // Ignore hidden macOS metadata files (e.g., ._MyFile.pdf) and dotfiles.
+        if (entry.name.startsWith(".")) {
+          return false;
+        }
+
+        return true;
+      })
       .map((entry) => entry.name)
       .sort((a, b) => a.localeCompare(b));
   } catch {
