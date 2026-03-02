@@ -180,6 +180,7 @@ import {
   getRelatedPublicationLinksForPresentationFile,
   type ResolvedPublicationLink,
 } from "../data/publicationsData";
+import { resolvePublicAssetPath } from "../utils/publicAssetPath";
 
 type MaterialTypeTag = "Slides" | "Poster";
 
@@ -245,10 +246,10 @@ export default defineComponent({
           topicTags: [],
           materialTag: "Poster",
           detailRoute: linkedTalk ? `/talks/${linkedTalk.slug}` : undefined,
-          primaryPath: poster.path,
+          primaryPath: resolvePublicAssetPath(poster.path),
           primaryActionLabel: "Open Poster PDF",
           relatedPublicationLinks: getRelatedPublicationLinksForPresentationFile(poster.path),
-          previewPath: poster.path,
+          previewPath: resolvePublicAssetPath(poster.path),
         };
       });
     },
@@ -264,11 +265,13 @@ export default defineComponent({
         topicTags: [...talk.topicTags],
         materialTag: "Slides",
         detailRoute: `/talks/${talk.slug}`,
-        primaryPath: talk.slidePath,
+        primaryPath: resolvePublicAssetPath(talk.slidePath),
         primaryActionLabel: "Open Slides PDF",
-        secondaryPosterPath: talk.posterPath,
+        secondaryPosterPath: talk.posterPath
+          ? resolvePublicAssetPath(talk.posterPath)
+          : undefined,
         relatedPublicationLinks: getRelatedPublicationLinksForTalkSlug(talk.slug),
-        previewPath: talk.slidePath,
+        previewPath: resolvePublicAssetPath(talk.slidePath),
       }));
 
       return [...slideEntries, ...this.posterEntries];

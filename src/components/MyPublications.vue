@@ -253,6 +253,7 @@ import {
 } from "../data/scholarCitations";
 import { getTalkViewBySlug } from "../data/talkCatalog";
 import { TOPIC_TAG_OPTIONS, VENUE_TAG_OPTIONS } from "../data/talkMetadata";
+import { resolvePublicAssetPath } from "../utils/publicAssetPath";
 
 interface ResolvedPresentationLink {
   key: string;
@@ -287,7 +288,7 @@ function resolvePublicationPresentationLinks(
     acc.push({
       key: `${publicationId}:file:${link.filePath}:${index}`,
       label: link.label ?? "Open Related Presentation Material",
-      href: link.filePath,
+      href: resolvePublicAssetPath(link.filePath),
     });
     return acc;
   }, []);

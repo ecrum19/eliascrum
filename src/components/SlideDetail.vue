@@ -25,7 +25,7 @@
         </div>
         <div class="slide-actions">
           <router-link to="/talks" class="action-btn">Back to Talks</router-link>
-          <a :href="talk.slidePath" target="_blank" rel="noopener noreferrer" class="action-btn primary">
+          <a :href="slidePdfUrl" target="_blank" rel="noopener noreferrer" class="action-btn primary">
             Open Slides PDF
           </a>
           <a
@@ -49,10 +49,10 @@
           :class="{ 'is-resizing': isResizingSlide }"
           :style="slideFrameShellStyle"
         >
-          <object :data="talk.slidePath" type="application/pdf" class="slide-frame">
+          <object :data="slidePdfUrl" type="application/pdf" class="slide-frame">
             <p>
               Your browser cannot render the slide PDF inline.
-              <a :href="talk.slidePath" target="_blank" rel="noopener noreferrer">Open the slides</a>.
+              <a :href="slidePdfUrl" target="_blank" rel="noopener noreferrer">Open the slides</a>.
             </p>
           </object>
           <div
@@ -69,10 +69,10 @@
       <article v-if="talk.posterPath" class="slide-panel">
         <h2>Poster</h2>
         <p class="poster-name">{{ talk.posterTitle || "Poster PDF" }}</p>
-        <object :data="talk.posterPath" type="application/pdf" class="poster-frame">
+        <object :data="posterPdfUrl" type="application/pdf" class="poster-frame">
           <p>
             Your browser cannot render the PDF inline.
-            <a :href="talk.posterPath" target="_blank" rel="noopener noreferrer">Open the poster</a>.
+            <a :href="posterPdfUrl" target="_blank" rel="noopener noreferrer">Open the poster</a>.
           </p>
         </object>
       </article>
@@ -101,6 +101,7 @@ import {
   getRelatedPublicationLinksForTalkSlug,
   type ResolvedPublicationLink,
 } from "../data/publicationsData";
+import { resolvePublicAssetPath } from "../utils/publicAssetPath";
 
 export default defineComponent({
   name: "SlideDetail",
@@ -134,6 +135,12 @@ export default defineComponent({
       });
 
       return Array.from(uniqueByPublicationId.values());
+    },
+    slidePdfUrl(): string {
+      return this.talk ? resolvePublicAssetPath(this.talk.slidePath) : "";
+    },
+    posterPdfUrl(): string {
+      return this.talk?.posterPath ? resolvePublicAssetPath(this.talk.posterPath) : "";
     },
     slideFrameShellStyle(): Record<string, string> {
       if (this.slideFrameHeight === null) {
