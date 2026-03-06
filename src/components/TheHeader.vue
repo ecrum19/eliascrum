@@ -56,6 +56,18 @@
         </button>
         <button
           type="button"
+          class="w3-bar-item w3-button w3-hover-opacity-off text-size-toggle"
+          @click="toggleTextScale"
+          :aria-label="`Text size: ${textScaleDisplayLabel}. Click to change text size`"
+          :title="`Text size: ${textScaleDisplayLabel}`"
+        >
+          <span class="text-size-icon" aria-hidden="true">
+            <span class="text-size-icon-large">A</span>
+            <span class="text-size-icon-small">A</span>
+          </span>
+        </button>
+        <button
+          type="button"
           class="w3-bar-item w3-button w3-hover-opacity-off theme-toggle"
           @click="toggleTheme"
           :aria-label="theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
@@ -103,6 +115,13 @@
       <button
         type="button"
         class="w3-bar-item w3-button theme-toggle-mobile"
+        @click="toggleTextScale"
+      >
+        TEXT SIZE: {{ textScaleDisplayLabel.toUpperCase() }}
+      </button>
+      <button
+        type="button"
+        class="w3-bar-item w3-button theme-toggle-mobile"
         @click="toggleTheme"
       >
         {{ theme === "dark" ? "LIGHT MODE" : "DARK MODE" }}
@@ -113,7 +132,7 @@
     </div>
 
   <!-- Name and Picture header -->
-  <div>
+  <div v-if="showIdentityHeader">
     <header>
       <img src="./assets/headshot.jpeg" alt="personal picture" />
       <h1>Elias D. Crum</h1>
@@ -126,6 +145,7 @@
 import { defineComponent, PropType } from "vue";
 
 type ThemeMode = "dark" | "light";
+type TextScaleMode = "small" | "normal" | "large";
 
 export default defineComponent({
   props: {
@@ -133,12 +153,30 @@ export default defineComponent({
       type: String as PropType<ThemeMode>,
       default: "dark",
     },
+    textScaleMode: {
+      type: String as PropType<TextScaleMode>,
+      default: "normal",
+    },
   },
-  emits: ["toggle-theme", "open-search"],
+  emits: ["toggle-theme", "toggle-text-scale", "open-search"],
   data() {
     return {
       mobileMenuOpen: false,
     };
+  },
+  computed: {
+    textScaleDisplayLabel(): string {
+      if (this.textScaleMode === "small") {
+        return "Small";
+      }
+      if (this.textScaleMode === "large") {
+        return "Large";
+      }
+      return "Normal";
+    },
+    showIdentityHeader(): boolean {
+      return this.$route.path === "/about" || this.$route.path === "/";
+    },
   },
   watch: {
     $route() {
@@ -154,6 +192,9 @@ export default defineComponent({
     },
     toggleTheme() {
       this.$emit("toggle-theme");
+    },
+    toggleTextScale() {
+      this.$emit("toggle-text-scale");
     },
     openSearch() {
       this.closeMenu();
@@ -201,7 +242,7 @@ header {
 
 #myNavbar :is(a, button) {
   min-height: 44px;
-  font-size: 1rem;
+  font-size: var(--font-size-body);
 }
 
 #navDemo {
@@ -232,9 +273,9 @@ header {
 }
 
 header h1 {
-  font-family: "KoHo", sans-serif;
+  font-family: var(--content-heading-font);
   color: var(--page-text);
-  font-size: 50pt;
+  font-size: var(--site-title-size);
   font-weight: 400;
   margin: 0;
 }
@@ -249,34 +290,63 @@ img {
 
 .theme-toggle,
 .theme-toggle-mobile,
-.search-trigger {
+.search-trigger,
+.text-size-toggle {
   border: none;
   background: var(--toggle-bg);
   color: var(--toggle-text);
   cursor: pointer;
 }
 
+.text-size-toggle {
+  min-width: 42px;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.text-size-icon {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 1px;
+  line-height: 1;
+  font-family: var(--font-family-heading);
+  font-weight: 700;
+}
+
+.text-size-icon-large {
+  font-size: 1.14em;
+}
+
+.text-size-icon-small {
+  font-size: 0.72em;
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
 .theme-toggle:hover,
 .theme-toggle-mobile:hover,
-.search-trigger:hover {
+.search-trigger:hover,
+.text-size-toggle:hover {
   background: var(--nav-hover-bg) !important;
 }
 
 [data-theme="light"] .theme-toggle,
 [data-theme="light"] .theme-toggle-mobile,
-[data-theme="light"] .search-trigger {
+[data-theme="light"] .search-trigger,
+[data-theme="light"] .text-size-toggle {
   background: transparent;
 }
 
 [data-theme="light"] .theme-toggle:hover,
 [data-theme="light"] .theme-toggle-mobile:hover,
-[data-theme="light"] .search-trigger:hover {
+[data-theme="light"] .search-trigger:hover,
+[data-theme="light"] .text-size-toggle:hover {
   background: rgba(16, 36, 59, 0.08) !important;
 }
 
 @media (max-width: 768px) {
   header h1 {
-    font-size: clamp(1.8rem, 8vw, 2.4rem);
+    font-size: clamp(1.8rem, 8vw, 2.6rem);
   }
 
   img {

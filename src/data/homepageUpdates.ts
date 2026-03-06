@@ -24,7 +24,7 @@ export type RequiredPublicationUpdateFields = Pick<
 >;
 export type RequiredTalkUpdateFields = Pick<
   TalkViewEntry,
-  "slug" | "displayTitle" | "displayDateIso" | "description"
+  "slug" | "displayTitle" | "displayDateIso" | "summary"
 >;
 export type RequiredBlogUpdateFields = Pick<
   BlogPost,
@@ -85,7 +85,7 @@ function getTalkUpdates(): HomepageUpdate[] {
     dateIso: talk.displayDateIso,
     dateLabel: toDateLabel(talk.displayDateIso),
     title: talk.displayTitle,
-    summary: talk.description,
+    summary: talk.summary,
     link: resolvePublicAssetPath(`/talks/${talk.slug}`),
     linkLabel: "View talk",
   }));

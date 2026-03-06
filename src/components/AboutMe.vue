@@ -221,7 +221,7 @@ export default defineComponent({
 
 <style>
 #introduction {
-  font-size: 16pt;
+  font-size: var(--font-size-subtitle);
 }
 
 #aboutMe {
@@ -268,7 +268,7 @@ export default defineComponent({
 
 .recentWorkType,
 .recentWorkDate {
-  font-size: 0.9rem;
+  font-size: var(--font-size-meta);
   border: 1px solid var(--surface-outline);
   border-radius: 999px;
   padding: 2px 10px;
@@ -277,7 +277,7 @@ export default defineComponent({
 .recentWorkHeading {
   margin: 0;
   color: var(--page-text);
-  font-size: 1.2rem;
+  font-size: var(--font-size-subtitle);
 }
 
 .recentWorkSummary {
@@ -308,7 +308,7 @@ a {
   background: var(--surface-bg);
   outline: 2px solid var(--surface-outline);
   padding-top: 5%;
-  font-size: 1.12rem;
+  font-size: var(--font-size-body-xl);
 }
 
 #genInfo i.w3-text-white {
@@ -316,12 +316,12 @@ a {
 }
 
 #genInfo p {
-  font-size: 1.12rem;
+  font-size: var(--font-size-body-xl);
   line-height: 1.45;
 }
 
 #genInfo p.w3-large {
-  font-size: 1.28rem !important;
+  font-size: var(--font-size-section-title) !important;
 }
 
 #about {
@@ -334,8 +334,8 @@ a {
 }
 
 #intro {
-  font-size: 22pt;
-  font-family: "KoHo", sans-serif;
+  font-size: var(--font-size-prose-xl);
+  font-family: var(--font-family-base);
   background: transparent;
   color: var(--page-text);
 }
@@ -346,7 +346,7 @@ a {
 }
 
 #keywords {
-  font-size: 1.08rem;
+  font-size: var(--font-size-body-lg);
   line-height: 1.5;
   margin-left: 30px;
 }

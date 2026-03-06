@@ -1,324 +1,425 @@
 <template>
   <section id="publications" class="w3-content w3-margin-top" style="max-width: 1400px">
-    <div class="publications-shell">
-      <header class="publications-header">
-        <div class="publications-intro">
-          <h1>Publications</h1>
-          <p>
-            Publications are shown from most recent to oldest, with short summaries and links to related
-            presentation material.
-          </p>
-          <p class="citation-update-note">
-            Google Scholar citations last updated: <strong>{{ scholarCitationLastUpdatedLabel }}</strong>
-          </p>
-        </div>
-        <div class="profile-links">
-          <a
-            class="profile-link scholar"
-            :href="scholarProfileUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Google Scholar"
-            title="Google Scholar"
-          >
-            <img
-              class="profile-icon"
-              src="https://freepngimg.com/download/science/63222-google-scholar-doctor-science-university-philosophy-computer.png"
-              alt=""
-            />
-          </a>
-          <a
-            class="profile-link semantic"
-            :href="semanticScholarUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Semantic Scholar"
-            title="Semantic Scholar"
-          >
-            <img
-              class="profile-icon"
-              src="https://api.iconify.design/academicons/semantic-scholar.svg?color=%23000"
-              alt=""
-            />
-          </a>
-        </div>
-
-        <section class="publication-filters">
+    <div class="work-layout" :class="{ 'work-layout-toc-collapsed': tocCollapsed }">
+      <aside class="work-toc-panel" :class="{ 'work-toc-panel-collapsed': tocCollapsed }">
+        <button
+          type="button"
+          class="work-toc-toggle"
+          @click="toggleToc"
+          :aria-expanded="!tocCollapsed"
+        >
+          <span class="work-toc-toggle-label">{{ tocCollapsed ? "TOC" : "Contents" }}</span>
+          <span class="work-toc-toggle-state">{{ tocCollapsed ? "Show" : "Hide" }}</span>
+        </button>
+        <nav v-show="!tocCollapsed" class="work-toc-nav" aria-label="Work page contents">
           <button
+            v-for="(entry, index) in tocEntries"
+            :key="entry.id"
             type="button"
-            class="filter-toggle"
-            @click="filtersOpen = !filtersOpen"
-            :aria-expanded="filtersOpen"
+            class="work-toc-link"
+            :class="{ 'work-toc-link-active': activeTocId === entry.id }"
+            @click="scrollToSection(entry.id)"
           >
-            <span class="filter-toggle-title">Filter and Sort</span>
-            <span class="filter-toggle-state">{{ filtersOpen ? "Hide" : "Show" }}</span>
+            <span class="work-toc-link-index">{{ index + 1 }}.</span>
+            <span class="work-toc-link-label">{{ entry.label }}</span>
           </button>
+        </nav>
+      </aside>
 
-          <div v-show="filtersOpen" class="filter-panel">
-            <div class="filter-grid">
-              <label class="filter-control">
-                Venue
-                <select v-model="selectedVenue">
-                  <option value="All">All</option>
-                  <option v-for="venue in availableVenueTags" :key="venue" :value="venue">
-                    {{ venue }}
-                  </option>
-                </select>
-              </label>
-
-              <label class="filter-control">
-                Main Topic
-                <select v-model="selectedTopic">
-                  <option value="All">All</option>
-                  <option v-for="topic in availableTopicTags" :key="topic" :value="topic">
-                    {{ topic }}
-                  </option>
-                </select>
-              </label>
-
-              <label class="filter-control">
-                Type
-                <select v-model="selectedType">
-                  <option value="All">All</option>
-                  <option v-for="publicationType in availableTypeTags" :key="publicationType" :value="publicationType">
-                    {{ publicationType }}
-                  </option>
-                </select>
-              </label>
-
-              <label class="filter-control">
-                Date
-                <select v-model="selectedYear">
-                  <option value="All">All</option>
-                  <option v-for="year in availableYears" :key="year" :value="year">
-                    {{ year }}
-                  </option>
-                </select>
-              </label>
-
-              <label class="filter-control">
-                Sort
-                <select v-model="selectedSort">
-                  <option value="date-desc">Newest First</option>
-                  <option value="date-asc">Oldest First</option>
-                  <option value="title-asc">Title (A-Z)</option>
-                  <option value="title-desc">Title (Z-A)</option>
-                </select>
-              </label>
-            </div>
-            <div class="filter-footer">
-              <p class="filter-result">
-                Showing {{ filteredAndSortedPublications.length }} of {{ publicationEntries.length }} publications.
+      <div class="work-main">
+        <section id="work-overview" class="work-section">
+          <header class="publications-header">
+            <div class="publications-intro">
+              <h1>Work</h1>
+              <p>
+                Publications, software artifacts, and linked presentation material organized for quick scanning.
               </p>
+              <p class="citation-update-note">
+                Google Scholar citation counts last updated: <strong>{{ scholarCitationLastUpdatedLabel }}</strong>
+              </p>
+            </div>
+            <div class="profile-links">
+              <a
+                class="profile-link scholar"
+                :href="scholarProfileUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Google Scholar"
+                title="Google Scholar"
+              >
+                <img
+                  class="profile-icon"
+                  src="https://freepngimg.com/download/science/63222-google-scholar-doctor-science-university-philosophy-computer.png"
+                  alt=""
+                />
+              </a>
+              <a
+                class="profile-link semantic"
+                :href="semanticScholarUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Semantic Scholar"
+                title="Semantic Scholar"
+              >
+                <img
+                  class="profile-icon"
+                  src="https://api.iconify.design/academicons/semantic-scholar.svg?color=%23000"
+                  alt=""
+                />
+              </a>
+            </div>
+          </header>
+        </section>
+
+        <section id="work-publications" class="work-section">
+          <div class="work-section-block">
+            <header class="work-section-header">
+              <h2>Publications</h2>
+              <p>Chronological list with filterable tags and expandable publication metadata.</p>
+            </header>
+
+            <section class="publication-filters">
               <button
                 type="button"
-                class="filter-clear-btn"
-                :disabled="!hasActiveFilters"
-                @click="clearPublicationFilters"
+                class="filter-toggle"
+                @click="filtersOpen = !filtersOpen"
+                :aria-expanded="filtersOpen"
               >
-                Clear
+                <span class="filter-toggle-title">Filter and Sort</span>
+                <span class="filter-toggle-state">{{ filtersOpen ? "Hide" : "Show" }}</span>
               </button>
+
+              <div v-show="filtersOpen" class="filter-panel">
+                <div class="filter-grid">
+                  <label class="filter-control">
+                    Venue
+                    <select v-model="selectedVenue">
+                      <option value="All">All</option>
+                      <option v-for="venue in availableVenueTags" :key="venue" :value="venue">
+                        {{ venue }}
+                      </option>
+                    </select>
+                  </label>
+
+                  <label class="filter-control">
+                    Main Topic
+                    <select v-model="selectedTopic">
+                      <option value="All">All</option>
+                      <option v-for="topic in availableTopicTags" :key="topic" :value="topic">
+                        {{ topic }}
+                      </option>
+                    </select>
+                  </label>
+
+                  <label class="filter-control">
+                    Type
+                    <select v-model="selectedType">
+                      <option value="All">All</option>
+                      <option v-for="publicationType in availableTypeTags" :key="publicationType" :value="publicationType">
+                        {{ publicationType }}
+                      </option>
+                    </select>
+                  </label>
+
+                  <label class="filter-control">
+                    Date
+                    <select v-model="selectedYear">
+                      <option value="All">All</option>
+                      <option v-for="year in availableYears" :key="year" :value="year">
+                        {{ year }}
+                      </option>
+                    </select>
+                  </label>
+
+                  <label class="filter-control">
+                    Sort
+                    <select v-model="selectedSort">
+                      <option value="date-desc">Newest First</option>
+                      <option value="date-asc">Oldest First</option>
+                      <option value="title-asc">Title (A-Z)</option>
+                      <option value="title-desc">Title (Z-A)</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="filter-footer">
+                  <p class="filter-result">
+                    Showing {{ filteredAndSortedPublications.length }} of {{ publicationEntries.length }} publications.
+                  </p>
+                  <button
+                    type="button"
+                    class="filter-clear-btn"
+                    :disabled="!hasActiveFilters"
+                    @click="clearPublicationFilters"
+                  >
+                    Clear
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <div class="publications-list">
+            <article
+              v-for="publication in filteredAndSortedPublications"
+              :key="publication.id"
+              class="publication-card"
+            >
+              <div class="publication-title-row">
+                <h2 class="publication-title">
+                  <a :href="publication.url" target="_blank" rel="noopener noreferrer">
+                    {{ publication.title }}
+                  </a>
+                </h2>
+                <span class="publication-date">{{ publication.year }}</span>
+              </div>
+
+              <p class="publication-authors">{{ publication.authors }}</p>
+              <p class="publication-venue">{{ publication.venue }}</p>
+
+              <div class="publication-tags">
+                <button
+                  type="button"
+                  class="publication-tag publication-tag-type"
+                  :class="{ 'publication-tag-active': isPublicationTagActive('type', publication.type) }"
+                  data-category="Type"
+                  @click="applyPublicationTagFilter('type', publication.type)"
+                >
+                  {{ publication.type }}
+                </button>
+                <button
+                  type="button"
+                  v-for="tag in publication.venueTags"
+                  :key="`${publication.id}-venue-${tag}`"
+                  class="publication-tag publication-tag-venue"
+                  :class="{ 'publication-tag-active': isPublicationTagActive('venue', tag) }"
+                  data-category="Venue"
+                  @click="applyPublicationTagFilter('venue', tag)"
+                >
+                  {{ tag }}
+                </button>
+                <button
+                  type="button"
+                  v-for="tag in publication.topicTags"
+                  :key="`${publication.id}-topic-${tag}`"
+                  class="publication-tag publication-tag-topic"
+                  :class="{ 'publication-tag-active': isPublicationTagActive('topic', tag) }"
+                  data-category="Main Topic"
+                  @click="applyPublicationTagFilter('topic', tag)"
+                >
+                  {{ tag }}
+                </button>
+              </div>
+
+              <p class="publication-summary">{{ publication.summary }}</p>
+
+              <button
+                type="button"
+                class="publication-expand-toggle"
+                @click="togglePublicationExpanded(publication.id)"
+              >
+                {{ isPublicationExpanded(publication.id) ? "Hide Details" : "Show Details" }}
+              </button>
+
+              <div
+                v-show="isPublicationExpanded(publication.id)"
+                class="publication-expanded"
+              >
+                <section class="publication-expanded-block">
+                  <button
+                    type="button"
+                    class="publication-subsection-toggle"
+                    @click="togglePublicationSection(publication.id, 'abstract')"
+                    :aria-expanded="isPublicationSectionExpanded(publication.id, 'abstract')"
+                  >
+                    <span class="publication-subsection-label">Abstract</span>
+                    <span class="publication-subsection-state">
+                      {{ isPublicationSectionExpanded(publication.id, "abstract") ? "Hide" : "Show" }}
+                    </span>
+                  </button>
+                  <div
+                    v-show="isPublicationSectionExpanded(publication.id, 'abstract')"
+                    class="publication-subsection-content"
+                  >
+                    <p v-if="publication.abstract">{{ publication.abstract }}</p>
+                    <p v-else class="publication-empty">No abstract is currently recorded for this item.</p>
+                  </div>
+                </section>
+
+                <section class="publication-expanded-block">
+                  <button
+                    type="button"
+                    class="publication-subsection-toggle"
+                    @click="togglePublicationSection(publication.id, 'details')"
+                    :aria-expanded="isPublicationSectionExpanded(publication.id, 'details')"
+                  >
+                    <span class="publication-subsection-label">Additional Details</span>
+                    <span class="publication-subsection-state">
+                      {{ isPublicationSectionExpanded(publication.id, "details") ? "Hide" : "Show" }}
+                    </span>
+                  </button>
+                  <div
+                    v-show="isPublicationSectionExpanded(publication.id, 'details')"
+                    class="publication-subsection-content"
+                  >
+                    <ul class="publication-details-list">
+                      <li
+                        v-for="(detail, detailIndex) in publication.details"
+                        :key="`${publication.id}-detail-${detailIndex}`"
+                      >
+                        <span class="detail-label">{{ detail.label }}:</span>
+                        <a
+                          v-if="detail.href"
+                          :href="detail.href"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {{ detail.value }}
+                        </a>
+                        <span v-else>{{ detail.value }}</span>
+                      </li>
+                      <li>
+                        <span class="detail-label">{{ metricLabel(publication) }}:</span>
+                        <span>{{ metricValue(publication) }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </section>
+
+                <section class="publication-expanded-block">
+                  <button
+                    type="button"
+                    class="publication-subsection-toggle"
+                    @click="togglePublicationSection(publication.id, 'bibtex')"
+                    :aria-expanded="isPublicationSectionExpanded(publication.id, 'bibtex')"
+                  >
+                    <span class="publication-subsection-label">BibTeX</span>
+                    <span class="publication-subsection-state">
+                      {{ isPublicationSectionExpanded(publication.id, "bibtex") ? "Hide" : "Show" }}
+                    </span>
+                  </button>
+                  <div
+                    v-show="isPublicationSectionExpanded(publication.id, 'bibtex')"
+                    class="publication-subsection-content publication-bibtex-shell"
+                  >
+                    <button
+                      type="button"
+                      class="bibtex-copy-btn"
+                      :aria-label="
+                        isBibtexCopied(publication.id)
+                          ? 'BibTeX copied to clipboard'
+                          : 'Copy BibTeX citation to clipboard'
+                      "
+                      :title="
+                        isBibtexCopied(publication.id)
+                          ? 'Copied'
+                          : 'Copy BibTeX citation'
+                      "
+                      @click="copyBibtexCitation(publication.id, publication.bibtex)"
+                    >
+                      <i class="fa" :class="isBibtexCopied(publication.id) ? 'fa-check' : 'fa-files-o'"></i>
+                    </button>
+                    <pre class="publication-bibtex"><code>{{ publication.bibtex }}</code></pre>
+                  </div>
+                </section>
+              </div>
+
+              <div
+                v-if="publication.resolvedPresentationLinks.length"
+                class="publication-links"
+              >
+                <template
+                  v-for="link in publication.resolvedPresentationLinks"
+                  :key="link.key"
+                >
+                  <router-link
+                    v-if="link.to"
+                    :to="link.to"
+                    class="publication-action-btn primary"
+                  >
+                    {{ link.label }}
+                  </router-link>
+                  <a
+                    v-else
+                    :href="link.href"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="publication-action-btn"
+                  >
+                    {{ link.label }}
+                  </a>
+                </template>
+              </div>
+            </article>
+
+            <article v-if="filteredAndSortedPublications.length === 0" class="publication-card empty-state">
+              <h2>No Publications Match Current Filters</h2>
+              <p>Try clearing one or more filters to see more entries.</p>
+            </article>
             </div>
           </div>
         </section>
-      </header>
 
-      <article
-        v-for="publication in filteredAndSortedPublications"
-        :key="publication.id"
-        class="publication-card"
-      >
-        <div class="publication-title-row">
-          <h2 class="publication-title">
-            <a :href="publication.url" target="_blank" rel="noopener noreferrer">
-              {{ publication.title }}
-            </a>
-          </h2>
-          <span class="publication-date">{{ publication.year }}</span>
-        </div>
+        <section id="work-software" class="work-section">
+          <div class="work-section-block">
+            <header class="work-section-header">
+              <h2>Software</h2>
+              <p>Tools, web pages, and software resources that support this research workflow.</p>
+            </header>
 
-        <p class="publication-authors">{{ publication.authors }}</p>
-        <p class="publication-venue">{{ publication.venue }}</p>
+            <div class="software-list">
+            <article v-for="project in softwareEntries" :key="project.id" class="software-card">
+              <div class="software-title-row">
+                <h3 class="software-title">
+                  <a :href="project.url" target="_blank" rel="noopener noreferrer">{{ project.title }}</a>
+                </h3>
+                <span class="software-year">{{ project.year }}</span>
+              </div>
 
-        <div class="publication-tags">
-          <button
-            type="button"
-            class="publication-tag publication-tag-type"
-            :class="{ 'publication-tag-active': isPublicationTagActive('type', publication.type) }"
-            @click="applyPublicationTagFilter('type', publication.type)"
-            :title="`Filter by type: ${publication.type}`"
-          >
-            {{ publication.type }}
-          </button>
-          <button
-            type="button"
-            v-for="tag in publication.venueTags"
-            :key="`${publication.id}-venue-${tag}`"
-            class="publication-tag publication-tag-venue"
-            :class="{ 'publication-tag-active': isPublicationTagActive('venue', tag) }"
-            @click="applyPublicationTagFilter('venue', tag)"
-            :title="`Filter by venue: ${tag}`"
-          >
-            {{ tag }}
-          </button>
-          <button
-            type="button"
-            v-for="tag in publication.topicTags"
-            :key="`${publication.id}-topic-${tag}`"
-            class="publication-tag publication-tag-topic"
-            :class="{ 'publication-tag-active': isPublicationTagActive('topic', tag) }"
-            @click="applyPublicationTagFilter('topic', tag)"
-            :title="`Filter by topic: ${tag}`"
-          >
-            {{ tag }}
-          </button>
-        </div>
+              <p class="software-kind">{{ project.kind }}</p>
+              <p class="software-summary">{{ project.summary }}</p>
 
-        <p class="publication-summary">{{ publication.summary }}</p>
-
-        <button
-          type="button"
-          class="publication-expand-toggle"
-          @click="togglePublicationExpanded(publication.id)"
-        >
-          {{ isPublicationExpanded(publication.id) ? "Hide Details" : "Show Details" }}
-        </button>
-
-        <div
-          v-show="isPublicationExpanded(publication.id)"
-          class="publication-expanded"
-        >
-          <section class="publication-expanded-block">
-            <button
-              type="button"
-              class="publication-subsection-toggle"
-              @click="togglePublicationSection(publication.id, 'abstract')"
-              :aria-expanded="isPublicationSectionExpanded(publication.id, 'abstract')"
-            >
-              <span class="publication-subsection-label">Abstract</span>
-              <span class="publication-subsection-state">
-                {{ isPublicationSectionExpanded(publication.id, "abstract") ? "Hide" : "Show" }}
-              </span>
-            </button>
-            <div
-              v-show="isPublicationSectionExpanded(publication.id, 'abstract')"
-              class="publication-subsection-content"
-            >
-              <p v-if="publication.abstract">{{ publication.abstract }}</p>
-              <p v-else class="publication-empty">No abstract is currently recorded for this item.</p>
-            </div>
-          </section>
-
-          <section class="publication-expanded-block">
-            <button
-              type="button"
-              class="publication-subsection-toggle"
-              @click="togglePublicationSection(publication.id, 'details')"
-              :aria-expanded="isPublicationSectionExpanded(publication.id, 'details')"
-            >
-              <span class="publication-subsection-label">Additional Details</span>
-              <span class="publication-subsection-state">
-                {{ isPublicationSectionExpanded(publication.id, "details") ? "Hide" : "Show" }}
-              </span>
-            </button>
-            <div
-              v-show="isPublicationSectionExpanded(publication.id, 'details')"
-              class="publication-subsection-content"
-            >
-              <ul class="publication-details-list">
-                <li
-                  v-for="(detail, detailIndex) in publication.details"
-                  :key="`${publication.id}-detail-${detailIndex}`"
+              <div class="software-tags">
+                <span
+                  v-for="tag in project.tags"
+                  :key="`${project.id}-${tag}`"
+                  class="software-tag"
                 >
-                  <span class="detail-label">{{ detail.label }}:</span>
-                  <a
-                    v-if="detail.href"
-                    :href="detail.href"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {{ detail.value }}
-                  </a>
-                  <span v-else>{{ detail.value }}</span>
-                </li>
-                <li>
-                  <span class="detail-label">Google Scholar Citations:</span>
-                  <span>{{ citationCountLabel(publication.id) }}</span>
-                </li>
-              </ul>
+                  {{ tag }}
+                </span>
+              </div>
+
+              <div class="software-links">
+                <a :href="project.url" target="_blank" rel="noopener noreferrer" class="publication-action-btn primary">
+                  Open Project
+                </a>
+                <a
+                  v-if="project.repositoryUrl"
+                  :href="project.repositoryUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="publication-action-btn"
+                >
+                  Repository
+                </a>
+                <a
+                  v-if="project.demoUrl"
+                  :href="project.demoUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="publication-action-btn"
+                >
+                  Demo
+                </a>
+              </div>
+            </article>
+
+            <article v-if="softwareEntries.length === 0" class="software-card empty-state">
+              <h3>No Software Entries Yet</h3>
+              <p>Add entries in <code>src/data/softwareData.ts</code> to populate this section.</p>
+            </article>
             </div>
-          </section>
-
-          <section class="publication-expanded-block">
-            <button
-              type="button"
-              class="publication-subsection-toggle"
-              @click="togglePublicationSection(publication.id, 'bibtex')"
-              :aria-expanded="isPublicationSectionExpanded(publication.id, 'bibtex')"
-            >
-              <span class="publication-subsection-label">BibTeX</span>
-              <span class="publication-subsection-state">
-                {{ isPublicationSectionExpanded(publication.id, "bibtex") ? "Hide" : "Show" }}
-              </span>
-            </button>
-            <div
-              v-show="isPublicationSectionExpanded(publication.id, 'bibtex')"
-              class="publication-subsection-content publication-bibtex-shell"
-            >
-              <button
-                type="button"
-                class="bibtex-copy-btn"
-                :aria-label="
-                  isBibtexCopied(publication.id)
-                    ? 'BibTeX copied to clipboard'
-                    : 'Copy BibTeX citation to clipboard'
-                "
-                :title="
-                  isBibtexCopied(publication.id)
-                    ? 'Copied'
-                    : 'Copy BibTeX citation'
-                "
-                @click="copyBibtexCitation(publication.id, publication.bibtex)"
-              >
-                <i class="fa" :class="isBibtexCopied(publication.id) ? 'fa-check' : 'fa-files-o'"></i>
-              </button>
-              <pre class="publication-bibtex"><code>{{ publication.bibtex }}</code></pre>
-            </div>
-          </section>
-        </div>
-
-        <div
-          v-if="publication.resolvedPresentationLinks.length"
-          class="publication-links"
-        >
-          <template
-            v-for="link in publication.resolvedPresentationLinks"
-            :key="link.key"
-          >
-            <router-link
-              v-if="link.to"
-              :to="link.to"
-              class="publication-action-btn primary"
-            >
-              {{ link.label }}
-            </router-link>
-            <a
-              v-else
-              :href="link.href"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="publication-action-btn"
-            >
-              {{ link.label }}
-            </a>
-          </template>
-        </div>
-      </article>
-
-      <article v-if="filteredAndSortedPublications.length === 0" class="publication-card empty-state">
-        <h2>No Publications Match Current Filters</h2>
-        <p>Try clearing one or more filters to see more entries.</p>
-      </article>
+          </div>
+        </section>
+      </div>
     </div>
   </section>
 </template>
@@ -338,10 +439,12 @@ import {
 import {
   scholarCitationLastUpdatedIso,
   scholarCitationsByPublicationId,
+  publicationDownloadsByPublicationId,
 } from "../data/scholarCitations";
 import { getTalkViewBySlug } from "../data/talkCatalog";
 import { TOPIC_TAG_OPTIONS, VENUE_TAG_OPTIONS } from "../data/talkMetadata";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
+import { softwareProjects, type SoftwareEntry } from "../data/softwareData";
 
 interface ResolvedPresentationLink {
   key: string;
@@ -356,6 +459,11 @@ interface PublicationView extends Publication {
 
 type PublicationDetailSection = "abstract" | "details" | "bibtex";
 type PublicationTagFilterKind = "type" | "venue" | "topic";
+
+interface WorkTocEntry {
+  id: string;
+  label: string;
+}
 
 const DEFAULT_SECTION_EXPANDED: Record<PublicationDetailSection, boolean> = {
   abstract: true,
@@ -396,6 +504,7 @@ export default defineComponent({
   data() {
     return {
       publications,
+      softwareProjects,
       publicationPresentationLinksById,
       scholarProfileUrl,
       semanticScholarUrl,
@@ -411,9 +520,22 @@ export default defineComponent({
       copyResetTimers: {} as Record<string, ReturnType<typeof setTimeout> | undefined>,
       scholarCitationLastUpdatedIso,
       scholarCitationsByPublicationId,
+      publicationDownloadsByPublicationId,
+      tocCollapsed: false,
+      activeTocId: "work-overview",
     };
   },
   computed: {
+    softwareEntries(): SoftwareEntry[] {
+      return this.softwareProjects;
+    },
+    tocEntries(): WorkTocEntry[] {
+      return [
+        { id: "work-overview", label: "Overview" },
+        { id: "work-publications", label: "Publications" },
+        { id: "work-software", label: "Software" },
+      ];
+    },
     publicationEntries(): PublicationView[] {
       return this.publications.map((publication) => ({
         ...publication,
@@ -517,10 +639,57 @@ export default defineComponent({
         return this.scholarCitationLastUpdatedIso;
       }
 
-      return date.toLocaleString();
+      return date.toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
     },
   },
+  mounted() {
+    this.tocCollapsed = window.matchMedia("(max-width: 1080px)").matches;
+    this.updateActiveTocId();
+    window.addEventListener("scroll", this.updateActiveTocId, { passive: true });
+    window.addEventListener("resize", this.updateActiveTocId);
+  },
   methods: {
+    toggleToc() {
+      this.tocCollapsed = !this.tocCollapsed;
+    },
+    scrollToSection(sectionId: string) {
+      const target = document.getElementById(sectionId);
+      if (!target) {
+        return;
+      }
+
+      const topOffset = 88;
+      const targetTop = target.getBoundingClientRect().top + window.scrollY - topOffset;
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+      this.activeTocId = sectionId;
+
+      if (window.matchMedia("(max-width: 1080px)").matches) {
+        this.tocCollapsed = true;
+      }
+    },
+    updateActiveTocId() {
+      const checkpoint = window.scrollY + window.innerHeight * 0.28;
+      let activeId = this.tocEntries[0]?.id ?? "work-overview";
+
+      this.tocEntries.forEach((entry) => {
+        const element = document.getElementById(entry.id);
+        if (!element) {
+          return;
+        }
+        if (element.offsetTop <= checkpoint) {
+          activeId = entry.id;
+        }
+      });
+
+      this.activeTocId = activeId;
+    },
     publicationSectionKey(
       publicationId: string,
       section: PublicationDetailSection
@@ -639,8 +808,29 @@ export default defineComponent({
       }
       return String(count);
     },
+    downloadCountLabel(publicationId: string): string {
+      const count = this.publicationDownloadsByPublicationId[publicationId];
+      if (count === null || typeof count === "undefined") {
+        return "N/A";
+      }
+      return String(count);
+    },
+    metricLabel(publication: Publication): string {
+      if (publication.type === "Thesis") {
+        return "Loyola eCommons Downloads";
+      }
+      return "Google Scholar Citations";
+    },
+    metricValue(publication: Publication): string {
+      if (publication.type === "Thesis") {
+        return this.downloadCountLabel(publication.id);
+      }
+      return this.citationCountLabel(publication.id);
+    },
   },
   beforeUnmount() {
+    window.removeEventListener("scroll", this.updateActiveTocId);
+    window.removeEventListener("resize", this.updateActiveTocId);
     Object.values(this.copyResetTimers).forEach((timer) => {
       if (timer) {
         clearTimeout(timer);
@@ -652,27 +842,163 @@ export default defineComponent({
 
 <style scoped>
 #publications {
-  padding: 0 16px 140px;
-  font-size: 1.08rem;
+  --work-content-max: 1040px;
+  padding: 0 12px 118px;
+  font-size: var(--font-size-body-lg);
 }
 
-.publications-shell {
+.work-layout {
   display: grid;
-  gap: 18px;
+  grid-template-columns: 228px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
 }
 
-.publications-header {
+.work-layout.work-layout-toc-collapsed {
+  grid-template-columns: 86px minmax(0, 1fr);
+}
+
+.work-toc-panel {
+  position: sticky;
+  top: 84px;
   background: var(--surface-bg);
   outline: 2px solid var(--surface-outline);
   border-radius: 14px;
-  padding: 18px 22px;
+  padding: 10px;
   display: grid;
-  gap: 14px;
+  gap: 8px;
+  z-index: 8;
+}
+
+.work-toc-toggle {
+  border: 1px solid var(--surface-outline);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--page-text);
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font: inherit;
+  transition: background-color 0.16s ease, border-color 0.16s ease;
+}
+
+.work-toc-toggle:hover {
+  background: var(--nav-hover-bg);
+  border-color: rgba(80, 203, 255, 0.42);
+}
+
+.work-toc-toggle-label {
+  font-size: var(--font-size-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+.work-toc-toggle-state {
+  font-size: var(--font-size-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.work-toc-panel-collapsed .work-toc-toggle {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 8px 6px;
+}
+
+.work-toc-nav {
+  display: grid;
+  gap: 8px;
+}
+
+.work-toc-link {
+  border: 1px solid var(--surface-outline);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--page-text);
+  text-align: left;
+  padding: 8px 10px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 8px;
+  font: inherit;
+  cursor: pointer;
+  min-width: 0;
+  transition: background-color 0.16s ease, border-color 0.16s ease;
+}
+
+.work-toc-link:hover {
+  background: var(--nav-hover-bg);
+}
+
+.work-toc-link-active {
+  border-color: rgba(80, 203, 255, 0.56);
+  background: rgba(80, 203, 255, 0.12);
+}
+
+.work-toc-link-index {
+  font-size: var(--font-size-micro);
+  opacity: 0.75;
+  letter-spacing: 0.06em;
+}
+
+.work-toc-link-label {
+  font-size: var(--font-size-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.work-main {
+  min-width: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.work-section {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+  scroll-margin-top: 92px;
+}
+
+.work-section-block {
+  max-width: var(--work-content-max);
+  width: 100%;
+  margin: 0 auto;
+  background: var(--surface-bg);
+  border: 1px solid var(--surface-outline);
+  border-radius: 14px;
+  padding: 10px 12px;
+  display: grid;
+  gap: 10px;
+}
+
+[data-theme="light"] .work-section-block {
+  background: rgba(16, 36, 59, 0.03);
+}
+
+.publications-header {
+  max-width: var(--work-content-max);
+  width: 100%;
+  margin: 0 auto;
+  background: var(--surface-bg);
+  border: 1px solid var(--surface-outline);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: grid;
+  gap: 10px;
   position: relative;
 }
 
 .publications-intro {
-  padding-right: 112px;
+  padding-right: 104px;
 }
 
 .publications-header h1 {
@@ -684,24 +1010,24 @@ export default defineComponent({
 }
 
 .publications-header p {
-  margin: 8px 0 0;
+  margin: 6px 0 0;
   color: var(--page-text);
   opacity: 0.88;
-  font-size: 1.14rem;
+  font-size: var(--font-size-body-xl);
 }
 
 .citation-update-note {
-  margin: 8px 0 0;
+  margin: 6px 0 0;
   opacity: 0.76;
-  font-size: 0.9rem !important;
+  font-size: var(--font-size-meta) !important;
 }
 
 .profile-links {
   position: absolute;
-  top: 18px;
-  right: 22px;
+  top: 12px;
+  right: 14px;
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .profile-link {
@@ -709,9 +1035,9 @@ export default defineComponent({
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 46px;
-  height: 46px;
-  font-size: 1.18rem;
+  width: 44px;
+  height: 44px;
+  font-size: var(--font-size-subtitle);
   font-weight: 700;
   padding: 0;
   border-radius: 999px;
@@ -746,13 +1072,34 @@ export default defineComponent({
   filter: grayscale(1) brightness(0) invert(1) contrast(1.05);
 }
 
+.work-section-header {
+  margin: 0;
+}
+
+.work-section-header h2 {
+  margin: 0;
+  color: var(--page-text);
+  font-family: var(--content-heading-font);
+  font-size: var(--content-h2-size);
+  font-weight: 600;
+}
+
+.work-section-header p {
+  margin: 5px 0 0;
+  color: var(--page-text);
+  opacity: 0.8;
+  font-size: var(--font-size-body);
+}
+
 .publication-filters {
-  padding-top: 8px;
-  border-top: 1px solid var(--surface-outline);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--surface-outline);
+  border-radius: 10px;
+  padding: 8px 10px;
 }
 
 [data-theme="light"] .publication-filters {
-  border-top-color: rgba(16, 36, 59, 0.24);
+  background: rgba(16, 36, 59, 0.035);
 }
 
 .filter-toggle {
@@ -772,7 +1119,7 @@ export default defineComponent({
 
 .filter-toggle-title {
   font-family: var(--content-heading-font);
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -783,7 +1130,7 @@ export default defineComponent({
   border: none;
   border-radius: 0;
   padding: 0;
-  font-size: 0.72rem;
+  font-size: var(--font-size-micro);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   opacity: 0.68;
@@ -791,21 +1138,21 @@ export default defineComponent({
 }
 
 .filter-panel {
-  margin-top: 12px;
+  margin-top: 9px;
 }
 
 .filter-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 9px;
+  gap: 7px;
 }
 
 .filter-control {
   display: grid;
-  gap: 5px;
+  gap: 4px;
   color: var(--page-text);
   font-weight: 600;
-  font-size: 0.74rem;
+  font-size: var(--font-size-caption);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   opacity: 0.85;
@@ -822,8 +1169,8 @@ export default defineComponent({
   background-position: right 11px center;
   background-size: 10px 6px;
   color: var(--page-text);
-  padding: 7px 30px 7px 12px;
-  font-size: 0.88rem;
+  padding: 6px 30px 6px 10px;
+  font-size: var(--font-size-meta);
   font-weight: 500;
   letter-spacing: normal;
   text-transform: none;
@@ -845,12 +1192,12 @@ export default defineComponent({
 .filter-result {
   margin: 0;
   opacity: 0.72;
-  font-size: 0.78rem;
+  font-size: var(--font-size-caption);
   letter-spacing: 0.03em;
 }
 
 .filter-footer {
-  margin-top: 10px;
+  margin-top: 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -862,8 +1209,8 @@ export default defineComponent({
   border-radius: 999px;
   background: transparent;
   color: var(--page-text);
-  padding: 4px 11px;
-  font-size: 0.76rem;
+  padding: 3px 10px;
+  font-size: var(--font-size-caption);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
@@ -879,11 +1226,23 @@ export default defineComponent({
   cursor: default;
 }
 
-.publication-card {
-  background: var(--surface-bg);
-  outline: 2px solid var(--surface-outline);
-  border-radius: 14px;
-  padding: 16px 20px;
+.publications-list,
+.software-list {
+  display: grid;
+  gap: 10px;
+}
+
+.publication-card,
+.software-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--surface-outline);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+[data-theme="light"] .publication-card,
+[data-theme="light"] .software-card {
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .publication-title-row {
@@ -902,7 +1261,7 @@ export default defineComponent({
 
 .publication-title {
   margin: 0;
-  font-size: 1.42rem;
+  font-size: var(--font-size-card-title);
   line-height: 1.35;
 }
 
@@ -916,47 +1275,86 @@ export default defineComponent({
 }
 
 .publication-authors {
-  margin: 10px 0 0;
+  margin: 8px 0 0;
   color: var(--page-text);
   opacity: 0.95;
   line-height: 1.5;
-  font-size: 1.08rem;
+  font-size: var(--font-size-body-lg);
 }
 
 .publication-venue {
-  margin: 6px 0 0;
+  margin: 4px 0 0;
   color: var(--page-text);
   opacity: 0.82;
-  font-size: 1.03rem;
+  font-size: var(--font-size-body);
 }
 
 .publication-tags {
-  margin-top: 10px;
+  margin-top: 8px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
 }
 
 .publication-tag {
+  --tag-tooltip-bg: rgba(100, 116, 139, 0.96);
+  --tag-tooltip-border: rgba(100, 116, 139, 0.98);
+  --tag-tooltip-text: #f8fafc;
+
   border: 1px solid var(--surface-outline);
   border-radius: 999px;
-  padding: 3px 11px;
-  font-size: 0.9rem;
+  padding: 3px 10px;
+  font-size: var(--font-size-body-sm);
   color: var(--page-text);
   appearance: none;
   -webkit-appearance: none;
   cursor: pointer;
   line-height: 1.2;
+  position: relative;
+  z-index: 0;
   transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.publication-tag::after {
+  content: attr(data-category);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translate(-50%, 4px);
+  border: 1px solid var(--tag-tooltip-border);
+  border-radius: 7px;
+  padding: 3px 7px;
+  background: var(--tag-tooltip-bg);
+  color: var(--tag-tooltip-text);
+  box-shadow: 0 8px 18px rgba(8, 15, 31, 0.24);
+  font-size: var(--font-size-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+  z-index: 1001;
 }
 
 .publication-tag:hover {
   transform: translateY(-1px);
+  z-index: 1000;
+}
+
+.publication-tag:hover::after,
+.publication-tag:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 .publication-tag:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.35);
+  z-index: 1000;
 }
 
 .publication-tag-active {
@@ -965,52 +1363,74 @@ export default defineComponent({
 
 .publication-tag-type {
   background: rgba(244, 208, 63, 0.16);
+  --tag-tooltip-bg: rgba(244, 208, 63, 0.96);
+  --tag-tooltip-border: rgba(202, 138, 4, 0.96);
+  --tag-tooltip-text: #281b00;
 }
 
 .publication-tag-venue {
   background: rgba(80, 203, 255, 0.14);
+  --tag-tooltip-bg: rgba(80, 203, 255, 0.96);
+  --tag-tooltip-border: rgba(14, 165, 233, 0.96);
+  --tag-tooltip-text: #052634;
 }
 
 .publication-tag-topic {
   background: rgba(45, 212, 191, 0.14);
+  --tag-tooltip-bg: rgba(45, 212, 191, 0.96);
+  --tag-tooltip-border: rgba(13, 148, 136, 0.96);
+  --tag-tooltip-text: #042320;
 }
 
 [data-theme="dark"] .publication-tag-type {
   background: rgba(244, 208, 63, 0.28);
   border-color: rgba(244, 208, 63, 0.62);
   color: #ffe7a8;
+  --tag-tooltip-bg: rgba(244, 208, 63, 0.98);
+  --tag-tooltip-border: rgba(250, 204, 21, 0.98);
+  --tag-tooltip-text: #1f1300;
 }
 
 [data-theme="dark"] .publication-tag-venue {
   background: rgba(80, 203, 255, 0.26);
   border-color: rgba(80, 203, 255, 0.6);
   color: #d3f4ff;
+  --tag-tooltip-bg: rgba(80, 203, 255, 0.98);
+  --tag-tooltip-border: rgba(125, 211, 252, 0.98);
+  --tag-tooltip-text: #041b25;
 }
 
 [data-theme="dark"] .publication-tag-topic {
   background: rgba(45, 212, 191, 0.26);
   border-color: rgba(45, 212, 191, 0.58);
   color: #d2fff4;
+  --tag-tooltip-bg: rgba(45, 212, 191, 0.98);
+  --tag-tooltip-border: rgba(45, 212, 191, 0.98);
+  --tag-tooltip-text: #021413;
 }
 
 .publication-summary {
-  margin: 12px 0 0;
+  margin: 10px 0 0;
   padding-left: 12px;
   border-left: 3px solid rgba(80, 203, 255, 0.45);
   color: var(--page-text);
   line-height: 1.6;
-  font-size: 1.08rem;
+  font-size: var(--font-size-body-lg);
+}
+
+[data-theme="light"] .publication-summary {
+  border-left-color: rgba(13, 79, 136, 0.4);
 }
 
 .publication-expand-toggle {
-  margin-top: 10px;
+  margin-top: 8px;
   display: block;
   margin-left: auto;
   border: none;
   background: transparent;
   color: var(--page-text);
   opacity: 0.74;
-  font-size: 0.76rem;
+  font-size: var(--font-size-caption);
   letter-spacing: 0.07em;
   text-transform: uppercase;
   cursor: pointer;
@@ -1030,17 +1450,17 @@ export default defineComponent({
 }
 
 .publication-expanded {
-  margin-top: 12px;
+  margin-top: 9px;
   display: grid;
-  gap: 12px;
+  gap: 8px;
   min-width: 0;
 }
 
 .publication-expanded-block {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--surface-outline);
-  border-radius: 10px;
-  padding: 10px 12px;
+  border-radius: 8px;
+  padding: 8px 10px;
   min-width: 0;
   overflow-x: hidden;
 }
@@ -1065,21 +1485,21 @@ export default defineComponent({
 
 .publication-subsection-label {
   margin: 0;
-  font-size: 0.88rem;
+  font-size: var(--font-size-meta);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   opacity: 0.82;
 }
 
 .publication-subsection-state {
-  font-size: 0.72rem;
+  font-size: var(--font-size-micro);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   opacity: 0.72;
 }
 
 .publication-subsection-content {
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .publication-expanded-block p {
@@ -1096,7 +1516,7 @@ export default defineComponent({
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 6px;
+  gap: 5px;
 }
 
 .publication-details-list li {
@@ -1119,12 +1539,22 @@ export default defineComponent({
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   word-break: break-word;
-  font-size: 0.82rem;
+  font-size: var(--font-size-label);
   line-height: 1.4;
-  padding: 30px 8px 8px;
+  padding: 7px 34px 7px 7px;
   border-radius: 8px;
   border: 1px solid var(--surface-outline);
   background: rgba(0, 0, 0, 0.18);
+}
+
+[data-theme="light"] .publication-bibtex {
+  background: rgba(16, 36, 59, 0.08);
+}
+
+.publication-bibtex code {
+  white-space: inherit;
+  overflow-wrap: inherit;
+  word-break: inherit;
 }
 
 .publication-bibtex-shell {
@@ -1133,15 +1563,15 @@ export default defineComponent({
 
 .bibtex-copy-btn {
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 7px;
+  right: 5px;
   width: 24px;
   height: 24px;
   border: 1px solid var(--surface-outline);
   border-radius: 999px;
   background: transparent;
   color: var(--page-text);
-  font-size: 0.76rem;
+  font-size: var(--font-size-caption);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1155,22 +1585,13 @@ export default defineComponent({
   background: var(--nav-hover-bg);
 }
 
-.publication-bibtex code {
-  white-space: inherit;
-  overflow-wrap: inherit;
-  word-break: inherit;
-}
-
-[data-theme="light"] .publication-bibtex {
-  background: rgba(16, 36, 59, 0.08);
-}
-
-.publication-links {
-  margin-top: 14px;
+.publication-links,
+.software-links {
+  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
-  row-gap: 10px;
-  column-gap: 14px;
+  row-gap: 8px;
+  column-gap: 10px;
 }
 
 .publication-action-btn {
@@ -1182,9 +1603,9 @@ export default defineComponent({
   border: 1px solid var(--surface-outline);
   background: transparent;
   border-radius: 999px;
-  padding: 7px 14px;
+  padding: 6px 12px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: var(--font-size-body);
   min-width: 0;
   line-height: 1.2;
   transition: background-color 0.2s ease, border-color 0.2s ease;
@@ -1199,7 +1620,75 @@ export default defineComponent({
   background: var(--nav-hover-bg);
 }
 
-.empty-state h2 {
+.software-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.software-title {
+  margin: 0;
+  font-size: var(--font-size-card-title);
+  line-height: 1.35;
+}
+
+.software-title a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.software-title a:hover {
+  text-decoration: underline;
+}
+
+.software-year {
+  font-weight: 700;
+  color: var(--page-text);
+  opacity: 0.9;
+}
+
+.software-kind {
+  margin: 6px 0 0;
+  color: var(--page-text);
+  opacity: 0.86;
+  font-size: var(--font-size-meta);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.software-summary {
+  margin: 6px 0 0;
+  color: var(--page-text);
+  line-height: 1.6;
+  font-size: var(--font-size-body-lg);
+}
+
+.software-tags {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.software-tag {
+  border: 1px solid var(--surface-outline);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: var(--font-size-body-sm);
+  color: var(--page-text);
+  background: rgba(80, 203, 255, 0.12);
+}
+
+[data-theme="dark"] .software-tag {
+  border-color: rgba(80, 203, 255, 0.52);
+  background: rgba(80, 203, 255, 0.22);
+  color: #d7f5ff;
+}
+
+.empty-state h2,
+.empty-state h3 {
   margin-top: 0;
 }
 
@@ -1207,18 +1696,41 @@ export default defineComponent({
   margin: 8px 0 0;
 }
 
-[data-theme="light"] .publication-summary {
-  border-left-color: rgba(13, 79, 136, 0.4);
+@media (max-width: 1080px) {
+  .work-layout,
+  .work-layout.work-layout-toc-collapsed {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .work-toc-panel,
+  .work-toc-panel-collapsed {
+    position: sticky;
+    top: 82px;
+  }
+
+  .work-toc-panel-collapsed .work-toc-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 12px;
+  }
 }
 
 @media (max-width: 768px) {
   #publications {
-    padding: 0 10px 132px;
+    padding: 0 8px 118px;
+  }
+
+  .work-section-block {
+    padding: 8px 9px;
+    gap: 8px;
   }
 
   .publications-header,
-  .publication-card {
-    padding: 14px;
+  .publication-card,
+  .software-card,
+  .publication-filters {
+    padding: 12px;
   }
 
   .publications-intro {
@@ -1233,6 +1745,11 @@ export default defineComponent({
   .profile-link {
     width: 44px;
     height: 44px;
+  }
+
+  .filter-footer {
+    flex-wrap: wrap;
+    justify-content: flex-start;
   }
 
   .publication-action-btn {

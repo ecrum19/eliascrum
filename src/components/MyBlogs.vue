@@ -3,10 +3,7 @@
     <div class="blogs-shell">
       <header class="blogs-header">
         <h1>Blogs</h1>
-        <p>
-          Blog posts are listed from newest to oldest and sourced from
-          <code>src/data/blogPostsData.ts</code>.
-        </p>
+        
       </header>
 
       <article
@@ -41,7 +38,7 @@
       <article v-if="sortedBlogPosts.length === 0" class="blog-card empty-state">
         <h2>No Blog Posts Yet</h2>
         <p>
-          Add entries in <code>src/data/blogPostsData.ts</code> to populate this page.
+          Check back later for new posts.
         </p>
       </article>
     </div>
@@ -105,8 +102,10 @@ export default defineComponent({
 
 .blogs-header h1 {
   margin: 0;
+  color: var(--page-text);
   font-family: var(--content-heading-font);
   font-size: var(--content-h1-size);
+  font-weight: 600;
 }
 
 .blogs-header p {
@@ -125,7 +124,7 @@ export default defineComponent({
   border: 1px solid var(--surface-outline);
   border-radius: 999px;
   padding: 2px 10px;
-  font-size: 0.85rem;
+  font-size: var(--font-size-meta);
 }
 
 .blog-title {

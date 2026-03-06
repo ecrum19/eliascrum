@@ -387,7 +387,8 @@ async function main() {
     addTextValue(triples, talkRef, "dcterms:identifier", talk.slug);
     addTextValue(triples, talkRef, "schema:name", talk.displayTitle ?? talk.title);
     addTextValue(triples, talkRef, "ec:sourceTitle", talk.title);
-    addTextValue(triples, talkRef, "ec:description", talk.description);
+    addTextValue(triples, talkRef, "ec:summary", talk.summary ?? talk.description);
+    addTextValue(triples, talkRef, "ec:description", talk.abstract ?? talk.description);
     addTextValue(triples, talkRef, "ec:sourceFile", talk.sourceFile);
 
     addDateValue(triples, talkRef, "ec:displayDate", talk.displayDateIso, "ec:displayDateText");
@@ -420,6 +421,18 @@ async function main() {
       triples.add(`${talkRef} ec:hasTopicTag ${tagRef} .`);
     });
 
+    const audienceSizeTag = talk.audienceSizeCategory;
+    if (audienceSizeTag) {
+      const tagRef = makeTagRef(tagRegistry, triples, "audience-size", audienceSizeTag);
+      triples.add(`${talkRef} ec:hasAudienceSizeTag ${tagRef} .`);
+    }
+
+    const audienceGroupTags = Array.isArray(talk.audienceGroups) ? talk.audienceGroups : [];
+    audienceGroupTags.forEach((tagLabel) => {
+      const tagRef = makeTagRef(tagRegistry, triples, "audience-group", tagLabel);
+      triples.add(`${talkRef} ec:hasAudienceGroupTag ${tagRef} .`);
+    });
+
     const talkMetadataRef = ecRef("talk-metadata", talk.slug);
     const rawMetadata = talkMetadataBySlug[talk.slug];
     if (rawMetadata) {
@@ -428,7 +441,13 @@ async function main() {
       addTextValue(triples, talkMetadataRef, "schema:name", rawMetadata.title);
       addDateValue(triples, talkMetadataRef, "ec:date", rawMetadata.dateIso, "ec:dateText");
       addTextValue(triples, talkMetadataRef, "ec:dateLabel", rawMetadata.dateLabel);
-      addTextValue(triples, talkMetadataRef, "ec:description", rawMetadata.description);
+      addTextValue(
+        triples,
+        talkMetadataRef,
+        "ec:description",
+        rawMetadata.summary ?? rawMetadata.description,
+      );
+      addTextValue(triples, talkMetadataRef, "ec:summary", rawMetadata.summary);
     }
   });
 
@@ -444,6 +463,20 @@ async function main() {
     : [];
   topicOptions.forEach((optionLabel) => {
     makeTagRef(tagRegistry, triples, "topic", optionLabel, true);
+  });
+
+  const audienceSizeOptions = Array.isArray(talkMetadataModule.AUDIENCE_SIZE_TAG_OPTIONS)
+    ? talkMetadataModule.AUDIENCE_SIZE_TAG_OPTIONS
+    : [];
+  audienceSizeOptions.forEach((optionLabel) => {
+    makeTagRef(tagRegistry, triples, "audience-size", optionLabel, true);
+  });
+
+  const audienceGroupOptions = Array.isArray(talkMetadataModule.AUDIENCE_GROUP_TAG_OPTIONS)
+    ? talkMetadataModule.AUDIENCE_GROUP_TAG_OPTIONS
+    : [];
+  audienceGroupOptions.forEach((optionLabel) => {
+    makeTagRef(tagRegistry, triples, "audience-group", optionLabel, true);
   });
 
   const publicationTypeOptions = Array.isArray(publicationsModule.PUBLICATION_TYPE_TAG_OPTIONS)

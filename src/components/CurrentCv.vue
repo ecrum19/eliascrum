@@ -180,7 +180,7 @@ export default defineComponent({
   margin: 8px 0 0;
   color: var(--page-text);
   opacity: 0.88;
-  font-size: 1.05rem;
+  font-size: var(--font-size-body);
 }
 
 .cv-section {
@@ -235,7 +235,7 @@ export default defineComponent({
 .cv-role {
   margin: 0;
   color: var(--page-text);
-  font-size: 1.08rem;
+  font-size: var(--font-size-body-lg);
 }
 
 .cv-organization {
@@ -252,7 +252,7 @@ export default defineComponent({
   border-radius: 999px;
   padding: 4px 10px;
   font-weight: 600;
-  font-size: 0.83rem;
+  font-size: var(--font-size-label);
 }
 
 .cv-date--current {
@@ -304,7 +304,7 @@ export default defineComponent({
   }
 
   .cv-role {
-    font-size: 1rem;
+    font-size: var(--font-size-body);
   }
 }
 </style>

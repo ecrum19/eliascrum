@@ -11,6 +11,12 @@ const publicationsDataPath = path.join(repoRoot, "src", "data", "publicationsDat
 const scholarCitationsPath = path.join(repoRoot, "src", "data", "scholarCitations.ts");
 const scholarUrl =
   "https://scholar.google.com/citations?user=fAJsN2kAAAAJ&hl=en&cstart=0&pagesize=100";
+const thesisDownloadTargets = [
+  {
+    publicationId: "engineering-coliphages-2022",
+    url: "https://ecommons.luc.edu/luc_theses/4434/",
+  },
+];
 
 const htmlEntityMap = {
   "&amp;": "&",
@@ -114,8 +120,13 @@ function findBestScholarMatch(publication, scholarEntries) {
   return substringMatches[0];
 }
 
-function formatGeneratedFile(lastUpdatedIso, citationsByPublicationId) {
+function formatGeneratedFile(lastUpdatedIso, citationsByPublicationId, downloadsByPublicationId) {
   const citationLines = Object.entries(citationsByPublicationId).map(([id, count]) => {
+    const value = count === null ? "null" : String(count);
+    return `  "${id}": ${value},`;
+  });
+
+  const downloadLines = Object.entries(downloadsByPublicationId).map(([id, count]) => {
     const value = count === null ? "null" : String(count);
     return `  "${id}": ${value},`;
   });
@@ -128,6 +139,10 @@ export const scholarCitationLastUpdatedIso: string | null = "${lastUpdatedIso}";
 
 export const scholarCitationsByPublicationId: Record<string, number | null> = {
 ${citationLines.join("\n")}
+};
+
+export const publicationDownloadsByPublicationId: Record<string, number | null> = {
+${downloadLines.join("\n")}
 };
 `;
 }
@@ -153,6 +168,84 @@ async function fetchScholarHtml() {
   return html;
 }
 
+function parseDownloadCountFromHtml(html) {
+  const spanMatch = html.match(
+    /<span[^>]*id=["']article-downloads["'][^>]*>\s*([\d,]+)\s*<\/span>/i,
+  );
+  if (spanMatch) {
+    const digitsOnly = spanMatch[1].replace(/[^\d]/g, "");
+    if (digitsOnly) {
+      return Number.parseInt(digitsOnly, 10);
+    }
+  }
+
+  return null;
+}
+
+function parseStatsRecordIdFromHtml(html) {
+  const match = html.match(/insertDownloads\((\d+)\)/i);
+  if (!match) {
+    return null;
+  }
+
+  return match[1];
+}
+
+function parseDownloadCountFromApiValue(value) {
+  const digitsOnly = String(value ?? "").replace(/[^\d]/g, "");
+  if (!digitsOnly) {
+    return null;
+  }
+
+  return Number.parseInt(digitsOnly, 10);
+}
+
+async function fetchDownloadCountFromStatsApi(url, statsRecordId) {
+  const apiUrl = new URL(`/do/api/site/stats/${statsRecordId}/json`, url);
+  const response = await fetch(apiUrl, {
+    headers: {
+      "user-agent":
+        "Mozilla/5.0 (compatible; EliasWebsiteBot/1.0; +https://github.com/)",
+      "accept-language": "en-US,en;q=0.9",
+      accept: "application/json, text/plain, */*",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Thesis stats API request failed with status ${response.status}`);
+  }
+
+  const payload = await response.json();
+  return parseDownloadCountFromApiValue(payload?.total_downloads);
+}
+
+async function fetchThesisDownloadCount(url) {
+  const response = await fetch(url, {
+    headers: {
+      "user-agent":
+        "Mozilla/5.0 (compatible; EliasWebsiteBot/1.0; +https://github.com/)",
+      "accept-language": "en-US,en;q=0.9",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Thesis page request failed with status ${response.status}`);
+  }
+
+  const html = await response.text();
+  const htmlDownloadCount = parseDownloadCountFromHtml(html);
+  if (htmlDownloadCount !== null) {
+    return htmlDownloadCount;
+  }
+
+  const statsRecordId = parseStatsRecordIdFromHtml(html);
+  if (!statsRecordId) {
+    return null;
+  }
+
+  return fetchDownloadCountFromStatsApi(url, statsRecordId);
+}
+
 async function main() {
   const publicationsSource = await fs.readFile(publicationsDataPath, "utf8");
   const publications = extractPublicationsFromData(publicationsSource);
@@ -170,20 +263,46 @@ async function main() {
 
   const citationsByPublicationId = {};
   const unmatched = [];
+  const downloadsByPublicationId = {};
 
   publications.forEach((publication) => {
     const match = findBestScholarMatch(publication, scholarEntries);
     if (!match) {
       citationsByPublicationId[publication.id] = null;
       unmatched.push(publication.title);
-      return;
+    } else {
+      citationsByPublicationId[publication.id] = match.citationCount;
     }
 
-    citationsByPublicationId[publication.id] = match.citationCount;
+    downloadsByPublicationId[publication.id] = null;
   });
 
+  for (const target of thesisDownloadTargets) {
+    const publicationExists = publications.some(
+      (publication) => publication.id === target.publicationId
+    );
+    if (!publicationExists) {
+      continue;
+    }
+
+    try {
+      const downloadCount = await fetchThesisDownloadCount(target.url);
+      downloadsByPublicationId[target.publicationId] = downloadCount;
+    } catch (error) {
+      console.warn(
+        `Failed to fetch thesis download count for ${target.publicationId}: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+    }
+  }
+
   const lastUpdatedIso = new Date().toISOString();
-  const generatedFile = formatGeneratedFile(lastUpdatedIso, citationsByPublicationId);
+  const generatedFile = formatGeneratedFile(
+    lastUpdatedIso,
+    citationsByPublicationId,
+    downloadsByPublicationId,
+  );
   await fs.writeFile(scholarCitationsPath, generatedFile, "utf8");
 
   console.log(`Updated citation counts for ${publications.length} publications.`);

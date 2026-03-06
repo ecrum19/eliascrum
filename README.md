@@ -22,7 +22,7 @@ Current release: **v0.1.0**
 
 - Node.js 20+
 - npm 10+
-- Optional: Ghostscript (`gs`) for PDF compression in `build:slides`
+- Optional: Ghostscript (`gs`) for additional PDF compression in `build:slides` (watermarking runs regardless)
 
 
 ## Project Scripts
@@ -31,7 +31,7 @@ Current release: **v0.1.0**
 - `npm run preview`: preview production build
 - `npm run build`: production build (`dist/`)
 - `npm run lint`: lint Vue/TypeScript source
-- `npm run build:slides`: rebuild generated talks/posters data and PDF outputs
+- `npm run build:slides`: rebuild generated talks/posters data and PDF outputs (adds small bottom-left watermark; compresses PDFs when Ghostscript is available)
 - `npm run update:scholar`: refresh Google Scholar citation counts
 - `npm run rdf:export`: export all `src/data/*.ts` content to `src/data/rdf/site-data.ttl`
 - `npm run rdf:update -- --update <file.ru>`: apply SPARQL `INSERT DATA`/`DELETE DATA` updates to RDF data

@@ -2,6 +2,7 @@ import { promises as fs } from "fs";
 import os from "os";
 import path from "path";
 import { spawn } from "child_process";
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 
 const rootDir = process.cwd();
 // Input precedence:
@@ -20,10 +21,17 @@ const postersPublicDir = path.join(talksBasePublicDir, "posters");
 const talksDataPath = path.join(rootDir, "src", "data", "talksData.ts");
 const talkMetadataPath = path.join(rootDir, "src", "data", "talkMetadata.ts");
 
-const GHOSTSCRIPT_REPLACE_THRESHOLD = 0.97;
+const GHOSTSCRIPT_REPLACE_THRESHOLD = 0.99;
 const PDF_COLOR_DPI = "200";
 const PDF_GRAY_DPI = "200";
 const PDF_MONO_DPI = "300";
+const WATERMARK_YEAR = new Date().getUTCFullYear();
+const WATERMARK_TEXT = `© Elias Crum ${WATERMARK_YEAR}`;
+const WATERMARK_FONT_SIZE_PT = 5.5;
+const WATERMARK_GRAY = 0.78;
+const WATERMARK_OPACITY = 0.42;
+const WATERMARK_X_PT = 14;
+const WATERMARK_Y_PT = 11;
 
 const MANUAL_POSTER_MAP = {
   "eswc-phdsymp-pangquin": "ESWC_24_Poster_EDC.pdf",
@@ -292,6 +300,37 @@ async function resolveSourceDir(kind, archivePath, legacyDir, tempDir) {
   };
 }
 
+async function watermarkPdfInPlace(pdfPath) {
+  const inputBytes = await fs.readFile(pdfPath);
+  const pdfDoc = await PDFDocument.load(inputBytes, { updateMetadata: false });
+  const watermarkFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const watermarkColor = rgb(WATERMARK_GRAY, WATERMARK_GRAY, WATERMARK_GRAY);
+  const pages = pdfDoc.getPages();
+
+  pages.forEach((page) => {
+    page.drawText(WATERMARK_TEXT, {
+      x: WATERMARK_X_PT,
+      y: WATERMARK_Y_PT,
+      size: WATERMARK_FONT_SIZE_PT,
+      font: watermarkFont,
+      color: watermarkColor,
+      opacity: WATERMARK_OPACITY,
+    });
+  });
+
+  const tempPath = `${pdfPath}.watermarked.pdf`;
+  const outputBytes = await pdfDoc.save({
+    useObjectStreams: false,
+    addDefaultPage: false,
+    updateFieldAppearances: false,
+  });
+  await fs.writeFile(tempPath, outputBytes);
+  await fs.rm(pdfPath, { force: true });
+  await fs.rename(tempPath, pdfPath);
+
+  return { watermarked: true };
+}
+
 async function compressPdfInPlace(pdfPath, ghostscriptAvailable) {
   if (!ghostscriptAvailable) {
     return { processed: false, replaced: false, bytesSaved: 0 };
@@ -329,12 +368,11 @@ async function compressPdfInPlace(pdfPath, ghostscriptAvailable) {
     );
 
     if (!(await fileExists(tempPath))) {
-      return { processed: true, replaced: false, bytesSaved: 0 };
+      return { processed: false, replaced: false, bytesSaved: 0 };
     }
 
     const original = await fs.stat(pdfPath);
     const compressed = await fs.stat(tempPath);
-
     if (compressed.size < original.size * GHOSTSCRIPT_REPLACE_THRESHOLD) {
       await fs.rm(pdfPath, { force: true });
       await fs.rename(tempPath, pdfPath);
@@ -347,7 +385,7 @@ async function compressPdfInPlace(pdfPath, ghostscriptAvailable) {
 
     await fs.rm(tempPath, { force: true });
     return { processed: true, replaced: false, bytesSaved: 0 };
-  } catch {
+  } catch (error) {
     await fs.rm(tempPath, { force: true });
     return { processed: false, replaced: false, bytesSaved: 0 };
   }
@@ -388,7 +426,7 @@ async function main() {
     const ghostscriptAvailable = await commandExists("gs");
     if (!ghostscriptAvailable) {
       console.warn(
-        "Ghostscript not found. PDF compression is skipped. Install `ghostscript` for smaller PDFs."
+        "Ghostscript not found. PDF compression is skipped; watermarking still runs."
       );
     }
 
@@ -397,7 +435,8 @@ async function main() {
 
     const posterMeta = [];
     const talkMetadataDateBySlug = await loadTalkMetadataDateBySlug();
-    let processedPdfCount = 0;
+    let generatedPdfCount = 0;
+    let watermarkedPdfCount = 0;
     let compressedPdfCount = 0;
     let totalBytesSaved = 0;
 
@@ -406,10 +445,14 @@ async function main() {
       const outputPath = path.join(postersPublicDir, fileName);
       await fs.copyFile(sourcePath, outputPath);
 
-      const compression = await compressPdfInPlace(outputPath, ghostscriptAvailable);
-      if (compression.processed) {
-        processedPdfCount += 1;
+      generatedPdfCount += 1;
+
+      const watermarking = await watermarkPdfInPlace(outputPath);
+      if (watermarking.watermarked) {
+        watermarkedPdfCount += 1;
       }
+
+      const compression = await compressPdfInPlace(outputPath, ghostscriptAvailable);
       if (compression.replaced) {
         compressedPdfCount += 1;
         totalBytesSaved += compression.bytesSaved;
@@ -443,10 +486,14 @@ async function main() {
 
       await fs.copyFile(sourcePdfPath, outputPdfPath);
 
-      const compression = await compressPdfInPlace(outputPdfPath, ghostscriptAvailable);
-      if (compression.processed) {
-        processedPdfCount += 1;
+      generatedPdfCount += 1;
+
+      const watermarking = await watermarkPdfInPlace(outputPdfPath);
+      if (watermarking.watermarked) {
+        watermarkedPdfCount += 1;
       }
+
+      const compression = await compressPdfInPlace(outputPdfPath, ghostscriptAvailable);
       if (compression.replaced) {
         compressedPdfCount += 1;
         totalBytesSaved += compression.bytesSaved;
@@ -597,6 +644,9 @@ ${postersTsObjects}
     }
 
     const mbSaved = (totalBytesSaved / (1024 * 1024)).toFixed(2);
+    const compressionSummary = ghostscriptAvailable
+      ? `Compressed ${compressedPdfCount}/${generatedPdfCount} output PDFs, saved ${mbSaved} MB.`
+      : "Compression skipped (Ghostscript unavailable).";
     const archiveSummary = [
       archivedSlides ? "slides archived to .talk-assets/slides.tar.gz" : null,
       archivedPosters ? "posters archived to .talk-assets/posters.tar.gz" : null,
@@ -605,7 +655,7 @@ ${postersTsObjects}
       .join("; ");
 
     console.log(
-      `Generated ${talks.length} talks and ${posterMeta.length} posters from PDF inputs. Compressed ${compressedPdfCount}/${processedPdfCount} output PDFs, saved ${mbSaved} MB.${archiveSummary ? ` ${archiveSummary}.` : ""}`
+      `Generated ${talks.length} talks and ${posterMeta.length} posters from PDF inputs. Watermarked ${watermarkedPdfCount}/${generatedPdfCount} output PDFs. ${compressionSummary}${archiveSummary ? ` ${archiveSummary}.` : ""}`
     );
   } finally {
     await fs.rm(tempSourcesDir, { recursive: true, force: true });

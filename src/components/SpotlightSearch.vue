@@ -266,7 +266,7 @@ export default defineComponent({
 }
 
 .spotlight-icon {
-  font-size: 1.08rem;
+  font-size: var(--font-size-body-lg);
   opacity: 0.82;
 }
 
@@ -274,7 +274,7 @@ export default defineComponent({
   width: 100%;
   border: none;
   outline: none;
-  font-size: 1.1rem;
+  font-size: var(--font-size-body-lg);
   color: var(--page-text);
   background: transparent;
 }
@@ -314,7 +314,7 @@ export default defineComponent({
   background: transparent;
   color: var(--page-text);
   padding: 7px 12px;
-  font-size: 0.86rem;
+  font-size: var(--font-size-meta);
   letter-spacing: 0.01em;
   cursor: pointer;
   transition: background-color 0.16s ease, transform 0.16s ease;
@@ -343,7 +343,7 @@ export default defineComponent({
   background: color-mix(in srgb, var(--surface-bg) 88%, transparent);
   color: var(--page-text);
   padding: 10px 12px;
-  font-size: 0.95rem;
+  font-size: var(--font-size-body-sm);
   line-height: 1.38;
   outline: none;
 }
@@ -355,7 +355,7 @@ export default defineComponent({
   background: var(--nav-hover-bg);
   color: var(--page-text);
   padding: 8px 14px;
-  font-size: 0.86rem;
+  font-size: var(--font-size-meta);
   cursor: pointer;
 }
 
@@ -379,7 +379,7 @@ export default defineComponent({
 .spotlight-notice,
 .spotlight-empty {
   margin: 0;
-  font-size: 0.86rem;
+  font-size: var(--font-size-meta);
   opacity: 0.84;
 }
 
@@ -416,23 +416,23 @@ export default defineComponent({
 
 .spotlight-result-title {
   font-weight: 600;
-  font-size: 0.98rem;
+  font-size: var(--font-size-body-sm);
 }
 
 .spotlight-result-type {
-  font-size: 0.74rem;
+  font-size: var(--font-size-micro);
   opacity: 0.74;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .spotlight-result-subtitle {
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   opacity: 0.8;
 }
 
 .spotlight-result-snippet {
-  font-size: 0.85rem;
+  font-size: var(--font-size-meta);
   line-height: 1.35;
   opacity: 0.9;
 }
@@ -474,7 +474,7 @@ kbd {
   background: var(--nav-hover-bg);
   border-radius: 6px;
   padding: 2px 5px;
-  font-size: 0.75rem;
+  font-size: var(--font-size-micro);
 }
 
 @media (max-width: 768px) {
@@ -492,7 +492,7 @@ kbd {
   }
 
   .spotlight-input {
-    font-size: 1rem;
+    font-size: var(--font-size-body);
   }
 
   .spotlight-sparql-query {

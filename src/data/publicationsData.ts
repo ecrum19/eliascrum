@@ -70,9 +70,7 @@ export const publications: Publication[] = [
     sortDate: "2026-01-01",
     type: "Journal Article",
     venueTags: [],
-    topicTags: [
-      "Clinical Genomics","Data Privacy"
-    ],
+    topicTags: ["Clinical Genomics", "Personalized Medicine", "Data Privacy"],
     url: "https://www.sciencedirect.com/science/article/pii/S0010482525016890",
     summary:
       "Scoping review of how genomic sequence data is shared in clinical practice, surveying implementations, infrastructure, and guidance. Identifies key barriers to scalability and adoption, and proposes concrete steps toward more unified, scalable clinical genomic data sharing systems.",
@@ -86,14 +84,13 @@ export const publications: Publication[] = [
     volume = {200},
     pages = {111335},
     year = {2026},
-    url = {https://www.sciencedirect.com/science/article/pii/S0010482525016890},
     issn = {0010-4825},
     doi = {https://doi.org/10.1016/j.compbiomed.2025.111335},
   }`,
     details: [
       { label: "Publication Type", value: "Journal Article" },
       { label: "Journal", value: "Computers in Biology and Medicine" },
-      { label: "Year", value: "2026" },
+      { label: "Date", value: "2026-01-01" },
       {
         label: "DOI",
         value: "10.1016/j.compbiomed.2025.111335",
@@ -113,7 +110,7 @@ export const publications: Publication[] = [
     sortDate: "2024-12-02",
     type: "Workshop Paper",
     venueTags: ["KBC-LM'24 workshop at ISWC 2024"],
-    topicTags: ["Semantic Web", "Data Science"],
+    topicTags: ["Semantic Web", "Data Science", "Knowledge Representation"],
     url: "https://doi.org/10.48550/arXiv.2410.03235",
     summary:
       "Investigates how large language models can propose class disjointness axioms for ontologies, with validation on DBpedia and a workflow that preserves logical consistency while reducing manual effort.",
@@ -135,7 +132,7 @@ export const publications: Publication[] = [
         label: "Conference",
         value: "International Semantic Web Conference (ISWC)",
       },
-      { label: "Year", value: "2024" },
+      { label: "Date", value: "2024-12-02" },
       {
         label: "DOI",
         value: "10.48550/arXiv.2410.03235",
@@ -155,7 +152,7 @@ export const publications: Publication[] = [
     sortDate: "2025-11-02",
     type: "Workshop Paper",
     venueTags: ["WikiData workshop at ISWC 2025"],
-    topicTags: ["Semantic Web", "Data Science"],
+    topicTags: ["Semantic Web", "Data Science", "Semantic Querying"],
     url: "https://wikidataworkshop.github.io/2025/papers/paper5.pdf",
     summary:
       "Client-side query federation can automatically combine data across the newly split Wikidata SPARQL endpoints, reducing the need for manual source annotations in queries while remaining feasible for queries that stay within client resource limits.",
@@ -174,11 +171,46 @@ export const publications: Publication[] = [
         label: "Conference",
         value: "International Semantic Web Conference (ISWC)",
       },
-      { label: "Year", value: "2025" },
+      { label: "Date", value: "2025-11-02" },
       {
         label: "Full Text",
         value: "CEUR paper PDF",
         href: "https://wikidataworkshop.github.io/2025/papers/paper5.pdf",
+      },
+    ],
+  },
+  {
+    id: "vcf2rdf-SWAT4HCLS-2025",
+    title: "Theoretical VCF to RDF mapping",
+    authors: "E. Crum, R. Taelman, B. Buelens, G. Ertaylan",
+    venue:
+      "Proceedings of the 16th International SWAT4HCLS Conference (CEUR Workshop Proceedings)",
+    year: 2025,
+    sortDate: "2025-02-28",
+    type: "Conference Paper",
+    venueTags: ["SWAT4HCLS"],
+    topicTags: ["Semantic Web", "Knowledge Representation", "Clinical Genomics"],
+    url: "",
+    summary:
+      "...",
+    abstract:
+      "...",
+    bibtex: `@inproceedings{crum2025vcf2rdf,
+  title={Theoretical VCF to RDF mapping},
+  author={Crum, Elias and Taelman, Ruben and Buelens, Bart and Ertaylan, Gokhan},
+  booktitle={Proceedings of the 16th International SWAT4HCLS Conference},
+  year={2025},
+  url={}
+  urldate={2026-03-05},
+}`,
+    details: [
+      { label: "Publication Type", value: "Conference Paper" },
+      { label: "Conference", value: "SWAT4HCLS" },
+      { label: "Date", value: "2025-02-28" },
+      {
+        label: "Full Text",
+        value: "CEUR paper PDF",
+        href: "",
       },
     ],
   },
@@ -191,8 +223,8 @@ export const publications: Publication[] = [
     year: 2024,
     sortDate: "2024-05-26",
     type: "Conference Paper",
-    venueTags: ["Conference"],
-    topicTags: ["Semantic Web", "Genomics", "Bioinformatics"],
+    venueTags: ["ESWC"],
+    topicTags: ["Semantic Web", "Clinical Genomics", "Semantic Querying", "Data Privacy"],
     url: "https://doi.org/10.1007/978-3-031-78955-7_3",
     summary:
       "Presents the PENGQUIN PhD framework for privacy-preserving genomic data sharing and querying using Solid pods, RDF/Linked Data representations, policy attachments, and link-traversal querying.",
@@ -210,7 +242,7 @@ export const publications: Publication[] = [
     details: [
       { label: "Publication Type", value: "Conference Paper" },
       { label: "Conference", value: "European Semantic Web Conference (ESWC)" },
-      { label: "Year", value: "2024" },
+      { label: "Date", value: "2024-05-26" },
       {
         label: "DOI",
         value: "10.1007/978-3-031-78955-7_3",
@@ -227,8 +259,8 @@ export const publications: Publication[] = [
     year: 2024,
     sortDate: "2024-02-26",
     type: "Conference Paper",
-    venueTags: ["Conference"],
-    topicTags: ["Semantic Web", "Bioinformatics", "Genomics"],
+    venueTags: ["SWAT4HCLS"],
+    topicTags: ["Solid", "Semantic Web", "Personalized Medicine", "Clinical Genomics"],
     url: "https://ceur-ws.org/Vol-3890/paper-25.pdf",
     summary:
       "Describes how Solid-based personal data pods can address privacy and data-sharing bottlenecks in genomic medicine by decentralizing storage and giving patients finer control over sensitive genomic data.",
@@ -240,11 +272,12 @@ export const publications: Publication[] = [
   booktitle={Proceedings of the 15th International SWAT4HCLS Conference},
   year={2024},
   url={https://ceur-ws.org/Vol-3890/paper-25.pdf}
+  urldate={2026-03-05},
 }`,
     details: [
       { label: "Publication Type", value: "Conference Paper" },
       { label: "Conference", value: "SWAT4HCLS" },
-      { label: "Year", value: "2024" },
+      { label: "Date", value: "2024-02-26" },
       {
         label: "Full Text",
         value: "CEUR paper PDF",
@@ -261,11 +294,11 @@ export const publications: Publication[] = [
     year: 2024,
     sortDate: "2024-02-26",
     type: "Conference Paper",
-    venueTags: ["Conference"],
-    topicTags: ["Semantic Web", "Bioinformatics", "Genomics"],
+    venueTags: ["SWAT4HCLS"],
+    topicTags: ["Semantic Web", "Data Science", "Knowledge Representation"],
     url: "https://ceur-ws.org/Vol-3890/paper-28.pdf",
     summary:
-      "Describes how Solid-based personal data pods can address privacy and data-sharing bottlenecks in genomic medicine by decentralizing storage and giving patients finer control over sensitive genomic data.",
+      "Describes how Solid-based data pods can address privacy and data-sharing bottlenecks in academic research by allowing felxible sharing of sensitive research data and result/experimental data provenance.",
     abstract:
       "The TRIPLE project, a collaborative effort between the SIB Swiss Institute of Bioinformatics, the University of Ghent and the IOCB Prague, aims to boost the (re) usability of existing knowledge graph resources and improve software tools for RDF data access, documentation and data model visualization. In addition, TRIPLE will increase interoperability between existing public SPARQL endpoints and private data stored in Solid Pods, thus creating an ecosystem of research data that can be seamlessly integrated through efficient and expressive federated SPARQL queries.",
     bibtex: `@inproceedings{bolleman2024triple,
@@ -274,11 +307,12 @@ export const publications: Publication[] = [
   booktitle={Proceedings of the 15th International SWAT4HCLS Conference},
   year={2024},
   url={https://ceur-ws.org/Vol-3890/paper-28.pdf}
+  urldate={2026-03-05},
 }`,
     details: [
       { label: "Publication Type", value: "Conference Paper" },
       { label: "Conference", value: "SWAT4HCLS" },
-      { label: "Year", value: "2024" },
+      { label: "Date", value: "2024-02-26" },
       {
         label: "Full Text",
         value: "CEUR paper PDF",
@@ -296,7 +330,7 @@ export const publications: Publication[] = [
     sortDate: "2023-04-13",
     type: "Journal Article",
     venueTags: [],
-    topicTags: ["Bioinformatics", "Genomics"],
+    topicTags: ["Bioinformatics", "Bacteriophage", "Genomics", "Taxonomy"],
     url: "https://doi.org/10.1371/journal.pone.0283930",
     summary:
       "Catalogs urinary E. coli phage diversity and shows that multiple urinary and non-urinary coliphages can lyse urinary E. coli strains, supporting a role for phages in shaping urobiome composition.",
@@ -311,12 +345,11 @@ export const publications: Publication[] = [
   pages={e0283930},
   year={2023},
   doi={10.1371/journal.pone.0283930},
-  url={https://doi.org/10.1371/journal.pone.0283930}
 }`,
     details: [
       { label: "Publication Type", value: "Journal Article" },
       { label: "Journal", value: "PLOS ONE" },
-      { label: "Year", value: "2023" },
+      { label: "Date", value: "2023-04-13" },
       {
         label: "DOI",
         value: "10.1371/journal.pone.0283930",
@@ -334,7 +367,7 @@ export const publications: Publication[] = [
     sortDate: "2022-09-01",
     type: "Thesis",
     venueTags: [],
-    topicTags: ["Bioinformatics", "Genomics", "Data Science"],
+    topicTags: ["Bioinformatics", "Bacteriophage", "Genomics", "Genetic Engineering"],
     url: "https://ecommons.luc.edu/luc_theses/4434/",
     summary:
       "Builds a large-scale catalog of urinary E. coli prophages and demonstrates induction plus engineering of temperate phages into obligately lytic variants for targeted lysis of non-native urinary strains.",
@@ -346,11 +379,12 @@ export const publications: Publication[] = [
   school={Loyola University Chicago},
   year={2022},
   url={https://ecommons.luc.edu/luc_theses/4434/}
+  urldate={2026-03-05},
 }`,
     details: [
       { label: "Publication Type", value: "Thesis" },
       { label: "Institution", value: "Loyola University Chicago" },
-      { label: "Year", value: "2022" },
+      { label: "Date", value: "2022-09-01" },
       {
         label: "Repository",
         value: "Loyola eCommons",
@@ -369,7 +403,7 @@ export const publications: Publication[] = [
     sortDate: "2021-05-12",
     type: "Journal Article",
     venueTags: [],
-    topicTags: ["Bioinformatics", "Genomics"],
+    topicTags: ["Bioinformatics", "Bacteria", "Taxonomy", "Genomics"],
     url: "https://doi.org/10.1128/mSphere.00154-21",
     summary:
       "Compares urinary and vaginal Gardnerella genomes, identifying species-level structure and showing that whole-genome analysis is needed for reliable differentiation across groups in urogenital microbiota.",
@@ -384,12 +418,11 @@ export const publications: Publication[] = [
   pages={e00154-21},
   year={2021},
   doi={10.1128/mSphere.00154-21},
-  url={https://doi.org/10.1128/mSphere.00154-21}
 }`,
     details: [
       { label: "Publication Type", value: "Journal Article" },
       { label: "Journal", value: "mSphere" },
-      { label: "Year", value: "2021" },
+      { label: "Date", value: "2021-05-12" },
       {
         label: "DOI",
         value: "10.1128/mSphere.00154-21",
@@ -409,15 +442,34 @@ export const publicationPresentationLinksById: Record<
   "pengquin-eswc-2024-paper": [
     {
       kind: "talk",
-      talkSlug: "pengquin-eswc-2024",
-      label: "Related Presentation (ESWC 2024)",
+      talkSlug: "eswc-phdsymp-pangquin",
+      label: "Presentation (PhD Symposium - ESWC 2024)",
+    },
+    {
+      kind: "file",
+      filePath: "/talks/posters/ESWC_24_Poster_EDC.pdf",
+      label: "Poster (PhD Symposium - ESWC 2024)",
     },
   ],
-  "personalized-medicine-data-pods-2024": [
+  "pm-pods-SWAT4HCLS-2024": [
     {
       kind: "file",
       filePath: "/talks/posters/SWAT4HCLS_24_poster_EDC.pdf",
-      label: "Related Presentation Material (SWAT4HCLS 2024)",
+      label: "Poster (SWAT4HCLS 2024)",
+    },
+  ],
+  "TRIPLE-SWAT4HCLS-2024": [
+    {
+      kind: "file",
+      filePath: "/talks/posters/...",
+      label: "Consortium Poster (SWAT4HCLS 2024)",
+    },
+  ],
+  "vcf2rdf-SWAT4HCLS-2025": [
+    {
+      kind: "file",
+      filePath: "/talks/posters/swat4hcls_2025.pdf",
+      label: "Poster (SWAT4HCLS 2025)",
     },
   ],
 };

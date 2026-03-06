@@ -4,7 +4,7 @@
       <header class="talks-header">
         <h1>Talks and Posters</h1>
         <p>
-          Slides and posters are listed together for quick scanning, with metadata tags and optional previews.
+          Slides and posters with metadata tags and optional previews.
         </p>
 
         <section class="talk-filters">
@@ -46,6 +46,48 @@
                   <option value="All">All</option>
                   <option v-for="material in availableMaterialTags" :key="material" :value="material">
                     {{ material }}
+                  </option>
+                </select>
+              </label>
+
+              <label class="filter-control">
+                Duration
+                <select v-model="selectedDuration">
+                  <option value="All">All</option>
+                  <option
+                    v-for="durationTag in availableDurationTags"
+                    :key="durationTag"
+                    :value="durationTag"
+                  >
+                    {{ durationTag }}
+                  </option>
+                </select>
+              </label>
+
+              <label class="filter-control">
+                Audience Size
+                <select v-model="selectedAudienceSize">
+                  <option value="All">All</option>
+                  <option
+                    v-for="sizeTag in availableAudienceSizeTags"
+                    :key="sizeTag"
+                    :value="sizeTag"
+                  >
+                    {{ sizeTag }}
+                  </option>
+                </select>
+              </label>
+
+              <label class="filter-control">
+                Audience Field
+                <select v-model="selectedAudienceGroup">
+                  <option value="All">All</option>
+                  <option
+                    v-for="audienceGroup in availableAudienceGroupTags"
+                    :key="audienceGroup"
+                    :value="audienceGroup"
+                  >
+                    {{ audienceGroup }}
                   </option>
                 </select>
               </label>
@@ -95,8 +137,7 @@
         <div class="talk-card-layout">
           <div>
             <div class="talk-meta">
-              <span class="talk-date">{{ item.displayDateLabel }}</span>
-              <span class="talk-file">{{ item.sourceFile }}</span>
+              <span class="talk-date">{{ item.displayDateIso }}</span>
             </div>
 
             <h2>{{ item.displayTitle }}</h2>
@@ -105,8 +146,8 @@
                 type="button"
                 class="talk-tag talk-tag-material"
                 :class="{ 'talk-tag-active': isTalkTagActive('material', item.materialTag) }"
+                data-category="Type"
                 @click="applyTalkTagFilter('material', item.materialTag)"
-                :title="`Filter by type: ${item.materialTag}`"
               >
                 {{ item.materialTag }}
               </button>
@@ -116,8 +157,8 @@
                 :key="`${item.id}-${tag}`"
                 class="talk-tag talk-tag-venue"
                 :class="{ 'talk-tag-active': isTalkTagActive('venue', tag) }"
+                data-category="Venue"
                 @click="applyTalkTagFilter('venue', tag)"
-                :title="`Filter by venue: ${tag}`"
               >
                 {{ tag }}
               </button>
@@ -127,13 +168,44 @@
                 :key="`${item.id}-${tag}`"
                 class="talk-tag talk-tag-topic"
                 :class="{ 'talk-tag-active': isTalkTagActive('topic', tag) }"
+                data-category="Main Topic"
                 @click="applyTalkTagFilter('topic', tag)"
-                :title="`Filter by topic: ${tag}`"
               >
                 {{ tag }}
               </button>
+              <button
+                v-if="item.durationCategory"
+                type="button"
+                class="talk-tag talk-tag-duration"
+                :class="{ 'talk-tag-active': isTalkTagActive('duration', item.durationCategory) }"
+                data-category="Duration"
+                @click="applyTalkTagFilter('duration', item.durationCategory)"
+              >
+                {{ item.durationCategory }}
+              </button>
+              <button
+                v-if="item.audienceSizeCategory"
+                type="button"
+                class="talk-tag talk-tag-audience-size"
+                :class="{ 'talk-tag-active': isTalkTagActive('audienceSize', item.audienceSizeCategory) }"
+                data-category="Audience Size"
+                @click="applyTalkTagFilter('audienceSize', item.audienceSizeCategory)"
+              >
+                {{ item.audienceSizeCategory }}
+              </button>
+              <button
+                type="button"
+                v-for="audienceGroup in item.audienceGroups"
+                :key="`${item.id}-audience-${audienceGroup}`"
+                class="talk-tag talk-tag-audience-group"
+                :class="{ 'talk-tag-active': isTalkTagActive('audienceGroup', audienceGroup) }"
+                data-category="Audience Field"
+                @click="applyTalkTagFilter('audienceGroup', audienceGroup)"
+              >
+                {{ audienceGroup }}
+              </button>
             </div>
-            <p class="talk-description">{{ item.description }}</p>
+            <p class="talk-description">{{ item.summary }}</p>
 
             <div class="talk-actions">
               <router-link v-if="item.detailRoute" :to="item.detailRoute" class="talk-btn primary">
@@ -198,8 +270,20 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { talks, posters } from "../data/talksData";
-import { getTalkViewEntries, type TalkViewEntry } from "../data/talkCatalog";
-import { TOPIC_TAG_OPTIONS, VENUE_TAG_OPTIONS } from "../data/talkMetadata";
+import {
+  DURATION_TAG_OPTIONS,
+  getTalkViewEntries,
+  type DurationTag,
+  type TalkViewEntry,
+} from "../data/talkCatalog";
+import {
+  AUDIENCE_GROUP_TAG_OPTIONS,
+  AUDIENCE_SIZE_TAG_OPTIONS,
+  TOPIC_TAG_OPTIONS,
+  VENUE_TAG_OPTIONS,
+  type AudienceGroupTag,
+  type AudienceSizeTag,
+} from "../data/talkMetadata";
 import {
   getRelatedPublicationLinksForTalkSlug,
   getRelatedPublicationLinksForPresentationFile,
@@ -208,15 +292,23 @@ import {
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
 
 type MaterialTypeTag = "Slides" | "Poster";
-type TalkTagFilterKind = "material" | "venue" | "topic";
+type TalkTagFilterKind =
+  | "material"
+  | "venue"
+  | "topic"
+  | "audienceSize"
+  | "audienceGroup"
+  | "duration";
 
 interface CatalogEntry {
   id: string;
   displayTitle: string;
-  description: string;
+  summary: string;
   displayDateIso: string;
   displayDateLabel: string;
-  sourceFile: string;
+  durationCategory: DurationTag | null;
+  audienceSizeCategory: AudienceSizeTag | null;
+  audienceGroups: AudienceGroupTag[];
   venueTags: string[];
   topicTags: string[];
   materialTag: MaterialTypeTag;
@@ -230,11 +322,6 @@ interface CatalogEntry {
 
 const MATERIAL_TAG_OPTIONS: MaterialTypeTag[] = ["Slides", "Poster"];
 
-function sourceFileFromPath(filePath: string): string {
-  const segments = filePath.split("/");
-  return decodeURIComponent(segments[segments.length - 1] || filePath);
-}
-
 export default defineComponent({
   name: "MySlides",
   data() {
@@ -243,6 +330,9 @@ export default defineComponent({
       selectedVenue: "All",
       selectedTopic: "All",
       selectedMaterial: "All",
+      selectedAudienceSize: "All",
+      selectedAudienceGroup: "All",
+      selectedDuration: "All",
       selectedYear: "All",
       selectedSort: "date-desc",
       previewVisibility: {} as Record<string, boolean>,
@@ -256,18 +346,20 @@ export default defineComponent({
       return posters.map((poster) => {
         const isEswcPoster = poster.slug === "eswc-24-poster-edc";
         const linkedTalk = isEswcPoster
-          ? this.talkEntries.find((talk) => talk.slug === "pengquin-eswc-2024")
+          ? this.talkEntries.find((talk) => talk.slug === "eswc-phdsymp-pangquin")
           : undefined;
 
         return {
           id: `poster:${poster.slug}`,
           displayTitle: poster.title,
-          description: linkedTalk
+          summary: linkedTalk
             ? "Poster linked to the ESWC 2024 slide deck."
             : "Poster presentation file.",
           displayDateIso: linkedTalk?.displayDateIso ?? "1900-01-01",
           displayDateLabel: linkedTalk?.displayDateLabel ?? "Undated",
-          sourceFile: sourceFileFromPath(poster.path),
+          durationCategory: linkedTalk?.durationCategory ?? null,
+          audienceSizeCategory: linkedTalk?.audienceSizeCategory ?? null,
+          audienceGroups: linkedTalk?.audienceGroups ?? [],
           venueTags: [],
           topicTags: [],
           materialTag: "Poster",
@@ -283,10 +375,12 @@ export default defineComponent({
       const slideEntries: CatalogEntry[] = this.talkEntries.map((talk) => ({
         id: `slide:${talk.slug}`,
         displayTitle: talk.displayTitle,
-        description: talk.description,
+        summary: talk.summary,
         displayDateIso: talk.displayDateIso,
         displayDateLabel: talk.displayDateLabel,
-        sourceFile: talk.sourceFile,
+        durationCategory: talk.durationCategory,
+        audienceSizeCategory: talk.audienceSizeCategory,
+        audienceGroups: [...talk.audienceGroups],
         venueTags: [...talk.venueTags],
         topicTags: [...talk.topicTags],
         materialTag: "Slides",
@@ -319,6 +413,27 @@ export default defineComponent({
     availableMaterialTags(): MaterialTypeTag[] {
       return MATERIAL_TAG_OPTIONS;
     },
+    availableDurationTags(): DurationTag[] {
+      const tags = new Set<DurationTag>(DURATION_TAG_OPTIONS);
+      this.talkEntries.forEach((talk) => {
+        tags.add(talk.durationCategory);
+      });
+      return Array.from(tags);
+    },
+    availableAudienceSizeTags(): AudienceSizeTag[] {
+      const tags = new Set<AudienceSizeTag>(AUDIENCE_SIZE_TAG_OPTIONS);
+      this.talkEntries.forEach((talk) => {
+        tags.add(talk.audienceSizeCategory);
+      });
+      return Array.from(tags);
+    },
+    availableAudienceGroupTags(): AudienceGroupTag[] {
+      const tags = new Set<AudienceGroupTag>(AUDIENCE_GROUP_TAG_OPTIONS);
+      this.talkEntries.forEach((talk) => {
+        talk.audienceGroups.forEach((group) => tags.add(group));
+      });
+      return Array.from(tags).sort((a, b) => String(a).localeCompare(String(b)));
+    },
     availableYears(): string[] {
       const years = new Set<string>();
       this.catalogEntries.forEach((entry) => {
@@ -343,6 +458,9 @@ export default defineComponent({
         this.selectedVenue !== "All" ||
         this.selectedTopic !== "All" ||
         this.selectedMaterial !== "All" ||
+        this.selectedDuration !== "All" ||
+        this.selectedAudienceSize !== "All" ||
+        this.selectedAudienceGroup !== "All" ||
         this.selectedYear !== "All" ||
         this.selectedSort !== "date-desc"
       );
@@ -357,12 +475,29 @@ export default defineComponent({
           this.selectedTopic === "All" || entry.topicTags.includes(this.selectedTopic);
         const materialMatch =
           this.selectedMaterial === "All" || entry.materialTag === this.selectedMaterial;
+        const durationMatch =
+          this.selectedDuration === "All" ||
+          entry.durationCategory === this.selectedDuration;
+        const audienceSizeMatch =
+          this.selectedAudienceSize === "All" ||
+          entry.audienceSizeCategory === this.selectedAudienceSize;
+        const audienceGroupMatch =
+          this.selectedAudienceGroup === "All" ||
+          entry.audienceGroups.includes(this.selectedAudienceGroup);
         const yearMatch =
           this.selectedYear === "All" ||
           (this.selectedYear === "Undated"
             ? entry.displayDateIso === "1900-01-01"
             : entry.displayDateIso.startsWith(`${this.selectedYear}-`));
-        return venueMatch && topicMatch && materialMatch && yearMatch;
+        return (
+          venueMatch &&
+          topicMatch &&
+          materialMatch &&
+          durationMatch &&
+          audienceSizeMatch &&
+          audienceGroupMatch &&
+          yearMatch
+        );
       });
 
       return filtered.sort((a, b) => {
@@ -384,8 +519,38 @@ export default defineComponent({
       this.selectedVenue = "All";
       this.selectedTopic = "All";
       this.selectedMaterial = "All";
+      this.selectedDuration = "All";
+      this.selectedAudienceSize = "All";
+      this.selectedAudienceGroup = "All";
       this.selectedYear = "All";
       this.selectedSort = "date-desc";
+    },
+    parseTagFilterKind(raw: string): TalkTagFilterKind | null {
+      if (
+        raw === "material" ||
+        raw === "venue" ||
+        raw === "topic" ||
+        raw === "duration" ||
+        raw === "audienceSize" ||
+        raw === "audienceGroup"
+      ) {
+        return raw;
+      }
+      return null;
+    },
+    applyRouteTagFilter() {
+      const rawTag = this.$route.query.tag;
+      const rawValue = this.$route.query.value;
+      if (typeof rawTag !== "string" || typeof rawValue !== "string") {
+        return;
+      }
+
+      const parsedKind = this.parseTagFilterKind(rawTag);
+      if (!parsedKind || !rawValue.trim()) {
+        return;
+      }
+
+      this.applyTalkTagFilter(parsedKind, rawValue.trim());
     },
     applyTalkTagFilter(
       kind: TalkTagFilterKind,
@@ -395,14 +560,44 @@ export default defineComponent({
         this.selectedMaterial = value;
         this.selectedVenue = "All";
         this.selectedTopic = "All";
+        this.selectedDuration = "All";
+        this.selectedAudienceSize = "All";
+        this.selectedAudienceGroup = "All";
       } else if (kind === "venue") {
         this.selectedVenue = value;
         this.selectedMaterial = "All";
         this.selectedTopic = "All";
+        this.selectedDuration = "All";
+        this.selectedAudienceSize = "All";
+        this.selectedAudienceGroup = "All";
+      } else if (kind === "duration") {
+        this.selectedDuration = value;
+        this.selectedMaterial = "All";
+        this.selectedVenue = "All";
+        this.selectedTopic = "All";
+        this.selectedAudienceSize = "All";
+        this.selectedAudienceGroup = "All";
+      } else if (kind === "audienceSize") {
+        this.selectedAudienceSize = value;
+        this.selectedMaterial = "All";
+        this.selectedVenue = "All";
+        this.selectedTopic = "All";
+        this.selectedDuration = "All";
+        this.selectedAudienceGroup = "All";
+      } else if (kind === "audienceGroup") {
+        this.selectedAudienceGroup = value;
+        this.selectedMaterial = "All";
+        this.selectedVenue = "All";
+        this.selectedTopic = "All";
+        this.selectedDuration = "All";
+        this.selectedAudienceSize = "All";
       } else {
         this.selectedTopic = value;
         this.selectedMaterial = "All";
         this.selectedVenue = "All";
+        this.selectedDuration = "All";
+        this.selectedAudienceSize = "All";
+        this.selectedAudienceGroup = "All";
       }
 
       this.selectedYear = "All";
@@ -418,6 +613,15 @@ export default defineComponent({
       if (kind === "venue") {
         return this.selectedVenue === value;
       }
+      if (kind === "duration") {
+        return this.selectedDuration === value;
+      }
+      if (kind === "audienceSize") {
+        return this.selectedAudienceSize === value;
+      }
+      if (kind === "audienceGroup") {
+        return this.selectedAudienceGroup === value;
+      }
       return this.selectedTopic === value;
     },
     isPreviewOpen(id: string): boolean {
@@ -427,12 +631,22 @@ export default defineComponent({
       this.previewVisibility[id] = !this.isPreviewOpen(id);
     },
   },
+  watch: {
+    "$route.query": {
+      handler() {
+        this.applyRouteTagFilter();
+      },
+      deep: true,
+      immediate: true,
+    },
+  },
 });
 </script>
 
 <style scoped>
 #talks {
   padding: 0 16px 140px;
+  font-size: var(--font-size-body-lg);
 }
 
 .talks-shell {
@@ -452,6 +666,7 @@ export default defineComponent({
   color: var(--page-text);
   font-family: var(--content-heading-font);
   font-size: var(--content-h1-size);
+  font-weight: 600;
 }
 
 .talks-header p {
@@ -488,7 +703,7 @@ export default defineComponent({
 
 .filter-toggle-title {
   font-family: var(--content-heading-font);
-  font-size: 0.8rem;
+  font-size: var(--font-size-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -499,7 +714,7 @@ export default defineComponent({
   border: none;
   border-radius: 0;
   padding: 0;
-  font-size: 0.72rem;
+  font-size: var(--font-size-micro);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   opacity: 0.68;
@@ -512,16 +727,18 @@ export default defineComponent({
 
 .filter-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 9px;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 7px;
+  align-items: end;
 }
 
 .filter-control {
   display: grid;
   gap: 5px;
+  min-width: 0;
   color: var(--page-text);
   font-weight: 600;
-  font-size: 0.74rem;
+  font-size: var(--font-size-caption);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   opacity: 0.85;
@@ -530,6 +747,10 @@ export default defineComponent({
 .filter-control select {
   appearance: none;
   -webkit-appearance: none;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: 38px;
   border-radius: 999px;
   border: 1px solid var(--surface-outline);
   background-color: transparent;
@@ -539,11 +760,14 @@ export default defineComponent({
   background-size: 10px 6px;
   color: var(--page-text);
   padding: 7px 30px 7px 12px;
-  font-size: 0.88rem;
+  font-size: var(--font-size-meta);
   font-weight: 500;
   letter-spacing: normal;
   text-transform: none;
   cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   transition: border-color 0.18s ease, background-color 0.18s ease;
 }
 
@@ -561,7 +785,7 @@ export default defineComponent({
 .filter-result {
   margin: 0;
   opacity: 0.72;
-  font-size: 0.78rem;
+  font-size: var(--font-size-caption);
   letter-spacing: 0.03em;
 }
 
@@ -579,7 +803,7 @@ export default defineComponent({
   background: transparent;
   color: var(--page-text);
   padding: 4px 11px;
-  font-size: 0.76rem;
+  font-size: var(--font-size-caption);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
@@ -600,6 +824,7 @@ export default defineComponent({
   outline: 2px solid var(--surface-outline);
   border-radius: 14px;
   padding: 16px 20px;
+  overflow: visible;
 }
 
 .talk-card-layout {
@@ -607,6 +832,11 @@ export default defineComponent({
   grid-template-columns: minmax(0, 1fr) clamp(250px, 31vw, 390px);
   gap: 6px;
   align-items: start;
+}
+
+.talk-card-layout > div {
+  position: relative;
+  z-index: 0;
 }
 
 .talk-meta {
@@ -619,14 +849,10 @@ export default defineComponent({
 .talk-date {
   border: 1px solid var(--surface-outline);
   border-radius: 999px;
-  padding: 2px 10px;
-  font-size: 0.85rem;
-  font-weight: 700;
-}
-
-.talk-file {
-  opacity: 0.75;
-  font-size: 0.9rem;
+  padding: 5px 12px;
+  font-size: var(--font-size-body);
+  font-weight: 750;
+  letter-spacing: 0.01em;
 }
 
 .talk-card h2 {
@@ -634,6 +860,8 @@ export default defineComponent({
   color: var(--page-text);
   font-family: var(--content-heading-font);
   font-size: var(--content-h2-size);
+  position: relative;
+  z-index: 1;
 }
 
 .talk-description {
@@ -648,29 +876,68 @@ export default defineComponent({
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
 }
 
 .talk-tag {
+  --tag-tooltip-bg: rgba(100, 116, 139, 0.96);
+  --tag-tooltip-border: rgba(100, 116, 139, 0.98);
+  --tag-tooltip-text: #f8fafc;
+
   border: 1px solid var(--surface-outline);
   border-radius: 999px;
-  padding: 3px 10px;
-  font-size: 0.82rem;
+  padding: 3px 11px;
+  font-size: var(--font-size-body-sm);
   color: var(--page-text);
   appearance: none;
   -webkit-appearance: none;
-  background: transparent;
+  background: rgba(148, 163, 184, 0.12);
   cursor: pointer;
   line-height: 1.2;
+  position: relative;
+  z-index: 0;
   transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.talk-tag::after {
+  content: attr(data-category);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translate(-50%, 4px);
+  border: 1px solid var(--tag-tooltip-border);
+  border-radius: 7px;
+  padding: 3px 7px;
+  background: var(--tag-tooltip-bg);
+  color: var(--tag-tooltip-text);
+  box-shadow: 0 8px 18px rgba(8, 15, 31, 0.24);
+  font-size: var(--font-size-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+  z-index: 1001;
 }
 
 .talk-tag:hover {
   transform: translateY(-1px);
+  z-index: 1000;
+}
+
+.talk-tag:hover::after,
+.talk-tag:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 .talk-tag:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.35);
+  z-index: 1000;
 }
 
 .talk-tag-active {
@@ -678,40 +945,106 @@ export default defineComponent({
 }
 
 .talk-tag-material {
-  background: rgba(244, 208, 63, 0.16);
+  background: rgba(245, 158, 11, 0.18);
+  --tag-tooltip-bg: rgba(245, 158, 11, 0.96);
+  --tag-tooltip-border: rgba(161, 98, 7, 0.96);
+  --tag-tooltip-text: #251401;
 }
 
 .talk-tag-venue {
-  background: rgba(80, 203, 255, 0.14);
+  background: rgba(56, 189, 248, 0.16);
+  --tag-tooltip-bg: rgba(56, 189, 248, 0.96);
+  --tag-tooltip-border: rgba(2, 132, 199, 0.96);
+  --tag-tooltip-text: #052634;
 }
 
 .talk-tag-topic {
-  background: rgba(45, 212, 191, 0.14);
+  background: rgba(20, 184, 166, 0.16);
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.96);
+  --tag-tooltip-border: rgba(13, 148, 136, 0.96);
+  --tag-tooltip-text: #042320;
+}
+
+.talk-tag-duration {
+  background: rgba(168, 85, 247, 0.16);
+  --tag-tooltip-bg: rgba(168, 85, 247, 0.96);
+  --tag-tooltip-border: rgba(147, 51, 234, 0.96);
+  --tag-tooltip-text: #12031f;
+}
+
+.talk-tag-audience-size {
+  background: rgba(249, 115, 22, 0.16);
+  --tag-tooltip-bg: rgba(249, 115, 22, 0.96);
+  --tag-tooltip-border: rgba(194, 65, 12, 0.96);
+  --tag-tooltip-text: #2b0c01;
+}
+
+.talk-tag-audience-group {
+  background: rgba(100, 116, 139, 0.18);
+  --tag-tooltip-bg: rgba(100, 116, 139, 0.96);
+  --tag-tooltip-border: rgba(71, 85, 105, 0.96);
+  --tag-tooltip-text: #f8fafc;
 }
 
 [data-theme="dark"] .talk-tag-material {
-  background: rgba(244, 208, 63, 0.28);
-  border-color: rgba(244, 208, 63, 0.62);
+  background: rgba(245, 158, 11, 0.28);
+  border-color: rgba(245, 158, 11, 0.62);
   color: #ffe7a8;
+  --tag-tooltip-bg: rgba(245, 158, 11, 0.98);
+  --tag-tooltip-border: rgba(251, 191, 36, 0.98);
+  --tag-tooltip-text: #1f1300;
 }
 
 [data-theme="dark"] .talk-tag-venue {
-  background: rgba(80, 203, 255, 0.26);
-  border-color: rgba(80, 203, 255, 0.6);
+  background: rgba(56, 189, 248, 0.26);
+  border-color: rgba(56, 189, 248, 0.6);
   color: #d3f4ff;
+  --tag-tooltip-bg: rgba(56, 189, 248, 0.98);
+  --tag-tooltip-border: rgba(125, 211, 252, 0.98);
+  --tag-tooltip-text: #041b25;
 }
 
 [data-theme="dark"] .talk-tag-topic {
-  background: rgba(45, 212, 191, 0.26);
-  border-color: rgba(45, 212, 191, 0.58);
+  background: rgba(20, 184, 166, 0.26);
+  border-color: rgba(20, 184, 166, 0.58);
   color: #d2fff4;
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.98);
+  --tag-tooltip-border: rgba(45, 212, 191, 0.98);
+  --tag-tooltip-text: #021413;
+}
+
+[data-theme="dark"] .talk-tag-duration {
+  background: rgba(168, 85, 247, 0.26);
+  border-color: rgba(168, 85, 247, 0.58);
+  color: #ece4ff;
+  --tag-tooltip-bg: rgba(168, 85, 247, 0.98);
+  --tag-tooltip-border: rgba(192, 132, 252, 0.98);
+  --tag-tooltip-text: #11021f;
+}
+
+[data-theme="dark"] .talk-tag-audience-size {
+  background: rgba(249, 115, 22, 0.26);
+  border-color: rgba(249, 115, 22, 0.58);
+  color: #ffe0c2;
+  --tag-tooltip-bg: rgba(249, 115, 22, 0.98);
+  --tag-tooltip-border: rgba(251, 146, 60, 0.98);
+  --tag-tooltip-text: #200700;
+}
+
+[data-theme="dark"] .talk-tag-audience-group {
+  background: rgba(100, 116, 139, 0.26);
+  border-color: rgba(100, 116, 139, 0.58);
+  color: #e4ebf4;
+  --tag-tooltip-bg: rgba(100, 116, 139, 0.98);
+  --tag-tooltip-border: rgba(148, 163, 184, 0.98);
+  --tag-tooltip-text: #f8fafc;
 }
 
 .talk-actions {
   display: flex;
   flex-wrap: wrap;
-  row-gap: 12px;
-  column-gap: 22px;
+  row-gap: 10px;
+  column-gap: 14px;
   margin-top: 16px;
 }
 
@@ -722,23 +1055,40 @@ export default defineComponent({
   text-decoration: none;
   color: var(--page-text);
   border: 1px solid var(--surface-outline);
-  background: transparent;
-  border-radius: 999px;
-  padding: 7px 14px;
+  background: rgba(148, 163, 184, 0.07);
+  border-radius: 10px;
+  padding: 8px 14px;
   font-weight: 600;
   min-width: 0;
   line-height: 1.2;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.16s ease, box-shadow 0.2s ease;
 }
 
 .talk-btn.primary {
-  border-color: rgba(80, 203, 255, 0.42);
-  background: rgba(80, 203, 255, 0.08);
+  border-color: rgba(80, 203, 255, 0.5);
+  background: rgba(80, 203, 255, 0.13);
 }
 
 .talk-btn:hover {
   background: var(--nav-hover-bg);
+  border-color: rgba(80, 203, 255, 0.45);
+  box-shadow: 0 4px 12px rgba(8, 15, 31, 0.12);
+  transform: translateY(-1px);
+}
+
+.talk-btn:focus-visible {
+  outline: none;
+  border-color: rgba(80, 203, 255, 0.78);
+  box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.24);
+}
+
+[data-theme="light"] .talk-btn {
+  background: rgba(16, 36, 59, 0.04);
+}
+
+[data-theme="light"] .talk-btn.primary {
+  background: rgba(80, 203, 255, 0.1);
 }
 
 .preview-shell {
@@ -754,7 +1104,7 @@ export default defineComponent({
   background: transparent;
   color: var(--page-text);
   opacity: 0.72;
-  font-size: 0.72rem;
+  font-size: var(--font-size-micro);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
@@ -797,7 +1147,7 @@ export default defineComponent({
 }
 
 .talk-preview-fallback i {
-  font-size: 2rem;
+  font-size: var(--font-size-card-title);
 }
 
 .empty-state h2 {
@@ -806,6 +1156,36 @@ export default defineComponent({
 
 .empty-state p {
   margin: 8px 0 0;
+}
+
+@media (max-width: 1320px) {
+  .filter-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1080px) {
+  .filter-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .filter-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 500px) {
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {

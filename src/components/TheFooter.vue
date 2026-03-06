@@ -30,7 +30,7 @@ export default {
 }
 
 #runner {
-  font-size: 1rem;
+  font-size: var(--font-size-body);
   color: var(--page-text);
   opacity: 0.95;
 }
@@ -64,7 +64,7 @@ export default {
   }
 
   #runner {
-    font-size: 14px;
+    font-size: var(--font-size-meta);
   }
 }
 </style>
