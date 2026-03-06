@@ -18,6 +18,7 @@ const slidesPublicDir = path.join(talksBasePublicDir, "slides");
 const postersPublicDir = path.join(talksBasePublicDir, "posters");
 
 const talksDataPath = path.join(rootDir, "src", "data", "talksData.ts");
+const talkMetadataPath = path.join(rootDir, "src", "data", "talkMetadata.ts");
 
 const GHOSTSCRIPT_REPLACE_THRESHOLD = 0.97;
 const PDF_COLOR_DPI = "200";
@@ -25,7 +26,23 @@ const PDF_GRAY_DPI = "200";
 const PDF_MONO_DPI = "300";
 
 const MANUAL_POSTER_MAP = {
-  "pengquin-eswc-2024": "ESWC_24_Poster_EDC.pdf",
+  "eswc-phdsymp-pangquin": "ESWC_24_Poster_EDC.pdf",
+};
+
+// Source-file level mapping so talksData slugs stay aligned with talkMetadata keys.
+const TALK_METADATA_SLUG_BY_SOURCE_FILE = {
+  "SPHN-290425.pdf": "sphn-pengquin-talk",
+  "Vital-IT-EDC-040425.pdf": "sib-vital-it-talk",
+  "EDC-DPH-25.pdf": "dph-day-talk",
+  "FWO24_Pitch_EDC(official).pdf": "fwo-interview",
+  "ISWS2024_Slytherin_Presentation.pdf": "isws-group-project-presentation",
+  "PENGQUIN_ESWC_2024.pdf": "eswc-phdsymp-pangquin",
+  "SolidSymp2024_EDC.pdf": "solidsymp-genomepods",
+  "EDC-18m-VITO-Jury.pdf": "18m-vito-internal-jury",
+  "SIB-ReflectionUGent.pdf": "sib-researchstay-reflection",
+  "Solid_intro_TRIPLE.pdf": "solid-intro-triple-consortium",
+  "SwissProt.pdf": "swissprot-talk",
+  "UGent_PENGQUIN_Intro.pdf": "ugent-genomics-talk",
 };
 
 const STOP_WORDS = new Set([
@@ -96,6 +113,16 @@ function parseDateInfo(name) {
     iso: "1900-01-01",
     label: "Undated",
   };
+}
+
+function labelFromIso(dateIso) {
+  const isoMatch = dateIso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!isoMatch) {
+    return dateIso;
+  }
+
+  const [, year, month, day] = isoMatch;
+  return `${day}/${month}/${year}`;
 }
 
 function jaccardScore(tokensA, tokensB) {
@@ -185,6 +212,31 @@ async function fileExists(filePath) {
     return true;
   } catch {
     return false;
+  }
+}
+
+async function loadTalkMetadataDateBySlug() {
+  try {
+    const source = await fs.readFile(talkMetadataPath, "utf8");
+    const entryPattern = /"([^"]+)"\s*:\s*{([\s\S]*?)\n\s*},?/g;
+    const metadataDateBySlug = new Map();
+
+    let match;
+    while ((match = entryPattern.exec(source)) !== null) {
+      const slug = match[1];
+      const body = match[2];
+      const dateIsoMatch = body.match(/dateIso:\s*"([^"]+)"/);
+      const dateLabelMatch = body.match(/dateLabel:\s*"([^"]+)"/);
+
+      metadataDateBySlug.set(slug, {
+        dateIso: dateIsoMatch ? dateIsoMatch[1] : undefined,
+        dateLabel: dateLabelMatch ? dateLabelMatch[1] : undefined,
+      });
+    }
+
+    return metadataDateBySlug;
+  } catch {
+    return new Map();
   }
 }
 
@@ -344,6 +396,7 @@ async function main() {
     await clearDir(postersPublicDir);
 
     const posterMeta = [];
+    const talkMetadataDateBySlug = await loadTalkMetadataDateBySlug();
     let processedPdfCount = 0;
     let compressedPdfCount = 0;
     let totalBytesSaved = 0;
@@ -377,8 +430,15 @@ async function main() {
     for (const fileName of slidePdfFiles) {
       const sourcePdfPath = path.join(slideSource.dir, fileName);
       const stem = fileName.replace(/\.pdf$/i, "");
-      const slug = toSlug(stem);
+      const generatedSlug = toSlug(stem);
+      const mappedMetadataSlug = TALK_METADATA_SLUG_BY_SOURCE_FILE[fileName];
+      const slug = mappedMetadataSlug || generatedSlug;
       const date = parseDateInfo(stem);
+      const metadataDate = talkMetadataDateBySlug.get(slug);
+      const resolvedDateIso = metadataDate?.dateIso ?? date.iso;
+      const resolvedDateLabel =
+        metadataDate?.dateLabel ??
+        (metadataDate?.dateIso ? labelFromIso(metadataDate.dateIso) : date.label);
       const outputPdfPath = path.join(slidesPublicDir, `${slug}.pdf`);
 
       await fs.copyFile(sourcePdfPath, outputPdfPath);
@@ -396,8 +456,8 @@ async function main() {
         slug,
         title: toTitleFromStem(stem),
         sourceFile: fileName,
-        dateIso: date.iso,
-        dateLabel: date.label,
+        dateIso: resolvedDateIso,
+        dateLabel: resolvedDateLabel,
         slidePath: `/talks/slides/${slug}.pdf`,
         posterPath: undefined,
         posterTitle: undefined,

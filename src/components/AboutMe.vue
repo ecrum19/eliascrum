@@ -40,7 +40,7 @@
             <p class="w3-large">
               <b
                 ><i
-                  class="fa fa-globe fa-fw w3-xlarge w3-margin-right w3-text-green"
+                  class="fa fa-globe fa-fw w3-xlarge w3-margin-right w3-text-white"
                 ></i
                 >Affiliations</b
               >
@@ -78,7 +78,7 @@
             <p class="w3-large">
               <b
                 ><i
-                  class="fa fa-graduation-cap fa-fw w3-xlarge w3-margin-right w3-text-blue"
+                  class="fa fa-graduation-cap fa-fw w3-xlarge w3-margin-right w3-text-white"
                 ></i
                 >Research Topics</b
               >
@@ -103,7 +103,7 @@
             <p class="w3-large w3-text-theme">
               <b
                 ><i
-                  class="fa fa-address-card fa-fw w3-xlarge w3-margin-right w3-text-red"
+                  class="fa fa-address-card fa-fw w3-xlarge w3-margin-right w3-text-white"
                 ></i>
                 <a
                   href="/about/cv"
@@ -112,27 +112,13 @@
               >
             </p>
 
-            <br />
-
-            <p class="w3-large w3-text-theme">
-              <b
-                ><i
-                  class="fa fa-newspaper-o fa-fw w3-xlarge w3-margin-right w3-text-yellow"
-                ></i>
-                <a
-                  href="https://scholar.google.com/citations?user=fAJsN2kAAAAJ&hl=en"
-                  target="_blank"
-                  >Publications</a
-                ></b
-              >
-            </p>
 
             <br />
 
             <p class="w3-large w3-text-theme">
               <b
                 ><i
-                  class="fa fa-bullhorn fa-fw w3-xlarge w3-margin-right w3-text-orange"
+                  class="fa fa-bullhorn fa-fw w3-xlarge w3-margin-right w3-text-white"
                 ></i>
                 <a
                   href="https://drive.google.com/drive/folders/1QWyqEYoFDszYWHMKqK-xS06cC3sy6Jbe?usp=sharing"
@@ -157,11 +143,11 @@
           <div
             class="recentWorkItem"
             v-for="item in recentUpdates"
-            :key="item.title"
+            :key="item.id"
           >
             <div class="recentWorkMeta">
               <span class="recentWorkType">{{ item.type }}</span>
-              <span class="recentWorkDate">{{ item.date }}</span>
+              <span class="recentWorkDate">{{ item.dateLabel }}</span>
             </div>
             <h3 class="recentWorkHeading">{{ item.title }}</h3>
             <p class="recentWorkSummary">{{ item.summary }}</p>
@@ -173,6 +159,12 @@
             >
               {{ item.linkLabel }}
             </a>
+          </div>
+          <div v-if="recentUpdates.length === 0" class="recentWorkItem">
+            <h3 class="recentWorkHeading">No Recent Work Yet</h3>
+            <p class="recentWorkSummary">
+              Add publication, talk, or blog entries with a valid ISO date to populate this section.
+            </p>
           </div>
         </div>
         <div id="aboutMe" class="w3-container w3-card">
@@ -213,26 +205,18 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    // Edit this array to keep the "Recent Work" dialogue box up to date.
-    return {
-      recentUpdates: [
-        {
-          type: "Publication",
-          date: "2025",
-          title: "New Publication (ScienceDirect)",
-          summary:
-            "Latest peer-reviewed publication is now available on ScienceDirect.",
-          link: "https://www.sciencedirect.com/science/article/pii/S0010482525016890",
-          linkLabel: "Read the paper",
-        },
-      ],
-    };
+<script lang="ts">
+import { defineComponent } from "vue";
+import { getRecentHomepageUpdates, type HomepageUpdate } from "../data/homepageUpdates";
+
+export default defineComponent({
+  name: "AboutMe",
+  computed: {
+    recentUpdates(): HomepageUpdate[] {
+      return getRecentHomepageUpdates(1);
+    },
   },
-  methods: {},
-};
+});
 </script>
 
 <style>
@@ -258,7 +242,7 @@ export default {
   color: var(--page-text);
   margin: 10px 0 4px;
   font-family: var(--content-heading-font);
-  font-size: var(--content-h2-size);
+  font-size: var(--content-h1-size);
   font-weight: 600;
 }
 
@@ -358,6 +342,7 @@ a {
 
 #intro-container {
   margin-bottom: 10px;
+  padding-bottom: 23px;
 }
 
 #keywords {
