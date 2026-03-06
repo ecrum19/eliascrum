@@ -123,7 +123,7 @@ export const talks: TalkEntry[] = [
 export const posters: PosterEntry[] = [
   {
     slug: "e-i-xchange-poster-24",
-    title: "E(I)Xchange: PENGQUIN",
+    title: "E(I)Xchange Poster: PENGQUIN",
     path: "/talks/posters/E(i)xchange24_Poster_EDC.pdf",
   },
   {

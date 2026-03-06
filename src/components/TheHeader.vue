@@ -27,10 +27,16 @@
         <i class="fa fa-user"></i> ABOUT
       </router-link>
       <router-link
-        to="/work"
+        to="/publications"
         class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-black w3-opacity w3-hover-opacity-off"
       >
-        <i class="fa fa-briefcase"></i> WORK
+        <i class="fa fa-file-text-o"></i> PUBLICATIONS
+      </router-link>
+      <router-link
+        to="/software"
+        class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-black w3-opacity w3-hover-opacity-off"
+      >
+        <i class="fa fa-code"></i> SOFTWARE
       </router-link>
       <router-link
         to="/talks"
@@ -93,8 +99,11 @@
       <router-link to="/about" class="w3-bar-item w3-button" @click="closeMenu"
         >ABOUT</router-link
       >
-      <router-link to="/work" class="w3-bar-item w3-button" @click="closeMenu"
-        >WORK</router-link
+      <router-link to="/publications" class="w3-bar-item w3-button" @click="closeMenu"
+        >PUBLICATIONS</router-link
+      >
+      <router-link to="/software" class="w3-bar-item w3-button" @click="closeMenu"
+        >SOFTWARE</router-link
       >
       <router-link to="/talks" class="w3-bar-item w3-button" @click="closeMenu"
         >TALKS</router-link

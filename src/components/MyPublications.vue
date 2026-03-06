@@ -1,38 +1,15 @@
 <template>
-  <section id="publications" class="w3-content w3-margin-top" style="max-width: 1400px">
-    <div class="work-layout" :class="{ 'work-layout-toc-collapsed': tocCollapsed }">
-      <aside class="work-toc-panel" :class="{ 'work-toc-panel-collapsed': tocCollapsed }">
-        <button
-          type="button"
-          class="work-toc-toggle"
-          @click="toggleToc"
-          :aria-expanded="!tocCollapsed"
-        >
-          <span class="work-toc-toggle-label">{{ tocCollapsed ? "TOC" : "Contents" }}</span>
-          <span class="work-toc-toggle-state">{{ tocCollapsed ? "Show" : "Hide" }}</span>
-        </button>
-        <nav v-show="!tocCollapsed" class="work-toc-nav" aria-label="Work page contents">
-          <button
-            v-for="(entry, index) in tocEntries"
-            :key="entry.id"
-            type="button"
-            class="work-toc-link"
-            :class="{ 'work-toc-link-active': activeTocId === entry.id }"
-            @click="scrollToSection(entry.id)"
-          >
-            <span class="work-toc-link-index">{{ index + 1 }}.</span>
-            <span class="work-toc-link-label">{{ entry.label }}</span>
-          </button>
-        </nav>
-      </aside>
+  <section id="publications" class="w3-content w3-margin-top" style="max-width: min(1920px, 97vw)">
+    <div class="work-layout">
+      <work-toc :entries="tocEntries" />
 
       <div class="work-main">
-        <section id="work-overview" class="work-section">
+        <section id="publications-overview" class="work-section">
           <header class="publications-header">
             <div class="publications-intro">
-              <h1>Work</h1>
+              <h1>Publications</h1>
               <p>
-                Publications, software artifacts, and linked presentation material organized for quick scanning.
+                Publications are shown from most recent to oldest, with short summaries and linked presentation material.
               </p>
               <p class="citation-update-note">
                 Google Scholar citation counts last updated: <strong>{{ scholarCitationLastUpdatedLabel }}</strong>
@@ -71,14 +48,14 @@
           </header>
         </section>
 
-        <section id="work-publications" class="work-section">
+        <section id="publications-content" class="work-section">
           <div class="work-section-block">
             <header class="work-section-header">
               <h2>Publications</h2>
               <p>Chronological list with filterable tags and expandable publication metadata.</p>
             </header>
 
-            <section class="publication-filters">
+            <section id="publications-filters" class="publication-filters">
               <button
                 type="button"
                 class="filter-toggle"
@@ -161,6 +138,7 @@
             <article
               v-for="publication in filteredAndSortedPublications"
               :key="publication.id"
+              :id="publicationSectionId(publication.id)"
               class="publication-card"
             >
               <div class="publication-title-row">
@@ -357,68 +335,6 @@
             </div>
           </div>
         </section>
-
-        <section id="work-software" class="work-section">
-          <div class="work-section-block">
-            <header class="work-section-header">
-              <h2>Software</h2>
-              <p>Tools, web pages, and software resources that support this research workflow.</p>
-            </header>
-
-            <div class="software-list">
-            <article v-for="project in softwareEntries" :key="project.id" class="software-card">
-              <div class="software-title-row">
-                <h3 class="software-title">
-                  <a :href="project.url" target="_blank" rel="noopener noreferrer">{{ project.title }}</a>
-                </h3>
-                <span class="software-year">{{ project.year }}</span>
-              </div>
-
-              <p class="software-kind">{{ project.kind }}</p>
-              <p class="software-summary">{{ project.summary }}</p>
-
-              <div class="software-tags">
-                <span
-                  v-for="tag in project.tags"
-                  :key="`${project.id}-${tag}`"
-                  class="software-tag"
-                >
-                  {{ tag }}
-                </span>
-              </div>
-
-              <div class="software-links">
-                <a :href="project.url" target="_blank" rel="noopener noreferrer" class="publication-action-btn primary">
-                  Open Project
-                </a>
-                <a
-                  v-if="project.repositoryUrl"
-                  :href="project.repositoryUrl"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="publication-action-btn"
-                >
-                  Repository
-                </a>
-                <a
-                  v-if="project.demoUrl"
-                  :href="project.demoUrl"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="publication-action-btn"
-                >
-                  Demo
-                </a>
-              </div>
-            </article>
-
-            <article v-if="softwareEntries.length === 0" class="software-card empty-state">
-              <h3>No Software Entries Yet</h3>
-              <p>Add entries in <code>src/data/softwareData.ts</code> to populate this section.</p>
-            </article>
-            </div>
-          </div>
-        </section>
       </div>
     </div>
   </section>
@@ -444,7 +360,7 @@ import {
 import { getTalkViewBySlug } from "../data/talkCatalog";
 import { TOPIC_TAG_OPTIONS, VENUE_TAG_OPTIONS } from "../data/talkMetadata";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
-import { softwareProjects, type SoftwareEntry } from "../data/softwareData";
+import WorkToc from "./WorkToc.vue";
 
 interface ResolvedPresentationLink {
   key: string;
@@ -501,10 +417,12 @@ function resolvePublicationPresentationLinks(
 
 export default defineComponent({
   name: "MyPublications",
+  components: {
+    WorkToc,
+  },
   data() {
     return {
       publications,
-      softwareProjects,
       publicationPresentationLinksById,
       scholarProfileUrl,
       semanticScholarUrl,
@@ -521,19 +439,19 @@ export default defineComponent({
       scholarCitationLastUpdatedIso,
       scholarCitationsByPublicationId,
       publicationDownloadsByPublicationId,
-      tocCollapsed: false,
-      activeTocId: "work-overview",
     };
   },
   computed: {
-    softwareEntries(): SoftwareEntry[] {
-      return this.softwareProjects;
-    },
     tocEntries(): WorkTocEntry[] {
+      const publicationEntries = this.filteredAndSortedPublications.map((publication) => ({
+        id: this.publicationSectionId(publication.id),
+        label: publication.title,
+      }));
+
       return [
-        { id: "work-overview", label: "Overview" },
-        { id: "work-publications", label: "Publications" },
-        { id: "work-software", label: "Software" },
+        { id: "publications-overview", label: "Overview" },
+        { id: "publications-filters", label: "Filters" },
+        ...publicationEntries,
       ];
     },
     publicationEntries(): PublicationView[] {
@@ -649,46 +567,9 @@ export default defineComponent({
       });
     },
   },
-  mounted() {
-    this.tocCollapsed = window.matchMedia("(max-width: 1080px)").matches;
-    this.updateActiveTocId();
-    window.addEventListener("scroll", this.updateActiveTocId, { passive: true });
-    window.addEventListener("resize", this.updateActiveTocId);
-  },
   methods: {
-    toggleToc() {
-      this.tocCollapsed = !this.tocCollapsed;
-    },
-    scrollToSection(sectionId: string) {
-      const target = document.getElementById(sectionId);
-      if (!target) {
-        return;
-      }
-
-      const topOffset = 88;
-      const targetTop = target.getBoundingClientRect().top + window.scrollY - topOffset;
-      window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
-      this.activeTocId = sectionId;
-
-      if (window.matchMedia("(max-width: 1080px)").matches) {
-        this.tocCollapsed = true;
-      }
-    },
-    updateActiveTocId() {
-      const checkpoint = window.scrollY + window.innerHeight * 0.28;
-      let activeId = this.tocEntries[0]?.id ?? "work-overview";
-
-      this.tocEntries.forEach((entry) => {
-        const element = document.getElementById(entry.id);
-        if (!element) {
-          return;
-        }
-        if (element.offsetTop <= checkpoint) {
-          activeId = entry.id;
-        }
-      });
-
-      this.activeTocId = activeId;
+    publicationSectionId(publicationId: string): string {
+      return `publication-${publicationId}`;
     },
     publicationSectionKey(
       publicationId: string,
@@ -829,8 +710,6 @@ export default defineComponent({
     },
   },
   beforeUnmount() {
-    window.removeEventListener("scroll", this.updateActiveTocId);
-    window.removeEventListener("resize", this.updateActiveTocId);
     Object.values(this.copyResetTimers).forEach((timer) => {
       if (timer) {
         clearTimeout(timer);
@@ -842,129 +721,28 @@ export default defineComponent({
 
 <style scoped>
 #publications {
-  --work-content-max: 1040px;
+  --work-content-max: 100%;
   padding: 0 12px 118px;
   font-size: var(--font-size-body-lg);
 }
 
 .work-layout {
   display: grid;
-  grid-template-columns: 228px minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
   gap: 12px;
   align-items: start;
-}
-
-.work-layout.work-layout-toc-collapsed {
-  grid-template-columns: 86px minmax(0, 1fr);
-}
-
-.work-toc-panel {
-  position: sticky;
-  top: 84px;
-  background: var(--surface-bg);
-  outline: 2px solid var(--surface-outline);
-  border-radius: 14px;
-  padding: 10px;
-  display: grid;
-  gap: 8px;
-  z-index: 8;
-}
-
-.work-toc-toggle {
-  border: 1px solid var(--surface-outline);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--page-text);
-  padding: 8px 12px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  font: inherit;
-  transition: background-color 0.16s ease, border-color 0.16s ease;
-}
-
-.work-toc-toggle:hover {
-  background: var(--nav-hover-bg);
-  border-color: rgba(80, 203, 255, 0.42);
-}
-
-.work-toc-toggle-label {
-  font-size: var(--font-size-label);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.9;
-  font-weight: 600;
-}
-
-.work-toc-toggle-state {
-  font-size: var(--font-size-micro);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.7;
-}
-
-.work-toc-panel-collapsed .work-toc-toggle {
-  display: grid;
-  justify-items: center;
-  gap: 2px;
-  padding: 8px 6px;
-}
-
-.work-toc-nav {
-  display: grid;
-  gap: 8px;
-}
-
-.work-toc-link {
-  border: 1px solid var(--surface-outline);
-  border-radius: 10px;
-  background: transparent;
-  color: var(--page-text);
-  text-align: left;
-  padding: 8px 10px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: baseline;
-  gap: 8px;
-  font: inherit;
-  cursor: pointer;
-  min-width: 0;
-  transition: background-color 0.16s ease, border-color 0.16s ease;
-}
-
-.work-toc-link:hover {
-  background: var(--nav-hover-bg);
-}
-
-.work-toc-link-active {
-  border-color: rgba(80, 203, 255, 0.56);
-  background: rgba(80, 203, 255, 0.12);
-}
-
-.work-toc-link-index {
-  font-size: var(--font-size-micro);
-  opacity: 0.75;
-  letter-spacing: 0.06em;
-}
-
-.work-toc-link-label {
-  font-size: var(--font-size-body);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .work-main {
   min-width: 0;
   display: grid;
-  gap: 12px;
+  gap: 20px;
 }
 
 .work-section {
   min-width: 0;
   display: grid;
-  gap: 8px;
+  gap: 12px;
   scroll-margin-top: 92px;
 }
 
@@ -972,16 +750,20 @@ export default defineComponent({
   max-width: var(--work-content-max);
   width: 100%;
   margin: 0 auto;
-  background: var(--surface-bg);
+  background: linear-gradient(180deg, rgba(80, 203, 255, 0.08), rgba(45, 212, 191, 0.04));
   border: 1px solid var(--surface-outline);
   border-radius: 14px;
-  padding: 10px 12px;
+  padding: 16px 18px;
   display: grid;
-  gap: 10px;
+  gap: 14px;
 }
 
 [data-theme="light"] .work-section-block {
-  background: rgba(16, 36, 59, 0.03);
+  background: linear-gradient(180deg, rgba(80, 203, 255, 0.12), rgba(16, 36, 59, 0.05));
+}
+
+#publications-overview {
+  margin-bottom: 2px;
 }
 
 .publications-header {
@@ -1226,23 +1008,20 @@ export default defineComponent({
   cursor: default;
 }
 
-.publications-list,
-.software-list {
+.publications-list {
   display: grid;
-  gap: 10px;
+  gap: 16px;
 }
 
-.publication-card,
-.software-card {
+.publication-card {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--surface-outline);
   border-radius: 12px;
   padding: 12px 14px;
 }
 
-[data-theme="light"] .publication-card,
-[data-theme="light"] .software-card {
-  background: rgba(255, 255, 255, 0.4);
+[data-theme="light"] .publication-card {
+  background: rgba(255, 255, 255, 0.52);
 }
 
 .publication-title-row {
@@ -1585,8 +1364,7 @@ export default defineComponent({
   background: var(--nav-hover-bg);
 }
 
-.publication-links,
-.software-links {
+.publication-links {
   margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
@@ -1620,73 +1398,6 @@ export default defineComponent({
   background: var(--nav-hover-bg);
 }
 
-.software-title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.software-title {
-  margin: 0;
-  font-size: var(--font-size-card-title);
-  line-height: 1.35;
-}
-
-.software-title a {
-  color: var(--link-color);
-  text-decoration: none;
-}
-
-.software-title a:hover {
-  text-decoration: underline;
-}
-
-.software-year {
-  font-weight: 700;
-  color: var(--page-text);
-  opacity: 0.9;
-}
-
-.software-kind {
-  margin: 6px 0 0;
-  color: var(--page-text);
-  opacity: 0.86;
-  font-size: var(--font-size-meta);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.software-summary {
-  margin: 6px 0 0;
-  color: var(--page-text);
-  line-height: 1.6;
-  font-size: var(--font-size-body-lg);
-}
-
-.software-tags {
-  margin-top: 6px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.software-tag {
-  border: 1px solid var(--surface-outline);
-  border-radius: 999px;
-  padding: 3px 10px;
-  font-size: var(--font-size-body-sm);
-  color: var(--page-text);
-  background: rgba(80, 203, 255, 0.12);
-}
-
-[data-theme="dark"] .software-tag {
-  border-color: rgba(80, 203, 255, 0.52);
-  background: rgba(80, 203, 255, 0.22);
-  color: #d7f5ff;
-}
-
 .empty-state h2,
 .empty-state h3 {
   margin-top: 0;
@@ -1697,22 +1408,12 @@ export default defineComponent({
 }
 
 @media (max-width: 1080px) {
-  .work-layout,
-  .work-layout.work-layout-toc-collapsed {
+  .work-layout {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .work-toc-panel,
-  .work-toc-panel-collapsed {
-    position: sticky;
-    top: 82px;
-  }
-
-  .work-toc-panel-collapsed .work-toc-toggle {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 8px 12px;
+  .work-main {
+    gap: 16px;
   }
 }
 
@@ -1722,13 +1423,12 @@ export default defineComponent({
   }
 
   .work-section-block {
-    padding: 8px 9px;
-    gap: 8px;
+    padding: 10px 11px;
+    gap: 10px;
   }
 
   .publications-header,
   .publication-card,
-  .software-card,
   .publication-filters {
     padding: 12px;
   }

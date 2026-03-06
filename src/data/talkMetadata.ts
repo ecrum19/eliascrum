@@ -261,9 +261,9 @@ export const talkMetadataBySlug: Record<string, TalkMetadata> = {
   },
   "e-i-xchange-poster-24": {
     title: "E(I)Xchange Poster: PENGQUIN",
-    dateIso: "2024-03-04",
+    dateIso: "2025-10-05",
     summary:
-      "Foundational genomics overview tailored to computer science researchers entering health-data domains.",
+      "...",
     abstract:
       "This talk introduced genomics concepts most relevant to computational audiences, including sequencing outputs, variant interpretation, and common data structures used in analysis pipelines. I mapped these foundations to challenges in representation, interoperability, and reproducibility that are central to modern data engineering. The session served as a bridge from domain fundamentals to semantic and decentralized research directions.",
     goal:

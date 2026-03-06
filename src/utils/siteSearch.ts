@@ -166,7 +166,7 @@ function buildSearchDocuments(): SearchDocument[] {
       title: publicationEntry.title,
       subtitle: `Publication • ${publicationEntry.year} • ${publicationEntry.type}`,
       snippet: publicationEntry.summary,
-      route: "/work",
+      route: "/publications",
       href: publicationEntry.url,
       searchableText: [
         publicationEntry.title,
@@ -376,7 +376,7 @@ function mapIriToRoute(iriValue: string): string | undefined {
     return `/talks/${iriValue.split("/id/talk/")[1]}`;
   }
   if (iriValue.includes("/id/publication/")) {
-    return "/work";
+    return "/publications";
   }
   if (iriValue.includes("/id/blog-post/")) {
     return "/blogs";
