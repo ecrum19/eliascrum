@@ -106,9 +106,19 @@
                 </select>
               </label>
             </div>
-            <p class="filter-result">
-              Showing {{ filteredAndSortedPublications.length }} of {{ publicationEntries.length }} publications.
-            </p>
+            <div class="filter-footer">
+              <p class="filter-result">
+                Showing {{ filteredAndSortedPublications.length }} of {{ publicationEntries.length }} publications.
+              </p>
+              <button
+                type="button"
+                class="filter-clear-btn"
+                :disabled="!hasActiveFilters"
+                @click="clearPublicationFilters"
+              >
+                Clear
+              </button>
+            </div>
           </div>
         </section>
       </header>
@@ -131,21 +141,37 @@
         <p class="publication-venue">{{ publication.venue }}</p>
 
         <div class="publication-tags">
-          <span class="publication-tag publication-tag-type">{{ publication.type }}</span>
-          <span
+          <button
+            type="button"
+            class="publication-tag publication-tag-type"
+            :class="{ 'publication-tag-active': isPublicationTagActive('type', publication.type) }"
+            @click="applyPublicationTagFilter('type', publication.type)"
+            :title="`Filter by type: ${publication.type}`"
+          >
+            {{ publication.type }}
+          </button>
+          <button
+            type="button"
             v-for="tag in publication.venueTags"
             :key="`${publication.id}-venue-${tag}`"
             class="publication-tag publication-tag-venue"
+            :class="{ 'publication-tag-active': isPublicationTagActive('venue', tag) }"
+            @click="applyPublicationTagFilter('venue', tag)"
+            :title="`Filter by venue: ${tag}`"
           >
             {{ tag }}
-          </span>
-          <span
+          </button>
+          <button
+            type="button"
             v-for="tag in publication.topicTags"
             :key="`${publication.id}-topic-${tag}`"
             class="publication-tag publication-tag-topic"
+            :class="{ 'publication-tag-active': isPublicationTagActive('topic', tag) }"
+            @click="applyPublicationTagFilter('topic', tag)"
+            :title="`Filter by topic: ${tag}`"
           >
             {{ tag }}
-          </span>
+          </button>
         </div>
 
         <p class="publication-summary">{{ publication.summary }}</p>
@@ -163,39 +189,101 @@
           class="publication-expanded"
         >
           <section class="publication-expanded-block">
-            <h3>Abstract</h3>
-            <p v-if="publication.abstract">{{ publication.abstract }}</p>
-            <p v-else class="publication-empty">No abstract is currently recorded for this item.</p>
+            <button
+              type="button"
+              class="publication-subsection-toggle"
+              @click="togglePublicationSection(publication.id, 'abstract')"
+              :aria-expanded="isPublicationSectionExpanded(publication.id, 'abstract')"
+            >
+              <span class="publication-subsection-label">Abstract</span>
+              <span class="publication-subsection-state">
+                {{ isPublicationSectionExpanded(publication.id, "abstract") ? "Hide" : "Show" }}
+              </span>
+            </button>
+            <div
+              v-show="isPublicationSectionExpanded(publication.id, 'abstract')"
+              class="publication-subsection-content"
+            >
+              <p v-if="publication.abstract">{{ publication.abstract }}</p>
+              <p v-else class="publication-empty">No abstract is currently recorded for this item.</p>
+            </div>
           </section>
 
           <section class="publication-expanded-block">
-            <h3>Additional Details</h3>
-            <ul class="publication-details-list">
-              <li
-                v-for="(detail, detailIndex) in publication.details"
-                :key="`${publication.id}-detail-${detailIndex}`"
-              >
-                <span class="detail-label">{{ detail.label }}:</span>
-                <a
-                  v-if="detail.href"
-                  :href="detail.href"
-                  target="_blank"
-                  rel="noopener noreferrer"
+            <button
+              type="button"
+              class="publication-subsection-toggle"
+              @click="togglePublicationSection(publication.id, 'details')"
+              :aria-expanded="isPublicationSectionExpanded(publication.id, 'details')"
+            >
+              <span class="publication-subsection-label">Additional Details</span>
+              <span class="publication-subsection-state">
+                {{ isPublicationSectionExpanded(publication.id, "details") ? "Hide" : "Show" }}
+              </span>
+            </button>
+            <div
+              v-show="isPublicationSectionExpanded(publication.id, 'details')"
+              class="publication-subsection-content"
+            >
+              <ul class="publication-details-list">
+                <li
+                  v-for="(detail, detailIndex) in publication.details"
+                  :key="`${publication.id}-detail-${detailIndex}`"
                 >
-                  {{ detail.value }}
-                </a>
-                <span v-else>{{ detail.value }}</span>
-              </li>
-              <li>
-                <span class="detail-label">Google Scholar Citations:</span>
-                <span>{{ citationCountLabel(publication.id) }}</span>
-              </li>
-            </ul>
+                  <span class="detail-label">{{ detail.label }}:</span>
+                  <a
+                    v-if="detail.href"
+                    :href="detail.href"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {{ detail.value }}
+                  </a>
+                  <span v-else>{{ detail.value }}</span>
+                </li>
+                <li>
+                  <span class="detail-label">Google Scholar Citations:</span>
+                  <span>{{ citationCountLabel(publication.id) }}</span>
+                </li>
+              </ul>
+            </div>
           </section>
 
           <section class="publication-expanded-block">
-            <h3>BibTeX</h3>
-            <pre class="publication-bibtex"><code>{{ publication.bibtex }}</code></pre>
+            <button
+              type="button"
+              class="publication-subsection-toggle"
+              @click="togglePublicationSection(publication.id, 'bibtex')"
+              :aria-expanded="isPublicationSectionExpanded(publication.id, 'bibtex')"
+            >
+              <span class="publication-subsection-label">BibTeX</span>
+              <span class="publication-subsection-state">
+                {{ isPublicationSectionExpanded(publication.id, "bibtex") ? "Hide" : "Show" }}
+              </span>
+            </button>
+            <div
+              v-show="isPublicationSectionExpanded(publication.id, 'bibtex')"
+              class="publication-subsection-content publication-bibtex-shell"
+            >
+              <button
+                type="button"
+                class="bibtex-copy-btn"
+                :aria-label="
+                  isBibtexCopied(publication.id)
+                    ? 'BibTeX copied to clipboard'
+                    : 'Copy BibTeX citation to clipboard'
+                "
+                :title="
+                  isBibtexCopied(publication.id)
+                    ? 'Copied'
+                    : 'Copy BibTeX citation'
+                "
+                @click="copyBibtexCitation(publication.id, publication.bibtex)"
+              >
+                <i class="fa" :class="isBibtexCopied(publication.id) ? 'fa-check' : 'fa-files-o'"></i>
+              </button>
+              <pre class="publication-bibtex"><code>{{ publication.bibtex }}</code></pre>
+            </div>
           </section>
         </div>
 
@@ -266,6 +354,15 @@ interface PublicationView extends Publication {
   resolvedPresentationLinks: ResolvedPresentationLink[];
 }
 
+type PublicationDetailSection = "abstract" | "details" | "bibtex";
+type PublicationTagFilterKind = "type" | "venue" | "topic";
+
+const DEFAULT_SECTION_EXPANDED: Record<PublicationDetailSection, boolean> = {
+  abstract: true,
+  details: false,
+  bibtex: false,
+};
+
 function resolvePublicationPresentationLinks(
   publicationId: string,
   links: PublicationPresentationLink[]
@@ -309,6 +406,9 @@ export default defineComponent({
       selectedYear: "All",
       selectedSort: "date-desc",
       expandedPublications: {} as Record<string, boolean>,
+      expandedPublicationSections: {} as Record<string, boolean>,
+      copiedBibtexByPublicationId: {} as Record<string, boolean>,
+      copyResetTimers: {} as Record<string, ReturnType<typeof setTimeout> | undefined>,
       scholarCitationLastUpdatedIso,
       scholarCitationsByPublicationId,
     };
@@ -366,6 +466,15 @@ export default defineComponent({
         return Number(b) - Number(a);
       });
     },
+    hasActiveFilters(): boolean {
+      return (
+        this.selectedVenue !== "All" ||
+        this.selectedTopic !== "All" ||
+        this.selectedType !== "All" ||
+        this.selectedYear !== "All" ||
+        this.selectedSort !== "date-desc"
+      );
+    },
     filteredAndSortedPublications(): PublicationView[] {
       const collator = new Intl.Collator(undefined, { sensitivity: "base" });
 
@@ -412,11 +521,116 @@ export default defineComponent({
     },
   },
   methods: {
+    publicationSectionKey(
+      publicationId: string,
+      section: PublicationDetailSection
+    ): string {
+      return `${publicationId}:${section}`;
+    },
     isPublicationExpanded(publicationId: string): boolean {
       return Boolean(this.expandedPublications[publicationId]);
     },
     togglePublicationExpanded(publicationId: string) {
       this.expandedPublications[publicationId] = !this.isPublicationExpanded(publicationId);
+    },
+    clearPublicationFilters() {
+      this.selectedVenue = "All";
+      this.selectedTopic = "All";
+      this.selectedType = "All";
+      this.selectedYear = "All";
+      this.selectedSort = "date-desc";
+    },
+    applyPublicationTagFilter(
+      kind: PublicationTagFilterKind,
+      value: string
+    ) {
+      if (kind === "type") {
+        this.selectedType = value;
+        this.selectedVenue = "All";
+        this.selectedTopic = "All";
+      } else if (kind === "venue") {
+        this.selectedVenue = value;
+        this.selectedType = "All";
+        this.selectedTopic = "All";
+      } else {
+        this.selectedTopic = value;
+        this.selectedType = "All";
+        this.selectedVenue = "All";
+      }
+
+      this.selectedYear = "All";
+      this.filtersOpen = true;
+    },
+    isPublicationTagActive(
+      kind: PublicationTagFilterKind,
+      value: string
+    ): boolean {
+      if (kind === "type") {
+        return this.selectedType === value;
+      }
+      if (kind === "venue") {
+        return this.selectedVenue === value;
+      }
+      return this.selectedTopic === value;
+    },
+    isPublicationSectionExpanded(
+      publicationId: string,
+      section: PublicationDetailSection
+    ): boolean {
+      const key = this.publicationSectionKey(publicationId, section);
+      if (typeof this.expandedPublicationSections[key] === "boolean") {
+        return this.expandedPublicationSections[key];
+      }
+      return DEFAULT_SECTION_EXPANDED[section];
+    },
+    togglePublicationSection(
+      publicationId: string,
+      section: PublicationDetailSection
+    ) {
+      const key = this.publicationSectionKey(publicationId, section);
+      this.expandedPublicationSections[key] =
+        !this.isPublicationSectionExpanded(publicationId, section);
+    },
+    isBibtexCopied(publicationId: string): boolean {
+      return Boolean(this.copiedBibtexByPublicationId[publicationId]);
+    },
+    async copyBibtexCitation(publicationId: string, bibtex: string) {
+      const setCopiedState = () => {
+        this.copiedBibtexByPublicationId[publicationId] = true;
+        const existingTimer = this.copyResetTimers[publicationId];
+        if (existingTimer) {
+          clearTimeout(existingTimer);
+        }
+        this.copyResetTimers[publicationId] = setTimeout(() => {
+          this.copiedBibtexByPublicationId[publicationId] = false;
+          this.copyResetTimers[publicationId] = undefined;
+        }, 1800);
+      };
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(bibtex);
+          setCopiedState();
+          return;
+        }
+      } catch {
+        // Fallback path below.
+      }
+
+      const textarea = document.createElement("textarea");
+      textarea.value = bibtex;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      textarea.setSelectionRange(0, textarea.value.length);
+      const copied = document.execCommand("copy");
+      document.body.removeChild(textarea);
+      if (copied) {
+        setCopiedState();
+      }
     },
     citationCountLabel(publicationId: string): string {
       const count = this.scholarCitationsByPublicationId[publicationId];
@@ -425,6 +639,13 @@ export default defineComponent({
       }
       return String(count);
     },
+  },
+  beforeUnmount() {
+    Object.values(this.copyResetTimers).forEach((timer) => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    });
   },
 });
 </script>
@@ -622,10 +843,40 @@ export default defineComponent({
 }
 
 .filter-result {
-  margin: 10px 0 0;
+  margin: 0;
   opacity: 0.72;
   font-size: 0.78rem;
   letter-spacing: 0.03em;
+}
+
+.filter-footer {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.filter-clear-btn {
+  border: 1px solid var(--surface-outline);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--page-text);
+  padding: 4px 11px;
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.16s ease, opacity 0.16s ease;
+}
+
+.filter-clear-btn:hover:not(:disabled) {
+  background: var(--nav-hover-bg);
+}
+
+.filter-clear-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
 }
 
 .publication-card {
@@ -692,6 +943,24 @@ export default defineComponent({
   padding: 3px 11px;
   font-size: 0.9rem;
   color: var(--page-text);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  line-height: 1.2;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.publication-tag:hover {
+  transform: translateY(-1px);
+}
+
+.publication-tag:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.35);
+}
+
+.publication-tag-active {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
 }
 
 .publication-tag-type {
@@ -735,6 +1004,8 @@ export default defineComponent({
 
 .publication-expand-toggle {
   margin-top: 10px;
+  display: block;
+  margin-left: auto;
   border: none;
   background: transparent;
   color: var(--page-text);
@@ -762,6 +1033,7 @@ export default defineComponent({
   margin-top: 12px;
   display: grid;
   gap: 12px;
+  min-width: 0;
 }
 
 .publication-expanded-block {
@@ -769,18 +1041,45 @@ export default defineComponent({
   border: 1px solid var(--surface-outline);
   border-radius: 10px;
   padding: 10px 12px;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 [data-theme="light"] .publication-expanded-block {
   background: rgba(16, 36, 59, 0.035);
 }
 
-.publication-expanded-block h3 {
-  margin: 0 0 8px;
+.publication-subsection-toggle {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--page-text);
+  padding: 0;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.publication-subsection-label {
+  margin: 0;
   font-size: 0.88rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   opacity: 0.82;
+}
+
+.publication-subsection-state {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+.publication-subsection-content {
+  margin-top: 8px;
 }
 
 .publication-expanded-block p {
@@ -816,13 +1115,50 @@ export default defineComponent({
 .publication-bibtex {
   margin: 0;
   overflow-x: auto;
-  white-space: pre;
+  max-width: 100%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
   font-size: 0.82rem;
   line-height: 1.4;
-  padding: 8px;
+  padding: 30px 8px 8px;
   border-radius: 8px;
   border: 1px solid var(--surface-outline);
   background: rgba(0, 0, 0, 0.18);
+}
+
+.publication-bibtex-shell {
+  position: relative;
+}
+
+.bibtex-copy-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--surface-outline);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--page-text);
+  font-size: 0.76rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.82;
+  transition: background-color 0.18s ease, opacity 0.18s ease;
+}
+
+.bibtex-copy-btn:hover {
+  opacity: 1;
+  background: var(--nav-hover-bg);
+}
+
+.publication-bibtex code {
+  white-space: inherit;
+  overflow-wrap: inherit;
+  word-break: inherit;
 }
 
 [data-theme="light"] .publication-bibtex {

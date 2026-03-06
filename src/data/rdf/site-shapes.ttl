@@ -1,0 +1,574 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix schema: <https://schema.org/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix ec: <https://eliascrum.github.io/eliascrum/vocab#> .
+
+ec:WebsiteDatasetShape
+  a sh:NodeShape ;
+  sh:targetClass ec:WebsiteDataset ;
+  sh:property [
+    sh:path schema:name ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path dcterms:modified ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:dateTime ;
+  ] .
+
+ec:TagShape
+  a sh:NodeShape ;
+  sh:targetClass ec:Tag ;
+  sh:property [
+    sh:path skos:prefLabel ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:tagKind ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:isDeclaredOption ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:boolean ;
+  ] .
+
+ec:CvSectionShape
+  a sh:NodeShape ;
+  sh:targetClass ec:CvSection ;
+  sh:property [
+    sh:path dcterms:isPartOf ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:class ec:WebsiteDataset ;
+  ] ;
+  sh:property [
+    sh:path schema:name ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:order ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:integer ;
+  ] ;
+  sh:property [
+    sh:path ec:hasItem ;
+    sh:minCount 1 ;
+    sh:class ec:CvItem ;
+  ] .
+
+ec:CvItemShape
+  a sh:NodeShape ;
+  sh:targetClass ec:CvItem ;
+  sh:property [
+    sh:path dcterms:isPartOf ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:class ec:CvSection ;
+  ] ;
+  sh:property [
+    sh:path ec:order ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:integer ;
+  ] ;
+  sh:property [
+    sh:path ec:role ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:hasDetail ;
+    sh:class ec:CvDetail ;
+  ] .
+
+ec:CvDetailShape
+  a sh:NodeShape ;
+  sh:targetClass ec:CvDetail ;
+  sh:property [
+    sh:path dcterms:isPartOf ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:class ec:CvItem ;
+  ] ;
+  sh:property [
+    sh:path ec:order ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:integer ;
+  ] ;
+  sh:property [
+    sh:path ec:text ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] .
+
+ec:PosterShape
+  a sh:NodeShape ;
+  sh:targetClass ec:Poster ;
+  sh:property [
+    sh:path dcterms:identifier ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:name ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:filePath ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:url ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+  ] .
+
+ec:TalkShape
+  a sh:NodeShape ;
+  sh:targetClass ec:Talk ;
+  sh:property [
+    sh:path dcterms:identifier ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:name ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:description ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:sourceFile ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:slidePath ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:hasTopicTag ;
+    sh:class ec:TopicTag ;
+  ] ;
+  sh:property [
+    sh:path ec:hasVenueTag ;
+    sh:class ec:VenueTag ;
+  ] ;
+  sh:or (
+    [
+      sh:property [
+        sh:path ec:displayDate ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+      ]
+    ]
+    [
+      sh:property [
+        sh:path ec:displayDateText ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+      ]
+    ]
+  ) .
+
+ec:TalkMetadataShape
+  a sh:NodeShape ;
+  sh:targetClass ec:TalkMetadata ;
+  sh:property [
+    sh:path ec:forTalk ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:class ec:Talk ;
+  ] ;
+  sh:property [
+    sh:path ec:description ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] .
+
+ec:PublicationShape
+  a sh:NodeShape ;
+  sh:targetClass ec:Publication ;
+  sh:property [
+    sh:path dcterms:identifier ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:name ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:authors ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:venue ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:publicationYear ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:gYear ;
+  ] ;
+  sh:property [
+    sh:path ec:summary ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:bibtex ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:url ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+  ] ;
+  sh:property [
+    sh:path ec:hasPublicationTypeTag ;
+    sh:minCount 1 ;
+    sh:class ec:PublicationTypeTag ;
+  ] ;
+  sh:property [
+    sh:path ec:hasTopicTag ;
+    sh:class ec:TopicTag ;
+  ] ;
+  sh:property [
+    sh:path ec:hasVenueTag ;
+    sh:class ec:VenueTag ;
+  ] ;
+  sh:or (
+    [
+      sh:property [
+        sh:path ec:sortDate ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+      ]
+    ]
+    [
+      sh:property [
+        sh:path ec:sortDateText ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+      ]
+    ]
+  ) .
+
+ec:PublicationDetailShape
+  a sh:NodeShape ;
+  sh:targetClass ec:PublicationDetail ;
+  sh:property [
+    sh:path dcterms:isPartOf ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:class ec:Publication ;
+  ] ;
+  sh:property [
+    sh:path rdfs:label ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path rdf:value ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:order ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:integer ;
+  ] .
+
+ec:PublicationPresentationLinkShape
+  a sh:NodeShape ;
+  sh:targetClass ec:PublicationPresentationLink ;
+  sh:property [
+    sh:path ec:order ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:integer ;
+  ] ;
+  sh:or (
+    [
+      sh:property [
+        sh:path ec:forPublication ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class ec:Publication ;
+      ]
+    ]
+    [
+      sh:property [
+        sh:path ec:forPublication ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class ec:PublicationReference ;
+      ]
+    ]
+  ) ;
+  sh:xone (
+    [
+      sh:property [
+        sh:path ec:linksTalk ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:nodeKind sh:IRI ;
+      ] ;
+      sh:property [
+        sh:path ec:filePath ;
+        sh:maxCount 0 ;
+      ]
+    ]
+    [
+      sh:property [
+        sh:path ec:filePath ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+      ] ;
+      sh:property [
+        sh:path ec:linksTalk ;
+        sh:maxCount 0 ;
+      ]
+    ]
+  ) .
+
+ec:PublicationReferenceShape
+  a sh:NodeShape ;
+  sh:targetClass ec:PublicationReference ;
+  sh:property [
+    sh:path dcterms:identifier ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:isResolved ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:boolean ;
+  ] .
+
+ec:TalkReferenceShape
+  a sh:NodeShape ;
+  sh:targetClass ec:TalkReference ;
+  sh:property [
+    sh:path dcterms:identifier ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:isResolved ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:boolean ;
+  ] .
+
+ec:BlogPostShape
+  a sh:NodeShape ;
+  sh:targetClass ec:BlogPost ;
+  sh:property [
+    sh:path dcterms:identifier ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:name ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:summary ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:linkLabel ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:url ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+  ] ;
+  sh:or (
+    [
+      sh:property [
+        sh:path dcterms:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+      ]
+    ]
+    [
+      sh:property [
+        sh:path ec:dateText ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+      ]
+    ]
+  ) .
+
+ec:HomepageUpdateShape
+  a sh:NodeShape ;
+  sh:targetClass ec:HomepageUpdate ;
+  sh:property [
+    sh:path dcterms:identifier ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:updateType ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:name ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:summary ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:linkLabel ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:url ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+  ] ;
+  sh:or (
+    [
+      sh:property [
+        sh:path ec:updateDate ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+      ]
+    ]
+    [
+      sh:property [
+        sh:path ec:updateDateText ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+      ]
+    ]
+  ) .
+
+ec:ScholarCitationSnapshotShape
+  a sh:NodeShape ;
+  sh:targetClass ec:ScholarCitationSnapshot ;
+  sh:or (
+    [
+      sh:property [
+        sh:path dcterms:modified ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:dateTime ;
+      ]
+    ]
+    [
+      sh:property [
+        sh:path ec:modifiedText ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+      ]
+    ]
+  ) .
+
+ec:CitationObservationShape
+  a sh:NodeShape ;
+  sh:targetClass ec:CitationObservation ;
+  sh:property [
+    sh:path ec:fromSnapshot ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:class ec:ScholarCitationSnapshot ;
+  ] ;
+  sh:property [
+    sh:path ec:publicationId ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path ec:citationCount ;
+    sh:datatype xsd:integer ;
+  ] .

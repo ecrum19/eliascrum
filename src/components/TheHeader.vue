@@ -12,6 +12,14 @@
       >
         <i class="fa fa-bars"></i>
       </button>
+      <button
+        class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right"
+        type="button"
+        @click="openSearch"
+        aria-label="Open search"
+      >
+        <i class="fa fa-search"></i>
+      </button>
       <router-link
         to="/about"
         class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-black w3-opacity w3-hover-opacity-off"
@@ -37,6 +45,15 @@
         <i class="fa fa-pencil"></i> BLOGS
       </router-link>
       <div class="desktop-right-controls w3-hide-small">
+        <button
+          type="button"
+          class="w3-bar-item w3-button w3-hover-opacity-off search-trigger"
+          aria-label="Open search"
+          title="Search (Ctrl/Cmd+K)"
+          @click="openSearch"
+        >
+          <i class="fa fa-search"></i>
+        </button>
         <button
           type="button"
           class="w3-bar-item w3-button w3-hover-opacity-off theme-toggle"
@@ -79,6 +96,13 @@
       <button
         type="button"
         class="w3-bar-item w3-button theme-toggle-mobile"
+        @click="openSearch"
+      >
+        SEARCH
+      </button>
+      <button
+        type="button"
+        class="w3-bar-item w3-button theme-toggle-mobile"
         @click="toggleTheme"
       >
         {{ theme === "dark" ? "LIGHT MODE" : "DARK MODE" }}
@@ -110,7 +134,7 @@ export default defineComponent({
       default: "dark",
     },
   },
-  emits: ["toggle-theme"],
+  emits: ["toggle-theme", "open-search"],
   data() {
     return {
       mobileMenuOpen: false,
@@ -130,6 +154,10 @@ export default defineComponent({
     },
     toggleTheme() {
       this.$emit("toggle-theme");
+    },
+    openSearch() {
+      this.closeMenu();
+      this.$emit("open-search");
     },
   },
 });
@@ -220,7 +248,8 @@ img {
 }
 
 .theme-toggle,
-.theme-toggle-mobile {
+.theme-toggle-mobile,
+.search-trigger {
   border: none;
   background: var(--toggle-bg);
   color: var(--toggle-text);
@@ -228,17 +257,20 @@ img {
 }
 
 .theme-toggle:hover,
-.theme-toggle-mobile:hover {
+.theme-toggle-mobile:hover,
+.search-trigger:hover {
   background: var(--nav-hover-bg) !important;
 }
 
 [data-theme="light"] .theme-toggle,
-[data-theme="light"] .theme-toggle-mobile {
+[data-theme="light"] .theme-toggle-mobile,
+[data-theme="light"] .search-trigger {
   background: transparent;
 }
 
 [data-theme="light"] .theme-toggle:hover,
-[data-theme="light"] .theme-toggle-mobile:hover {
+[data-theme="light"] .theme-toggle-mobile:hover,
+[data-theme="light"] .search-trigger:hover {
   background: rgba(16, 36, 59, 0.08) !important;
 }
 

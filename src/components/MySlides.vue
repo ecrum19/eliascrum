@@ -70,9 +70,19 @@
                 </select>
               </label>
             </div>
-            <p class="filter-result">
-              Showing {{ filteredAndSortedItems.length }} of {{ catalogEntries.length }} items.
-            </p>
+            <div class="filter-footer">
+              <p class="filter-result">
+                Showing {{ filteredAndSortedItems.length }} of {{ catalogEntries.length }} items.
+              </p>
+              <button
+                type="button"
+                class="filter-clear-btn"
+                :disabled="!hasActiveFilters"
+                @click="clearTalkFilters"
+              >
+                Clear
+              </button>
+            </div>
           </div>
         </section>
       </header>
@@ -90,25 +100,40 @@
             </div>
 
             <h2>{{ item.displayTitle }}</h2>
-            <p class="talk-description">{{ item.description }}</p>
-
             <div class="talk-tags">
-              <span class="talk-tag talk-tag-material">{{ item.materialTag }}</span>
-              <span
+              <button
+                type="button"
+                class="talk-tag talk-tag-material"
+                :class="{ 'talk-tag-active': isTalkTagActive('material', item.materialTag) }"
+                @click="applyTalkTagFilter('material', item.materialTag)"
+                :title="`Filter by type: ${item.materialTag}`"
+              >
+                {{ item.materialTag }}
+              </button>
+              <button
+                type="button"
                 v-for="tag in item.venueTags"
                 :key="`${item.id}-${tag}`"
                 class="talk-tag talk-tag-venue"
+                :class="{ 'talk-tag-active': isTalkTagActive('venue', tag) }"
+                @click="applyTalkTagFilter('venue', tag)"
+                :title="`Filter by venue: ${tag}`"
               >
                 {{ tag }}
-              </span>
-              <span
+              </button>
+              <button
+                type="button"
                 v-for="tag in item.topicTags"
                 :key="`${item.id}-${tag}`"
                 class="talk-tag talk-tag-topic"
+                :class="{ 'talk-tag-active': isTalkTagActive('topic', tag) }"
+                @click="applyTalkTagFilter('topic', tag)"
+                :title="`Filter by topic: ${tag}`"
               >
                 {{ tag }}
-              </span>
+              </button>
             </div>
+            <p class="talk-description">{{ item.description }}</p>
 
             <div class="talk-actions">
               <router-link v-if="item.detailRoute" :to="item.detailRoute" class="talk-btn primary">
@@ -183,6 +208,7 @@ import {
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
 
 type MaterialTypeTag = "Slides" | "Poster";
+type TalkTagFilterKind = "material" | "venue" | "topic";
 
 interface CatalogEntry {
   id: string;
@@ -312,6 +338,15 @@ export default defineComponent({
         return Number(b) - Number(a);
       });
     },
+    hasActiveFilters(): boolean {
+      return (
+        this.selectedVenue !== "All" ||
+        this.selectedTopic !== "All" ||
+        this.selectedMaterial !== "All" ||
+        this.selectedYear !== "All" ||
+        this.selectedSort !== "date-desc"
+      );
+    },
     filteredAndSortedItems(): CatalogEntry[] {
       const collator = new Intl.Collator(undefined, { sensitivity: "base" });
 
@@ -345,6 +380,46 @@ export default defineComponent({
     },
   },
   methods: {
+    clearTalkFilters() {
+      this.selectedVenue = "All";
+      this.selectedTopic = "All";
+      this.selectedMaterial = "All";
+      this.selectedYear = "All";
+      this.selectedSort = "date-desc";
+    },
+    applyTalkTagFilter(
+      kind: TalkTagFilterKind,
+      value: string
+    ) {
+      if (kind === "material") {
+        this.selectedMaterial = value;
+        this.selectedVenue = "All";
+        this.selectedTopic = "All";
+      } else if (kind === "venue") {
+        this.selectedVenue = value;
+        this.selectedMaterial = "All";
+        this.selectedTopic = "All";
+      } else {
+        this.selectedTopic = value;
+        this.selectedMaterial = "All";
+        this.selectedVenue = "All";
+      }
+
+      this.selectedYear = "All";
+      this.filtersOpen = true;
+    },
+    isTalkTagActive(
+      kind: TalkTagFilterKind,
+      value: string
+    ): boolean {
+      if (kind === "material") {
+        return this.selectedMaterial === value;
+      }
+      if (kind === "venue") {
+        return this.selectedVenue === value;
+      }
+      return this.selectedTopic === value;
+    },
     isPreviewOpen(id: string): boolean {
       return Boolean(this.previewVisibility[id]);
     },
@@ -484,10 +559,40 @@ export default defineComponent({
 }
 
 .filter-result {
-  margin: 10px 0 0;
+  margin: 0;
   opacity: 0.72;
   font-size: 0.78rem;
   letter-spacing: 0.03em;
+}
+
+.filter-footer {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.filter-clear-btn {
+  border: 1px solid var(--surface-outline);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--page-text);
+  padding: 4px 11px;
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.16s ease, opacity 0.16s ease;
+}
+
+.filter-clear-btn:hover:not(:disabled) {
+  background: var(--nav-hover-bg);
+}
+
+.filter-clear-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
 }
 
 .talk-card {
@@ -551,6 +656,25 @@ export default defineComponent({
   padding: 3px 10px;
   font-size: 0.82rem;
   color: var(--page-text);
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+  line-height: 1.2;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.talk-tag:hover {
+  transform: translateY(-1px);
+}
+
+.talk-tag:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.35);
+}
+
+.talk-tag-active {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
 }
 
 .talk-tag-material {

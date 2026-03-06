@@ -1,0 +1,524 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix schema: <https://schema.org/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix ec: <https://eliascrum.github.io/eliascrum/vocab#> .
+
+<https://eliascrum.github.io/eliascrum/vocab>
+  rdfs:label "Elias Crum Website Vocabulary"@en ;
+  rdfs:comment "Vocabulary for data entities and relationships used in the Elias Crum personal website RDF graph."@en ;
+  rdfs:seeAlso <https://eliascrum.github.io/eliascrum/vocab.ttl> .
+
+# Classes
+
+ec:WebsiteDataset
+  a rdfs:Class ;
+  rdfs:subClassOf schema:Dataset ;
+  rdfs:label "Website Dataset"@en ;
+  rdfs:comment "Top-level dataset resource representing the website data graph."@en .
+
+ec:Tag
+  a rdfs:Class ;
+  rdfs:subClassOf skos:Concept ;
+  rdfs:label "Tag"@en ;
+  rdfs:comment "Base class for controlled or free-text tags used in filtering and categorization."@en .
+
+ec:TopicTag
+  a rdfs:Class ;
+  rdfs:subClassOf ec:Tag ;
+  rdfs:label "Topic Tag"@en ;
+  rdfs:comment "Tag describing a topical theme (for example Semantic Web, Genomics)."@en .
+
+ec:VenueTag
+  a rdfs:Class ;
+  rdfs:subClassOf ec:Tag ;
+  rdfs:label "Venue Tag"@en ;
+  rdfs:comment "Tag describing where a talk/publication was presented."@en .
+
+ec:PublicationTypeTag
+  a rdfs:Class ;
+  rdfs:subClassOf ec:Tag ;
+  rdfs:label "Publication Type Tag"@en ;
+  rdfs:comment "Tag describing publication category (for example Journal Article, Conference Paper)."@en .
+
+ec:BlogCategoryTag
+  a rdfs:Class ;
+  rdfs:subClassOf ec:Tag ;
+  rdfs:label "Blog Category Tag"@en ;
+  rdfs:comment "Tag describing a blog post category."@en .
+
+ec:CvSection
+  a rdfs:Class ;
+  rdfs:label "CV Section"@en ;
+  rdfs:comment "Section of the CV grouping related CV items."@en .
+
+ec:CvItem
+  a rdfs:Class ;
+  rdfs:label "CV Item"@en ;
+  rdfs:comment "Single CV entry belonging to a CV section."@en .
+
+ec:CvDetail
+  a rdfs:Class ;
+  rdfs:label "CV Detail"@en ;
+  rdfs:comment "Detail line attached to a CV item, optionally with link metadata."@en .
+
+ec:Talk
+  a rdfs:Class ;
+  rdfs:subClassOf schema:CreativeWork ;
+  rdfs:label "Talk"@en ;
+  rdfs:comment "Presentation entity with slides, metadata, tags, and optional poster link."@en .
+
+ec:TalkMetadata
+  a rdfs:Class ;
+  rdfs:label "Talk Metadata"@en ;
+  rdfs:comment "Editable metadata node containing curated talk overrides and descriptors."@en .
+
+ec:TalkReference
+  a rdfs:Class ;
+  rdfs:label "Talk Reference"@en ;
+  rdfs:comment "Reference placeholder for a talk when a link points to an unresolved talk slug."@en .
+
+ec:Poster
+  a rdfs:Class ;
+  rdfs:subClassOf schema:CreativeWork ;
+  rdfs:label "Poster"@en ;
+  rdfs:comment "Poster material represented as a PDF asset."@en .
+
+ec:Publication
+  a rdfs:Class ;
+  rdfs:subClassOf schema:ScholarlyArticle ;
+  rdfs:label "Publication"@en ;
+  rdfs:comment "Scholarly publication with citation and display metadata."@en .
+
+ec:PublicationReference
+  a rdfs:Class ;
+  rdfs:label "Publication Reference"@en ;
+  rdfs:comment "Reference placeholder for a publication when a relationship points to an unresolved publication ID."@en .
+
+ec:PublicationDetail
+  a rdfs:Class ;
+  rdfs:label "Publication Detail"@en ;
+  rdfs:comment "Label-value detail row attached to a publication."@en .
+
+ec:PublicationPresentationLink
+  a rdfs:Class ;
+  rdfs:label "Publication Presentation Link"@en ;
+  rdfs:comment "Join entity connecting publications to talks or static files."@en .
+
+ec:BlogPost
+  a rdfs:Class ;
+  rdfs:subClassOf schema:BlogPosting ;
+  rdfs:label "Blog Post"@en ;
+  rdfs:comment "Blog entry represented in the website data graph."@en .
+
+ec:HomepageUpdate
+  a rdfs:Class ;
+  rdfs:label "Homepage Update"@en ;
+  rdfs:comment "Recent-work update card rendered on the homepage."@en .
+
+ec:ExternalProfile
+  a rdfs:Class ;
+  rdfs:subClassOf schema:WebPage ;
+  rdfs:label "External Profile"@en ;
+  rdfs:comment "External scholarly profile link (for example Google Scholar, Semantic Scholar)."@en .
+
+ec:ScholarCitationSnapshot
+  a rdfs:Class ;
+  rdfs:label "Scholar Citation Snapshot"@en ;
+  rdfs:comment "Snapshot metadata representing when citation counts were last refreshed."@en .
+
+ec:CitationObservation
+  a rdfs:Class ;
+  rdfs:label "Citation Observation"@en ;
+  rdfs:comment "Citation count observation for a publication at a given snapshot."@en .
+
+# Properties
+
+ec:abstract
+  a rdf:Property ;
+  rdfs:label "abstract"@en ;
+  rdfs:comment "Long-form abstract text for a publication."@en ;
+  rdfs:domain ec:Publication ;
+  rdfs:range xsd:string .
+
+ec:authors
+  a rdf:Property ;
+  rdfs:label "authors"@en ;
+  rdfs:comment "Author list for a publication as display text."@en ;
+  rdfs:domain ec:Publication ;
+  rdfs:range xsd:string .
+
+ec:bibtex
+  a rdf:Property ;
+  rdfs:label "bibtex"@en ;
+  rdfs:comment "BibTeX citation text for a publication."@en ;
+  rdfs:domain ec:Publication ;
+  rdfs:range xsd:string .
+
+ec:citationCount
+  a rdf:Property ;
+  rdfs:label "citation count"@en ;
+  rdfs:comment "Observed citation count for a publication."@en ;
+  rdfs:domain ec:CitationObservation ;
+  rdfs:range xsd:integer .
+
+ec:date
+  a rdf:Property ;
+  rdfs:label "date"@en ;
+  rdfs:comment "Date field used in curated talk metadata."@en ;
+  rdfs:domain ec:TalkMetadata ;
+  rdfs:range xsd:date .
+
+ec:dateLabel
+  a rdf:Property ;
+  rdfs:label "date label"@en ;
+  rdfs:comment "Human-friendly date label used for display."@en ;
+  rdfs:range xsd:string .
+
+ec:dateText
+  a rdf:Property ;
+  rdfs:label "date text"@en ;
+  rdfs:comment "Non-ISO textual date when exact xsd:date is unavailable."@en ;
+  rdfs:range xsd:string .
+
+ec:description
+  a rdf:Property ;
+  rdfs:label "description"@en ;
+  rdfs:comment "Description text for talks or talk metadata."@en ;
+  rdfs:range xsd:string .
+
+ec:displayDate
+  a rdf:Property ;
+  rdfs:label "display date"@en ;
+  rdfs:comment "Primary sortable/display date for a talk."@en ;
+  rdfs:domain ec:Talk ;
+  rdfs:range xsd:date .
+
+ec:displayDateLabel
+  a rdf:Property ;
+  rdfs:label "display date label"@en ;
+  rdfs:comment "Human-friendly date label for talk display."@en ;
+  rdfs:domain ec:Talk ;
+  rdfs:range xsd:string .
+
+ec:displayDateText
+  a rdf:Property ;
+  rdfs:label "display date text"@en ;
+  rdfs:comment "Fallback text date for talk display when ISO date is unavailable."@en ;
+  rdfs:domain ec:Talk ;
+  rdfs:range xsd:string .
+
+ec:filePath
+  a rdf:Property ;
+  rdfs:label "file path"@en ;
+  rdfs:comment "Relative website file path for linked static resources."@en ;
+  rdfs:range xsd:string .
+
+ec:forPublication
+  a rdf:Property ;
+  rdfs:label "for publication"@en ;
+  rdfs:comment "Associates an entity with a publication or publication reference."@en ;
+  rdfs:range rdfs:Resource .
+
+ec:forTalk
+  a rdf:Property ;
+  rdfs:label "for talk"@en ;
+  rdfs:comment "Associates a talk metadata node with a talk."@en ;
+  rdfs:domain ec:TalkMetadata ;
+  rdfs:range ec:Talk .
+
+ec:fromSnapshot
+  a rdf:Property ;
+  rdfs:label "from snapshot"@en ;
+  rdfs:comment "Links a citation observation to a citation snapshot."@en ;
+  rdfs:domain ec:CitationObservation ;
+  rdfs:range ec:ScholarCitationSnapshot .
+
+ec:hasDetail
+  a rdf:Property ;
+  rdfs:label "has detail"@en ;
+  rdfs:comment "Associates an entity with detail rows (CV detail or publication detail)."@en ;
+  rdfs:range rdfs:Resource .
+
+ec:hasExternalProfile
+  a rdf:Property ;
+  rdfs:label "has external profile"@en ;
+  rdfs:comment "Links website dataset to external profile resources."@en ;
+  rdfs:domain ec:WebsiteDataset ;
+  rdfs:range ec:ExternalProfile .
+
+ec:hasItem
+  a rdf:Property ;
+  rdfs:label "has item"@en ;
+  rdfs:comment "Associates a CV section with its CV items."@en ;
+  rdfs:domain ec:CvSection ;
+  rdfs:range ec:CvItem .
+
+ec:hasPoster
+  a rdf:Property ;
+  rdfs:label "has poster"@en ;
+  rdfs:comment "Associates a talk with a related poster."@en ;
+  rdfs:domain ec:Talk ;
+  rdfs:range ec:Poster .
+
+ec:hasPresentationLink
+  a rdf:Property ;
+  rdfs:label "has presentation link"@en ;
+  rdfs:comment "Associates a publication (or reference) with publication-presentation link nodes."@en ;
+  rdfs:range ec:PublicationPresentationLink .
+
+ec:hasPublicationTypeTag
+  a rdf:Property ;
+  rdfs:label "has publication type tag"@en ;
+  rdfs:comment "Associates a publication with a publication type tag."@en ;
+  rdfs:domain ec:Publication ;
+  rdfs:range ec:PublicationTypeTag .
+
+ec:hasTag
+  a rdf:Property ;
+  rdfs:label "has tag"@en ;
+  rdfs:comment "Generic tag association, currently used for blog categories."@en ;
+  rdfs:range ec:Tag .
+
+ec:hasTopicTag
+  a rdf:Property ;
+  rdfs:label "has topic tag"@en ;
+  rdfs:comment "Associates talks or publications with topic tags."@en ;
+  rdfs:range ec:TopicTag .
+
+ec:hasVenueTag
+  a rdf:Property ;
+  rdfs:label "has venue tag"@en ;
+  rdfs:comment "Associates talks or publications with venue tags."@en ;
+  rdfs:range ec:VenueTag .
+
+ec:isDeclaredOption
+  a rdf:Property ;
+  rdfs:label "is declared option"@en ;
+  rdfs:comment "Indicates whether a tag is part of a declared options list."@en ;
+  rdfs:domain ec:Tag ;
+  rdfs:range xsd:boolean .
+
+ec:isPosterForTalk
+  a rdf:Property ;
+  rdfs:label "is poster for talk"@en ;
+  rdfs:comment "Inverse-like relation from poster to talk."@en ;
+  rdfs:domain ec:Poster ;
+  rdfs:range ec:Talk .
+
+ec:isResolved
+  a rdf:Property ;
+  rdfs:label "is resolved"@en ;
+  rdfs:comment "Indicates whether a reference placeholder resolves to a concrete entity."@en ;
+  rdfs:range xsd:boolean .
+
+ec:linkLabel
+  a rdf:Property ;
+  rdfs:label "link label"@en ;
+  rdfs:comment "Display label for rendered link buttons."@en ;
+  rdfs:range xsd:string .
+
+ec:linksTalk
+  a rdf:Property ;
+  rdfs:label "links talk"@en ;
+  rdfs:comment "Connects a publication-presentation link node to a talk or talk reference."@en ;
+  rdfs:range rdfs:Resource .
+
+ec:modifiedText
+  a rdf:Property ;
+  rdfs:label "modified text"@en ;
+  rdfs:comment "Fallback textual modified timestamp when xsd:dateTime cannot be emitted."@en ;
+  rdfs:range xsd:string .
+
+ec:order
+  a rdf:Property ;
+  rdfs:label "order"@en ;
+  rdfs:comment "Numeric sort/display order for list members."@en ;
+  rdfs:range xsd:integer .
+
+ec:organization
+  a rdf:Property ;
+  rdfs:label "organization"@en ;
+  rdfs:comment "Organization text for CV items."@en ;
+  rdfs:domain ec:CvItem ;
+  rdfs:range xsd:string .
+
+ec:posterPath
+  a rdf:Property ;
+  rdfs:label "poster path"@en ;
+  rdfs:comment "Relative path to a poster linked from a talk."@en ;
+  rdfs:domain ec:Talk ;
+  rdfs:range xsd:string .
+
+ec:posterTitle
+  a rdf:Property ;
+  rdfs:label "poster title"@en ;
+  rdfs:comment "Display title for poster material linked from a talk."@en ;
+  rdfs:domain ec:Talk ;
+  rdfs:range xsd:string .
+
+ec:prefix
+  a rdf:Property ;
+  rdfs:label "prefix"@en ;
+  rdfs:comment "Optional text prefix displayed before a CV detail value."@en ;
+  rdfs:domain ec:CvDetail ;
+  rdfs:range xsd:string .
+
+ec:publicationId
+  a rdf:Property ;
+  rdfs:label "publication ID"@en ;
+  rdfs:comment "Raw publication ID string used by citation observation mappings."@en ;
+  rdfs:domain ec:CitationObservation ;
+  rdfs:range xsd:string .
+
+ec:publicationYear
+  a rdf:Property ;
+  rdfs:label "publication year"@en ;
+  rdfs:comment "Publication year as xsd:gYear."@en ;
+  rdfs:domain ec:Publication ;
+  rdfs:range xsd:gYear .
+
+ec:rawUrl
+  a rdf:Property ;
+  rdfs:label "raw URL"@en ;
+  rdfs:comment "Non-normalized URL string when URI normalization fails."@en ;
+  rdfs:range xsd:string .
+
+ec:referencesEntity
+  a rdf:Property ;
+  rdfs:label "references entity"@en ;
+  rdfs:comment "Links a homepage update to the entity it summarizes."@en ;
+  rdfs:domain ec:HomepageUpdate ;
+  rdfs:range rdfs:Resource .
+
+ec:relatedPublication
+  a rdf:Property ;
+  rdfs:label "related publication"@en ;
+  rdfs:comment "Associates a talk with related publication nodes."@en ;
+  rdfs:range rdfs:Resource .
+
+ec:relatedTalk
+  a rdf:Property ;
+  rdfs:label "related talk"@en ;
+  rdfs:comment "Associates a publication with related talk nodes."@en ;
+  rdfs:range rdfs:Resource .
+
+ec:role
+  a rdf:Property ;
+  rdfs:label "role"@en ;
+  rdfs:comment "Role/title text for CV items."@en ;
+  rdfs:domain ec:CvItem ;
+  rdfs:range xsd:string .
+
+ec:slidePath
+  a rdf:Property ;
+  rdfs:label "slide path"@en ;
+  rdfs:comment "Relative path to talk slides."@en ;
+  rdfs:domain ec:Talk ;
+  rdfs:range xsd:string .
+
+ec:sortDate
+  a rdf:Property ;
+  rdfs:label "sort date"@en ;
+  rdfs:comment "Sortable publication date."@en ;
+  rdfs:domain ec:Publication ;
+  rdfs:range xsd:date .
+
+ec:sortDateText
+  a rdf:Property ;
+  rdfs:label "sort date text"@en ;
+  rdfs:comment "Fallback textual sort date for publications."@en ;
+  rdfs:domain ec:Publication ;
+  rdfs:range xsd:string .
+
+ec:sourceDate
+  a rdf:Property ;
+  rdfs:label "source date"@en ;
+  rdfs:comment "Date extracted from source talk data before display overrides."@en ;
+  rdfs:domain ec:Talk ;
+  rdfs:range xsd:date .
+
+ec:sourceDateLabel
+  a rdf:Property ;
+  rdfs:label "source date label"@en ;
+  rdfs:comment "Source date display label from generated talk data."@en ;
+  rdfs:domain ec:Talk ;
+  rdfs:range xsd:string .
+
+ec:sourceDateText
+  a rdf:Property ;
+  rdfs:label "source date text"@en ;
+  rdfs:comment "Fallback textual source date for talks."@en ;
+  rdfs:domain ec:Talk ;
+  rdfs:range xsd:string .
+
+ec:sourceDirectory
+  a rdf:Property ;
+  rdfs:label "source directory"@en ;
+  rdfs:comment "Filesystem-relative source directory used to generate the dataset."@en ;
+  rdfs:domain ec:WebsiteDataset ;
+  rdfs:range xsd:string .
+
+ec:sourceFile
+  a rdf:Property ;
+  rdfs:label "source file"@en ;
+  rdfs:comment "Source filename for a talk's slide input."@en ;
+  rdfs:domain ec:Talk ;
+  rdfs:range xsd:string .
+
+ec:sourceTitle
+  a rdf:Property ;
+  rdfs:label "source title"@en ;
+  rdfs:comment "Source title from generated talk data before metadata override."@en ;
+  rdfs:domain ec:Talk ;
+  rdfs:range xsd:string .
+
+ec:summary
+  a rdf:Property ;
+  rdfs:label "summary"@en ;
+  rdfs:comment "Short summary text used in listings and cards."@en ;
+  rdfs:range xsd:string .
+
+ec:tagKind
+  a rdf:Property ;
+  rdfs:label "tag kind"@en ;
+  rdfs:comment "Tag category key (for example topic, venue, publication-type)."@en ;
+  rdfs:domain ec:Tag ;
+  rdfs:range xsd:string .
+
+ec:text
+  a rdf:Property ;
+  rdfs:label "text"@en ;
+  rdfs:comment "Primary text content for CV detail rows."@en ;
+  rdfs:domain ec:CvDetail ;
+  rdfs:range xsd:string .
+
+ec:updateDate
+  a rdf:Property ;
+  rdfs:label "update date"@en ;
+  rdfs:comment "Date of a homepage update card."@en ;
+  rdfs:domain ec:HomepageUpdate ;
+  rdfs:range xsd:date .
+
+ec:updateDateText
+  a rdf:Property ;
+  rdfs:label "update date text"@en ;
+  rdfs:comment "Fallback textual date for homepage updates."@en ;
+  rdfs:domain ec:HomepageUpdate ;
+  rdfs:range xsd:string .
+
+ec:updateType
+  a rdf:Property ;
+  rdfs:label "update type"@en ;
+  rdfs:comment "Type of update card (for example Publication, Talk, Blog)."@en ;
+  rdfs:domain ec:HomepageUpdate ;
+  rdfs:range xsd:string .
+
+ec:venue
+  a rdf:Property ;
+  rdfs:label "venue"@en ;
+  rdfs:comment "Venue/publication outlet label."@en ;
+  rdfs:domain ec:Publication ;
+  rdfs:range xsd:string .

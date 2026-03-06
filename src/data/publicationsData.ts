@@ -148,7 +148,7 @@ export const publications: Publication[] = [
     title:
       "Observations on automated client-side query federation over Wikidata SPARQL endpoints",
     authors:
-      "Jonni Hanski, Elias Crum, Ruben Taelman",
+      "J. Hanski, E. Crum, R. Taelman",
     venue:
       "International Semantic Web Conference (ISWC) 2025 (WikiData workshop)",
     year: 2025,
@@ -255,7 +255,7 @@ export const publications: Publication[] = [
   {
     id: "TRIPLE-SWAT4HCLS-2024",
     title: "CHIST-ERA Triple: improving data interoperability and federation across RDF knowledge graphs and Solid Pods",
-    authors: "Jerven Bolleman, Elias Crum, Iulian Dragan, Jakub Galgonek, Mark Ibberson, Tarcisio Mendes de Farias, Marek Moos, Marco Pagni, Ruben Taelman, Jiří Vondrášek, Ana Claudia Sima",
+    authors: "J. Bolleman, E. Crum, I. Dragan, J. Galgonek, M. Ibberson, T. Mendes de Farias, M. Moos, M. Pagni, R. Taelman, J. Vondrášek, A. C. Sima",
     venue:
       "Proceedings of the 15th International SWAT4HCLS Conference (CEUR Workshop Proceedings)",
     year: 2024,

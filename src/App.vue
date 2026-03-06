@@ -1,6 +1,7 @@
 <template>
   <div class="app-shell">
-    <the-header :theme="theme" @toggle-theme="toggleTheme" />
+    <the-header :theme="theme" @toggle-theme="toggleTheme" @open-search="openSearch" />
+    <spotlight-search :open="isSearchOpen" @close="closeSearch" />
     <div class="background">
       <video
         id="background-video"
@@ -21,6 +22,7 @@
 import { defineComponent } from "vue";
 import TheHeader from './components/TheHeader.vue';
 import TheFooter from './components/TheFooter.vue';
+import SpotlightSearch from "./components/SpotlightSearch.vue";
 
 type ThemeMode = "dark" | "light";
 const THEME_STORAGE_KEY = "site-theme";
@@ -30,10 +32,12 @@ export default defineComponent({
   components: {
     TheHeader,
     TheFooter,
+    SpotlightSearch,
   },
-  data(): { theme: ThemeMode } {
+  data(): { theme: ThemeMode; isSearchOpen: boolean } {
     return {
       theme: "dark",
+      isSearchOpen: false,
     };
   },
   methods: {
@@ -44,6 +48,21 @@ export default defineComponent({
       this.theme = this.theme === "dark" ? "light" : "dark";
       this.applyTheme(this.theme);
       localStorage.setItem(THEME_STORAGE_KEY, this.theme);
+    },
+    openSearch() {
+      this.isSearchOpen = true;
+    },
+    closeSearch() {
+      this.isSearchOpen = false;
+    },
+    handleGlobalSearchShortcut(event: KeyboardEvent) {
+      const isShortcut = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k";
+      if (!isShortcut) {
+        return;
+      }
+
+      event.preventDefault();
+      this.openSearch();
     },
   },
   created() {
@@ -59,6 +78,11 @@ export default defineComponent({
     if (video) {
       video.playbackRate = 0.45;
     }
+
+    window.addEventListener("keydown", this.handleGlobalSearchShortcut);
+  },
+  beforeUnmount() {
+    window.removeEventListener("keydown", this.handleGlobalSearchShortcut);
   },
 });
 </script>
