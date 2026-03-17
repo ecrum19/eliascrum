@@ -143,21 +143,9 @@
             >
               <div class="publication-title-row">
                 <h2 class="publication-title">
-                  <router-link
-                    v-if="publicationPrimaryRoute(publication)"
-                    :to="publicationPrimaryRoute(publication)"
-                  >
+                  <router-link :to="publicationPrimaryRoute(publication)">
                     {{ publication.title }}
                   </router-link>
-                  <a
-                    v-else-if="publicationPrimaryHref(publication)"
-                    :href="publicationPrimaryHref(publication)"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {{ publication.title }}
-                  </a>
-                  <span v-else>{{ publication.title }}</span>
                 </h2>
                 <span class="publication-date">{{ publication.year }}</span>
               </div>
@@ -310,28 +298,34 @@
                     <pre class="publication-bibtex"><code>{{ publication.bibtex }}</code></pre>
                   </div>
                 </section>
+
+                <div
+                  v-if="publicationPaperRoute(publication) || publicationPdfHref(publication)"
+                  class="publication-expanded-actions"
+                >
+                  <router-link
+                    v-if="publicationPaperRoute(publication)"
+                    :to="publicationPaperRoute(publication)"
+                    class="publication-action-btn primary"
+                  >
+                    Paper Page
+                  </router-link>
+                  <a
+                    v-if="publicationPdfHref(publication)"
+                    :href="publicationPdfHref(publication)"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="publication-action-btn"
+                  >
+                    Open Paper PDF
+                  </a>
+                </div>
               </div>
 
               <div
-                v-if="publicationPaperRoute(publication) || publicationPdfHref(publication) || publication.resolvedPresentationLinks.length"
+                v-if="publication.resolvedPresentationLinks.length"
                 class="publication-links"
               >
-                <router-link
-                  v-if="publicationPaperRoute(publication)"
-                  :to="publicationPaperRoute(publication)"
-                  class="publication-action-btn primary"
-                >
-                  Paper Page
-                </router-link>
-                <a
-                  v-if="publicationPdfHref(publication)"
-                  :href="publicationPdfHref(publication)"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="publication-action-btn"
-                >
-                  Open Paper PDF
-                </a>
                 <template
                   v-for="link in publication.resolvedPresentationLinks"
                   :key="link.key"
@@ -372,6 +366,7 @@
 import { defineComponent } from "vue";
 import {
   PUBLICATION_TYPE_TAG_OPTIONS,
+  getPublicationSlug,
   publications,
   publicationPresentationLinksById,
   scholarProfileUrl,
@@ -595,33 +590,35 @@ export default defineComponent({
       });
     },
   },
+  watch: {
+    "$route.query": {
+      immediate: true,
+      handler() {
+        this.applyRouteQueryFilters();
+      },
+    },
+  },
   methods: {
     publicationSectionId(publicationId: string): string {
       return `publication-${publicationId}`;
     },
-    publicationPaperRoute(publication: Publication): { name: string; params: { slug: string } } | undefined {
-      if (!publication.slug || !publication.paperPdfPath) {
-        return undefined;
-      }
-
+    publicationPaperRoute(publication: Publication): { name: string; params: { slug: string } } {
       return {
         name: "Publication Paper",
-        params: { slug: publication.slug },
+        params: { slug: getPublicationSlug(publication) },
       };
     },
-    publicationPrimaryRoute(publication: Publication): { name: string; params: { slug: string } } | undefined {
-      if (publication.url) {
-        return undefined;
-      }
-
+    publicationPrimaryRoute(publication: Publication): { name: string; params: { slug: string } } {
       return this.publicationPaperRoute(publication);
-    },
-    publicationPrimaryHref(publication: Publication): string | undefined {
-      return publication.url || undefined;
     },
     publicationPdfHref(publication: Publication): string | undefined {
       if (!publication.paperPdfPath) {
-        return undefined;
+        const normalizedUrl = publication.url.trim().toLowerCase();
+        if (!normalizedUrl || !normalizedUrl.split(/[?#]/, 1)[0].endsWith(".pdf")) {
+          return undefined;
+        }
+
+        return publication.url;
       }
 
       return resolvePublicAssetPath(publication.paperPdfPath);
@@ -644,6 +641,21 @@ export default defineComponent({
       this.selectedType = "All";
       this.selectedYear = "All";
       this.selectedSort = "date-desc";
+    },
+    applyRouteQueryFilters() {
+      const tag = typeof this.$route.query.tag === "string" ? this.$route.query.tag : "";
+      const value = typeof this.$route.query.value === "string" ? this.$route.query.value : "";
+
+      if (!tag || !value) {
+        return;
+      }
+
+      if (tag !== "type" && tag !== "venue" && tag !== "topic") {
+        return;
+      }
+
+      this.clearPublicationFilters();
+      this.applyPublicationTagFilter(tag, value);
     },
     applyPublicationTagFilter(
       kind: PublicationTagFilterKind,
@@ -814,7 +826,8 @@ export default defineComponent({
 }
 
 [data-theme="light"] .work-section-block {
-  background: linear-gradient(180deg, rgba(80, 203, 255, 0.12), rgba(16, 36, 59, 0.05));
+  background: linear-gradient(180deg, rgba(235, 248, 255, 0.96), rgba(233, 249, 245, 0.92));
+  border-color: rgba(16, 36, 59, 0.14);
 }
 
 #publications-overview {
@@ -1359,6 +1372,15 @@ export default defineComponent({
 
 .publication-details-list a {
   color: var(--link-color);
+}
+
+.publication-expanded-actions {
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 8px;
+  column-gap: 10px;
+  justify-content: flex-end;
 }
 
 .detail-label {

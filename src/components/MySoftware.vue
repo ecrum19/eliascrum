@@ -191,7 +191,8 @@ export default defineComponent({
 }
 
 [data-theme="light"] .work-section-block {
-  background: linear-gradient(180deg, rgba(80, 203, 255, 0.12), rgba(16, 36, 59, 0.05));
+  background: linear-gradient(180deg, rgba(235, 248, 255, 0.96), rgba(233, 249, 245, 0.92));
+  border-color: rgba(16, 36, 59, 0.14);
 }
 
 .work-section-header {

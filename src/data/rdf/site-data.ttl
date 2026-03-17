@@ -265,7 +265,7 @@
 <https://eliascrum.github.io/eliascrum/id/cv-section/9> rdf:type ec:CvSection .
 <https://eliascrum.github.io/eliascrum/id/cv-section/9> schema:name "Organizations" .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:description "RDF/Turtle projection of the TypeScript data modules under src/data." .
-<https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:modified "2026-03-17T15:35:25.883Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:modified "2026-03-17T16:13:26.786Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:hasExternalProfile <https://eliascrum.github.io/eliascrum/id/profile/google-scholar> .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:hasExternalProfile <https://eliascrum.github.io/eliascrum/id/profile/semantic-scholar> .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:sourceDirectory "src/data" .
@@ -381,15 +381,15 @@
 <https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf-to-rdf-rml-swat4hcls-2026> schema:name "From VCF to RDF: RML-Based Conversion Approaches for the Semantic Representation of Variant Data" .
 <https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> dcterms:identifier "publication:vcf2rdf-SWAT4HCLS-2025" .
 <https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
-<https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:dateLabel "28 Feb 2025" .
+<https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:dateLabel "24 Feb 2025" .
 <https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:linkLabel "Read publication" .
 <https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:order "10"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:referencesEntity <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> .
-<https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:summary "..." .
-<https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:updateDate "2025-02-28"^^xsd:date .
+<https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:summary "Introduces a framework for converting VCF genomic variant files into RDF, combining a comprehensive ontology, storage-efficient HDT serialization, and alignment with clinical metadata schemas to improve interoperability, data linking, querying, and semantic interpretability." .
+<https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:updateDate "2025-02-24"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:updateType "Publication" .
 <https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> rdf:type ec:HomepageUpdate .
-<https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> schema:name "Theoretical VCF to RDF mapping" .
+<https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> schema:name "Semantifying Genomic Variant Data: VCF to RDF Conversion Framework" .
 <https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Awikidata-sparql-ISWC-2025> dcterms:identifier "publication:wikidata-sparql-ISWC-2025" .
 <https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Awikidata-sparql-ISWC-2025> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
 <https://eliascrum.github.io/eliascrum/id/homepage-update/publication%3Awikidata-sparql-ISWC-2025> ec:dateLabel "02 Nov 2025" .
@@ -794,18 +794,33 @@
 <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> .
 <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-2> ec:order "2"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-2> rdf:type ec:PublicationDetail .
-<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-2> rdf:value "SWAT4HCLS" .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-2> rdf:value "SWAT4HCLS 2025" .
 <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-2> rdfs:label "Conference" .
 <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> .
 <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-3> ec:order "3"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-3> rdf:type ec:PublicationDetail .
-<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-3> rdf:value "2025-02-28" .
-<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-3> rdfs:label "Date" .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-3> rdf:value "Barcelona, Spain" .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-3> rdfs:label "Location" .
 <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-4> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> .
 <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-4> ec:order "4"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-4> rdf:type ec:PublicationDetail .
-<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-4> rdf:value "CEUR paper PDF" .
-<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-4> rdfs:label "Full Text" .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-4> rdf:value "2025-02-24" .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-4> rdfs:label "Date" .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-5> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-5> ec:order "5"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-5> rdf:type ec:PublicationDetail .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-5> rdf:value "Knowledge Representation, Genomic Data, Semantics, Ontology" .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-5> rdfs:label "Keywords" .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-6> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-6> ec:order "6"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-6> rdf:type ec:PublicationDetail .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-6> rdf:value "Not yet available" .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-6> rdfs:label "DOI" .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-7> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-7> ec:order "7"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-7> rdf:type ec:PublicationDetail .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-7> rdf:value "Not yet available" .
+<https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-7> rdfs:label "Web Version" .
 <https://eliascrum.github.io/eliascrum/id/publication-detail/wikidata-sparql-ISWC-2025-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/publication/wikidata-sparql-ISWC-2025> .
 <https://eliascrum.github.io/eliascrum/id/publication-detail/wikidata-sparql-ISWC-2025-1> ec:order "1"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/publication-detail/wikidata-sparql-ISWC-2025-1> rdf:type ec:PublicationDetail .
@@ -1059,25 +1074,29 @@
 <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> schema:name "From VCF to RDF: RML-Based Conversion Approaches for the Semantic Representation of Variant Data" .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> dcterms:identifier "vcf2rdf-SWAT4HCLS-2025" .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
-<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:abstract "..." .
-<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:authors "E. Crum, R. Taelman, B. Buelens, G. Ertaylan" .
-<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:bibtex "@inproceedings{crum2025vcf2rdf,\n  title={Theoretical VCF to RDF mapping},\n  author={Crum, Elias and Taelman, Ruben and Buelens, Bart and Ertaylan, Gokhan},\n  booktitle={Proceedings of the 16th International SWAT4HCLS Conference},\n  year={2025},\n  url={}\n  urldate={2026-03-05},\n}" .
+<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:abstract "Variant Call Format (VCF) files, the standard for representing patient genomic variant data, face limitations in interoperability, data linking, querying, and semantic interpretability. We propose a framework for converting VCF data into semantic data using the Resource Description Framework (RDF) to address these limitations. Our approach includes a comprehensive ontology, a storage-efficient RDF representation using Header Dictionary Triples (HDT), and integration with clinical metadata schemas like that proposed by SPHN. Our framework and the representation of VCF data semantically will contribute to greater integration, scalability, and usability of these genomic variant data in both genomic medicine and research." .
+<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:authors "E. Crum, R. Taelman, B. Buelens, G. Ertaylan, R. Verborgh" .
+<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:bibtex "@inproceedings{crum2025semantifying,\n  title={Semantifying Genomic Variant Data: VCF to RDF Conversion Framework},\n  author={Crum, Elias and Taelman, Ruben and Buelens, Bart and Ertaylan, Gokhan and Verborgh, Ruben},\n  booktitle={Proceedings of the 16th International SWAT4HCLS Conference},\n  address={Barcelona, Spain},\n  month={feb},\n  year={2025},\n}" .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-1> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-2> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-3> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-4> .
+<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-5> .
+<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-6> .
+<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf2rdf-SWAT4HCLS-2025-7> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasPresentationLink <https://eliascrum.github.io/eliascrum/id/publication-presentation-link/vcf2rdf-SWAT4HCLS-2025-1> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasPublicationTypeTag <https://eliascrum.github.io/eliascrum/id/tag/publication-type/conference-paper-b3a0ecc0> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/clinical-genomics-30552628> .
+<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/genomics-b19f4ebd> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/knowledge-representation-6c3310dd> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/semantic-web-501ff810> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasVenueTag <https://eliascrum.github.io/eliascrum/id/tag/venue/swat4hcls-92e9e698> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:publicationYear "2025"^^xsd:gYear .
-<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:sortDate "2025-02-28"^^xsd:date .
-<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:summary "..." .
+<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:sortDate "2025-02-24"^^xsd:date .
+<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:summary "Introduces a framework for converting VCF genomic variant files into RDF, combining a comprehensive ontology, storage-efficient HDT serialization, and alignment with clinical metadata schemas to improve interoperability, data linking, querying, and semantic interpretability." .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:venue "Proceedings of the 16th International SWAT4HCLS Conference (CEUR Workshop Proceedings)" .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> rdf:type ec:Publication .
-<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> schema:name "Theoretical VCF to RDF mapping" .
+<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> schema:name "Semantifying Genomic Variant Data: VCF to RDF Conversion Framework" .
 <https://eliascrum.github.io/eliascrum/id/publication/wikidata-sparql-ISWC-2025> dcterms:identifier "wikidata-sparql-ISWC-2025" .
 <https://eliascrum.github.io/eliascrum/id/publication/wikidata-sparql-ISWC-2025> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
 <https://eliascrum.github.io/eliascrum/id/publication/wikidata-sparql-ISWC-2025> ec:abstract "The recent Wikidata graph split divided a previously singular SPARQL endpoint into two distinct ones, breaking existing queries that depend on the combined data from these endpoints. To accommodate this graph split, instructions for manual source assignment have been provided. However, the proposed solution of manual source annotations within the queries themselves, through the use of SPARQL SERVICE clauses, not only imposes additional work on users of these endpoints, but also assumes prior knowledge of which data come from which endpoint, and how they should be combined. Potential future graph splits would result in this manual source assignment having to be done again. Within this work, we employ client-side query federation over the two Wikidata endpoints, using state-of-the-art source assignment approaches for query operations, to demonstrate the feasibility and challenges of automated federation as an alternative to manual source assignment. Through our experiments, we show how client-side federation can offer a viable alternative to manual source assignment for certain queries, where the amount of data to process remains within client-side resource limits, and provided no custom behaviour is attached to standard SPARQL operations. Future work will be needed to address the trade-offs between network request counts and client-side data processing, to be able to execute queries that access large amounts of data from multiple sources." .

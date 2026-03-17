@@ -221,38 +221,39 @@ export const publications: Publication[] = [
   },
   {
     id: "vcf2rdf-SWAT4HCLS-2025",
-    title: "Theoretical VCF to RDF mapping",
-    authors: "E. Crum, R. Taelman, B. Buelens, G. Ertaylan",
+    slug: "semantifying-genomic-variant-data-swat4hcls-2025",
+    title: "Semantifying Genomic Variant Data: VCF to RDF Conversion Framework",
+    authors: "E. Crum, R. Taelman, B. Buelens, G. Ertaylan, R. Verborgh",
     venue:
       "Proceedings of the 16th International SWAT4HCLS Conference (CEUR Workshop Proceedings)",
     year: 2025,
-    sortDate: "2025-02-28",
+    sortDate: "2025-02-24",
     type: "Conference Paper",
     venueTags: ["SWAT4HCLS"],
-    topicTags: ["Semantic Web", "Knowledge Representation", "Clinical Genomics"],
+    topicTags: ["Semantic Web", "Knowledge Representation", "Clinical Genomics", "Genomics"],
     url: "",
     summary:
-      "...",
+      "Introduces a framework for converting VCF genomic variant files into RDF, combining a comprehensive ontology, storage-efficient HDT serialization, and alignment with clinical metadata schemas to improve interoperability, data linking, querying, and semantic interpretability.",
     abstract:
-      "...",
-    bibtex: `@inproceedings{crum2025vcf2rdf,
-  title={Theoretical VCF to RDF mapping},
-  author={Crum, Elias and Taelman, Ruben and Buelens, Bart and Ertaylan, Gokhan},
+      "Variant Call Format (VCF) files, the standard for representing patient genomic variant data, face limitations in interoperability, data linking, querying, and semantic interpretability. We propose a framework for converting VCF data into semantic data using the Resource Description Framework (RDF) to address these limitations. Our approach includes a comprehensive ontology, a storage-efficient RDF representation using Header Dictionary Triples (HDT), and integration with clinical metadata schemas like that proposed by SPHN. Our framework and the representation of VCF data semantically will contribute to greater integration, scalability, and usability of these genomic variant data in both genomic medicine and research.",
+    bibtex: `@inproceedings{crum2025semantifying,
+  title={Semantifying Genomic Variant Data: VCF to RDF Conversion Framework},
+  author={Crum, Elias and Taelman, Ruben and Buelens, Bart and Ertaylan, Gokhan and Verborgh, Ruben},
   booktitle={Proceedings of the 16th International SWAT4HCLS Conference},
+  address={Barcelona, Spain},
+  month={feb},
   year={2025},
-  url={}
-  urldate={2026-03-05},
 }`,
     details: [
       { label: "Publication Type", value: "Conference Paper" },
-      { label: "Conference", value: "SWAT4HCLS" },
-      { label: "Date", value: "2025-02-28" },
-      {
-        label: "Full Text",
-        value: "CEUR paper PDF",
-        href: "",
-      },
+      { label: "Conference", value: "SWAT4HCLS 2025" },
+      { label: "Location", value: "Barcelona, Spain" },
+      { label: "Date", value: "2025-02-24" },
+      { label: "Keywords", value: "Knowledge Representation, Genomic Data, Semantics, Ontology" },
+      { label: "DOI", value: "Not yet available" },
+      { label: "Web Version", value: "Not yet available" },
     ],
+    paperPdfPath: "/publications/papers/swat4hcls-2025-vcf-to-rdf-paper.pdf",
   },
   {
     id: "pengquin-eswc-2024",
@@ -514,6 +515,31 @@ export const publicationPresentationLinksById: Record<
   ],
 };
 
+function slugifyPublicationValue(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export function getPublicationSlug(publication: Publication): string {
+  if (publication.slug && publication.slug.trim().length > 0) {
+    return publication.slug.trim();
+  }
+
+  const normalizedId = slugifyPublicationValue(publication.id);
+  if (normalizedId.length > 0) {
+    return normalizedId;
+  }
+
+  return slugifyPublicationValue(publication.title);
+}
+
+export function getPublicationPagePath(publication: Publication): string {
+  return `/publications/${getPublicationSlug(publication)}/paper`;
+}
+
 export function getPublicationById(
   publicationId: string,
 ): Publication | undefined {
@@ -523,7 +549,9 @@ export function getPublicationById(
 export function getPublicationBySlug(
   publicationSlug: string,
 ): Publication | undefined {
-  return publications.find((publication) => publication.slug === publicationSlug);
+  return publications.find(
+    (publication) => getPublicationSlug(publication) === publicationSlug,
+  );
 }
 
 export function getRelatedPublicationLinksForTalkSlug(
@@ -570,7 +598,7 @@ function getRelatedPublicationLinks(
           label:
             presentationLink.label ??
             `Related Publication: ${publication.title}`,
-          url: publication.url,
+          url: getPublicationPagePath(publication),
         });
       });
     },

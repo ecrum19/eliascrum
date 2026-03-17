@@ -1,7 +1,7 @@
 import { blogPosts } from "../data/blogPostsData";
 import { cvSections } from "../data/cvData";
 import { getAllHomepageUpdates } from "../data/homepageUpdates";
-import { publications } from "../data/publicationsData";
+import { getPublicationPagePath, publications } from "../data/publicationsData";
 import { getTalkViewEntries } from "../data/talkCatalog";
 import { posters, talks } from "../data/talksData";
 import { resolvePublicAssetPath } from "./publicAssetPath";
@@ -160,18 +160,13 @@ function buildSearchDocuments(): SearchDocument[] {
   });
 
   publications.forEach((publicationEntry) => {
-    const publicationRoute =
-      publicationEntry.slug && publicationEntry.paperPdfPath
-        ? `/publications/${publicationEntry.slug}/paper`
-        : "/publications";
-
     documents.push({
       id: `publication:${publicationEntry.id}`,
       type: "Publication",
       title: publicationEntry.title,
       subtitle: `Publication • ${publicationEntry.year} • ${publicationEntry.type}`,
       snippet: publicationEntry.summary,
-      route: publicationRoute,
+      route: getPublicationPagePath(publicationEntry),
       href: publicationEntry.url,
       searchableText: [
         publicationEntry.title,
