@@ -276,6 +276,22 @@ export const talkMetadataBySlug: Record<string, TalkMetadata> = {
     venueTags: ["Internal Meeting"],
     topicTags: ["Genomics", "Clinical Genomics", "Knowledge Representation"],
   },
+  "swat4hcls-2026": {
+    title: "SWAT4HCLS 2026 Poster: From VCF to RDF",
+    dateIso: "2026-03-24",
+    summary:
+      "Poster presenting an RML-based method for converting full VCF variant files into RDF with stronger structure, provenance, interoperability, and privacy-aware semantics.",
+    abstract:
+      "This poster introduces an RML-based approach for representing Variant Call Format (VCF) data in RDF in a way that preserves both the structural richness of VCF and compatibility with established semantic technologies. It frames the main challenges of VCF conversion around structural irregularity, weak semantics, limited interoperability, and constrained access-control patterns, then positions an RDF-based representation as a response. The proposed approach emphasizes complete file representation, explicit provenance and structure at header, record, and call levels, and ontology alignment with established genomic vocabularies such as SO, FALDO, and GENO. It also highlights the role of RML and RMLStreamer in expressing reusable declarative mappings that can scale to larger datasets.",
+    goal:
+      "Demonstrate that VCF-to-RDF conversion using declarative RML mappings is feasible and useful for interoperable, machine-actionable genomic variant data workflows.",
+    audienceExpertise:
+      "Semantic web researchers, bioinformaticians, and life-science data practitioners interested in genomic data interoperability and FAIR representation.",
+    audienceGroups: ["Bioinformaticians", "Semantic Web Researchers", "Interdisciplinary Researchers"],
+    durationMinutes: 8,
+    audienceSizeApprox: 70,
+    venueTags: ["Conference", "SWAT4HCLS"],
+    topicTags: ["Semantic Web", "Bioinformatics", "Genomics", "Knowledge Representation"],
+  },
 };
-
 

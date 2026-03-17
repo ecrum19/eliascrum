@@ -8,9 +8,6 @@
           <header class="publications-header">
             <div class="publications-intro">
               <h1>Publications</h1>
-              <p>
-                Publications are shown from most recent to oldest, with short summaries and linked presentation material.
-              </p>
               <p class="citation-update-note">
                 Google Scholar citation counts last updated: <strong>{{ scholarCitationLastUpdatedLabel }}</strong>
               </p>
@@ -45,15 +42,6 @@
                 />
               </a>
             </div>
-          </header>
-        </section>
-
-        <section id="publications-content" class="work-section">
-          <div class="work-section-block">
-            <header class="work-section-header">
-              <h2>Publications</h2>
-              <p>Chronological list with filterable tags and expandable publication metadata.</p>
-            </header>
 
             <section id="publications-filters" class="publication-filters">
               <button
@@ -133,7 +121,11 @@
                 </div>
               </div>
             </section>
+          </header>
+        </section>
 
+        <section id="publications-content" class="work-section">
+          <div class="work-section-block publications-content-block">
             <div class="publications-list">
             <article
               v-for="publication in filteredAndSortedPublications"
@@ -402,6 +394,7 @@ type PublicationTagFilterKind = "type" | "venue" | "topic";
 interface WorkTocEntry {
   id: string;
   label: string;
+  level?: number;
 }
 
 const DEFAULT_SECTION_EXPANDED: Record<PublicationDetailSection, boolean> = {
@@ -469,11 +462,13 @@ export default defineComponent({
       const publicationEntries = this.filteredAndSortedPublications.map((publication) => ({
         id: this.publicationSectionId(publication.id),
         label: publication.title,
+        level: 2,
       }));
 
       return [
-        { id: "publications-overview", label: "Overview" },
-        { id: "publications-filters", label: "Filters" },
+        { id: "publications-overview", label: "Overview", level: 1 },
+        { id: "publications-filters", label: "Filters", level: 2 },
+        { id: "publications-content", label: "Entries", level: 1 },
         ...publicationEntries,
       ];
     },
@@ -803,7 +798,7 @@ export default defineComponent({
 .work-main {
   min-width: 0;
   display: grid;
-  gap: 20px;
+  gap: 14px;
 }
 
 .work-section {
@@ -817,7 +812,7 @@ export default defineComponent({
   max-width: var(--work-content-max);
   width: 100%;
   margin: 0 auto;
-  background: linear-gradient(180deg, rgba(80, 203, 255, 0.08), rgba(45, 212, 191, 0.04));
+  background: var(--surface-elevated);
   border: 1px solid var(--surface-outline);
   border-radius: 14px;
   padding: 16px 18px;
@@ -825,13 +820,14 @@ export default defineComponent({
   gap: 14px;
 }
 
-[data-theme="light"] .work-section-block {
-  background: linear-gradient(180deg, rgba(235, 248, 255, 0.96), rgba(233, 249, 245, 0.92));
-  border-color: rgba(16, 36, 59, 0.14);
+.publications-content-block {
+  gap: 0;
+  padding-top: 14px;
 }
 
-#publications-overview {
-  margin-bottom: 2px;
+[data-theme="light"] .work-section-block {
+  background: linear-gradient(180deg, rgba(var(--accent-secondary-rgb), 0.56), rgba(var(--accent-rgb), 0.16));
+  border-color: rgba(16, 36, 59, 0.14);
 }
 
 .publications-header {
@@ -861,14 +857,15 @@ export default defineComponent({
 
 .publications-header p {
   margin: 6px 0 0;
-  color: var(--page-text);
-  opacity: 0.88;
+  color: var(--text-muted);
+  opacity: 1;
   font-size: var(--font-size-body-xl);
 }
 
 .citation-update-note {
   margin: 6px 0 0;
-  opacity: 0.76;
+  color: var(--text-soft);
+  opacity: 1;
   font-size: var(--font-size-meta) !important;
 }
 
@@ -903,11 +900,11 @@ export default defineComponent({
 }
 
 .profile-link.scholar {
-  box-shadow: inset 0 0 0 1px rgba(80, 203, 255, 0.35);
+  box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.35);
 }
 
 .profile-link.semantic {
-  box-shadow: inset 0 0 0 1px rgba(45, 212, 191, 0.35);
+  box-shadow: inset 0 0 0 1px rgba(var(--accent-secondary-rgb), 0.35);
 }
 
 .profile-icon {
@@ -922,34 +919,14 @@ export default defineComponent({
   filter: grayscale(1) brightness(0) invert(1) contrast(1.05);
 }
 
-.work-section-header {
-  margin: 0;
-}
-
-.work-section-header h2 {
-  margin: 0;
-  color: var(--page-text);
-  font-family: var(--content-heading-font);
-  font-size: var(--content-h2-size);
-  font-weight: 600;
-}
-
-.work-section-header p {
-  margin: 5px 0 0;
-  color: var(--page-text);
-  opacity: 0.8;
-  font-size: var(--font-size-body);
-}
-
 .publication-filters {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--surface-outline);
-  border-radius: 10px;
-  padding: 8px 10px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--surface-outline);
 }
 
 [data-theme="light"] .publication-filters {
-  background: rgba(16, 36, 59, 0.035);
+  border-top-color: rgba(16, 36, 59, 0.24);
 }
 
 .filter-toggle {
@@ -969,26 +946,28 @@ export default defineComponent({
 
 .filter-toggle-title {
   font-family: var(--content-heading-font);
+  color: var(--text-muted);
   font-size: var(--font-size-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  opacity: 0.86;
+  opacity: 1;
 }
 
 .filter-toggle-state {
   border: none;
   border-radius: 0;
   padding: 0;
+  color: var(--text-soft);
   font-size: var(--font-size-micro);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  opacity: 0.68;
+  opacity: 1;
   background: transparent;
 }
 
 .filter-panel {
-  margin-top: 9px;
+  margin-top: 12px;
 }
 
 .filter-grid {
@@ -1000,12 +979,12 @@ export default defineComponent({
 .filter-control {
   display: grid;
   gap: 4px;
-  color: var(--page-text);
+  color: var(--text-muted);
   font-weight: 600;
   font-size: var(--font-size-caption);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  opacity: 0.85;
+  opacity: 1;
 }
 
 .filter-control select {
@@ -1029,19 +1008,20 @@ export default defineComponent({
 }
 
 .filter-control select:hover {
-  border-color: rgba(80, 203, 255, 0.46);
-  background-color: rgba(80, 203, 255, 0.06);
+  border-color: rgba(var(--accent-rgb), 0.46);
+  background-color: rgba(var(--accent-rgb), 0.06);
 }
 
 .filter-control select:focus-visible {
   outline: none;
-  border-color: rgba(80, 203, 255, 0.72);
-  box-shadow: 0 0 0 1px rgba(80, 203, 255, 0.25);
+  border-color: rgba(var(--accent-rgb), 0.72);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.25);
 }
 
 .filter-result {
   margin: 0;
-  opacity: 0.72;
+  color: var(--text-soft);
+  opacity: 1;
   font-size: var(--font-size-caption);
   letter-spacing: 0.03em;
 }
@@ -1082,7 +1062,7 @@ export default defineComponent({
 }
 
 .publication-card {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-card);
   border: 1px solid var(--surface-outline);
   border-radius: 12px;
   padding: 12px 14px;
@@ -1102,8 +1082,8 @@ export default defineComponent({
 
 .publication-date {
   font-weight: 700;
-  color: var(--page-text);
-  opacity: 0.9;
+  color: var(--text-muted);
+  opacity: 1;
 }
 
 .publication-title {
@@ -1131,8 +1111,8 @@ export default defineComponent({
 
 .publication-venue {
   margin: 4px 0 0;
-  color: var(--page-text);
-  opacity: 0.82;
+  color: var(--text-muted);
+  opacity: 1;
   font-size: var(--font-size-body);
 }
 
@@ -1200,7 +1180,7 @@ export default defineComponent({
 
 .publication-tag:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.35);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.35);
   z-index: 1000;
 }
 
@@ -1216,15 +1196,15 @@ export default defineComponent({
 }
 
 .publication-tag-venue {
-  background: rgba(80, 203, 255, 0.14);
-  --tag-tooltip-bg: rgba(80, 203, 255, 0.96);
+  background: rgba(var(--accent-rgb), 0.14);
+  --tag-tooltip-bg: rgba(var(--accent-rgb), 0.96);
   --tag-tooltip-border: rgba(14, 165, 233, 0.96);
   --tag-tooltip-text: #052634;
 }
 
 .publication-tag-topic {
-  background: rgba(45, 212, 191, 0.14);
-  --tag-tooltip-bg: rgba(45, 212, 191, 0.96);
+  background: rgba(var(--accent-secondary-rgb), 0.14);
+  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.96);
   --tag-tooltip-border: rgba(13, 148, 136, 0.96);
   --tag-tooltip-text: #042320;
 }
@@ -1239,34 +1219,34 @@ export default defineComponent({
 }
 
 [data-theme="dark"] .publication-tag-venue {
-  background: rgba(80, 203, 255, 0.26);
-  border-color: rgba(80, 203, 255, 0.6);
+  background: rgba(var(--accent-rgb), 0.26);
+  border-color: rgba(var(--accent-rgb), 0.6);
   color: #d3f4ff;
-  --tag-tooltip-bg: rgba(80, 203, 255, 0.98);
+  --tag-tooltip-bg: rgba(var(--accent-rgb), 0.98);
   --tag-tooltip-border: rgba(125, 211, 252, 0.98);
   --tag-tooltip-text: #041b25;
 }
 
 [data-theme="dark"] .publication-tag-topic {
-  background: rgba(45, 212, 191, 0.26);
-  border-color: rgba(45, 212, 191, 0.58);
+  background: rgba(var(--accent-secondary-rgb), 0.26);
+  border-color: rgba(var(--accent-secondary-rgb), 0.58);
   color: #d2fff4;
-  --tag-tooltip-bg: rgba(45, 212, 191, 0.98);
-  --tag-tooltip-border: rgba(45, 212, 191, 0.98);
+  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.98);
+  --tag-tooltip-border: rgba(var(--accent-secondary-rgb), 0.98);
   --tag-tooltip-text: #021413;
 }
 
 .publication-summary {
   margin: 10px 0 0;
   padding-left: 12px;
-  border-left: 3px solid rgba(80, 203, 255, 0.45);
-  color: var(--page-text);
+  border-left: 3px solid rgba(var(--accent-rgb), 0.45);
+  color: var(--text-muted);
   line-height: 1.6;
   font-size: var(--font-size-body-lg);
 }
 
 [data-theme="light"] .publication-summary {
-  border-left-color: rgba(13, 79, 136, 0.4);
+  border-left-color: rgba(var(--accent-ink-rgb), 0.42);
 }
 
 .publication-expand-toggle {
@@ -1275,8 +1255,8 @@ export default defineComponent({
   margin-left: auto;
   border: none;
   background: transparent;
-  color: var(--page-text);
-  opacity: 0.74;
+  color: var(--text-soft);
+  opacity: 1;
   font-size: var(--font-size-caption);
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -1304,7 +1284,7 @@ export default defineComponent({
 }
 
 .publication-expanded-block {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface-card);
   border: 1px solid var(--surface-outline);
   border-radius: 8px;
   padding: 8px 10px;
@@ -1332,17 +1312,19 @@ export default defineComponent({
 
 .publication-subsection-label {
   margin: 0;
+  color: var(--text-muted);
   font-size: var(--font-size-meta);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  opacity: 0.82;
+  opacity: 1;
 }
 
 .publication-subsection-state {
+  color: var(--text-soft);
   font-size: var(--font-size-micro);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  opacity: 0.72;
+  opacity: 1;
 }
 
 .publication-subsection-content {
@@ -1355,7 +1337,8 @@ export default defineComponent({
 }
 
 .publication-empty {
-  opacity: 0.78;
+  color: var(--text-soft);
+  opacity: 1;
 }
 
 .publication-details-list {
@@ -1467,8 +1450,8 @@ export default defineComponent({
 }
 
 .publication-action-btn.primary {
-  border-color: rgba(80, 203, 255, 0.42);
-  background: rgba(80, 203, 255, 0.08);
+  border-color: rgba(var(--accent-rgb), 0.42);
+  background: rgba(var(--accent-rgb), 0.08);
 }
 
 .publication-action-btn:hover {
@@ -1505,8 +1488,7 @@ export default defineComponent({
   }
 
   .publications-header,
-  .publication-card,
-  .publication-filters {
+  .publication-card {
     padding: 12px;
   }
 

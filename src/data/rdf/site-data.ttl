@@ -56,216 +56,511 @@
 <https://eliascrum.github.io/eliascrum/id/citation-observation/wikidata-sparql-ISWC-2025> rdf:type ec:CitationObservation .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/1-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-1> ec:text "Developing framework for clinical genomic data storage, sharing, and querying" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-1> ec:text "KNowledge on Web Scale (IDLab, UGent) / Digital Precision Health (VITO NV)" .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-1> rdf:type ec:CvDetail .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/1-1> .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-2> ec:order "2"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-2> ec:text "Utilization of the Solid protocol" .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-2> rdf:type ec:CvDetail .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/1-1> .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-3> ec:order "3"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-3> ec:text "Experience with SPARQL, RDF, Linked Data, decentralized querying, and ontology definition" .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-3> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/1-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-1> ec:text "Identified and characterized novel medically relevant bacteria and bacteriophage sequences" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-1> ec:text "Graduated with Bioinformatics Honors" .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-1> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/1-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-2> ec:order "2"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-2> ec:text "Master's thesis: Cataloguing Coliphages of the Human Urinary Microbiome" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-2> ec:text "GPA: 4.00 / 4.00" .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-2> rdf:type ec:CvDetail .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/1-2> .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-3> ec:order "3"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-3> ec:prefix "Primary author:" .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-3> ec:text "DOI: 10.1371/journal.pone.0283930" .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-3> rdf:type ec:CvDetail .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-3> schema:url <https://doi.org/10.1371/journal.pone.0283930> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/1-3> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-1> ec:text "Performed independent research involving prokaryotic DNA sequencing, assembly, and analysis" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-1> ec:text "Majors: Bioinformatics and Biology" .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-1> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/1-3> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-2> ec:order "2"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-2> ec:prefix "Contributing author:" .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-2> ec:text "DOI: 10.1128/mSphere.00154-21" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-2> ec:text "Minor: History" .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-2> rdf:type ec:CvDetail .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-2> schema:url <https://doi.org/10.1128/mSphere.00154-21> .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-4-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/1-4> .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-4-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-4-1> ec:text "Researched the variable resistance of 68 strains of bladder E. coli to bacteriophage infection" .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-4-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/1-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-3> ec:text "GPA: 3.991 / 4.000" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-3> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/2-1-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/2-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/2-1-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/2-1-1> ec:text "Taught multiple sections of Biology Lab I and II each semester" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-1-1> ec:text "Python, BASH, R, Java, JavaScript, TypeScript, HTML, CSS, Vue, LaTeX" .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/2-1-1> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/2-2-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/2-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/2-2-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/2-2-1> ec:text "Assisted physicians by taking notes on and charting patient visits" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-2-1> ec:text "BowTie2, Kallisto, Spades, FastANI, PATRIC, PHASTER, Anvi'o, ResFinder, BLAST+, Clustal Omega, and related tooling" .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/2-2-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-3-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/2-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-3-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-3-1> ec:text "GitHub Actions, NGINX, Conda, Docker, Cytoscape" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-3-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-4-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/2-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-4-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-4-1> ec:text "SPARQL, RDF serialization, ontology definition, Solid" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-4-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-5-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/2-5> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-5-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-5-1> ec:text "English (native), Dutch (A1), French (A2)" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-5-1> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/3-1-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/3-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/3-1-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/3-1-1> ec:text "Doctor of Computer Science Engineering" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/3-1-1> ec:text "Participated in the 2024 International Semantic Web Summer School and related project activities." .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/3-1-1> rdf:type ec:CvDetail .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/3-2-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/3-2> .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/3-2-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/3-2-1> ec:text "GPA: 4.000 / 4.000" .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/3-2-1> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-1> ec:text "Python, BASH, R, Java, JavaScript, TypeScript, HTML, CSS, Vue" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-1> ec:text "Developing framework for clinical genomic data storage, sharing, and querying." .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-2> ec:text "Implementation of the framework utilizes the Solid protocol." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-2> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-3> ec:text "Experience with SPARQL, RDF, Linked Data, decentralized querying, and ontology definition." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-3> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-1> ec:text "BowTie2, Kallisto, Spades, etc." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-1> ec:text "Identified and characterized novel, medically relevant bacteria and bacteriophage sequences." .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-2> ec:text "Master's thesis: Cataloguing Coliphages of the Human Urinary Microbiome." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-2> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-3> ec:text "Experience with gene annotation and clustering, taxonomic classification screening, and gene-similarity network production." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-3> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> ec:order "4"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> ec:prefix "Publication:" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> ec:text "10.1371/journal.pone.0283930" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> schema:url <https://eliascrum.github.io/eliascrum/publications/urinary-coliphages-2023/paper> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-1> ec:text "Performed independent research involving prokaryotic DNA sequencing, assembly, and analysis." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> ec:prefix "Publication:" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> ec:text "10.1128/mSphere.00154-21" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> schema:url <https://eliascrum.github.io/eliascrum/publications/gardnerella-characterization-2021/paper> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-1> ec:text "Researched the variable resistance of strains of bladder E. coli to bacteriophage infection." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-2> ec:text "Presented the outcomes of this work to the Stritch School of Medicine Microbiology and Immunology Department." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-2> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-3> ec:text "Presented a poster at the Stritch School of Medicine annual St. Albert's Day Research Celebration." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-3> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-1> ec:text "Taught two sections of Biology Lab I and II each semester, with 24 students per section." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-2> ec:text "Designed and delivered lectures, assessed in-class exercises, and developed and evaluated quizzes and exams." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-2> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-3> ec:text "Collaborated with colleagues and students to maximize student learning and growth." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-3> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-1> ec:text "Assisted physicians by taking notes on and charting patient visits." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-2> ec:text "Interpreted and integrated medical charts to aid in the diagnosis and treatment of patients." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-2> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-3> ec:text "Operated EPIC software for medical documentation." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-3> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-1> ec:text "Trained incoming student tutors and supplementary instructors." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-2> ec:text "Supervised peer leaders and provided constructive feedback on instruction." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-2> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-3> ec:text "Led group discussions and presented during bi-weekly meetings of more than 100 tutors." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-3> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-1> ec:text "Tutored and served as professor's assistant for Pre-calculus (MATH 117) and Organic Chemistry I and II (CHEM 223 and 224)." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-2> ec:text "Attended lectures and aided professors with lessons for around 200 students." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-2> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-3> ec:text "Hosted three tutoring sessions per week with an average attendance between 20 and 80 students." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-3> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-4> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-4> ec:order "4"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-4> ec:text "Tutored students in accelerated summer science courses including General Biology, Cell Biology, Genetics, General Chemistry, Organic Chemistry, Biochemistry, and Physics." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-4> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-5> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-1> ec:text "Refereed intramural sports including flag football, soccer, and volleyball." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-5> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-2> ec:text "Communicated with other officials and players to ensure a fair and enjoyable intramural atmosphere." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-2> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-5> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-3> ec:text "Diffused conflicts arising during or after games." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-3> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-4> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-5> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-4> ec:order "4"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-4> ec:text "Earned Campus Recreation Employee of the Year for the 2017-2018 academic year." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-4> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-1-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/6-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-1-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-1-1> ec:text "Coached underprivileged inner-city children in the fundamentals of skating and ice hockey." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-1-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-1-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/6-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-1-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-1-2> ec:text "Taught, encouraged, and engaged with participants aged 8 to 15." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-1-2> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-2-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/6-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-2-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-2-1> ec:text "Attended Loyola alumni events and communicated the student experience with Loyola alumni." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-2-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-2-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/6-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-2-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-2-2> ec:text "Worked at a diverse array of Loyola-sponsored events and acted as a representative of the university." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-2-2> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-3-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/6-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-3-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-3-1> ec:text "Volunteered in the emergency room on a weekly basis." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-3-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-3-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/6-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-3-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-3-2> ec:text "Helped restock rooms, tend to patient needs, and assist medical professionals." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-3-2> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-4-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/6-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-4-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-4-1> ec:text "Assisted in overseeing the afterschool homework program at Jordan Elementary for grades 3 and 4." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-4-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-4-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/6-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-4-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-4-2> ec:text "Helped keep around 20 students focused while assisting with homework and occasional enrichment activities." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-4-2> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-5-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/6-5> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-5-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-5-1> ec:text "Instructed underprivileged inner-city children in the fundamentals of skating and ice hockey." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-5-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-5-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/6-5> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-5-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-5-2> ec:text "Assisted St. Paul Police officers with program coordination and participant organization." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/6-5-2> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-item/1-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/1> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-1> ec:dateText "Oct 2023 - Present" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/1-1> ec:dateText "Oct. 2023 - Present" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/1-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-1> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-2> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/1-1-3> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/1-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-1> ec:organization "Ghent University / VITO NV" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-1> ec:role "Ph.D. Researcher" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/1-1> ec:organization "Ghent University" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/1-1> ec:role "Doctor of Computer Science Engineering" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/1-1> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/1-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/1> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-2> ec:dateText "Aug 2020 - Aug 2022" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/1-2> ec:dateText "Aug. 2020 - Aug. 2022" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/1-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/1-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-2> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-3> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/1-2> ec:order "2"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-2> ec:organization "Loyola" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-2> ec:role "Master's Thesis Researcher" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/1-2> ec:organization "Loyola University Chicago" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/1-2> ec:role "Master of Science (Bioinformatics)" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/1-2> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/1-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/1> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-3> ec:dateText "Aug 2019 - Aug 2020" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/1-3> ec:dateText "Aug. 2017 - May 2021" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/1-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/1-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/1-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-3> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/1-3> ec:order "3"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-3> ec:organization "Loyola" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-3> ec:role "Putonti Lab Undergraduate Researcher" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/1-3> ec:organization "Loyola University Chicago" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/1-3> ec:role "Bachelor of Science" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/1-3> rdf:type ec:CvItem .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-4> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/1> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-4> ec:dateText "May 2019 - Aug 2019" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-4> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/1-4-1> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-4> ec:order "4"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-4> ec:organization "Loyola Stritch School of Medicine" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-4> ec:role "Wolfe Lab Research Assistant" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/1-4> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/2-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/2> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/2-1> ec:dateText "Aug 2021 - May 2023" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/2-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/2-1-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/2-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/2-1> ec:organization "Loyola University Chicago" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/2-1> ec:role "Adjunct Professor of Biology" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-1> ec:role "Programming Languages" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/2-1> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/2-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/2> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/2-2> ec:dateText "Nov 2021 - Jan 2023" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/2-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/2-2-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/2-2> ec:order "2"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/2-2> ec:organization "University of Chicago Medical Center" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/2-2> ec:role "Medical Scribe" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-2> ec:role "Bioinformatics Tools" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/2-2> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/2-3-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-3> ec:role "Miscellaneous" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-3> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-4> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-4> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/2-4-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-4> ec:order "4"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-4> ec:role "Semantic Web" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-4> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-5> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-5> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/2-5-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-5> ec:order "5"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-5> ec:role "Languages" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-5> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/3-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/3> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/3-1> ec:dateText "October 2023 - Present" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/3-1> ec:dateText "2024" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/3-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/3-1-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/3-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/3-1> ec:role "Ghent University - Ph.D. Candidate" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/3-1> ec:organization "International Semantic Web Summer School 2024" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/3-1> ec:role "Participant" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/3-1> rdf:type ec:CvItem .
-<https://eliascrum.github.io/eliascrum/id/cv-item/3-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/3> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/3-2> ec:dateText "Aug 2020 - Aug 2022" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/3-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/3-2-1> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/3-2> ec:order "2"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/3-2> ec:role "Loyola University Chicago - Master of Science" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/3-2> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/4> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-1> ec:dateText "Oct. 2023 - Present" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-3> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/4-1> ec:role "Programming Languages" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-1> ec:organization "Graduate Researcher, Ghent University & VITO NV" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-1> ec:role "Ph.D. Candidate" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-1> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/4> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:dateText "Aug. 2020 - Aug. 2022" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:order "2"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:role "Bioinformatic Tools" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:organization "Master's Research, Loyola University Chicago (Putonti Lab)" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:role "Master's Researcher" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/4> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:dateText "Aug. 2019 - Aug. 2020" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:organization "Undergraduate Research, Loyola University Chicago (Putonti Lab)" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:role "Undergraduate Researcher" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/4> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:dateText "May 2019 - Aug. 2019" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:order "4"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:organization "Junior Researcher, Loyola Stritch School of Medicine (Wolfe Lab)" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:role "Junior Research Assistant" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/5-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/5> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/5-1> ec:dateText "Seminar Completion Date: 11/30/2017" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-1> ec:dateText "Aug. 2021 - May 2023" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-3> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/5-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/5-1> ec:role "Emerging Leaders Program" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-1> ec:organization "Department of Biology, Loyola University Chicago" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-1> ec:role "Adjunct Professor of Biology" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/5-1> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/5> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-2> ec:dateText "Nov. 2021 - Jan. 2023" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-2> ec:organization "Emergency Department, University of Chicago Medical Center" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-2> ec:role "Medical Scribe" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-2> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/5> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-3> ec:dateText "Nov. 2020 - May 2021" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-3-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-3> ec:organization "Tutoring Center, Loyola University Chicago" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-3> ec:role "Training and Professional Development Committee Member" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-3> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-4> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/5> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-4> ec:dateText "Jan. 2019 - May 2021" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-4> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-4> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-4> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-4> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-4-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-4> ec:order "4"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-4> ec:organization "Tutoring Center, Loyola University Chicago" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-4> ec:role "Supplementary Instructor (SI) and Group Tutor" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-4> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-5> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/5> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-5> ec:dateText "Sept. 2017 - May 2019" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-5> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-5> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-5> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-5> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-5-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-5> ec:order "5"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-5> ec:organization "Campus Recreation, Loyola University Chicago" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-5> ec:role "Intramural Sports Official" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/5-5> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/6-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/6> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/6-1> ec:dateText "Jan 2020 - May 2021" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-1> ec:dateText "Oct. 2021 - Apr. 2023" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/6-1-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/6-1-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/6-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/6-1> ec:organization "Loyola" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/6-1> ec:role "Supplementary Instructor" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-1> ec:organization "Inner City Education (ICE) Program" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-1> ec:role "Ice Hockey and Skating Coach" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/6-1> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/6> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-2> ec:dateText "Aug. 2019 - May 2020" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/6-2-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/6-2-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-2> ec:organization "Alumni Relations, Loyola University Chicago" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-2> ec:role "Student Alumni Ambassador" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-2> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/6> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-3> ec:dateText "Oct. 2018 - Mar. 2020" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/6-3-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/6-3-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-3> ec:organization "AMITA St. Joseph's Hospital" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-3> ec:role "Emergency Room Volunteer" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-3> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-4> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/6> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-4> ec:dateText "Sept. 2019 - Mar. 2020" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-4> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/6-4-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-4> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/6-4-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-4> ec:order "4"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-4> ec:organization "Loyola4Chicago - Jordan Elementary" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-4> ec:role "Afterschool Program Tutor" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-4> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-5> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/6> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-5> ec:dateText "Nov. 2015 - Mar. 2020" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-5> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/6-5-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-5> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/6-5-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-5> ec:order "5"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-5> ec:organization "St. Paul Police PAL - Learn to Skate Program" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-5> ec:role "Assistant Skating Instructor" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/6-5> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/7-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/7> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/7-1> ec:dateText "Oct 2021 - Present" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-1> ec:dateText "2024-28" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/7-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/7-1> ec:role "Inner-City Education Hockey Coach" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-1> ec:organization "The Research Foundation - Flanders (FWO)" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-1> ec:role "PhD Fellowship Grant Holder" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/7-1> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/7> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-2> ec:dateText "2024" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-2> ec:organization "International Semantic Web Summer School 2024" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-2> ec:role "Best Paper (Group)" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-2> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/7> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-3> ec:dateText "2024" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-3> ec:organization "International Semantic Web Summer School 2024" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-3> ec:role "Best Poster (Individual)" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-3> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-4> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/7> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-4> ec:dateText "2020-21" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-4> ec:order "4"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-4> ec:organization "Recipient of a research scholarship for the 2020-2021 school year" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-4> ec:role "Mulcahy Research Fellowship Award" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-4> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-5> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/7> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-5> ec:dateText "2017-21" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-5> ec:order "5"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-5> ec:organization "Eight-time Dean's List recipient" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-5> ec:role "College of Arts and Sciences Dean's List Mention" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-5> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-6> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/7> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-6> ec:dateText "2017-18" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-6> ec:order "6"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-6> ec:organization "Campus Recreation, Loyola University Chicago" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-6> ec:role "Employee of the Year" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-6> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-7> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/7> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-7> ec:dateText "2017-21" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-7> ec:order "7"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-7> ec:organization "College of Arts and Sciences, Loyola University Chicago" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-7> ec:role "Presidential Scholarship Recipient" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/7-7> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/8-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/8> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/8-1> ec:dateText "Aug 2020 - May 2021" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/8-1> ec:dateText "2019" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/8-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/8-1> ec:role "Mulcahy Research Fellowship Award" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/8-1> ec:organization "Loyola University Chicago Chapter" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/8-1> ec:role "Alpha Sigma Nu Jesuit Honors Society Inductee" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/8-1> rdf:type ec:CvItem .
-<https://eliascrum.github.io/eliascrum/id/cv-item/9-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/9> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/9-1> ec:dateText "Oct 2019" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/9-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/9-1> ec:role "Alpha Sigma Nu Jesuit Honors Society Inductee" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/9-1> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/8-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/8> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/8-2> ec:dateText "2018" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/8-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/8-2> ec:organization "Epsilon Kappa Chapter, Loyola University Chicago" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/8-2> ec:role "Delta Sigma Phi Fraternity" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/8-2> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-section/1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/1> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/1-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/1> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/1-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/1> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/1-3> .
-<https://eliascrum.github.io/eliascrum/id/cv-section/1> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/1-4> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/1> ec:order "1"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/cv-section/1> rdf:type ec:CvSection .
-<https://eliascrum.github.io/eliascrum/id/cv-section/1> schema:name "Research Experience" .
+<https://eliascrum.github.io/eliascrum/id/cv-section/1> schema:name "Education" .
 <https://eliascrum.github.io/eliascrum/id/cv-section/2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/2> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/2-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/2> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/2-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/2> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/2-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/2> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/2-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/2> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/2-5> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/2> ec:order "2"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/cv-section/2> rdf:type ec:CvSection .
-<https://eliascrum.github.io/eliascrum/id/cv-section/2> schema:name "Professional Experience" .
+<https://eliascrum.github.io/eliascrum/id/cv-section/2> schema:name "Skills" .
 <https://eliascrum.github.io/eliascrum/id/cv-section/3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/3> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/3-1> .
-<https://eliascrum.github.io/eliascrum/id/cv-section/3> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/3-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/3> ec:order "3"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/cv-section/3> rdf:type ec:CvSection .
-<https://eliascrum.github.io/eliascrum/id/cv-section/3> schema:name "Education" .
+<https://eliascrum.github.io/eliascrum/id/cv-section/3> schema:name "Professional Development" .
 <https://eliascrum.github.io/eliascrum/id/cv-section/4> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/4> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/4-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/4> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/4> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/4-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/4> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/4-4> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/4> ec:order "4"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/cv-section/4> rdf:type ec:CvSection .
-<https://eliascrum.github.io/eliascrum/id/cv-section/4> schema:name "Skills and Computational Expertise" .
+<https://eliascrum.github.io/eliascrum/id/cv-section/4> schema:name "Research Experience" .
 <https://eliascrum.github.io/eliascrum/id/cv-section/5> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/5> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/5-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/5> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/5-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/5> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/5-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/5> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/5-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/5> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/5-5> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/5> ec:order "5"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/cv-section/5> rdf:type ec:CvSection .
-<https://eliascrum.github.io/eliascrum/id/cv-section/5> schema:name "Additional Education" .
+<https://eliascrum.github.io/eliascrum/id/cv-section/5> schema:name "Professional Experience" .
 <https://eliascrum.github.io/eliascrum/id/cv-section/6> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/6> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/6-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/6> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/6-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/6> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/6-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/6> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/6-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/6> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/6-5> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/6> ec:order "6"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/cv-section/6> rdf:type ec:CvSection .
-<https://eliascrum.github.io/eliascrum/id/cv-section/6> schema:name "Past Employment" .
+<https://eliascrum.github.io/eliascrum/id/cv-section/6> schema:name "Volunteer Experience" .
 <https://eliascrum.github.io/eliascrum/id/cv-section/7> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/7> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/7-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/7> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/7-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/7> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/7-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/7> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/7-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/7> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/7-5> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/7> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/7-6> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/7> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/7-7> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/7> ec:order "7"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/cv-section/7> rdf:type ec:CvSection .
-<https://eliascrum.github.io/eliascrum/id/cv-section/7> schema:name "Volunteer Experience" .
+<https://eliascrum.github.io/eliascrum/id/cv-section/7> schema:name "Honors and Awards" .
 <https://eliascrum.github.io/eliascrum/id/cv-section/8> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/8> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/8-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/8> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/8-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/8> ec:order "8"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/cv-section/8> rdf:type ec:CvSection .
-<https://eliascrum.github.io/eliascrum/id/cv-section/8> schema:name "Awards" .
-<https://eliascrum.github.io/eliascrum/id/cv-section/9> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
-<https://eliascrum.github.io/eliascrum/id/cv-section/9> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/9-1> .
-<https://eliascrum.github.io/eliascrum/id/cv-section/9> ec:order "9"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-section/9> rdf:type ec:CvSection .
-<https://eliascrum.github.io/eliascrum/id/cv-section/9> schema:name "Organizations" .
+<https://eliascrum.github.io/eliascrum/id/cv-section/8> schema:name "Organizations" .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:description "RDF/Turtle projection of the TypeScript data modules under src/data." .
-<https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:modified "2026-03-17T16:13:26.786Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:modified "2026-03-17T19:18:34.677Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:hasExternalProfile <https://eliascrum.github.io/eliascrum/id/profile/google-scholar> .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:hasExternalProfile <https://eliascrum.github.io/eliascrum/id/profile/semantic-scholar> .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:sourceDirectory "src/data" .
@@ -546,37 +841,43 @@
 <https://eliascrum.github.io/eliascrum/id/homepage-update/talk%3Augent-genomics-talk> rdf:type ec:HomepageUpdate .
 <https://eliascrum.github.io/eliascrum/id/homepage-update/talk%3Augent-genomics-talk> schema:name "KNoWS: An Intro to Genomics for Computer Scientists" .
 <https://eliascrum.github.io/eliascrum/id/homepage-update/talk%3Augent-genomics-talk> schema:url <https://eliascrum.github.io/eliascrum/talks/ugent-genomics-talk> .
-<https://eliascrum.github.io/eliascrum/id/poster/e-i-xchange-poster-24> dcterms:identifier "e-i-xchange-poster-24" .
-<https://eliascrum.github.io/eliascrum/id/poster/e-i-xchange-poster-24> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
-<https://eliascrum.github.io/eliascrum/id/poster/e-i-xchange-poster-24> ec:filePath "/talks/posters/E(i)xchange24_Poster_EDC.pdf" .
-<https://eliascrum.github.io/eliascrum/id/poster/e-i-xchange-poster-24> rdf:type ec:Poster .
-<https://eliascrum.github.io/eliascrum/id/poster/e-i-xchange-poster-24> schema:name "E(I)Xchange Poster: PENGQUIN" .
-<https://eliascrum.github.io/eliascrum/id/poster/e-i-xchange-poster-24> schema:url <https://eliascrum.github.io/eliascrum/talks/posters/E(i)xchange24_Poster_EDC.pdf> .
-<https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster> dcterms:identifier "eswc-24-poster" .
-<https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
-<https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster> ec:filePath "/talks/posters/ESWC_24_Poster_EDC.pdf" .
-<https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster> ec:isPosterForTalk <https://eliascrum.github.io/eliascrum/id/talk/eswc-phdsymp-pangquin> .
-<https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster> rdf:type ec:Poster .
-<https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster> schema:name "ESWC Poster: PENGQUIN" .
-<https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster> schema:url <https://eliascrum.github.io/eliascrum/talks/posters/ESWC_24_Poster_EDC.pdf> .
-<https://eliascrum.github.io/eliascrum/id/poster/isws-24-poster-award-winner> dcterms:identifier "isws-24-poster-award-winner" .
-<https://eliascrum.github.io/eliascrum/id/poster/isws-24-poster-award-winner> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
-<https://eliascrum.github.io/eliascrum/id/poster/isws-24-poster-award-winner> ec:filePath "/talks/posters/EDC_Poster_ISWS2024(award_winner).pdf" .
-<https://eliascrum.github.io/eliascrum/id/poster/isws-24-poster-award-winner> rdf:type ec:Poster .
-<https://eliascrum.github.io/eliascrum/id/poster/isws-24-poster-award-winner> schema:name "ISWS2024 Poster: PENGQUIN" .
-<https://eliascrum.github.io/eliascrum/id/poster/isws-24-poster-award-winner> schema:url <https://eliascrum.github.io/eliascrum/talks/posters/EDC_Poster_ISWS2024(award_winner).pdf> .
-<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-24-poster> dcterms:identifier "swat4hcls-24-poster" .
-<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-24-poster> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
-<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-24-poster> ec:filePath "/talks/posters/SWAT4HCLS_24_poster_EDC.pdf" .
-<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-24-poster> rdf:type ec:Poster .
-<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-24-poster> schema:name "SWAT4HCLS Poster: Personalized Data Pods for Personalized Medicine" .
-<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-24-poster> schema:url <https://eliascrum.github.io/eliascrum/talks/posters/SWAT4HCLS_24_poster_EDC.pdf> .
-<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-25-poster> dcterms:identifier "swat4hcls-25-poster" .
-<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-25-poster> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
-<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-25-poster> ec:filePath "/talks/posters/swat4hcls_2025.pdf" .
-<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-25-poster> rdf:type ec:Poster .
-<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-25-poster> schema:name "SWAT4HCLS Poster: VCF to RDF" .
-<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-25-poster> schema:url <https://eliascrum.github.io/eliascrum/talks/posters/swat4hcls_2025.pdf> .
+<https://eliascrum.github.io/eliascrum/id/poster/e-i-xchange24-poster-edc> dcterms:identifier "e-i-xchange24-poster-edc" .
+<https://eliascrum.github.io/eliascrum/id/poster/e-i-xchange24-poster-edc> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
+<https://eliascrum.github.io/eliascrum/id/poster/e-i-xchange24-poster-edc> ec:filePath "/talks/posters/E(i)xchange24_Poster_EDC.pdf" .
+<https://eliascrum.github.io/eliascrum/id/poster/e-i-xchange24-poster-edc> rdf:type ec:Poster .
+<https://eliascrum.github.io/eliascrum/id/poster/e-i-xchange24-poster-edc> schema:name "E(I)Xchange24 Poster EDC" .
+<https://eliascrum.github.io/eliascrum/id/poster/e-i-xchange24-poster-edc> schema:url <https://eliascrum.github.io/eliascrum/talks/posters/E(i)xchange24_Poster_EDC.pdf> .
+<https://eliascrum.github.io/eliascrum/id/poster/edc-poster-isws2024-award-winner> dcterms:identifier "edc-poster-isws2024-award-winner" .
+<https://eliascrum.github.io/eliascrum/id/poster/edc-poster-isws2024-award-winner> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
+<https://eliascrum.github.io/eliascrum/id/poster/edc-poster-isws2024-award-winner> ec:filePath "/talks/posters/EDC_Poster_ISWS2024(award_winner).pdf" .
+<https://eliascrum.github.io/eliascrum/id/poster/edc-poster-isws2024-award-winner> rdf:type ec:Poster .
+<https://eliascrum.github.io/eliascrum/id/poster/edc-poster-isws2024-award-winner> schema:name "EDC Poster ISWS2024(Award Winner)" .
+<https://eliascrum.github.io/eliascrum/id/poster/edc-poster-isws2024-award-winner> schema:url <https://eliascrum.github.io/eliascrum/talks/posters/EDC_Poster_ISWS2024(award_winner).pdf> .
+<https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster-edc> dcterms:identifier "eswc-24-poster-edc" .
+<https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster-edc> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
+<https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster-edc> ec:filePath "/talks/posters/ESWC_24_Poster_EDC.pdf" .
+<https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster-edc> ec:isPosterForTalk <https://eliascrum.github.io/eliascrum/id/talk/eswc-phdsymp-pangquin> .
+<https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster-edc> rdf:type ec:Poster .
+<https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster-edc> schema:name "ESWC 24 Poster EDC" .
+<https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster-edc> schema:url <https://eliascrum.github.io/eliascrum/talks/posters/ESWC_24_Poster_EDC.pdf> .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> dcterms:identifier "swat4hcls-2025" .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> ec:filePath "/talks/posters/swat4hcls_2025.pdf" .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> rdf:type ec:Poster .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> schema:name "Swat4hcls 2025" .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> schema:url <https://eliascrum.github.io/eliascrum/talks/posters/swat4hcls_2025.pdf> .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> dcterms:identifier "swat4hcls-2026" .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> ec:filePath "/talks/posters/swat4hcls_2026.pdf" .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> rdf:type ec:Poster .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> schema:name "Swat4hcls 2026" .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> schema:url <https://eliascrum.github.io/eliascrum/talks/posters/swat4hcls_2026.pdf> .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-24-poster-edc> dcterms:identifier "swat4hcls-24-poster-edc" .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-24-poster-edc> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-24-poster-edc> ec:filePath "/talks/posters/SWAT4HCLS_24_poster_EDC.pdf" .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-24-poster-edc> rdf:type ec:Poster .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-24-poster-edc> schema:name "SWAT4HCLS 24 Poster EDC" .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-24-poster-edc> schema:url <https://eliascrum.github.io/eliascrum/talks/posters/SWAT4HCLS_24_poster_EDC.pdf> .
 <https://eliascrum.github.io/eliascrum/id/profile/google-scholar> rdf:type ec:ExternalProfile .
 <https://eliascrum.github.io/eliascrum/id/profile/google-scholar> schema:name "Google Scholar" .
 <https://eliascrum.github.io/eliascrum/id/profile/google-scholar> schema:url <https://scholar.google.com/citations?user=fAJsN2kAAAAJ&hl=en> .
@@ -865,6 +1166,12 @@
 <https://eliascrum.github.io/eliascrum/id/publication-presentation-link/TRIPLE-SWAT4HCLS-2024-1> rdf:type ec:PublicationPresentationLink .
 <https://eliascrum.github.io/eliascrum/id/publication-presentation-link/TRIPLE-SWAT4HCLS-2024-1> schema:name "Consortium Poster (SWAT4HCLS 2024)" .
 <https://eliascrum.github.io/eliascrum/id/publication-presentation-link/TRIPLE-SWAT4HCLS-2024-1> schema:url <https://eliascrum.github.io/eliascrum/talks/posters/...> .
+<https://eliascrum.github.io/eliascrum/id/publication-presentation-link/vcf-to-rdf-rml-swat4hcls-2026-1> ec:filePath "/talks/posters/swat4hcls_2026.pdf" .
+<https://eliascrum.github.io/eliascrum/id/publication-presentation-link/vcf-to-rdf-rml-swat4hcls-2026-1> ec:forPublication <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> .
+<https://eliascrum.github.io/eliascrum/id/publication-presentation-link/vcf-to-rdf-rml-swat4hcls-2026-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/publication-presentation-link/vcf-to-rdf-rml-swat4hcls-2026-1> rdf:type ec:PublicationPresentationLink .
+<https://eliascrum.github.io/eliascrum/id/publication-presentation-link/vcf-to-rdf-rml-swat4hcls-2026-1> schema:name "Poster (SWAT4HCLS 2026)" .
+<https://eliascrum.github.io/eliascrum/id/publication-presentation-link/vcf-to-rdf-rml-swat4hcls-2026-1> schema:url <https://eliascrum.github.io/eliascrum/talks/posters/swat4hcls_2026.pdf> .
 <https://eliascrum.github.io/eliascrum/id/publication-presentation-link/vcf2rdf-SWAT4HCLS-2025-1> ec:filePath "/talks/posters/swat4hcls_2025.pdf" .
 <https://eliascrum.github.io/eliascrum/id/publication-presentation-link/vcf2rdf-SWAT4HCLS-2025-1> ec:forPublication <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> .
 <https://eliascrum.github.io/eliascrum/id/publication-presentation-link/vcf2rdf-SWAT4HCLS-2025-1> ec:order "1"^^xsd:integer .
@@ -1060,6 +1367,7 @@
 <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf-to-rdf-rml-swat4hcls-2026-5> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf-to-rdf-rml-swat4hcls-2026-6> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/publication-detail/vcf-to-rdf-rml-swat4hcls-2026-7> .
+<https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:hasPresentationLink <https://eliascrum.github.io/eliascrum/id/publication-presentation-link/vcf-to-rdf-rml-swat4hcls-2026-1> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:hasPublicationTypeTag <https://eliascrum.github.io/eliascrum/id/tag/publication-type/poster-paper-7f10c34f> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/bioinformatics-c3c9b51f> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/genomics-b19f4ebd> .
@@ -1470,7 +1778,7 @@
 <https://eliascrum.github.io/eliascrum/id/talk/eswc-phdsymp-pangquin> ec:hasAudienceGroupTag <https://eliascrum.github.io/eliascrum/id/tag/audience-group/computer-scientists-b0882035> .
 <https://eliascrum.github.io/eliascrum/id/talk/eswc-phdsymp-pangquin> ec:hasAudienceGroupTag <https://eliascrum.github.io/eliascrum/id/tag/audience-group/semantic-web-researchers-7045b142> .
 <https://eliascrum.github.io/eliascrum/id/talk/eswc-phdsymp-pangquin> ec:hasAudienceSizeTag <https://eliascrum.github.io/eliascrum/id/tag/audience-size/medium-2c1cee17> .
-<https://eliascrum.github.io/eliascrum/id/talk/eswc-phdsymp-pangquin> ec:hasPoster <https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster> .
+<https://eliascrum.github.io/eliascrum/id/talk/eswc-phdsymp-pangquin> ec:hasPoster <https://eliascrum.github.io/eliascrum/id/poster/eswc-24-poster-edc> .
 <https://eliascrum.github.io/eliascrum/id/talk/eswc-phdsymp-pangquin> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/clinical-genomics-30552628> .
 <https://eliascrum.github.io/eliascrum/id/talk/eswc-phdsymp-pangquin> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/data-privacy-21d7a0e8> .
 <https://eliascrum.github.io/eliascrum/id/talk/eswc-phdsymp-pangquin> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/semantic-querying-56094aa6> .

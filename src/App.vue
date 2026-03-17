@@ -29,6 +29,7 @@ import { defineComponent } from "vue";
 import TheHeader from './components/TheHeader.vue';
 import TheFooter from './components/TheFooter.vue';
 import SpotlightSearch from "./components/SpotlightSearch.vue";
+import { resolvePublicAssetPath } from "./utils/publicAssetPath";
 
 type ThemeMode = "dark" | "light";
 type TextScaleMode = "small" | "normal" | "large";
@@ -63,6 +64,22 @@ export default defineComponent({
   methods: {
     applyTheme(theme: ThemeMode) {
       document.documentElement.setAttribute("data-theme", theme);
+      this.updateSiteIcons(theme);
+    },
+    updateSiteIcons(theme: ThemeMode) {
+      const iconHref = resolvePublicAssetPath(
+        theme === "dark"
+          ? "/branding/edc-logo-inverse.svg"
+          : "/branding/edc-logo.svg",
+      );
+
+      const iconLinks = document.querySelectorAll<HTMLLinkElement>(
+        "#site-favicon, #site-shortcut-icon, #site-apple-touch-icon",
+      );
+
+      iconLinks.forEach((link) => {
+        link.href = iconHref;
+      });
     },
     toggleTheme() {
       this.theme = this.theme === "dark" ? "light" : "dark";
@@ -154,34 +171,50 @@ export default defineComponent({
   --font-size-card-title: calc(1.44rem * var(--text-scale-heading));
   --font-size-prose-xl: calc(1.72rem * var(--text-scale-body));
   --page-background: #000000;
-  --page-text: #ffffff;
-  --surface-bg: rgba(0, 0, 0, 0.8);
-  --surface-outline: rgba(255, 255, 255, 0.8);
-  --header-bg: rgba(0, 0, 0, 0.7);
-  --footer-bg: rgba(0, 0, 0, 0.2);
-  --link-color: #eaf4ff;
-  --nav-hover-bg: rgba(255, 255, 255, 0.15);
-  --toggle-bg: rgba(255, 255, 255, 0.08);
-  --toggle-border: rgba(255, 255, 255, 0.45);
+  --page-text: #f7f9fc;
+  --text-muted: #e7edf5;
+  --text-soft: #cfd8e4;
+  --surface-bg: rgba(11, 11, 12, 0.9);
+  --surface-elevated: rgba(18, 18, 20, 0.94);
+  --surface-card: rgba(255, 255, 255, 0.065);
+  --surface-outline: rgba(255, 255, 255, 0.22);
+  --header-bg: rgba(9, 9, 10, 0.86);
+  --footer-bg: rgba(8, 8, 9, 0.72);
+  --link-color: #f2f7ff;
+  --nav-hover-bg: rgba(255, 255, 255, 0.09);
+  --toggle-bg: rgba(255, 255, 255, 0.065);
+  --toggle-border: rgba(255, 255, 255, 0.28);
   --toggle-text: #ffffff;
   --video-opacity: 0.4;
   --content-heading-font: var(--font-family-heading);
   --content-h1-size: calc(clamp(1.8rem, 2.8vw, 2.5rem) * var(--text-scale-heading));
   --content-h2-size: calc(clamp(1.25rem, 2.1vw, 1.55rem) * var(--text-scale-heading));
   --site-title-size: calc(clamp(2.35rem, 5.4vw, 3.8rem) * var(--text-scale-heading));
+  --accent-rgb: 80, 203, 255;
+  --accent-secondary-rgb: 45, 212, 191;
+  --accent-ink-rgb: 80, 203, 255;
+  --accent-ink: #50cbff;
 }
 
 :root[data-theme="light"] {
-  --page-background: #e9eff7;
+  --page-background: #f6f3ed;
   --page-text: #10243b;
-  --surface-bg: rgba(246, 250, 255, 0.9);
-  --surface-outline: rgba(16, 36, 59, 0.28);
-  --header-bg: rgba(243, 248, 255, 0.85);
-  --footer-bg: rgba(230, 239, 250, 0.75);
-  --link-color: #0d4f88;
-  --nav-hover-bg: rgba(16, 36, 59, 0.12);
-  --toggle-bg: rgba(16, 36, 59, 0.08);
-  --toggle-border: rgba(16, 36, 59, 0.28);
+  --text-muted: rgba(16, 36, 59, 0.88);
+  --text-soft: rgba(16, 36, 59, 0.74);
+  --surface-bg: rgba(253, 251, 247, 0.94);
+  --surface-elevated: rgba(253, 251, 247, 0.94);
+  --surface-card: rgba(255, 255, 255, 0.52);
+  --surface-outline: rgba(84, 66, 38, 0.22);
+  --header-bg: rgba(250, 247, 241, 0.9);
+  --footer-bg: rgba(244, 238, 229, 0.82);
+  --accent-rgb: 226, 214, 196;
+  --accent-secondary-rgb: 246, 240, 231;
+  --accent-ink-rgb: 13, 79, 136;
+  --accent-ink: #0d4f88;
+  --link-color: var(--accent-ink);
+  --nav-hover-bg: rgba(var(--accent-rgb), 0.18);
+  --toggle-bg: rgba(var(--accent-rgb), 0.12);
+  --toggle-border: rgba(var(--accent-rgb), 0.34);
   --toggle-text: #10243b;
   --video-opacity: 0.16;
 }

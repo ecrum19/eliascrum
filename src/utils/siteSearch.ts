@@ -193,19 +193,29 @@ function buildSearchDocuments(): SearchDocument[] {
           return [detail.prefix, detail.text, detail.url].filter(Boolean).join(" ");
         })
         .join(" ");
+      const flattenedArtifacts = (cvItem.artifacts || [])
+        .map((artifact) => [artifact.label, artifact.path].filter(Boolean).join(" "))
+        .join(" ");
 
       documents.push({
         id: `cv:${cvSection.title}:${itemIndex}`,
         type: "CV",
         title: cvItem.role,
         subtitle: `CV • ${cvSection.title}`,
-        snippet: [cvItem.organization, cvItem.date, flattenedDetails]
+        snippet: [cvItem.organization, cvItem.location, cvItem.date, flattenedDetails]
           .filter(Boolean)
           .join(" • "),
         route: "/about/cv",
-        searchableText: [cvSection.title, cvItem.role, cvItem.organization || "", cvItem.date || "", flattenedDetails].join(
-          " ",
-        ),
+        searchableText: [
+          cvSection.title,
+          cvItem.group || "",
+          cvItem.role,
+          cvItem.organization || "",
+          cvItem.location || "",
+          cvItem.date || "",
+          flattenedDetails,
+          flattenedArtifacts,
+        ].join(" "),
         boost: 5,
       });
     });

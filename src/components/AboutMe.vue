@@ -2,7 +2,7 @@
   <div
     id="introduction"
     class="w3-content w3-margin-top"
-    style="max-width: 1400px"
+    style="max-width: min(1640px, 97vw)"
   >
     <div id="entry" class="w3-row-padding">
       <!-- Left Column -->
@@ -75,60 +75,50 @@
 
             <hr />
 
-            <p class="w3-large">
-              <b
-                ><i
-                  class="fa fa-graduation-cap fa-fw w3-xlarge w3-margin-right w3-text-white"
-                ></i
-                >Research Topics</b
-              >
-            </p>
-            <ul id="keywords">
-              <li>Clinical Genomics</li>
-              <li>Knowledge Representation</li>
-              <li>Semantic Web</li>
-              <li><a href="https://solidproject.org/">Solid</a></li>
-              <li>
-                <a href="https://comunica.dev/">Decentralized Querying</a>
-              </li>
-              <li>Linked Data</li>
-              <li>Knowledge Graph Generation</li>
-              <li>Ontology Generation</li>
-            </ul>
+            <section class="home-sidebar-section">
+              <div class="home-sidebar-section-head">
+                <p class="w3-large home-sidebar-section-title">
+                  <b
+                    ><i
+                      class="fa fa-graduation-cap fa-fw w3-xlarge w3-margin-right w3-text-white"
+                    ></i
+                    >Research Topics</b
+                  >
+                </p>
+                <p class="home-sidebar-section-copy">
+                  Browse the site by recurring research themes across publications and talks.
+                </p>
+              </div>
+              <div id="keywords" class="home-topic-tags">
+                <router-link
+                  v-for="topic in researchTopicLinks"
+                  :key="topic.label"
+                  class="home-topic-tag"
+                  :class="`home-topic-tag-${topic.variant}`"
+                  :data-destination="topic.destination"
+                  :to="topic.to"
+                >
+                  {{ topic.label }}
+                </router-link>
+              </div>
+            </section>
 
-            <br />
-
-            <br />
-
-            <p class="w3-large w3-text-theme">
-              <b
-                ><i
-                  class="fa fa-address-card fa-fw w3-xlarge w3-margin-right w3-text-white"
-                ></i>
-                <a
-                  href="/about/cv"
-                  >Curriculum Vitae</a
-                ></b
-              >
-            </p>
-
-
-            <br />
-
-            <p class="w3-large w3-text-theme">
-              <b
-                ><i
-                  class="fa fa-bullhorn fa-fw w3-xlarge w3-margin-right w3-text-white"
-                ></i>
-                <a
-                  href="https://drive.google.com/drive/folders/1QWyqEYoFDszYWHMKqK-xS06cC3sy6Jbe?usp=sharing"
-                  target="_blank"
-                  >Presentations</a
-                ></b
-              >
-            </p>
-
-            <br />
+            <section class="cv-preview">
+              <p class="w3-large w3-text-theme cv-preview-title">
+                <b
+                  ><i
+                    class="fa fa-address-card fa-fw w3-xlarge w3-margin-right w3-text-white"
+                  ></i>
+                  Curriculum Vitae</b
+                >
+              </p>
+              <p class="cv-preview-copy">
+                Structured overview of research experience, teaching, education, awards, and computational expertise.
+              </p>
+              <router-link class="cv-preview-link" to="/about/cv">
+                Open Full CV
+              </router-link>
+            </section>
           </div>
         </div>
         <br />
@@ -139,7 +129,15 @@
       <!-- Right Column -->
       <div class="w3-twothird">
         <div id="recentWork" class="w3-container w3-card">
-          <h2 class="w3-panel" id="recentWorkTitle">Recent Work</h2>
+          <div id="recentWorkHeader">
+            <div class="recentWorkTitleBlock">
+              <span class="recentWorkEyebrow">Latest Highlight</span>
+              <h2 class="w3-panel" id="recentWorkTitle">Recent Work</h2>
+            </div>
+          </div>
+          <p class="recentWorkIntro">
+            Most recent publication, talk, or release surfaced directly from the site data.
+          </p>
           <div
             class="recentWorkItem"
             v-for="item in recentUpdates"
@@ -170,33 +168,39 @@
         <div id="aboutMe" class="w3-container w3-card">
           <h1 class="w3-panel" id="about">About Me</h1>
           <div class="w3-container" id="intro-container">
-            <body id="intro">
-              I am a 1st year PhD candidate in the
-              <a href="https://knows.idlab.ugent.be/"><u>KNoWS group</u></a>
-              of IDLab at Ghent University and the Digital Precision Health
-              group of
-              <a href="https://vito.be/en/theme/sustainable-health"
-                ><u>VITO NV</u></a
-              >. 
-              
-              I funded through the <a href="https://www.fwo.be/en/support-programmes/all-calls/phd/phd-fellowship-strategic-basic-research/">
-                PhD fellowship - strategic basic research</a> from the Research Foundation - Flanders (FWO).
-              <br />
-              <br />
-              My PhD, PErsoNal Genome QUery IN health care and clinical practice
-              (<i>PENGQUIN</i>), is investigating the integration of
-              cutting-edge decentralized storage and semantic web technologies
-              to innovate in the field of personal genomic data storage and
-              usage. Specifically, I am interested in the topics of genomic data
-              knowledge graph generation, data linking, ontology definition,
-              data privacy policy enforcement, federated SPARQL querying, and
-              scalable decentralized data storage approaches.
-              <br />
-              <br />
-              More generally, I am passionate about building things that improve
-              the world around me, especially in the realms of genomics and
-              healthcare.
-            </body>
+            <div id="intro">
+              <p>
+                I am a 1st year PhD candidate in the
+                <a href="https://knows.idlab.ugent.be/"><u>KNoWS group</u></a>
+                of IDLab at Ghent University and the Digital Precision Health
+                group of
+                <a href="https://vito.be/en/theme/sustainable-health"
+                  ><u>VITO NV</u></a
+                >.
+              </p>
+              <p>
+                I funded through the
+                <a href="https://www.fwo.be/en/support-programmes/all-calls/phd/phd-fellowship-strategic-basic-research/">
+                  PhD fellowship - strategic basic research
+                </a>
+                from the Research Foundation - Flanders (FWO).
+              </p>
+              <p>
+                My PhD, PErsoNal Genome QUery IN health care and clinical practice
+                (<i>PENGQUIN</i>), is investigating the integration of
+                cutting-edge decentralized storage and semantic web technologies
+                to innovate in the field of personal genomic data storage and
+                usage. Specifically, I am interested in the topics of genomic data
+                knowledge graph generation, data linking, ontology definition,
+                data privacy policy enforcement, federated SPARQL querying, and
+                scalable decentralized data storage approaches.
+              </p>
+              <p>
+                More generally, I am passionate about building things that improve
+                the world around me, especially in the realms of genomics and
+                healthcare.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -209,11 +213,73 @@
 import { defineComponent } from "vue";
 import { getRecentHomepageUpdates, type HomepageUpdate } from "../data/homepageUpdates";
 
+interface ResearchTopicLink {
+  label: string;
+  destination: string;
+  variant: "publication" | "talk";
+  to: {
+    path: string;
+    query?: Record<string, string>;
+  };
+}
+
 export default defineComponent({
   name: "AboutMe",
   computed: {
     recentUpdates(): HomepageUpdate[] {
       return getRecentHomepageUpdates(1);
+    },
+    researchTopicLinks(): ResearchTopicLink[] {
+      return [
+        {
+          label: "Clinical Genomics",
+          destination: "Publications",
+          variant: "publication",
+          to: { path: "/publications", query: { tag: "topic", value: "Clinical Genomics" } },
+        },
+        {
+          label: "Semantic Web",
+          destination: "Publications",
+          variant: "publication",
+          to: { path: "/publications", query: { tag: "topic", value: "Semantic Web" } },
+        },
+        {
+          label: "Semantic Querying",
+          destination: "Talks",
+          variant: "talk",
+          to: { path: "/talks", query: { tag: "topic", value: "Semantic Querying" } },
+        },
+        {
+          label: "Solid",
+          destination: "Talks",
+          variant: "talk",
+          to: { path: "/talks", query: { tag: "topic", value: "Solid" } },
+        },
+        {
+          label: "Data Privacy",
+          destination: "Publications",
+          variant: "publication",
+          to: { path: "/publications", query: { tag: "topic", value: "Data Privacy" } },
+        },
+        {
+          label: "Bioinformatics",
+          destination: "Publications",
+          variant: "publication",
+          to: { path: "/publications", query: { tag: "topic", value: "Bioinformatics" } },
+        },
+        {
+          label: "Knowledge Representation",
+          destination: "Publications",
+          variant: "publication",
+          to: { path: "/publications", query: { tag: "topic", value: "Knowledge Representation" } },
+        },
+        {
+          label: "Data Science",
+          destination: "Talks",
+          variant: "talk",
+          to: { path: "/talks", query: { tag: "topic", value: "Data Science" } },
+        },
+      ];
     },
   },
 });
@@ -222,48 +288,130 @@ export default defineComponent({
 <style>
 #introduction {
   font-size: var(--font-size-subtitle);
+  padding: 0 10px 128px;
 }
 
 #aboutMe {
   background: var(--surface-bg);
-  outline: 2px solid var(--surface-outline);
-  align-items: center;
+  border: 1px solid var(--surface-outline);
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  padding: 18px 22px 22px;
 }
 
 #recentWork {
   background: var(--surface-bg);
-  outline: 2px solid var(--surface-outline);
-  align-items: center;
+  border: 1px solid var(--surface-outline);
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
   margin-bottom: 16px;
+  padding: 18px 22px 22px;
+}
+
+#recentWorkHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 16px;
+  margin: 0 0 2px;
+  text-align: left;
+}
+
+.recentWorkTitleBlock {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  justify-items: start;
+  text-align: left;
+}
+
+.recentWorkEyebrow {
+  color: rgba(var(--accent-ink-rgb), 0.92);
+  font-size: var(--font-size-meta);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.1;
 }
 
 #recentWorkTitle {
   background: transparent;
   color: var(--page-text);
-  margin: 10px 0 4px;
+  margin: 0;
+  padding: 0;
   font-family: var(--content-heading-font);
   font-size: var(--content-h1-size);
   font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+
+.recentWorkCount {
+  border: 1px solid rgba(var(--accent-rgb), 0.34);
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), 0.08);
+  color: var(--page-text);
+  padding: 6px 12px;
+  font-size: var(--font-size-meta);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.recentWorkIntro {
+  margin: 0 0 14px;
+  max-width: 62ch;
+  color: var(--text-soft);
+  opacity: 1;
+  font-size: var(--font-size-body);
+  line-height: 1.45;
+  text-align: left;
 }
 
 .recentWorkItem {
-  background: rgba(255, 255, 255, 0.03);
-  border-left: 4px solid rgba(80, 203, 255, 0.58);
-  border-radius: 10px;
-  padding: 12px 14px;
-  margin-bottom: 14px;
+  position: relative;
+  background: var(--surface-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 4px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
+  padding: 16px 18px 18px;
+  margin-bottom: 0;
+  overflow: hidden;
 }
 
 [data-theme="light"] .recentWorkItem {
-  background: rgba(16, 36, 59, 0.06);
-  border-left-color: rgba(13, 79, 136, 0.55);
+  background: linear-gradient(180deg, rgba(var(--accent-secondary-rgb), 0.6), rgba(var(--accent-rgb), 0.18));
+  border-color: rgba(16, 36, 59, 0.1);
+  border-left-color: rgba(var(--accent-ink-rgb), 0.46);
+  box-shadow: 0 12px 24px rgba(16, 36, 59, 0.08);
+}
+
+.recentWorkItem::after {
+  content: "";
+  position: absolute;
+  top: -30%;
+  right: -8%;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.16), rgba(var(--accent-rgb), 0));
+  pointer-events: none;
+}
+
+[data-theme="dark"] .recentWorkItem::after {
+  display: none;
 }
 
 .recentWorkMeta {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
 }
 
 .recentWorkType,
@@ -271,24 +419,83 @@ export default defineComponent({
   font-size: var(--font-size-meta);
   border: 1px solid var(--surface-outline);
   border-radius: 999px;
-  padding: 2px 10px;
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .recentWorkHeading {
   margin: 0;
   color: var(--page-text);
-  font-size: var(--font-size-subtitle);
+  font-family: var(--content-heading-font);
+  font-size: clamp(1.7rem, 2.4vw, 2.25rem);
+  line-height: 1.14;
+  letter-spacing: -0.02em;
+  max-width: 34ch;
+  position: relative;
+  z-index: 1;
 }
 
 .recentWorkSummary {
-  margin: 8px 0 0;
-  line-height: 1.45;
+  margin: 14px 0 0;
+  max-width: 60ch;
+  line-height: 1.58;
+  font-size: var(--font-size-body-lg);
+  position: relative;
+  z-index: 1;
 }
 
 .recentWorkLink {
-  display: inline-block;
-  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  border: 1px solid rgba(var(--accent-rgb), 0.34);
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: rgba(var(--accent-rgb), 0.08);
   font-weight: 700;
+  font-size: var(--font-size-body);
+  position: relative;
+  z-index: 1;
+  transition: background-color 0.18s ease, transform 0.16s ease, border-color 0.18s ease;
+}
+
+.recentWorkLink::after {
+  content: "→";
+  font-size: 1em;
+}
+
+.recentWorkLink:hover {
+  transform: translateY(-1px);
+  background: rgba(var(--accent-rgb), 0.14);
+  border-color: rgba(var(--accent-rgb), 0.46);
+}
+
+@media (max-width: 768px) {
+  #recentWorkHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .recentWorkItem {
+    padding: 14px;
+  }
+
+  .recentWorkHeading {
+    max-width: none;
+  }
+
+  .recentWorkSummary {
+    max-width: none;
+  }
+
+  .recentWorkLink {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 #entry {
@@ -306,18 +513,33 @@ a {
 
 #genInfo {
   background: var(--surface-bg);
-  outline: 2px solid var(--surface-outline);
-  padding-top: 5%;
+  border: 1px solid var(--surface-outline);
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  padding-top: 0;
   font-size: var(--font-size-body-xl);
+}
+
+#genInfo .w3-container {
+  padding: 22px 24px 24px;
 }
 
 #genInfo i.w3-text-white {
   color: var(--page-text) !important;
 }
 
+#genInfo hr {
+  margin: 22px 0;
+  border: 0;
+  border-top: 1px solid var(--surface-outline);
+  opacity: 1;
+}
+
 #genInfo p {
   font-size: var(--font-size-body-xl);
   line-height: 1.45;
+  margin: 0 0 12px;
 }
 
 #genInfo p.w3-large {
@@ -327,7 +549,7 @@ a {
 #about {
   background: transparent;
   color: var(--page-text);
-  margin-top: 10px;
+  margin: 0;
   font-family: var(--content-heading-font);
   font-size: var(--content-h1-size);
   font-weight: 600;
@@ -338,21 +560,142 @@ a {
   font-family: var(--font-family-base);
   background: transparent;
   color: var(--page-text);
+  max-width: 72ch;
+  line-height: 1.72;
+}
+
+#intro p {
+  margin: 0 0 18px;
+}
+
+#intro p:last-child {
+  margin-bottom: 0;
 }
 
 #intro-container {
-  margin-bottom: 10px;
-  padding-bottom: 23px;
+  margin-bottom: 0;
+  padding: 12px 0 0;
 }
 
 #keywords {
-  font-size: var(--font-size-body-lg);
-  line-height: 1.5;
-  margin-left: 30px;
+  margin-left: 0;
 }
 
-#keywords li {
-  margin-bottom: 4px;
+.home-sidebar-section {
+  display: grid;
+  gap: 12px;
+}
+
+.home-sidebar-section-head {
+  display: grid;
+  gap: 6px;
+}
+
+.home-sidebar-section-title {
+  margin: 0;
+}
+
+.home-sidebar-section-copy {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: var(--font-size-body);
+  line-height: 1.45;
+}
+
+.home-topic-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0;
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+}
+
+.home-topic-tag {
+  --tag-tooltip-bg: rgba(100, 116, 139, 0.96);
+  --tag-tooltip-border: rgba(100, 116, 139, 0.98);
+  --tag-tooltip-text: #f8fafc;
+
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--surface-outline);
+  border-radius: 999px;
+  padding: 4px 11px;
+  font-size: var(--font-size-body-sm);
+  color: var(--page-text) !important;
+  text-decoration: none;
+  line-height: 1.2;
+  position: relative;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.home-topic-tag::after {
+  content: attr(data-destination);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translate(-50%, 4px);
+  border: 1px solid var(--tag-tooltip-border);
+  border-radius: 7px;
+  padding: 3px 7px;
+  background: var(--tag-tooltip-bg);
+  color: var(--tag-tooltip-text);
+  box-shadow: 0 8px 18px rgba(8, 15, 31, 0.24);
+  font-size: var(--font-size-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+  z-index: 10;
+}
+
+.home-topic-tag:hover {
+  transform: translateY(-1px);
+  z-index: 1000;
+}
+
+.home-topic-tag:hover::after,
+.home-topic-tag:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.home-topic-tag:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.35);
+}
+
+.home-topic-tag-publication {
+  background: rgba(var(--accent-secondary-rgb), 0.14);
+  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.96);
+  --tag-tooltip-border: rgba(13, 148, 136, 0.96);
+  --tag-tooltip-text: #042320;
+}
+
+.home-topic-tag-talk {
+  background: rgba(var(--accent-rgb), 0.14);
+  --tag-tooltip-bg: rgba(var(--accent-rgb), 0.96);
+  --tag-tooltip-border: rgba(14, 165, 233, 0.96);
+  --tag-tooltip-text: #052634;
+}
+
+[data-theme="dark"] .home-topic-tag-publication {
+  background: rgba(var(--accent-secondary-rgb), 0.26);
+  border-color: rgba(var(--accent-secondary-rgb), 0.58);
+  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.98);
+  --tag-tooltip-border: rgba(var(--accent-secondary-rgb), 0.98);
+  --tag-tooltip-text: #021413;
+}
+
+[data-theme="dark"] .home-topic-tag-talk {
+  background: rgba(var(--accent-rgb), 0.26);
+  border-color: rgba(var(--accent-rgb), 0.6);
+  --tag-tooltip-bg: rgba(var(--accent-rgb), 0.98);
+  --tag-tooltip-border: rgba(125, 211, 252, 0.98);
+  --tag-tooltip-text: #041b25;
 }
 
 #orgs {
@@ -383,6 +726,43 @@ a {
     hue-rotate(192deg) brightness(96%) contrast(91%);
 }
 
+.cv-preview {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--surface-outline);
+}
+
+.cv-preview-title {
+  margin: 0;
+}
+
+.cv-preview-copy {
+  margin: 8px 0 10px;
+  color: var(--text-soft);
+  font-size: var(--font-size-body);
+  line-height: 1.45;
+  max-width: 36ch;
+}
+
+.cv-preview-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(var(--accent-rgb), 0.42);
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), 0.08);
+  padding: 7px 14px;
+  font-weight: 650;
+  font-size: var(--font-size-body-sm);
+  transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.16s ease;
+}
+
+.cv-preview-link:hover {
+  background: var(--nav-hover-bg);
+  border-color: rgba(var(--accent-rgb), 0.5);
+  transform: translateY(-1px);
+}
+
 div.school {
   background: var(--surface-bg);
   position: flex;
@@ -392,5 +772,17 @@ div.school {
   outline: 2px solid var(--surface-outline);
   width: 40%;
   padding: 2%;
+}
+
+@media (max-width: 768px) {
+  #introduction {
+    padding: 0 8px 118px;
+  }
+
+  #genInfo,
+  #recentWork,
+  #aboutMe {
+    border-radius: 16px;
+  }
 }
 </style>

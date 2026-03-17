@@ -1,135 +1,145 @@
 <template>
-  <section id="slide-detail" class="w3-content w3-margin-top" style="max-width: 1400px">
-    <div v-if="talk" class="slide-shell">
-      <header class="slide-header">
-        <div class="slide-header-top">
-          <h1>{{ talk.displayTitle }}</h1>
-          <p class="talk-date-detailed">{{ talk.displayDateIso }}</p>
-        </div>
-        <div class="slide-actions">
-          <router-link to="/talks" class="action-btn">Back to Talks</router-link>
-          <a :href="slidePdfUrl" target="_blank" rel="noopener noreferrer" class="action-btn primary">
-            Open Slides PDF
-          </a>
-          <a
-            v-for="publicationLink in relatedPublicationLinks"
-            :key="publicationLink.key"
-            :href="publicationLink.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="action-btn"
-          >
-            {{ publicationLink.label }}
-          </a>
-        </div>
-        <section class="talk-abstract-block">
-          <h2 class="talk-detail-heading">Abstract</h2>
-          <p class="talk-summary">{{ talk.abstract }}</p>
+  <section id="slide-detail" class="w3-content w3-margin-top" style="max-width: min(1780px, 97vw)">
+    <div v-if="talk" class="work-layout">
+      <work-toc :entries="tocEntries" />
+
+      <div class="work-main">
+        <section id="talk-detail-overview" class="work-section">
+          <header class="slide-header toc-anchor">
+            <div class="slide-header-top">
+              <h1>{{ talk.displayTitle }}</h1>
+              <p class="talk-date-detailed">{{ talk.displayDateIso }}</p>
+            </div>
+            <div class="slide-actions">
+              <router-link to="/talks" class="action-btn">Back to Talks</router-link>
+              <a :href="slidePdfUrl" target="_blank" rel="noopener noreferrer" class="action-btn primary">
+                Open Slides PDF
+              </a>
+              <a
+                v-for="publicationLink in relatedPublicationLinks"
+                :key="publicationLink.key"
+                :href="publicationLink.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="action-btn"
+              >
+                {{ publicationLink.label }}
+              </a>
+            </div>
+            <section id="talk-detail-abstract" class="talk-abstract-block toc-anchor">
+              <h2 class="talk-detail-heading">Abstract</h2>
+              <p class="talk-summary">{{ talk.abstract }}</p>
+            </section>
+            <dl id="talk-detail-metadata" class="talk-details-list toc-anchor">
+              <div class="talk-detail-row">
+                <dt>Goal</dt>
+                <dd>{{ talk.goal }}</dd>
+              </div>
+              <div class="talk-detail-row">
+                <dt>Audience Expertise</dt>
+                <dd>{{ talk.audienceExpertise }}</dd>
+              </div>
+              <div class="talk-detail-row">
+                <dt>Duration</dt>
+                <dd>~ {{ talk.durationMinutes }} minutes</dd>
+              </div>
+              <div class="talk-detail-row">
+                <dt>Audience Size</dt>
+                <dd>{{ talk.audienceSizeEstimate.replace(/^Approx\.?\s*/i, "~ ") }}</dd>
+              </div>
+            </dl>
+            <div id="talk-detail-tags" class="talk-tags-footer toc-anchor" v-if="detailTags.length">
+              <span class="talk-tags-label">Tags:</span>
+              <div class="talk-tags-list">
+                <router-link
+                  v-for="tag in detailTags"
+                  :key="tag.key"
+                  class="talk-tag talk-tag-link"
+                  :class="tag.className"
+                  :title="`${tag.category}: ${tag.label}`"
+                  :data-category="tag.category"
+                  :to="{ path: '/talks', query: { tag: tag.kind, value: tag.value } }"
+                >
+                  {{ tag.label }}
+                </router-link>
+              </div>
+            </div>
+          </header>
         </section>
-        <dl class="talk-details-list">
-          <div class="talk-detail-row">
-            <dt>Goal</dt>
-            <dd>{{ talk.goal }}</dd>
-          </div>
-          <div class="talk-detail-row">
-            <dt>Audience Expertise</dt>
-            <dd>{{ talk.audienceExpertise }}</dd>
-          </div>
-          <div class="talk-detail-row">
-            <dt>Duration</dt>
-            <dd>~ {{ talk.durationMinutes }} minutes</dd>
-          </div>
-          <div class="talk-detail-row">
-            <dt>Audience Size</dt>
-            <dd>{{ talk.audienceSizeEstimate.replace(/^Approx\.?\s*/i, "~ ") }}</dd>
-          </div>
-        </dl>
-        <div class="talk-tags-footer" v-if="detailTags.length">
-          <span class="talk-tags-label">Tags:</span>
-          <div class="talk-tags-list">
-            <router-link
-              v-for="tag in detailTags"
-              :key="tag.key"
-              class="talk-tag talk-tag-link"
-              :class="tag.className"
-              :title="`${tag.category}: ${tag.label}`"
-              :data-category="tag.category"
-              :to="{ path: '/talks', query: { tag: tag.kind, value: tag.value } }"
-            >
-              {{ tag.label }}
-            </router-link>
-          </div>
-        </div>
-      </header>
 
-      <article class="slide-panel">
-        <h2>Slides</h2>
-        <div
-          ref="slideFrameShell"
-          class="slide-frame-shell"
-        >
-          <div ref="slideCanvasShell" class="slide-canvas-shell">
-            <canvas ref="slideCanvas" class="slide-canvas"></canvas>
-            <div v-if="isPdfLoading" class="slide-canvas-overlay">
-              Loading slides...
+        <section id="talk-detail-slides" class="work-section">
+          <article class="slide-panel toc-anchor">
+            <h2>Slides</h2>
+            <div
+              ref="slideFrameShell"
+              class="slide-frame-shell"
+            >
+              <div ref="slideCanvasShell" class="slide-canvas-shell">
+                <canvas ref="slideCanvas" class="slide-canvas"></canvas>
+                <div v-if="isPdfLoading" class="slide-canvas-overlay">
+                  Loading slides...
+                </div>
+                <div v-else-if="isPdfRenderError" class="slide-canvas-overlay">
+                  <span>Preview unavailable.</span>
+                  <span v-if="pdfRenderErrorMessage" class="slide-error-text">{{ pdfRenderErrorMessage }}</span>
+                  <a :href="slidePdfUrl" target="_blank" rel="noopener noreferrer">Open the slides</a>
+                </div>
+              </div>
+              <div class="slide-pagination slide-pagination-footer" aria-label="Slide navigation controls">
+                <button
+                  type="button"
+                  class="slide-page-btn"
+                  @click="goToPreviousSlidePage"
+                  :disabled="currentSlidePage <= 1"
+                >
+                  Previous
+                </button>
+                <label class="slide-page-label" for="slide-page-input">
+                  <input
+                    id="slide-page-input"
+                    class="slide-page-input"
+                    type="number"
+                    min="1"
+                    :max="maxSlidePage ?? undefined"
+                    inputmode="numeric"
+                    :value="currentSlidePage"
+                    :style="slidePageInputStyle"
+                    aria-label="Current slide page"
+                    @change="onSlidePageInputChange"
+                  />
+                  <span v-if="maxSlidePage" class="slide-page-total">/ {{ maxSlidePage }}</span>
+                </label>
+                <button
+                  type="button"
+                  class="slide-page-btn"
+                  @click="goToNextSlidePage"
+                  :disabled="maxSlidePage !== null && currentSlidePage >= maxSlidePage"
+                >
+                  Next
+                </button>
+              </div>
             </div>
-            <div v-else-if="isPdfRenderError" class="slide-canvas-overlay">
-              <span>Preview unavailable.</span>
-              <span v-if="pdfRenderErrorMessage" class="slide-error-text">{{ pdfRenderErrorMessage }}</span>
-              <a :href="slidePdfUrl" target="_blank" rel="noopener noreferrer">Open the slides</a>
-            </div>
-          </div>
-          <div class="slide-pagination slide-pagination-footer" aria-label="Slide navigation controls">
-            <button
-              type="button"
-              class="slide-page-btn"
-              @click="goToPreviousSlidePage"
-              :disabled="currentSlidePage <= 1"
-            >
-              Previous
-            </button>
-            <label class="slide-page-label" for="slide-page-input">
-              <input
-                id="slide-page-input"
-                class="slide-page-input"
-                type="number"
-                min="1"
-                :max="maxSlidePage ?? undefined"
-                inputmode="numeric"
-                :value="currentSlidePage"
-                :style="slidePageInputStyle"
-                aria-label="Current slide page"
-                @change="onSlidePageInputChange"
-              />
-              <span v-if="maxSlidePage" class="slide-page-total">/ {{ maxSlidePage }}</span>
-            </label>
-            <button
-              type="button"
-              class="slide-page-btn"
-              @click="goToNextSlidePage"
-              :disabled="maxSlidePage !== null && currentSlidePage >= maxSlidePage"
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      </article>
+          </article>
+        </section>
 
-      <article v-if="talk.posterPath" class="slide-panel">
-        <h2>Poster</h2>
-        <p class="poster-name">{{ talk.posterTitle || "Poster PDF" }}</p>
-        <object :data="posterPdfUrl" type="application/pdf" class="poster-frame">
-          <p>
-            Your browser cannot render the PDF inline.
-            <a :href="posterPdfUrl" target="_blank" rel="noopener noreferrer">Open the poster</a>.
-          </p>
-        </object>
-      </article>
+        <section id="talk-detail-poster" class="work-section">
+          <article v-if="talk.posterPath" class="slide-panel toc-anchor">
+            <h2>Poster</h2>
+            <p class="poster-name">{{ talk.posterTitle || "Poster PDF" }}</p>
+            <object :data="posterPdfUrl" type="application/pdf" class="poster-frame">
+              <p>
+                Your browser cannot render the PDF inline.
+                <a :href="posterPdfUrl" target="_blank" rel="noopener noreferrer">Open the poster</a>.
+              </p>
+            </object>
+          </article>
 
-      <article v-else class="slide-panel muted-panel">
-        <h2>Poster</h2>
-        <p>No poster is currently linked to this talk.</p>
-      </article>
+          <article v-else class="slide-panel muted-panel toc-anchor">
+            <h2>Poster</h2>
+            <p>No poster is currently linked to this talk.</p>
+          </article>
+        </section>
+      </div>
     </div>
 
     <div v-else class="slide-shell">
@@ -160,6 +170,7 @@ import {
   type ResolvedPublicationLink,
 } from "../data/publicationsData";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
+import WorkToc from "./WorkToc.vue";
 
 if (!GlobalWorkerOptions.workerPort) {
   try {
@@ -185,8 +196,17 @@ interface TalkDetailTag {
   className: string;
 }
 
+interface WorkTocEntry {
+  id: string;
+  label: string;
+  level?: number;
+}
+
 export default defineComponent({
   name: "SlideDetail",
+  components: {
+    WorkToc,
+  },
   data() {
     return {
       currentSlidePage: 1,
@@ -204,6 +224,28 @@ export default defineComponent({
     };
   },
   computed: {
+    tocEntries(): WorkTocEntry[] {
+      if (!this.talk) {
+        return [];
+      }
+
+      const entries: WorkTocEntry[] = [
+        { id: "talk-detail-overview", label: "Overview", level: 1 },
+        { id: "talk-detail-abstract", label: "Abstract", level: 2 },
+        { id: "talk-detail-metadata", label: "Details", level: 2 },
+      ];
+
+      if (this.detailTags.length) {
+        entries.push({ id: "talk-detail-tags", label: "Tags", level: 2 });
+      }
+
+      entries.push(
+        { id: "talk-detail-slides", label: "Slides", level: 1 },
+        { id: "talk-detail-poster", label: "Poster", level: 1 }
+      );
+
+      return entries;
+    },
     talk(): TalkViewEntry | undefined {
       const routeSlug = String(this.$route.params.slug || "");
       return getTalkViewBySlug(routeSlug);
@@ -627,6 +669,29 @@ export default defineComponent({
   padding: 0 16px 140px;
 }
 
+.work-layout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.work-main {
+  min-width: 0;
+  display: grid;
+  gap: 18px;
+}
+
+.work-section {
+  min-width: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.toc-anchor {
+  scroll-margin-top: 92px;
+}
+
 .slide-shell {
   display: grid;
   gap: 18px;
@@ -634,7 +699,7 @@ export default defineComponent({
 
 .slide-header,
 .slide-panel {
-  background: var(--surface-bg);
+  background: var(--surface-elevated);
   outline: 2px solid var(--surface-outline);
   border-radius: 14px;
   padding: 16px 20px;
@@ -673,11 +738,12 @@ export default defineComponent({
 
 .talk-detail-heading {
   margin: 0;
+  color: var(--text-muted);
   font-family: var(--content-heading-font);
   font-size: var(--font-size-label);
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  opacity: 0.84;
+  opacity: 1;
 }
 
 .talk-abstract-block {
@@ -691,7 +757,7 @@ export default defineComponent({
   width: 100%;
   line-height: 1.56;
   padding-left: 12px;
-  border-left: 3px solid rgba(80, 203, 255, 0.45);
+  border-left: 3px solid rgba(var(--accent-rgb), 0.45);
   opacity: 0.96;
 }
 
@@ -717,11 +783,12 @@ export default defineComponent({
 
 .talk-detail-row dt {
   margin: 0;
+  color: var(--text-muted);
   font-size: var(--font-size-meta);
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  opacity: 0.9;
+  opacity: 1;
 }
 
 .talk-detail-row dd {
@@ -902,7 +969,7 @@ export default defineComponent({
   --tag-border: rgba(20, 184, 166, 0.62);
   --tag-text: #d2fff4;
   --tag-tooltip-bg: rgba(20, 184, 166, 0.98);
-  --tag-tooltip-border: rgba(45, 212, 191, 0.98);
+  --tag-tooltip-border: rgba(var(--accent-secondary-rgb), 0.98);
   --tag-tooltip-text: #021413;
 }
 
@@ -957,21 +1024,21 @@ export default defineComponent({
 }
 
 .action-btn.primary {
-  border-color: rgba(80, 203, 255, 0.5);
-  background: rgba(80, 203, 255, 0.13);
+  border-color: rgba(var(--accent-rgb), 0.5);
+  background: rgba(var(--accent-rgb), 0.13);
 }
 
 .action-btn:hover {
   background: var(--nav-hover-bg);
-  border-color: rgba(80, 203, 255, 0.45);
+  border-color: rgba(var(--accent-rgb), 0.45);
   box-shadow: 0 4px 12px rgba(8, 15, 31, 0.12);
   transform: translateY(-1px);
 }
 
 .action-btn:focus-visible {
   outline: none;
-  border-color: rgba(80, 203, 255, 0.78);
-  box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.24);
+  border-color: rgba(var(--accent-rgb), 0.78);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.24);
 }
 
 [data-theme="light"] .action-btn {
@@ -979,7 +1046,7 @@ export default defineComponent({
 }
 
 [data-theme="light"] .action-btn.primary {
-  background: rgba(80, 203, 255, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
 }
 
 .slide-panel h2 {
@@ -1026,16 +1093,16 @@ export default defineComponent({
 }
 
 .slide-page-btn:hover:not(:disabled) {
-  background: rgba(80, 203, 255, 0.24);
-  border-color: rgba(80, 203, 255, 0.54);
+  background: rgba(var(--accent-rgb), 0.24);
+  border-color: rgba(var(--accent-rgb), 0.54);
   box-shadow: 0 3px 10px rgba(8, 15, 31, 0.28);
   transform: translateY(-1px);
 }
 
 .slide-page-btn:focus-visible {
   outline: none;
-  border-color: rgba(80, 203, 255, 0.86);
-  box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.28);
+  border-color: rgba(var(--accent-rgb), 0.86);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.28);
 }
 
 .slide-page-btn:disabled {
@@ -1098,8 +1165,8 @@ export default defineComponent({
 
 .slide-page-label:focus-within {
   outline: none;
-  border-color: rgba(80, 203, 255, 0.86);
-  box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.28);
+  border-color: rgba(var(--accent-rgb), 0.86);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.28);
 }
 
 .slide-frame-shell {
@@ -1174,7 +1241,8 @@ export default defineComponent({
 
 .muted-panel p {
   margin: 0;
-  opacity: 0.84;
+  color: var(--text-soft);
+  opacity: 1;
 }
 
 @media (max-width: 768px) {
@@ -1252,6 +1320,12 @@ export default defineComponent({
 
   .slide-pagination {
     padding: 8px 10px calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 1080px) {
+  .work-layout {
+    grid-template-columns: 1fr;
   }
 }
 </style>

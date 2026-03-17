@@ -90,6 +90,7 @@ import { softwareProjects, type SoftwareEntry } from "../data/softwareData";
 interface WorkTocEntry {
   id: string;
   label: string;
+  level?: number;
 }
 
 export default defineComponent({
@@ -110,11 +111,12 @@ export default defineComponent({
       const projectEntries = this.softwareEntries.map((project) => ({
         id: this.softwareSectionId(project.id),
         label: project.title,
+        level: 2,
       }));
 
       return [
-        { id: "software-overview", label: "Overview" },
-        { id: "software-content", label: "Projects" },
+        { id: "software-overview", label: "Overview", level: 1 },
+        { id: "software-content", label: "Projects", level: 1 },
         ...projectEntries,
       ];
     },
@@ -174,15 +176,15 @@ export default defineComponent({
 
 .software-header p {
   margin: 0;
-  color: var(--page-text);
-  opacity: 0.88;
+  color: var(--text-muted);
+  opacity: 1;
   font-size: var(--font-size-body-xl);
 }
 
 .work-section-block {
   width: 100%;
   margin: 0 auto;
-  background: linear-gradient(180deg, rgba(80, 203, 255, 0.08), rgba(45, 212, 191, 0.04));
+  background: var(--surface-elevated);
   border: 1px solid var(--surface-outline);
   border-radius: 14px;
   padding: 16px 18px;
@@ -191,7 +193,7 @@ export default defineComponent({
 }
 
 [data-theme="light"] .work-section-block {
-  background: linear-gradient(180deg, rgba(235, 248, 255, 0.96), rgba(233, 249, 245, 0.92));
+  background: linear-gradient(180deg, rgba(var(--accent-secondary-rgb), 0.56), rgba(var(--accent-rgb), 0.16));
   border-color: rgba(16, 36, 59, 0.14);
 }
 
@@ -209,8 +211,8 @@ export default defineComponent({
 
 .work-section-header p {
   margin: 5px 0 0;
-  color: var(--page-text);
-  opacity: 0.8;
+  color: var(--text-muted);
+  opacity: 1;
   font-size: var(--font-size-body);
 }
 
@@ -220,7 +222,7 @@ export default defineComponent({
 }
 
 .software-card {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-card);
   border: 1px solid var(--surface-outline);
   border-radius: 12px;
   padding: 12px 14px;
@@ -255,14 +257,14 @@ export default defineComponent({
 
 .software-year {
   font-weight: 700;
-  color: var(--page-text);
-  opacity: 0.9;
+  color: var(--text-muted);
+  opacity: 1;
 }
 
 .software-kind {
   margin: 6px 0 0;
-  color: var(--page-text);
-  opacity: 0.86;
+  color: var(--text-muted);
+  opacity: 1;
   font-size: var(--font-size-meta);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -288,12 +290,12 @@ export default defineComponent({
   padding: 3px 10px;
   font-size: var(--font-size-body-sm);
   color: var(--page-text);
-  background: rgba(80, 203, 255, 0.12);
+  background: rgba(var(--accent-rgb), 0.12);
 }
 
 [data-theme="dark"] .software-tag {
-  border-color: rgba(80, 203, 255, 0.52);
-  background: rgba(80, 203, 255, 0.22);
+  border-color: rgba(var(--accent-rgb), 0.52);
+  background: rgba(var(--accent-rgb), 0.22);
   color: #d7f5ff;
 }
 
@@ -322,8 +324,8 @@ export default defineComponent({
 }
 
 .software-action-btn.primary {
-  border-color: rgba(80, 203, 255, 0.42);
-  background: rgba(80, 203, 255, 0.08);
+  border-color: rgba(var(--accent-rgb), 0.42);
+  background: rgba(var(--accent-rgb), 0.08);
 }
 
 .software-action-btn:hover {

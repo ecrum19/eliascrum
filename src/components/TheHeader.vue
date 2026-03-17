@@ -20,35 +20,46 @@
       >
         <i class="fa fa-search"></i>
       </button>
+      <div class="desktop-nav-links w3-hide-small">
+        <router-link
+          to="/about"
+          class="nav-link w3-bar-item w3-button w3-hover-black w3-opacity w3-hover-opacity-off"
+        >
+          <i class="fa fa-user"></i> ABOUT
+        </router-link>
+        <router-link
+          to="/publications"
+          class="nav-link w3-bar-item w3-button w3-hover-black w3-opacity w3-hover-opacity-off"
+        >
+          <i class="fa fa-file-text-o"></i> PUBLICATIONS
+        </router-link>
+        <router-link
+          to="/software"
+          class="nav-link w3-bar-item w3-button w3-hover-black w3-opacity w3-hover-opacity-off"
+        >
+          <i class="fa fa-code"></i> SOFTWARE
+        </router-link>
+        <router-link
+          to="/talks"
+          class="nav-link w3-bar-item w3-button w3-hover-black w3-opacity w3-hover-opacity-off"
+        >
+          <i class="fa fa-slideshare"></i> TALKS
+        </router-link>
+        <router-link
+          to="/blogs"
+          class="nav-link w3-bar-item w3-button w3-hover-black w3-opacity w3-hover-opacity-off"
+        >
+          <i class="fa fa-pencil"></i> BLOGS
+        </router-link>
+      </div>
       <router-link
+        v-if="showCompactBrand"
         to="/about"
-        class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-black w3-opacity w3-hover-opacity-off"
+        class="header-brand w3-bar-item w3-button w3-hover-opacity-off"
+        aria-label="Go to home page"
+        title="Home"
       >
-        <i class="fa fa-user"></i> ABOUT
-      </router-link>
-      <router-link
-        to="/publications"
-        class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-black w3-opacity w3-hover-opacity-off"
-      >
-        <i class="fa fa-file-text-o"></i> PUBLICATIONS
-      </router-link>
-      <router-link
-        to="/software"
-        class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-black w3-opacity w3-hover-opacity-off"
-      >
-        <i class="fa fa-code"></i> SOFTWARE
-      </router-link>
-      <router-link
-        to="/talks"
-        class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-black w3-opacity w3-hover-opacity-off"
-      >
-        <i class="fa fa-slideshare"></i> TALKS
-      </router-link>
-      <router-link
-        to="/blogs"
-        class="nav-link w3-bar-item w3-button w3-hide-small w3-hover-black w3-opacity w3-hover-opacity-off"
-      >
-        <i class="fa fa-pencil"></i> BLOGS
+        <img class="header-logo" :src="headerLogoSrc" alt="EDC logo" />
       </router-link>
       <div class="desktop-right-controls w3-hide-small">
         <button
@@ -143,7 +154,7 @@
   <!-- Name and Picture header -->
   <div v-if="showIdentityHeader">
     <header>
-      <img src="./assets/headshot.jpeg" alt="personal picture" />
+      <img class="identity-photo" src="./assets/headshot.jpeg" alt="personal picture" />
       <h1>Elias D. Crum</h1>
     </header>
   </div>
@@ -152,6 +163,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
+import { resolvePublicAssetPath } from "../utils/publicAssetPath";
 
 type ThemeMode = "dark" | "light";
 type TextScaleMode = "small" | "normal" | "large";
@@ -185,6 +197,16 @@ export default defineComponent({
     },
     showIdentityHeader(): boolean {
       return this.$route.path === "/about" || this.$route.path === "/";
+    },
+    showCompactBrand(): boolean {
+      return !this.showIdentityHeader;
+    },
+    headerLogoSrc(): string {
+      return resolvePublicAssetPath(
+        this.theme === "dark"
+          ? "/branding/edc-logo-inverse.svg"
+          : "/branding/edc-logo.svg",
+      );
     },
   },
   watch: {
@@ -241,6 +263,32 @@ header {
 #myNavbar {
   display: flex;
   align-items: center;
+  position: relative;
+}
+
+.desktop-nav-links {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.header-brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 16px !important;
+  margin: 0;
+  opacity: 1 !important;
+  background: transparent !important;
+}
+
+.header-logo {
+  display: block;
+  width: auto;
+  height: 42px;
+  margin: 0;
+  border: none;
+  border-radius: 0;
 }
 
 #myNavbar .desktop-right-controls {
@@ -289,7 +337,7 @@ header h1 {
   margin: 0;
 }
 
-img {
+.identity-photo {
   width: 75px; /* Adjust size as needed */
   height: 100px; /* Maintain aspect ratio */
   border-radius: 50%; /* Make the image round */
@@ -350,17 +398,56 @@ img {
 [data-theme="light"] .theme-toggle-mobile:hover,
 [data-theme="light"] .search-trigger:hover,
 [data-theme="light"] .text-size-toggle:hover {
-  background: rgba(16, 36, 59, 0.08) !important;
+  background: rgba(var(--accent-rgb), 0.16) !important;
+}
+
+@media (min-width: 769px) {
+  #myNavbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .desktop-nav-links {
+    justify-self: start;
+  }
+
+  .header-brand {
+    justify-self: center;
+  }
+
+  #myNavbar .desktop-right-controls {
+    justify-self: end;
+    margin-left: 0;
+    padding-left: 18px;
+  }
 }
 
 @media (max-width: 768px) {
+  #myNavbar {
+    min-height: 52px;
+  }
+
+  .header-brand {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
   header h1 {
     font-size: clamp(1.8rem, 8vw, 2.6rem);
   }
 
-  img {
+  .identity-photo {
     width: 60px;
     height: 80px;
+  }
+
+  .header-logo {
+    height: 34px;
   }
 }
 </style>

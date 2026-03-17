@@ -513,6 +513,13 @@ export const publicationPresentationLinksById: Record<
       label: "Poster (SWAT4HCLS 2025)",
     },
   ],
+  "vcf-to-rdf-rml-swat4hcls-2026": [
+    {
+      kind: "file",
+      filePath: "/talks/posters/swat4hcls_2026.pdf",
+      label: "Poster (SWAT4HCLS 2026)",
+    },
+  ],
 };
 
 function slugifyPublicationValue(value: string): string {
