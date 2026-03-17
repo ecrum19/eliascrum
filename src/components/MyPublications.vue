@@ -143,9 +143,21 @@
             >
               <div class="publication-title-row">
                 <h2 class="publication-title">
-                  <a :href="publication.url" target="_blank" rel="noopener noreferrer">
+                  <router-link
+                    v-if="publicationPrimaryRoute(publication)"
+                    :to="publicationPrimaryRoute(publication)"
+                  >
+                    {{ publication.title }}
+                  </router-link>
+                  <a
+                    v-else-if="publicationPrimaryHref(publication)"
+                    :href="publicationPrimaryHref(publication)"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {{ publication.title }}
                   </a>
+                  <span v-else>{{ publication.title }}</span>
                 </h2>
                 <span class="publication-date">{{ publication.year }}</span>
               </div>
@@ -301,9 +313,25 @@
               </div>
 
               <div
-                v-if="publication.resolvedPresentationLinks.length"
+                v-if="publicationPaperRoute(publication) || publicationPdfHref(publication) || publication.resolvedPresentationLinks.length"
                 class="publication-links"
               >
+                <router-link
+                  v-if="publicationPaperRoute(publication)"
+                  :to="publicationPaperRoute(publication)"
+                  class="publication-action-btn primary"
+                >
+                  Paper Page
+                </router-link>
+                <a
+                  v-if="publicationPdfHref(publication)"
+                  :href="publicationPdfHref(publication)"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="publication-action-btn"
+                >
+                  Open Paper PDF
+                </a>
                 <template
                   v-for="link in publication.resolvedPresentationLinks"
                   :key="link.key"
@@ -570,6 +598,33 @@ export default defineComponent({
   methods: {
     publicationSectionId(publicationId: string): string {
       return `publication-${publicationId}`;
+    },
+    publicationPaperRoute(publication: Publication): { name: string; params: { slug: string } } | undefined {
+      if (!publication.slug || !publication.paperPdfPath) {
+        return undefined;
+      }
+
+      return {
+        name: "Publication Paper",
+        params: { slug: publication.slug },
+      };
+    },
+    publicationPrimaryRoute(publication: Publication): { name: string; params: { slug: string } } | undefined {
+      if (publication.url) {
+        return undefined;
+      }
+
+      return this.publicationPaperRoute(publication);
+    },
+    publicationPrimaryHref(publication: Publication): string | undefined {
+      return publication.url || undefined;
+    },
+    publicationPdfHref(publication: Publication): string | undefined {
+      if (!publication.paperPdfPath) {
+        return undefined;
+      }
+
+      return resolvePublicAssetPath(publication.paperPdfPath);
     },
     publicationSectionKey(
       publicationId: string,

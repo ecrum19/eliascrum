@@ -2,6 +2,7 @@ import { type TopicTag, type VenueTag } from "./talkMetadata";
 
 export const PUBLICATION_TYPE_TAG_OPTIONS = [
   "Conference Paper",
+  "Poster Paper",
   "Journal Article",
   "Workshop Paper",
   "Thesis",
@@ -14,6 +15,7 @@ export type PublicationTypeTag =
 export interface Publication {
   // Required core fields used by automatic homepage updates and list sorting.
   id: string;
+  slug?: string;
   title: string;
   authors: string;
   venue: string;
@@ -27,6 +29,7 @@ export interface Publication {
   abstract?: string;
   bibtex: string;
   details: PublicationDetail[];
+  paperPdfPath?: string;
 }
 
 export interface PublicationDetail {
@@ -61,6 +64,43 @@ export const semanticScholarUrl =
   "https://www.semanticscholar.org/author/Elias-Crum/2091963103";
 
 export const publications: Publication[] = [
+  {
+    id: "vcf-to-rdf-rml-swat4hcls-2026",
+    slug: "vcf-to-rdf-rml-swat4hcls-2026",
+    title:
+      "From VCF to RDF: RML-Based Conversion Approaches for the Semantic Representation of Variant Data",
+    authors: "E. Crum, B. Buelens, G. Ertaylan, R. Taelman",
+    venue: "SWAT4HCLS 2026",
+    year: 2026,
+    sortDate: "2026-03-24",
+    type: "Poster Paper",
+    venueTags: ["SWAT4HCLS"],
+    topicTags: ["Semantic Web", "Genomics", "Knowledge Representation", "Bioinformatics"],
+    url: "",
+    summary:
+      "Presents an RML-based approach for converting VCF genomic variant files into RDF using established ontologies, targeting more interoperable, queryable, and privacy-aware variant data representation.",
+    abstract:
+      "Representing Variant Call Format (VCF) data using the Resource Description Framework (RDF) offers benefits in interoperability, integration with other biomedical datasets, and selective privacy protections. Due to complexities of the data represented in VCF files, conversion of VCF to RDF poses challenges, especially concerning complex, heterogeneous data fields. Here, we propose converting VCF files to serialized RDF using the RML mapping language and established genomic data ontologies. Such a methodology will demonstrate the feasibility of an RML-based approach and inform a more FAIR, machine-actionable representation strategy for representing VCF data that is compatible with semantic data privacy policies and useful in both clinical and academic domains.",
+    bibtex: `@inproceedings{crum2026vcf2rdfposter,
+  title={From VCF to RDF: RML-Based Conversion Approaches for the Semantic Representation of Variant Data},
+  author={Crum, Elias and Buelens, Bart and Ertaylan, Gokhan and Taelman, Ruben},
+  booktitle={SWAT4HCLS 2026: Bridging Life Sciences and Technology},
+  year={2026},
+  month={mar},
+  address={Amsterdam, Netherlands},
+  note={Poster paper},
+}`,
+    details: [
+      { label: "Publication Type", value: "Poster Paper" },
+      { label: "Conference", value: "SWAT4HCLS 2026" },
+      { label: "Location", value: "Amsterdam, Netherlands" },
+      { label: "Date", value: "2026-03-24" },
+      { label: "Keywords", value: "Knowledge Representation, Genomic Data, Semantics, RML" },
+      { label: "DOI", value: "Not yet available" },
+      { label: "Web Version", value: "Not yet available" },
+    ],
+    paperPdfPath: "/publications/papers/swat4hcls-2026-poster-paper.pdf",
+  },
   {
     id: "genome-sharing-review-2026",
     title: "Genomic sequence data sharing for clinical practice: A scoping review",
@@ -478,6 +518,12 @@ export function getPublicationById(
   publicationId: string,
 ): Publication | undefined {
   return publications.find((publication) => publication.id === publicationId);
+}
+
+export function getPublicationBySlug(
+  publicationSlug: string,
+): Publication | undefined {
+  return publications.find((publication) => publication.slug === publicationSlug);
 }
 
 export function getRelatedPublicationLinksForTalkSlug(

@@ -7,6 +7,7 @@ import MyBlogs from "./components/MyBlogs.vue";
 import MyCV from "./components/CurrentCv.vue";
 import MySlides from "./components/MySlides.vue";
 import SlideDetail from "./components/SlideDetail.vue";
+import PublicationPaperPage from "./components/PublicationPaperPage.vue";
 
 /**
  * The router here allows for navigation between different pages of the website
@@ -28,6 +29,11 @@ const router = createRouter({
       name: "Publications",
       path: "/publications",
       components: { default: MyPublications },
+    },
+    {
+      name: "Publication Paper",
+      path: "/publications/:slug/paper",
+      component: PublicationPaperPage,
     },
     {
       name: "Software",

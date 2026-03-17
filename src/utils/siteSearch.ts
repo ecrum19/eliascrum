@@ -160,13 +160,18 @@ function buildSearchDocuments(): SearchDocument[] {
   });
 
   publications.forEach((publicationEntry) => {
+    const publicationRoute =
+      publicationEntry.slug && publicationEntry.paperPdfPath
+        ? `/publications/${publicationEntry.slug}/paper`
+        : "/publications";
+
     documents.push({
       id: `publication:${publicationEntry.id}`,
       type: "Publication",
       title: publicationEntry.title,
       subtitle: `Publication • ${publicationEntry.year} • ${publicationEntry.type}`,
       snippet: publicationEntry.summary,
-      route: "/publications",
+      route: publicationRoute,
       href: publicationEntry.url,
       searchableText: [
         publicationEntry.title,
