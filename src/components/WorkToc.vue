@@ -19,22 +19,32 @@
     </button>
 
     <nav
+      ref="navElement"
       class="work-toc-nav"
       :class="{ 'work-toc-nav-hidden': collapsed }"
       :aria-hidden="collapsed"
       :aria-label="`${title} navigation`"
     >
-      <button
-        v-for="(entry, index) in entries"
+      <a
+        v-for="entry in normalizedEntries"
         :key="entry.id"
-        type="button"
+        :href="entryHref(entry.id)"
         class="work-toc-link"
-        :class="{ 'work-toc-link-active': activeId === entry.id }"
-        @click="scrollToEntry(entry.id)"
+        :class="[
+          `work-toc-link-level-${Math.min(entry.level, 3)}`,
+          {
+            'work-toc-link-active': activeId === entry.id,
+            'work-toc-link-parent-active': activeTrailIds.includes(entry.id) && activeId !== entry.id,
+          },
+        ]"
+        :data-entry-id="entry.id"
+        :aria-current="activeId === entry.id ? 'location' : undefined"
+        @click="handleEntryClick($event, entry.id)"
       >
-        <span class="work-toc-link-index">{{ index + 1 }}.</span>
+        <span v-if="entry.level === 1" class="work-toc-link-index">{{ entry.topLevelIndex }}.</span>
+        <span v-else class="work-toc-link-marker" aria-hidden="true"></span>
         <span class="work-toc-link-label">{{ entry.label }}</span>
-      </button>
+      </a>
     </nav>
   </aside>
 </template>
@@ -45,7 +55,16 @@ import { defineComponent, type PropType } from "vue";
 export interface TocEntry {
   id: string;
   label: string;
+  level?: number;
 }
+
+interface NormalizedTocEntry extends TocEntry {
+  level: number;
+  topLevelIndex: number | null;
+  ancestorIds: string[];
+}
+
+type ScrollMode = "auto" | "smooth";
 
 export default defineComponent({
   name: "WorkToc",
@@ -71,19 +90,59 @@ export default defineComponent({
     return {
       collapsed: false,
       activeId: "",
+      syncFrame: null as number | null,
     };
   },
+  computed: {
+    normalizedEntries(): NormalizedTocEntry[] {
+      let topLevelIndex = 0;
+      const lineage: string[] = [];
+
+      return this.entries.map((entry) => {
+        const rawLevel = Number(entry.level ?? 1);
+        const requestedLevel = Number.isFinite(rawLevel) ? Math.max(1, Math.floor(rawLevel)) : 1;
+        const level = Math.min(requestedLevel, lineage.length + 1);
+
+        lineage.length = level - 1;
+        const ancestorIds = lineage.slice(0, level - 1);
+
+        const normalizedEntry: NormalizedTocEntry = {
+          ...entry,
+          level,
+          topLevelIndex: level === 1 ? ++topLevelIndex : null,
+          ancestorIds,
+        };
+
+        lineage[level - 1] = entry.id;
+        return normalizedEntry;
+      });
+    },
+    activeTrailIds(): string[] {
+      const activeEntry = this.normalizedEntries.find((entry) => entry.id === this.activeId);
+      if (!activeEntry) {
+        return [];
+      }
+      return [...activeEntry.ancestorIds, activeEntry.id];
+    },
+  },
   watch: {
+    activeId() {
+      this.$nextTick(() => this.scrollActiveLinkIntoView());
+    },
     entries: {
       handler() {
         if (this.entries.length === 0) {
           this.activeId = "";
           return;
         }
-        if (!this.entries.some((entry) => entry.id === this.activeId)) {
-          this.activeId = this.entries[0].id;
+        if (!this.normalizedEntries.some((entry) => entry.id === this.activeId)) {
+          this.activeId = this.normalizedEntries[0]?.id ?? "";
         }
-        this.$nextTick(() => this.syncActiveEntry());
+        this.$nextTick(() => {
+          if (!this.syncFromHash({ scroll: false })) {
+            this.syncActiveEntry();
+          }
+        });
       },
       deep: true,
       immediate: true,
@@ -91,55 +150,184 @@ export default defineComponent({
   },
   mounted() {
     this.collapsed = window.matchMedia(`(max-width: ${this.mobileBreakpoint}px)`).matches;
-    this.syncActiveEntry();
-    window.addEventListener("scroll", this.syncActiveEntry, { passive: true });
+    this.$nextTick(() => {
+      if (!this.syncFromHash({ scroll: false })) {
+        this.syncActiveEntry();
+      }
+    });
+    window.addEventListener("scroll", this.handleWindowScroll, { passive: true });
     window.addEventListener("resize", this.handleResize);
+    window.addEventListener("hashchange", this.handleHashChange);
   },
   beforeUnmount() {
-    window.removeEventListener("scroll", this.syncActiveEntry);
+    window.removeEventListener("scroll", this.handleWindowScroll);
     window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener("hashchange", this.handleHashChange);
+    if (this.syncFrame !== null) {
+      window.cancelAnimationFrame(this.syncFrame);
+      this.syncFrame = null;
+    }
   },
   methods: {
+    entryHref(entryId: string): string {
+      return `#${encodeURIComponent(entryId)}`;
+    },
+    currentHashEntryId(): string {
+      return decodeURIComponent(window.location.hash.replace(/^#/, ""));
+    },
+    prefersReducedMotion(): boolean {
+      return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    },
+    handleWindowScroll() {
+      this.scheduleSyncActiveEntry();
+    },
+    scheduleSyncActiveEntry() {
+      if (this.syncFrame !== null) {
+        return;
+      }
+
+      this.syncFrame = window.requestAnimationFrame(() => {
+        this.syncFrame = null;
+        this.syncActiveEntry();
+      });
+    },
     handleResize() {
       if (window.matchMedia(`(max-width: ${this.mobileBreakpoint}px)`).matches) {
         this.collapsed = true;
       }
-      this.syncActiveEntry();
+      this.scheduleSyncActiveEntry();
+      this.scrollActiveLinkIntoView("auto");
+    },
+    handleHashChange() {
+      this.syncFromHash({ scroll: false });
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
     },
-    scrollToEntry(entryId: string) {
+    scrollActiveLinkIntoView(behavior: ScrollMode = "smooth") {
+      if (!this.activeId || this.collapsed) {
+        return;
+      }
+
+      const navElement = this.$refs.navElement as HTMLElement | undefined;
+      if (!navElement) {
+        return;
+      }
+
+      const activeLink = navElement.querySelector<HTMLElement>(`[data-entry-id="${this.activeId}"]`);
+      if (!activeLink) {
+        return;
+      }
+
+      const navRect = navElement.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
+      const inset = 18;
+      const isWithinView =
+        linkRect.top >= navRect.top + inset &&
+        linkRect.bottom <= navRect.bottom - inset;
+
+      if (isWithinView) {
+        return;
+      }
+
+      const targetTop =
+        navElement.scrollTop +
+        (linkRect.top - navRect.top) -
+        navElement.clientHeight / 2 +
+        activeLink.clientHeight / 2;
+
+      navElement.scrollTo({
+        top: Math.max(
+          0,
+          Math.min(targetTop, navElement.scrollHeight - navElement.clientHeight)
+        ),
+        behavior,
+      });
+    },
+    syncFromHash(options: { scroll: boolean }): boolean {
+      const hashEntryId = this.currentHashEntryId();
+      if (!hashEntryId) {
+        return false;
+      }
+
+      if (!this.normalizedEntries.some((entry) => entry.id === hashEntryId)) {
+        return false;
+      }
+
+      this.activeId = hashEntryId;
+
+      if (options.scroll) {
+        this.navigateToEntry(hashEntryId, {
+          behavior: this.prefersReducedMotion() ? "auto" : "smooth",
+          updateHash: false,
+        });
+      } else {
+        this.$nextTick(() => this.scrollActiveLinkIntoView("auto"));
+      }
+
+      return true;
+    },
+    handleEntryClick(event: MouseEvent, entryId: string) {
+      event.preventDefault();
+      this.navigateToEntry(entryId, {
+        behavior: this.prefersReducedMotion() ? "auto" : "smooth",
+        updateHash: true,
+      });
+    },
+    navigateToEntry(
+      entryId: string,
+      options: { behavior: ScrollMode; updateHash: boolean }
+    ) {
       const target = document.getElementById(entryId);
       if (!target) {
         return;
       }
 
+      if (options.updateHash) {
+        window.history.replaceState(null, "", this.entryHref(entryId));
+      }
+
       const targetTop = target.getBoundingClientRect().top + window.scrollY - this.topOffset;
-      window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: options.behavior });
       this.activeId = entryId;
 
       if (window.matchMedia(`(max-width: ${this.mobileBreakpoint}px)`).matches) {
         this.collapsed = true;
       }
+
+      this.$nextTick(() => this.scrollActiveLinkIntoView(options.behavior));
     },
     syncActiveEntry() {
-      if (!this.entries.length) {
+      if (!this.normalizedEntries.length) {
         return;
       }
 
-      const checkpoint = window.scrollY + window.innerHeight * 0.28;
-      let current = this.entries[0].id;
+      const checkpoint = this.topOffset + 28;
+      let current = this.normalizedEntries[0]?.id ?? "";
+      let nearestBelow: { id: string; top: number } | null = null;
 
-      this.entries.forEach((entry) => {
+      this.normalizedEntries.forEach((entry) => {
         const element = document.getElementById(entry.id);
         if (!element) {
           return;
         }
-        if (element.offsetTop <= checkpoint) {
+
+        const top = element.getBoundingClientRect().top;
+        if (top <= checkpoint) {
           current = entry.id;
+          return;
+        }
+
+        if (!nearestBelow || top < nearestBelow.top) {
+          nearestBelow = { id: entry.id, top };
         }
       });
+
+      if (window.scrollY <= 4) {
+        current = this.normalizedEntries[0]?.id ?? current;
+      } else if (!current && nearestBelow) {
+        current = nearestBelow.id;
+      }
 
       this.activeId = current;
     },
@@ -157,7 +345,7 @@ export default defineComponent({
   align-self: start;
   width: var(--toc-open-width);
   max-height: calc(100vh - (var(--toc-top-offset) + 16px));
-  overflow: auto;
+  overflow: hidden;
   background: var(--surface-bg);
   outline: 2px solid var(--surface-outline);
   border-radius: 14px;
@@ -220,7 +408,7 @@ export default defineComponent({
 
 .work-toc-toggle:hover {
   background: var(--nav-hover-bg);
-  border-color: rgba(80, 203, 255, 0.42);
+  border-color: rgba(var(--accent-rgb), 0.42);
 }
 
 .work-toc-shell-collapsed .work-toc-toggle {
@@ -250,10 +438,13 @@ export default defineComponent({
 .work-toc-nav {
   display: grid;
   gap: 8px;
-  overflow: hidden;
+  overflow: auto;
   max-height: 2000px;
   opacity: 1;
   transform: translateY(0);
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  padding-right: 2px;
   transition: max-height 0.24s ease, opacity 0.18s ease, transform 0.24s ease;
 }
 
@@ -269,31 +460,59 @@ export default defineComponent({
   border-radius: 10px;
   background: transparent;
   color: var(--page-text);
+  text-decoration: none;
   text-align: left;
   padding: 8px 10px;
   display: grid;
   grid-template-columns: auto 1fr;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
   font: inherit;
   cursor: pointer;
   min-width: 0;
-  transition: background-color 0.16s ease, border-color 0.16s ease;
+  transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
 }
 
 .work-toc-link:hover {
   background: var(--nav-hover-bg);
+  transform: translateY(-1px);
 }
 
 .work-toc-link-active {
-  border-color: rgba(80, 203, 255, 0.56);
-  background: rgba(80, 203, 255, 0.12);
+  border-color: rgba(var(--accent-rgb), 0.56);
+  background: rgba(var(--accent-rgb), 0.12);
+}
+
+.work-toc-link-parent-active {
+  border-color: rgba(var(--accent-rgb), 0.34);
+  background: rgba(var(--accent-rgb), 0.06);
+}
+
+.work-toc-link-level-1 {
+  font-weight: 650;
+}
+
+.work-toc-link-level-2 {
+  padding-left: 18px;
+}
+
+.work-toc-link-level-3 {
+  padding-left: 26px;
 }
 
 .work-toc-link-index {
   font-size: var(--font-size-micro);
   opacity: 0.75;
   letter-spacing: 0.06em;
+  min-width: 1.15rem;
+}
+
+.work-toc-link-marker {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.3;
 }
 
 .work-toc-link-label {
@@ -301,6 +520,16 @@ export default defineComponent({
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.work-toc-link-level-2 .work-toc-link-label {
+  font-size: var(--font-size-meta);
+  opacity: 0.92;
+}
+
+.work-toc-link-level-3 .work-toc-link-label {
+  font-size: var(--font-size-caption);
+  opacity: 0.86;
 }
 
 @media (max-width: 1080px) {

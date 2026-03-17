@@ -261,6 +261,7 @@ if (!GlobalWorkerOptions.workerPort) {
 interface TocEntry {
   id: string;
   label: string;
+  level?: number;
 }
 
 type PublicationDetailFilterKind = "type" | "venue" | "topic";
@@ -395,18 +396,18 @@ export default defineComponent({
       }
 
       const entries: TocEntry[] = [
-        { id: "paper-overview", label: "Overview" },
-        { id: "paper-summary", label: "Summary" },
+        { id: "paper-overview", label: "Overview", level: 1 },
+        { id: "paper-summary", label: "Summary", level: 2 },
       ];
 
       if (this.publication.abstract) {
-        entries.push({ id: "paper-abstract", label: "Abstract" });
+        entries.push({ id: "paper-abstract", label: "Abstract", level: 2 });
       }
 
       entries.push(
-        { id: "paper-details", label: "Details" },
-        { id: "paper-citation", label: "BibTeX" },
-        { id: "paper-pdf", label: "PDF" },
+        { id: "paper-details", label: "Details", level: 2 },
+        { id: "paper-citation", label: "BibTeX", level: 2 },
+        { id: "paper-pdf", label: "PDF", level: 1 },
       );
 
       return entries;
@@ -885,25 +886,25 @@ export default defineComponent({
 .paper-header,
 .paper-panel {
   width: 100%;
-  background: var(--surface-bg);
+  background: var(--surface-elevated);
   border: 1px solid var(--surface-outline);
   border-radius: 14px;
   padding: 16px 18px;
 }
 
 .paper-header {
-  background: linear-gradient(180deg, rgba(80, 203, 255, 0.11), rgba(45, 212, 191, 0.05));
+  background: var(--surface-elevated);
 }
 
 [data-theme="light"] .paper-header {
-  background: linear-gradient(180deg, rgba(235, 248, 255, 0.98), rgba(233, 249, 245, 0.95));
+  background: linear-gradient(180deg, rgba(var(--accent-secondary-rgb), 0.6), rgba(var(--accent-rgb), 0.18));
   border-color: rgba(16, 36, 59, 0.14);
 }
 
 .paper-kicker {
   margin: 0;
-  color: var(--page-text);
-  opacity: 0.74;
+  color: var(--text-soft);
+  opacity: 1;
   font-size: var(--font-size-meta);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -934,7 +935,8 @@ export default defineComponent({
 }
 
 .paper-meta {
-  opacity: 0.8;
+  color: var(--text-muted);
+  opacity: 1;
   font-size: var(--font-size-body);
 }
 
@@ -1046,19 +1048,19 @@ export default defineComponent({
 }
 
 .paper-tag-venue {
-  --tag-bg: rgba(80, 203, 255, 0.14);
+  --tag-bg: rgba(var(--accent-rgb), 0.14);
   --tag-border: rgba(14, 165, 233, 0.34);
   --tag-text: #053a52;
-  --tag-tooltip-bg: rgba(80, 203, 255, 0.96);
+  --tag-tooltip-bg: rgba(var(--accent-rgb), 0.96);
   --tag-tooltip-border: rgba(14, 165, 233, 0.96);
   --tag-tooltip-text: #052634;
 }
 
 .paper-tag-topic {
-  --tag-bg: rgba(45, 212, 191, 0.14);
+  --tag-bg: rgba(var(--accent-secondary-rgb), 0.14);
   --tag-border: rgba(13, 148, 136, 0.34);
   --tag-text: #06453f;
-  --tag-tooltip-bg: rgba(45, 212, 191, 0.96);
+  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.96);
   --tag-tooltip-border: rgba(13, 148, 136, 0.96);
   --tag-tooltip-text: #042320;
 }
@@ -1073,20 +1075,20 @@ export default defineComponent({
 }
 
 [data-theme="dark"] .paper-tag-venue {
-  --tag-bg: rgba(80, 203, 255, 0.26);
-  --tag-border: rgba(80, 203, 255, 0.6);
+  --tag-bg: rgba(var(--accent-rgb), 0.26);
+  --tag-border: rgba(var(--accent-rgb), 0.6);
   --tag-text: #d3f4ff;
-  --tag-tooltip-bg: rgba(80, 203, 255, 0.98);
+  --tag-tooltip-bg: rgba(var(--accent-rgb), 0.98);
   --tag-tooltip-border: rgba(125, 211, 252, 0.98);
   --tag-tooltip-text: #041b25;
 }
 
 [data-theme="dark"] .paper-tag-topic {
-  --tag-bg: rgba(45, 212, 191, 0.26);
-  --tag-border: rgba(45, 212, 191, 0.58);
+  --tag-bg: rgba(var(--accent-secondary-rgb), 0.26);
+  --tag-border: rgba(var(--accent-secondary-rgb), 0.58);
   --tag-text: #d2fff4;
-  --tag-tooltip-bg: rgba(45, 212, 191, 0.98);
-  --tag-tooltip-border: rgba(45, 212, 191, 0.98);
+  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.98);
+  --tag-tooltip-border: rgba(var(--accent-secondary-rgb), 0.98);
   --tag-tooltip-text: #021413;
 }
 
@@ -1107,21 +1109,21 @@ export default defineComponent({
 }
 
 .paper-action-btn.primary {
-  border-color: rgba(80, 203, 255, 0.5);
-  background: rgba(80, 203, 255, 0.13);
+  border-color: rgba(var(--accent-rgb), 0.5);
+  background: rgba(var(--accent-rgb), 0.13);
 }
 
 .paper-action-btn:hover {
   background: var(--nav-hover-bg);
-  border-color: rgba(80, 203, 255, 0.45);
+  border-color: rgba(var(--accent-rgb), 0.45);
   box-shadow: 0 4px 12px rgba(8, 15, 31, 0.12);
   transform: translateY(-1px);
 }
 
 .paper-action-btn:focus-visible {
   outline: none;
-  border-color: rgba(80, 203, 255, 0.78);
-  box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.24);
+  border-color: rgba(var(--accent-rgb), 0.78);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.24);
 }
 
 [data-theme="light"] .paper-action-btn {
@@ -1129,7 +1131,7 @@ export default defineComponent({
 }
 
 [data-theme="light"] .paper-action-btn.primary {
-  background: rgba(80, 203, 255, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
 }
 
 .paper-panel {
@@ -1187,15 +1189,15 @@ export default defineComponent({
 .paper-zoom-btn:hover,
 .paper-zoom-reset:hover {
   background: var(--nav-hover-bg);
-  border-color: rgba(80, 203, 255, 0.45);
+  border-color: rgba(var(--accent-rgb), 0.45);
   transform: translateY(-1px);
 }
 
 .paper-zoom-btn:focus-visible,
 .paper-zoom-reset:focus-visible {
   outline: none;
-  border-color: rgba(80, 203, 255, 0.78);
-  box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.24);
+  border-color: rgba(var(--accent-rgb), 0.78);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.24);
 }
 
 .paper-inline-link {
@@ -1233,7 +1235,7 @@ export default defineComponent({
   padding: 8px 10px;
   border-radius: 10px;
   border: 1px solid var(--surface-outline);
-  background: rgba(0, 0, 0, 0.18);
+  background: rgba(0, 0, 0, 0.28);
 }
 
 [data-theme="light"] .paper-bibtex {
@@ -1296,16 +1298,16 @@ export default defineComponent({
 }
 
 .paper-page-btn:hover:not(:disabled) {
-  background: rgba(80, 203, 255, 0.24);
-  border-color: rgba(80, 203, 255, 0.54);
+  background: rgba(var(--accent-rgb), 0.24);
+  border-color: rgba(var(--accent-rgb), 0.54);
   box-shadow: 0 3px 10px rgba(8, 15, 31, 0.28);
   transform: translateY(-1px);
 }
 
 .paper-page-btn:focus-visible {
   outline: none;
-  border-color: rgba(80, 203, 255, 0.86);
-  box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.28);
+  border-color: rgba(var(--accent-rgb), 0.86);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.28);
 }
 
 .paper-page-btn:disabled {
@@ -1368,8 +1370,8 @@ export default defineComponent({
 
 .paper-page-label:focus-within {
   outline: none;
-  border-color: rgba(80, 203, 255, 0.86);
-  box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.28);
+  border-color: rgba(var(--accent-rgb), 0.86);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.28);
 }
 
 .paper-frame-shell {
@@ -1446,7 +1448,7 @@ export default defineComponent({
   text-align: center;
   border: 1px solid var(--surface-outline);
   border-radius: 12px;
-  background: rgba(0, 0, 0, 0.08);
+  background: var(--surface-card);
 }
 
 [data-theme="light"] .paper-preview-empty {

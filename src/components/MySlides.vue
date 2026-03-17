@@ -1,268 +1,454 @@
 <template>
-  <section id="talks" class="w3-content w3-margin-top" style="max-width: 1400px">
-    <div class="talks-shell">
-      <header class="talks-header">
-        <h1>Talks and Posters</h1>
-        <p>
-          Slides and posters with metadata tags and optional previews.
-        </p>
+  <section id="talks" class="w3-content w3-margin-top" style="max-width: min(1780px, 97vw)">
+    <div class="work-layout">
+      <work-toc :entries="tocEntries" />
 
-        <section class="talk-filters">
-          <button
-            type="button"
-            class="filter-toggle"
-            @click="filtersOpen = !filtersOpen"
-            :aria-expanded="filtersOpen"
-          >
-            <span class="filter-toggle-title">Filter and Sort</span>
-            <span class="filter-toggle-state">{{ filtersOpen ? "Hide" : "Show" }}</span>
-          </button>
+      <div class="work-main">
+        <section id="talks-overview" class="work-section">
+          <header class="talks-header">
+            <h1>Talks and Posters</h1>
+            <p>
+              Slides and posters with metadata tags and optional previews.
+            </p>
 
-          <div v-show="filtersOpen" class="filter-panel">
-            <div class="filter-grid">
-              <label class="filter-control">
-                Venue
-                <select v-model="selectedVenue">
-                  <option value="All">All</option>
-                  <option v-for="venue in availableVenueTags" :key="venue" :value="venue">
-                    {{ venue }}
-                  </option>
-                </select>
-              </label>
-
-              <label class="filter-control">
-                Main Topic
-                <select v-model="selectedTopic">
-                  <option value="All">All</option>
-                  <option v-for="topic in availableTopicTags" :key="topic" :value="topic">
-                    {{ topic }}
-                  </option>
-                </select>
-              </label>
-
-              <label class="filter-control">
-                Type
-                <select v-model="selectedMaterial">
-                  <option value="All">All</option>
-                  <option v-for="material in availableMaterialTags" :key="material" :value="material">
-                    {{ material }}
-                  </option>
-                </select>
-              </label>
-
-              <label class="filter-control">
-                Duration
-                <select v-model="selectedDuration">
-                  <option value="All">All</option>
-                  <option
-                    v-for="durationTag in availableDurationTags"
-                    :key="durationTag"
-                    :value="durationTag"
-                  >
-                    {{ durationTag }}
-                  </option>
-                </select>
-              </label>
-
-              <label class="filter-control">
-                Audience Size
-                <select v-model="selectedAudienceSize">
-                  <option value="All">All</option>
-                  <option
-                    v-for="sizeTag in availableAudienceSizeTags"
-                    :key="sizeTag"
-                    :value="sizeTag"
-                  >
-                    {{ sizeTag }}
-                  </option>
-                </select>
-              </label>
-
-              <label class="filter-control">
-                Audience Field
-                <select v-model="selectedAudienceGroup">
-                  <option value="All">All</option>
-                  <option
-                    v-for="audienceGroup in availableAudienceGroupTags"
-                    :key="audienceGroup"
-                    :value="audienceGroup"
-                  >
-                    {{ audienceGroup }}
-                  </option>
-                </select>
-              </label>
-
-              <label class="filter-control">
-                Date
-                <select v-model="selectedYear">
-                  <option value="All">All</option>
-                  <option v-for="year in availableYears" :key="year" :value="year">
-                    {{ year }}
-                  </option>
-                </select>
-              </label>
-
-              <label class="filter-control">
-                Sort
-                <select v-model="selectedSort">
-                  <option value="date-desc">Newest First</option>
-                  <option value="date-asc">Oldest First</option>
-                  <option value="title-asc">Title (A-Z)</option>
-                  <option value="title-desc">Title (Z-A)</option>
-                </select>
-              </label>
-            </div>
-            <div class="filter-footer">
-              <p class="filter-result">
-                Showing {{ filteredAndSortedItems.length }} of {{ catalogEntries.length }} items.
-              </p>
+            <section id="talks-filters" class="talk-filters toc-anchor">
               <button
                 type="button"
-                class="filter-clear-btn"
-                :disabled="!hasActiveFilters"
-                @click="clearTalkFilters"
+                class="filter-toggle"
+                @click="filtersOpen = !filtersOpen"
+                :aria-expanded="filtersOpen"
               >
-                Clear
+                <span class="filter-toggle-title">Filter and Sort</span>
+                <span class="filter-toggle-state">{{ filtersOpen ? "Hide" : "Show" }}</span>
               </button>
+
+              <div v-show="filtersOpen" class="filter-panel">
+                <div class="filter-grid">
+                  <label class="filter-control">
+                    Venue
+                    <select v-model="selectedVenue">
+                      <option value="All">All</option>
+                      <option v-for="venue in availableVenueTags" :key="venue" :value="venue">
+                        {{ venue }}
+                      </option>
+                    </select>
+                  </label>
+
+                  <label class="filter-control">
+                    Main Topic
+                    <select v-model="selectedTopic">
+                      <option value="All">All</option>
+                      <option v-for="topic in availableTopicTags" :key="topic" :value="topic">
+                        {{ topic }}
+                      </option>
+                    </select>
+                  </label>
+
+                  <label class="filter-control">
+                    Type
+                    <select v-model="selectedMaterial">
+                      <option value="All">All</option>
+                      <option v-for="material in availableMaterialTags" :key="material" :value="material">
+                        {{ material }}
+                      </option>
+                    </select>
+                  </label>
+
+                  <label class="filter-control">
+                    Duration
+                    <select v-model="selectedDuration">
+                      <option value="All">All</option>
+                      <option
+                        v-for="durationTag in availableDurationTags"
+                        :key="durationTag"
+                        :value="durationTag"
+                      >
+                        {{ durationTag }}
+                      </option>
+                    </select>
+                  </label>
+
+                  <label class="filter-control">
+                    Audience Size
+                    <select v-model="selectedAudienceSize">
+                      <option value="All">All</option>
+                      <option
+                        v-for="sizeTag in availableAudienceSizeTags"
+                        :key="sizeTag"
+                        :value="sizeTag"
+                      >
+                        {{ sizeTag }}
+                      </option>
+                    </select>
+                  </label>
+
+                  <label class="filter-control">
+                    Audience Field
+                    <select v-model="selectedAudienceGroup">
+                      <option value="All">All</option>
+                      <option
+                        v-for="audienceGroup in availableAudienceGroupTags"
+                        :key="audienceGroup"
+                        :value="audienceGroup"
+                      >
+                        {{ audienceGroup }}
+                      </option>
+                    </select>
+                  </label>
+
+                  <label class="filter-control">
+                    Date
+                    <select v-model="selectedYear">
+                      <option value="All">All</option>
+                      <option v-for="year in availableYears" :key="year" :value="year">
+                        {{ year }}
+                      </option>
+                    </select>
+                  </label>
+
+                  <label class="filter-control">
+                    Sort
+                    <select v-model="selectedSort">
+                      <option value="date-desc">Newest First</option>
+                      <option value="date-asc">Oldest First</option>
+                      <option value="title-asc">Title (A-Z)</option>
+                      <option value="title-desc">Title (Z-A)</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="filter-footer">
+                  <p class="filter-result">
+                    Showing {{ filteredAndSortedItems.length }} of {{ catalogEntries.length }} items.
+                  </p>
+                  <button
+                    type="button"
+                    class="filter-clear-btn"
+                    :disabled="!hasActiveFilters"
+                    @click="clearTalkFilters"
+                  >
+                    Clear
+                  </button>
+                </div>
+              </div>
+            </section>
+          </header>
+        </section>
+
+        <section id="talks-sections" class="work-section">
+          <div
+            v-if="showTalkSection"
+            id="talks-section-talks"
+            class="work-section-block toc-anchor"
+          >
+            <header class="talk-section-header">
+              <h2>Talks</h2>
+            </header>
+
+            <div class="talks-shell">
+              <article
+                v-for="item in filteredAndSortedTalkItems"
+                :id="itemSectionId(item.id)"
+                :key="item.id"
+                class="talk-card toc-anchor"
+              >
+                <div class="talk-card-layout">
+                  <div>
+                    <div class="talk-meta">
+                      <span class="talk-date">{{ item.displayDateIso }}</span>
+                    </div>
+
+                    <h2 class="talk-card-title">
+                      <router-link v-if="item.detailRoute" :to="item.detailRoute" class="talk-title-link">
+                        {{ item.displayTitle }}
+                      </router-link>
+                      <span v-else>{{ item.displayTitle }}</span>
+                    </h2>
+                    <div class="talk-tags">
+                      <button
+                        type="button"
+                        class="talk-tag talk-tag-material"
+                        :class="{ 'talk-tag-active': isTalkTagActive('material', item.materialTag) }"
+                        data-category="Type"
+                        @click="applyTalkTagFilter('material', item.materialTag)"
+                      >
+                        {{ item.materialTag }}
+                      </button>
+                      <button
+                        type="button"
+                        v-for="tag in item.venueTags"
+                        :key="`${item.id}-${tag}`"
+                        class="talk-tag talk-tag-venue"
+                        :class="{ 'talk-tag-active': isTalkTagActive('venue', tag) }"
+                        data-category="Venue"
+                        @click="applyTalkTagFilter('venue', tag)"
+                      >
+                        {{ tag }}
+                      </button>
+                      <button
+                        type="button"
+                        v-for="tag in item.topicTags"
+                        :key="`${item.id}-${tag}`"
+                        class="talk-tag talk-tag-topic"
+                        :class="{ 'talk-tag-active': isTalkTagActive('topic', tag) }"
+                        data-category="Main Topic"
+                        @click="applyTalkTagFilter('topic', tag)"
+                      >
+                        {{ tag }}
+                      </button>
+                      <button
+                        v-if="item.durationCategory"
+                        type="button"
+                        class="talk-tag talk-tag-duration"
+                        :class="{ 'talk-tag-active': isTalkTagActive('duration', item.durationCategory) }"
+                        data-category="Duration"
+                        @click="applyTalkTagFilter('duration', item.durationCategory)"
+                      >
+                        {{ item.durationCategory }}
+                      </button>
+                      <button
+                        v-if="item.audienceSizeCategory"
+                        type="button"
+                        class="talk-tag talk-tag-audience-size"
+                        :class="{ 'talk-tag-active': isTalkTagActive('audienceSize', item.audienceSizeCategory) }"
+                        data-category="Audience Size"
+                        @click="applyTalkTagFilter('audienceSize', item.audienceSizeCategory)"
+                      >
+                        {{ item.audienceSizeCategory }}
+                      </button>
+                      <button
+                        type="button"
+                        v-for="audienceGroup in item.audienceGroups"
+                        :key="`${item.id}-audience-${audienceGroup}`"
+                        class="talk-tag talk-tag-audience-group"
+                        :class="{ 'talk-tag-active': isTalkTagActive('audienceGroup', audienceGroup) }"
+                        data-category="Audience Field"
+                        @click="applyTalkTagFilter('audienceGroup', audienceGroup)"
+                      >
+                        {{ audienceGroup }}
+                      </button>
+                    </div>
+                    <p class="talk-description">{{ item.summary }}</p>
+
+                    <div class="talk-actions">
+                      <router-link v-if="item.detailRoute" :to="item.detailRoute" class="talk-btn primary">
+                        Show Details
+                      </router-link>
+                      <a :href="item.primaryPath" target="_blank" rel="noopener noreferrer" class="talk-btn">
+                        {{ item.primaryActionLabel }}
+                      </a>
+                      <a
+                        v-if="item.secondaryPosterPath"
+                        :href="item.secondaryPosterPath"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="talk-btn"
+                      >
+                        Open Poster PDF
+                      </a>
+                      <a
+                        v-for="publicationLink in item.relatedPublicationLinks"
+                        :key="publicationLink.key"
+                        :href="publicationLink.url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="talk-btn"
+                      >
+                        {{ publicationLink.label }}
+                      </a>
+                    </div>
+                  </div>
+
+                  <aside class="preview-shell">
+                    <button
+                      type="button"
+                      class="preview-toggle-inline"
+                      @click="togglePreview(item.id)"
+                    >
+                      {{ isPreviewOpen(item.id) ? "Hide Preview" : "Show Preview" }}
+                    </button>
+                    <object
+                      v-if="isPreviewOpen(item.id)"
+                      :data="`${item.previewPath}#page=1&zoom=page-fit`"
+                      type="application/pdf"
+                      class="talk-preview-frame"
+                    >
+                      <div class="talk-preview-fallback">
+                        <i class="fa fa-file-pdf-o"></i>
+                        <span>Preview unavailable</span>
+                      </div>
+                    </object>
+                  </aside>
+                </div>
+              </article>
+
+              <article v-if="filteredAndSortedTalkItems.length === 0" class="talk-card empty-state">
+                <h2>No Talks Match Current Filters</h2>
+                <p>Try clearing one or more filters to see more talk entries.</p>
+              </article>
             </div>
+          </div>
+
+          <div
+            v-if="showPosterSection"
+            id="talks-section-posters"
+            class="work-section-block toc-anchor"
+          >
+            <header class="talk-section-header">
+              <h2>Posters</h2>
+            </header>
+
+            <div class="talks-shell">
+              <article
+                v-for="item in filteredAndSortedPosterItems"
+                :id="itemSectionId(item.id)"
+                :key="item.id"
+                class="talk-card toc-anchor"
+              >
+                <div class="talk-card-layout">
+                  <div>
+                    <div class="talk-meta">
+                      <span class="talk-date">{{ item.displayDateIso }}</span>
+                    </div>
+
+                    <h2 class="talk-card-title">
+                      <router-link v-if="item.detailRoute" :to="item.detailRoute" class="talk-title-link">
+                        {{ item.displayTitle }}
+                      </router-link>
+                      <span v-else>{{ item.displayTitle }}</span>
+                    </h2>
+                    <div class="talk-tags">
+                      <button
+                        type="button"
+                        class="talk-tag talk-tag-material"
+                        :class="{ 'talk-tag-active': isTalkTagActive('material', item.materialTag) }"
+                        data-category="Type"
+                        @click="applyTalkTagFilter('material', item.materialTag)"
+                      >
+                        {{ item.materialTag }}
+                      </button>
+                      <button
+                        type="button"
+                        v-for="tag in item.venueTags"
+                        :key="`${item.id}-${tag}`"
+                        class="talk-tag talk-tag-venue"
+                        :class="{ 'talk-tag-active': isTalkTagActive('venue', tag) }"
+                        data-category="Venue"
+                        @click="applyTalkTagFilter('venue', tag)"
+                      >
+                        {{ tag }}
+                      </button>
+                      <button
+                        type="button"
+                        v-for="tag in item.topicTags"
+                        :key="`${item.id}-${tag}`"
+                        class="talk-tag talk-tag-topic"
+                        :class="{ 'talk-tag-active': isTalkTagActive('topic', tag) }"
+                        data-category="Main Topic"
+                        @click="applyTalkTagFilter('topic', tag)"
+                      >
+                        {{ tag }}
+                      </button>
+                      <button
+                        v-if="item.durationCategory"
+                        type="button"
+                        class="talk-tag talk-tag-duration"
+                        :class="{ 'talk-tag-active': isTalkTagActive('duration', item.durationCategory) }"
+                        data-category="Duration"
+                        @click="applyTalkTagFilter('duration', item.durationCategory)"
+                      >
+                        {{ item.durationCategory }}
+                      </button>
+                      <button
+                        v-if="item.audienceSizeCategory"
+                        type="button"
+                        class="talk-tag talk-tag-audience-size"
+                        :class="{ 'talk-tag-active': isTalkTagActive('audienceSize', item.audienceSizeCategory) }"
+                        data-category="Audience Size"
+                        @click="applyTalkTagFilter('audienceSize', item.audienceSizeCategory)"
+                      >
+                        {{ item.audienceSizeCategory }}
+                      </button>
+                      <button
+                        type="button"
+                        v-for="audienceGroup in item.audienceGroups"
+                        :key="`${item.id}-audience-${audienceGroup}`"
+                        class="talk-tag talk-tag-audience-group"
+                        :class="{ 'talk-tag-active': isTalkTagActive('audienceGroup', audienceGroup) }"
+                        data-category="Audience Field"
+                        @click="applyTalkTagFilter('audienceGroup', audienceGroup)"
+                      >
+                        {{ audienceGroup }}
+                      </button>
+                    </div>
+                    <p class="talk-description">{{ item.summary }}</p>
+
+                    <div class="talk-actions">
+                      <router-link v-if="item.detailRoute" :to="item.detailRoute" class="talk-btn primary">
+                        Show Details
+                      </router-link>
+                      <a :href="item.primaryPath" target="_blank" rel="noopener noreferrer" class="talk-btn">
+                        {{ item.primaryActionLabel }}
+                      </a>
+                      <a
+                        v-if="item.secondaryPosterPath"
+                        :href="item.secondaryPosterPath"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="talk-btn"
+                      >
+                        Open Poster PDF
+                      </a>
+                      <a
+                        v-for="publicationLink in item.relatedPublicationLinks"
+                        :key="publicationLink.key"
+                        :href="publicationLink.url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="talk-btn"
+                      >
+                        {{ publicationLink.label }}
+                      </a>
+                    </div>
+                  </div>
+
+                  <aside class="preview-shell">
+                    <button
+                      type="button"
+                      class="preview-toggle-inline"
+                      @click="togglePreview(item.id)"
+                    >
+                      {{ isPreviewOpen(item.id) ? "Hide Preview" : "Show Preview" }}
+                    </button>
+                    <object
+                      v-if="isPreviewOpen(item.id)"
+                      :data="`${item.previewPath}#page=1&zoom=page-fit`"
+                      type="application/pdf"
+                      class="talk-preview-frame"
+                    >
+                      <div class="talk-preview-fallback">
+                        <i class="fa fa-file-pdf-o"></i>
+                        <span>Preview unavailable</span>
+                      </div>
+                    </object>
+                  </aside>
+                </div>
+              </article>
+
+              <article v-if="filteredAndSortedPosterItems.length === 0" class="talk-card empty-state">
+                <h2>No Posters Match Current Filters</h2>
+                <p>Try clearing one or more filters to see more poster entries.</p>
+              </article>
+            </div>
+          </div>
+
+          <div v-if="!hasFilteredItems" class="work-section-block">
+            <article class="talk-card empty-state">
+              <h2>No Items Match Current Filters</h2>
+              <p>Try clearing one or more filters to see more talks and posters.</p>
+            </article>
           </div>
         </section>
-      </header>
-
-      <article
-        v-for="item in filteredAndSortedItems"
-        :key="item.id"
-        class="talk-card"
-      >
-        <div class="talk-card-layout">
-          <div>
-            <div class="talk-meta">
-              <span class="talk-date">{{ item.displayDateIso }}</span>
-            </div>
-
-            <h2>{{ item.displayTitle }}</h2>
-            <div class="talk-tags">
-              <button
-                type="button"
-                class="talk-tag talk-tag-material"
-                :class="{ 'talk-tag-active': isTalkTagActive('material', item.materialTag) }"
-                data-category="Type"
-                @click="applyTalkTagFilter('material', item.materialTag)"
-              >
-                {{ item.materialTag }}
-              </button>
-              <button
-                type="button"
-                v-for="tag in item.venueTags"
-                :key="`${item.id}-${tag}`"
-                class="talk-tag talk-tag-venue"
-                :class="{ 'talk-tag-active': isTalkTagActive('venue', tag) }"
-                data-category="Venue"
-                @click="applyTalkTagFilter('venue', tag)"
-              >
-                {{ tag }}
-              </button>
-              <button
-                type="button"
-                v-for="tag in item.topicTags"
-                :key="`${item.id}-${tag}`"
-                class="talk-tag talk-tag-topic"
-                :class="{ 'talk-tag-active': isTalkTagActive('topic', tag) }"
-                data-category="Main Topic"
-                @click="applyTalkTagFilter('topic', tag)"
-              >
-                {{ tag }}
-              </button>
-              <button
-                v-if="item.durationCategory"
-                type="button"
-                class="talk-tag talk-tag-duration"
-                :class="{ 'talk-tag-active': isTalkTagActive('duration', item.durationCategory) }"
-                data-category="Duration"
-                @click="applyTalkTagFilter('duration', item.durationCategory)"
-              >
-                {{ item.durationCategory }}
-              </button>
-              <button
-                v-if="item.audienceSizeCategory"
-                type="button"
-                class="talk-tag talk-tag-audience-size"
-                :class="{ 'talk-tag-active': isTalkTagActive('audienceSize', item.audienceSizeCategory) }"
-                data-category="Audience Size"
-                @click="applyTalkTagFilter('audienceSize', item.audienceSizeCategory)"
-              >
-                {{ item.audienceSizeCategory }}
-              </button>
-              <button
-                type="button"
-                v-for="audienceGroup in item.audienceGroups"
-                :key="`${item.id}-audience-${audienceGroup}`"
-                class="talk-tag talk-tag-audience-group"
-                :class="{ 'talk-tag-active': isTalkTagActive('audienceGroup', audienceGroup) }"
-                data-category="Audience Field"
-                @click="applyTalkTagFilter('audienceGroup', audienceGroup)"
-              >
-                {{ audienceGroup }}
-              </button>
-            </div>
-            <p class="talk-description">{{ item.summary }}</p>
-
-            <div class="talk-actions">
-              <router-link v-if="item.detailRoute" :to="item.detailRoute" class="talk-btn primary">
-                Show Details
-              </router-link>
-              <a :href="item.primaryPath" target="_blank" rel="noopener noreferrer" class="talk-btn">
-                {{ item.primaryActionLabel }}
-              </a>
-              <a
-                v-if="item.secondaryPosterPath"
-                :href="item.secondaryPosterPath"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="talk-btn"
-              >
-                Open Poster PDF
-              </a>
-              <a
-                v-for="publicationLink in item.relatedPublicationLinks"
-                :key="publicationLink.key"
-                :href="publicationLink.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="talk-btn"
-              >
-                {{ publicationLink.label }}
-              </a>
-            </div>
-          </div>
-
-          <aside class="preview-shell">
-            <button
-              type="button"
-              class="preview-toggle-inline"
-              @click="togglePreview(item.id)"
-            >
-              {{ isPreviewOpen(item.id) ? "Hide Preview" : "Show Preview" }}
-            </button>
-            <object
-              v-if="isPreviewOpen(item.id)"
-              :data="`${item.previewPath}#page=1&zoom=page-fit`"
-              type="application/pdf"
-              class="talk-preview-frame"
-            >
-              <div class="talk-preview-fallback">
-                <i class="fa fa-file-pdf-o"></i>
-                <span>Preview unavailable</span>
-              </div>
-            </object>
-          </aside>
-        </div>
-      </article>
-
-      <article v-if="filteredAndSortedItems.length === 0" class="talk-card empty-state">
-        <h2>No Items Match Current Filters</h2>
-        <p>Try clearing one or more filters to see more talks and posters.</p>
-      </article>
+      </div>
     </div>
   </section>
 </template>
@@ -281,6 +467,7 @@ import {
   AUDIENCE_SIZE_TAG_OPTIONS,
   TOPIC_TAG_OPTIONS,
   VENUE_TAG_OPTIONS,
+  talkMetadataBySlug,
   type AudienceGroupTag,
   type AudienceSizeTag,
 } from "../data/talkMetadata";
@@ -290,6 +477,7 @@ import {
   type ResolvedPublicationLink,
 } from "../data/publicationsData";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
+import WorkToc from "./WorkToc.vue";
 
 type MaterialTypeTag = "Slides" | "Poster";
 type TalkTagFilterKind =
@@ -320,10 +508,61 @@ interface CatalogEntry {
   previewPath: string;
 }
 
+interface WorkTocEntry {
+  id: string;
+  label: string;
+  level?: number;
+}
+
 const MATERIAL_TAG_OPTIONS: MaterialTypeTag[] = ["Slides", "Poster"];
+
+function labelFromIso(dateIso: string): string {
+  if (!dateIso || dateIso === "1900-01-01") {
+    return "Undated";
+  }
+
+  const parts = dateIso.split("-");
+  if (parts.length !== 3) {
+    return dateIso;
+  }
+
+  const [year, month, day] = parts;
+  return `${day}/${month}/${year}`;
+}
+
+function durationCategoryFromMinutes(durationMinutes?: number): DurationTag | null {
+  if (!Number.isFinite(durationMinutes)) {
+    return null;
+  }
+
+  if ((durationMinutes as number) <= 15) {
+    return "Short";
+  }
+  if ((durationMinutes as number) <= 45) {
+    return "Medium";
+  }
+  return "Long";
+}
+
+function audienceSizeCategoryFromApprox(audienceSizeApprox?: number): AudienceSizeTag | null {
+  if (!Number.isFinite(audienceSizeApprox)) {
+    return null;
+  }
+
+  if ((audienceSizeApprox as number) <= 25) {
+    return "Small";
+  }
+  if ((audienceSizeApprox as number) <= 70) {
+    return "Medium";
+  }
+  return "Large";
+}
 
 export default defineComponent({
   name: "MySlides",
+  components: {
+    WorkToc,
+  },
   data() {
     return {
       filtersOpen: false,
@@ -339,6 +578,36 @@ export default defineComponent({
     };
   },
   computed: {
+    tocEntries(): WorkTocEntry[] {
+      const entries: WorkTocEntry[] = [
+        { id: "talks-overview", label: "Overview", level: 1 },
+        { id: "talks-filters", label: "Filters", level: 2 },
+      ];
+
+      if (this.showTalkSection) {
+        entries.push({ id: "talks-section-talks", label: "Talks", level: 1 });
+        this.filteredAndSortedTalkItems.forEach((item) => {
+          entries.push({
+            id: this.itemSectionId(item.id),
+            label: item.displayTitle,
+            level: 2,
+          });
+        });
+      }
+
+      if (this.showPosterSection) {
+        entries.push({ id: "talks-section-posters", label: "Posters", level: 1 });
+        this.filteredAndSortedPosterItems.forEach((item) => {
+          entries.push({
+            id: this.itemSectionId(item.id),
+            label: item.displayTitle,
+            level: 2,
+          });
+        });
+      }
+
+      return entries;
+    },
     talkEntries(): TalkViewEntry[] {
       return getTalkViewEntries(talks);
     },
@@ -348,20 +617,32 @@ export default defineComponent({
         const linkedTalk = isEswcPoster
           ? this.talkEntries.find((talk) => talk.slug === "eswc-phdsymp-pangquin")
           : undefined;
+        const metadata = talkMetadataBySlug[poster.slug];
+        const displayDateIso = linkedTalk?.displayDateIso ?? metadata?.dateIso ?? "1900-01-01";
+        const displayDateLabel =
+          linkedTalk?.displayDateLabel ??
+          metadata?.dateLabel ??
+          labelFromIso(displayDateIso);
+        const durationCategory =
+          linkedTalk?.durationCategory ??
+          durationCategoryFromMinutes(metadata?.durationMinutes);
+        const audienceSizeCategory =
+          linkedTalk?.audienceSizeCategory ??
+          audienceSizeCategoryFromApprox(metadata?.audienceSizeApprox);
 
         return {
           id: `poster:${poster.slug}`,
-          displayTitle: poster.title,
+          displayTitle: metadata?.title ?? poster.title,
           summary: linkedTalk
             ? "Poster linked to the ESWC 2024 slide deck."
-            : "Poster presentation file.",
-          displayDateIso: linkedTalk?.displayDateIso ?? "1900-01-01",
-          displayDateLabel: linkedTalk?.displayDateLabel ?? "Undated",
-          durationCategory: linkedTalk?.durationCategory ?? null,
-          audienceSizeCategory: linkedTalk?.audienceSizeCategory ?? null,
-          audienceGroups: linkedTalk?.audienceGroups ?? [],
-          venueTags: [],
-          topicTags: [],
+            : metadata?.summary ?? "Poster presentation file.",
+          displayDateIso,
+          displayDateLabel,
+          durationCategory,
+          audienceSizeCategory,
+          audienceGroups: linkedTalk?.audienceGroups ?? metadata?.audienceGroups ?? [],
+          venueTags: metadata?.venueTags ?? [],
+          topicTags: metadata?.topicTags ?? [],
           materialTag: "Poster",
           detailRoute: linkedTalk ? `/talks/${linkedTalk.slug}` : undefined,
           primaryPath: resolvePublicAssetPath(poster.path),
@@ -398,15 +679,15 @@ export default defineComponent({
     },
     availableVenueTags(): string[] {
       const tags = new Set<string>(VENUE_TAG_OPTIONS);
-      this.talkEntries.forEach((talk) => {
-        talk.venueTags.forEach((tag) => tags.add(String(tag)));
+      this.catalogEntries.forEach((entry) => {
+        entry.venueTags.forEach((tag) => tags.add(String(tag)));
       });
       return Array.from(tags).sort((a, b) => a.localeCompare(b));
     },
     availableTopicTags(): string[] {
       const tags = new Set<string>(TOPIC_TAG_OPTIONS);
-      this.talkEntries.forEach((talk) => {
-        talk.topicTags.forEach((tag) => tags.add(String(tag)));
+      this.catalogEntries.forEach((entry) => {
+        entry.topicTags.forEach((tag) => tags.add(String(tag)));
       });
       return Array.from(tags).sort((a, b) => a.localeCompare(b));
     },
@@ -415,22 +696,26 @@ export default defineComponent({
     },
     availableDurationTags(): DurationTag[] {
       const tags = new Set<DurationTag>(DURATION_TAG_OPTIONS);
-      this.talkEntries.forEach((talk) => {
-        tags.add(talk.durationCategory);
+      this.catalogEntries.forEach((entry) => {
+        if (entry.durationCategory) {
+          tags.add(entry.durationCategory);
+        }
       });
       return Array.from(tags);
     },
     availableAudienceSizeTags(): AudienceSizeTag[] {
       const tags = new Set<AudienceSizeTag>(AUDIENCE_SIZE_TAG_OPTIONS);
-      this.talkEntries.forEach((talk) => {
-        tags.add(talk.audienceSizeCategory);
+      this.catalogEntries.forEach((entry) => {
+        if (entry.audienceSizeCategory) {
+          tags.add(entry.audienceSizeCategory);
+        }
       });
       return Array.from(tags);
     },
     availableAudienceGroupTags(): AudienceGroupTag[] {
       const tags = new Set<AudienceGroupTag>(AUDIENCE_GROUP_TAG_OPTIONS);
-      this.talkEntries.forEach((talk) => {
-        talk.audienceGroups.forEach((group) => tags.add(group));
+      this.catalogEntries.forEach((entry) => {
+        entry.audienceGroups.forEach((group) => tags.add(group));
       });
       return Array.from(tags).sort((a, b) => String(a).localeCompare(String(b)));
     },
@@ -513,8 +798,38 @@ export default defineComponent({
         return b.displayDateIso.localeCompare(a.displayDateIso);
       });
     },
+    filteredAndSortedTalkItems(): CatalogEntry[] {
+      return this.filteredAndSortedItems.filter((entry) => entry.materialTag === "Slides");
+    },
+    filteredAndSortedPosterItems(): CatalogEntry[] {
+      return this.filteredAndSortedItems.filter((entry) => entry.materialTag === "Poster");
+    },
+    hasFilteredItems(): boolean {
+      return this.filteredAndSortedItems.length > 0;
+    },
+    showTalkSection(): boolean {
+      if (!this.hasFilteredItems) {
+        return false;
+      }
+      if (this.selectedMaterial === "Poster") {
+        return false;
+      }
+      return this.filteredAndSortedTalkItems.length > 0;
+    },
+    showPosterSection(): boolean {
+      if (!this.hasFilteredItems) {
+        return false;
+      }
+      if (this.selectedMaterial === "Slides") {
+        return false;
+      }
+      return this.filteredAndSortedPosterItems.length > 0;
+    },
   },
   methods: {
+    itemSectionId(itemId: string): string {
+      return `talk-entry-${itemId.replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "").toLowerCase()}`;
+    },
     clearTalkFilters() {
       this.selectedVenue = "All";
       this.selectedTopic = "All";
@@ -649,9 +964,59 @@ export default defineComponent({
   font-size: var(--font-size-body-lg);
 }
 
+.work-layout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.work-main {
+  min-width: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.work-section {
+  min-width: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.work-section-block {
+  width: 100%;
+  background: var(--surface-elevated);
+  border: 1px solid var(--surface-outline);
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: grid;
+  gap: 14px;
+}
+
+[data-theme="light"] .work-section-block {
+  background: linear-gradient(180deg, rgba(var(--accent-secondary-rgb), 0.56), rgba(var(--accent-rgb), 0.16));
+  border-color: rgba(16, 36, 59, 0.14);
+}
+
+.talk-section-header {
+  margin: 0;
+}
+
+.talk-section-header h2 {
+  margin: 0;
+  color: var(--page-text);
+  font-family: var(--content-heading-font);
+  font-size: var(--content-h2-size);
+  font-weight: 600;
+}
+
+.toc-anchor {
+  scroll-margin-top: 92px;
+}
+
 .talks-shell {
   display: grid;
-  gap: 18px;
+  gap: 16px;
 }
 
 .talks-header {
@@ -671,8 +1036,8 @@ export default defineComponent({
 
 .talks-header p {
   margin: 8px 0 0;
-  color: var(--page-text);
-  opacity: 0.9;
+  color: var(--text-muted);
+  opacity: 1;
   line-height: 1.45;
 }
 
@@ -703,21 +1068,23 @@ export default defineComponent({
 
 .filter-toggle-title {
   font-family: var(--content-heading-font);
+  color: var(--text-muted);
   font-size: var(--font-size-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  opacity: 0.86;
+  opacity: 1;
 }
 
 .filter-toggle-state {
   border: none;
   border-radius: 0;
   padding: 0;
+  color: var(--text-soft);
   font-size: var(--font-size-micro);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  opacity: 0.68;
+  opacity: 1;
   background: transparent;
 }
 
@@ -736,12 +1103,12 @@ export default defineComponent({
   display: grid;
   gap: 5px;
   min-width: 0;
-  color: var(--page-text);
+  color: var(--text-muted);
   font-weight: 600;
   font-size: var(--font-size-caption);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  opacity: 0.85;
+  opacity: 1;
 }
 
 .filter-control select {
@@ -772,19 +1139,20 @@ export default defineComponent({
 }
 
 .filter-control select:hover {
-  border-color: rgba(80, 203, 255, 0.46);
-  background-color: rgba(80, 203, 255, 0.06);
+  border-color: rgba(var(--accent-rgb), 0.46);
+  background-color: rgba(var(--accent-rgb), 0.06);
 }
 
 .filter-control select:focus-visible {
   outline: none;
-  border-color: rgba(80, 203, 255, 0.72);
-  box-shadow: 0 0 0 1px rgba(80, 203, 255, 0.25);
+  border-color: rgba(var(--accent-rgb), 0.72);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.25);
 }
 
 .filter-result {
   margin: 0;
-  opacity: 0.72;
+  color: var(--text-soft);
+  opacity: 1;
   font-size: var(--font-size-caption);
   letter-spacing: 0.03em;
 }
@@ -820,7 +1188,7 @@ export default defineComponent({
 }
 
 .talk-card {
-  background: var(--surface-bg);
+  background: var(--surface-elevated);
   outline: 2px solid var(--surface-outline);
   border-radius: 14px;
   padding: 16px 20px;
@@ -855,7 +1223,7 @@ export default defineComponent({
   letter-spacing: 0.01em;
 }
 
-.talk-card h2 {
+.talk-card-title {
   margin: 10px 0 0;
   color: var(--page-text);
   font-family: var(--content-heading-font);
@@ -864,11 +1232,20 @@ export default defineComponent({
   z-index: 1;
 }
 
+.talk-title-link {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.talk-title-link:hover {
+  text-decoration: underline;
+}
+
 .talk-description {
   margin: 10px 0 0;
   line-height: 1.5;
-  color: var(--page-text);
-  opacity: 0.92;
+  color: var(--text-muted);
+  opacity: 1;
 }
 
 .talk-tags {
@@ -936,7 +1313,7 @@ export default defineComponent({
 
 .talk-tag:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.35);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.35);
   z-index: 1000;
 }
 
@@ -1009,7 +1386,7 @@ export default defineComponent({
   border-color: rgba(20, 184, 166, 0.58);
   color: #d2fff4;
   --tag-tooltip-bg: rgba(20, 184, 166, 0.98);
-  --tag-tooltip-border: rgba(45, 212, 191, 0.98);
+  --tag-tooltip-border: rgba(var(--accent-secondary-rgb), 0.98);
   --tag-tooltip-text: #021413;
 }
 
@@ -1066,21 +1443,21 @@ export default defineComponent({
 }
 
 .talk-btn.primary {
-  border-color: rgba(80, 203, 255, 0.5);
-  background: rgba(80, 203, 255, 0.13);
+  border-color: rgba(var(--accent-rgb), 0.5);
+  background: rgba(var(--accent-rgb), 0.13);
 }
 
 .talk-btn:hover {
   background: var(--nav-hover-bg);
-  border-color: rgba(80, 203, 255, 0.45);
+  border-color: rgba(var(--accent-rgb), 0.45);
   box-shadow: 0 4px 12px rgba(8, 15, 31, 0.12);
   transform: translateY(-1px);
 }
 
 .talk-btn:focus-visible {
   outline: none;
-  border-color: rgba(80, 203, 255, 0.78);
-  box-shadow: 0 0 0 2px rgba(80, 203, 255, 0.24);
+  border-color: rgba(var(--accent-rgb), 0.78);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.24);
 }
 
 [data-theme="light"] .talk-btn {
@@ -1088,7 +1465,7 @@ export default defineComponent({
 }
 
 [data-theme="light"] .talk-btn.primary {
-  background: rgba(80, 203, 255, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
 }
 
 .preview-shell {
@@ -1102,8 +1479,8 @@ export default defineComponent({
   align-self: flex-end;
   border: none;
   background: transparent;
-  color: var(--page-text);
-  opacity: 0.72;
+  color: var(--text-soft);
+  opacity: 1;
   font-size: var(--font-size-micro);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1142,8 +1519,8 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   gap: 8px;
-  color: var(--page-text);
-  opacity: 0.85;
+  color: var(--text-muted);
+  opacity: 1;
 }
 
 .talk-preview-fallback i {
@@ -1165,6 +1542,10 @@ export default defineComponent({
 }
 
 @media (max-width: 1080px) {
+  .work-layout {
+    grid-template-columns: 1fr;
+  }
+
   .filter-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -1194,7 +1575,8 @@ export default defineComponent({
   }
 
   .talks-header,
-  .talk-card {
+  .talk-card,
+  .work-section-block {
     padding: 14px;
   }
 

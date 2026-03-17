@@ -122,28 +122,33 @@ export const talks: TalkEntry[] = [
 
 export const posters: PosterEntry[] = [
   {
-    slug: "e-i-xchange-poster-24",
-    title: "E(I)Xchange Poster: PENGQUIN",
+    slug: "e-i-xchange24-poster-edc",
+    title: "E(I)Xchange24 Poster EDC",
     path: "/talks/posters/E(i)xchange24_Poster_EDC.pdf",
   },
   {
-    slug: "isws-24-poster-award-winner",
-    title: "ISWS2024 Poster: PENGQUIN",
+    slug: "edc-poster-isws2024-award-winner",
+    title: "EDC Poster ISWS2024(Award Winner)",
     path: "/talks/posters/EDC_Poster_ISWS2024(award_winner).pdf",
   },
   {
-    slug: "eswc-24-poster",
-    title: "ESWC Poster: PENGQUIN",
+    slug: "eswc-24-poster-edc",
+    title: "ESWC 24 Poster EDC",
     path: "/talks/posters/ESWC_24_Poster_EDC.pdf",
   },
   {
-    slug: "swat4hcls-25-poster",
-    title: "SWAT4HCLS Poster: VCF to RDF",
+    slug: "swat4hcls-2025",
+    title: "Swat4hcls 2025",
     path: "/talks/posters/swat4hcls_2025.pdf",
   },
   {
-    slug: "swat4hcls-24-poster",
-    title: "SWAT4HCLS Poster: Personalized Data Pods for Personalized Medicine",
+    slug: "swat4hcls-2026",
+    title: "Swat4hcls 2026",
+    path: "/talks/posters/swat4hcls_2026.pdf",
+  },
+  {
+    slug: "swat4hcls-24-poster-edc",
+    title: "SWAT4HCLS 24 Poster EDC",
     path: "/talks/posters/SWAT4HCLS_24_poster_EDC.pdf",
   },
 ];
