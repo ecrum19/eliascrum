@@ -46,8 +46,8 @@ export interface TalkMetadata {
   goal: string;
   audienceExpertise: string;
   audienceGroups: AudienceGroupTag[];
-  durationMinutes: number;
-  audienceSizeApprox: number;
+  durationMinutes?: number;
+  audienceSizeApprox?: number;
   venueTags: VenueTag[];
   topicTags: TopicTag[];
 }
@@ -259,22 +259,80 @@ export const talkMetadataBySlug: Record<string, TalkMetadata> = {
     venueTags: ["Internal Meeting"],
     topicTags: ["Genomics", "Clinical Genomics", "Knowledge Representation"],
   },
-  "e-i-xchange-poster-24": {
-    title: "E(I)Xchange Poster: PENGQUIN",
-    dateIso: "2025-10-05",
+  "e-i-xchange24-poster-edc": {
+    title: "PENGQUIN: Personal Genome Query in Healthcare and Clinical Practice",
+    dateIso: "2024-10-05",
     summary:
-      "...",
+      "Poster overview of the PENGQUIN research direction, focusing on privacy-aware storage, RDF representation, and distributed querying for personal genomic data.",
     abstract:
-      "This talk introduced genomics concepts most relevant to computational audiences, including sequencing outputs, variant interpretation, and common data structures used in analysis pipelines. I mapped these foundations to challenges in representation, interoperability, and reproducibility that are central to modern data engineering. The session served as a bridge from domain fundamentals to semantic and decentralized research directions.",
+      "This poster frames the core PENGQUIN research challenge around making personal genomic data more interoperable and usable without giving up privacy protections. It highlights engineering work on storing genomic data in Solid pods, managing access and privacy constraints, representing variant data as RDF, linking genomic and health information, and supporting both single-pod and multi-pod querying workflows. The poster positions these tasks as a practical semantic-web response to current barriers in clinical genomics data use.",
     goal:
-      "Provide a domain foundation that enables computer scientists to contribute effectively to genomics data problems.",
+      "Introduce the broader PENGQUIN research agenda and show how semantic-web technologies can support privacy-aware genomic data management and querying.",
     audienceExpertise:
-      "Semantic web / computer science colleagues and researchers with limited prior exposure to biology and/or genomics.",
-    audienceGroups: ["Computer Scientists", "Semantic Web Researchers"],
-    durationMinutes: 60,
-    audienceSizeApprox: 20,
-    venueTags: ["Internal Meeting"],
-    topicTags: ["Genomics", "Clinical Genomics", "Knowledge Representation"],
+      "Interdisciplinary attendees interested in applied data sharing, privacy-aware web technologies, and translational genomics.",
+    audienceGroups: ["Interdisciplinary Researchers", "Corporate Representatives", "Computer Scientists"],
+    venueTags: ["Non-Academic Event", "E(I)Xchange"],
+    topicTags: ["Semantic Web", "Genomics", "Bioinformatics", "Data Privacy"],
+  },
+  "edc-poster-isws2024-award-winner": {
+    title: "PENGQUIN: Personal Genome Query in Healthcare and Clinical Practice",
+    dateIso: "2024-06-15",
+    summary:
+      "Award-winning poster introducing the PENGQUIN research problem space around personal genomic data storage, privacy, semantic representation, and distributed querying.",
+    abstract:
+      "This poster presents the motivating research questions behind PENGQUIN, centered on using semantic-web technologies to support genomic data use in healthcare and clinical practice. It identifies major technical challenges such as governance, privacy granularity, data formatting, RDF conversion, data linkage, and scalable querying. The poster also outlines the engineering work needed to store genomic data in Solid pods, manage privacy-aware access, represent variant data in RDF, and support querying across one or many patient-controlled data pods.",
+    goal:
+      "Communicate the PENGQUIN research vision clearly to a semantic-web training audience and motivate the main technical work packages.",
+    audienceExpertise:
+      "Semantic-web students, trainees, and researchers with interest in applying linked-data methods to sensitive biomedical data.",
+    audienceGroups: ["Students / Trainees", "Semantic Web Researchers", "Computer Scientists"],
+    venueTags: ["Symposium", "ISWS"],
+    topicTags: ["Semantic Web", "Genomics", "Bioinformatics", "Data Privacy"],
+  },
+  "eswc-24-poster-edc": {
+    title: "PENGQUIN: Personal Genome Query in Healthcare and Clinical Practice",
+    dateIso: "2024-05-28",
+    summary:
+      "Conference poster summarizing the PENGQUIN approach for privacy-aware genomic data storage, RDF conversion, and patient-centric query workflows.",
+    abstract:
+      "This ESWC poster presents PENGQUIN as a patient-centric semantic-web approach to handling personal genomic data in healthcare settings. It highlights challenges in governance, privacy granularity, data formatting, RDF conversion, data linkage, and querying performance, then sketches a solution space built around Solid pods, RDF representations, and link-traversal querying. The poster also introduces a patient-centric storage model that connects genomic data, health data, and controlled access pathways across distributed resources.",
+    goal:
+      "Summarize the PENGQUIN PhD direction for the semantic-web research community and position its main technical challenges and solution strategy.",
+    audienceExpertise:
+      "Semantic-web researchers and technically oriented conference attendees familiar with linked-data, web architecture, and knowledge graph methods.",
+    audienceGroups: ["Semantic Web Researchers", "Computer Scientists", "Interdisciplinary Researchers"],
+    venueTags: ["Conference", "ESWC"],
+    topicTags: ["Semantic Web", "Genomics", "Bioinformatics", "Data Privacy"],
+  },
+  "swat4hcls-2025": {
+    title: "Semantifying Genomic Variant Data: VCF to RDF Conversion Framework",
+    dateIso: "2025-02-24",
+    summary:
+      "Poster presenting a framework for semantically converting VCF genomic variant data into RDF using a dedicated ontology, HDT-based storage, and reusable mapping specifications.",
+    abstract:
+      "This poster argues that VCF files remain difficult to integrate, query, and interpret semantically in their native form, then presents a conversion framework based on RDF to address those limitations. It introduces a VCF-focused ontology, an HDT-backed storage strategy, and the use of the RDF Mapping Language (RML) to express a reusable conversion pipeline that is not locked into a single hard-coded script. The poster also positions the work relative to existing VCF-to-RDF approaches and emphasizes future directions around ontology publication and pharmacogenomic data linkage.",
+    goal:
+      "Show that a richer semantic representation of VCF data can improve interoperability, data linking, and downstream genomic data use.",
+    audienceExpertise:
+      "Semantic-web researchers, bioinformaticians, and genomics data practitioners interested in semantically interoperable variant data.",
+    audienceGroups: ["Bioinformaticians", "Semantic Web Researchers", "Interdisciplinary Researchers"],
+    venueTags: ["Conference", "SWAT4HCLS"],
+    topicTags: ["Semantic Web", "Bioinformatics", "Genomics", "Knowledge Representation"],
+  },
+  "swat4hcls-24-poster-edc": {
+    title: "Personalized Medicine Through Personal Data Pods",
+    dateIso: "2024-02-26",
+    summary:
+      "Poster describing how patient-controlled data pods could improve privacy, transparency, and data sharing for genomic medicine workflows.",
+    abstract:
+      "This poster examines how personal data pods could support more scalable and privacy-aware personalized medicine workflows. It motivates the need for a patient-centric approach by pointing to data duplication, poor transparency, limited sharing, and fragmented control in current institution-centric systems. The poster then frames the main research and engineering challenges around governance, consent, privacy granularity, data linkage, and querying performance, while presenting a unified framework for giving patients more direct control over sensitive genome data.",
+    goal:
+      "Present a patient-centric storage and access model for genomic medicine and clarify the key technical barriers to making it practical.",
+    audienceExpertise:
+      "Life-science and semantic-web researchers interested in privacy, interoperability, and data infrastructure for personalized medicine.",
+    audienceGroups: ["Bioinformaticians", "Semantic Web Researchers", "Interdisciplinary Researchers"],
+    venueTags: ["Conference", "SWAT4HCLS"],
+    topicTags: ["Semantic Web", "Genomics", "Bioinformatics", "Personalized Medicine"],
   },
   "swat4hcls-2026": {
     title: "SWAT4HCLS 2026 Poster: From VCF to RDF",
@@ -294,4 +352,3 @@ export const talkMetadataBySlug: Record<string, TalkMetadata> = {
     topicTags: ["Semantic Web", "Bioinformatics", "Genomics", "Knowledge Representation"],
   },
 };
-
