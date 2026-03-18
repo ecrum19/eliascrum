@@ -1,9 +1,10 @@
 import { blogPosts } from "../data/blogPostsData";
 import { cvSections } from "../data/cvData";
 import { getAllHomepageUpdates } from "../data/homepageUpdates";
+import { getPosterViewEntries } from "../data/posterCatalog";
 import { getPublicationPagePath, publications } from "../data/publicationsData";
 import { getTalkViewEntries } from "../data/talkCatalog";
-import { posters, talks } from "../data/talksData";
+import { talks } from "../data/talksData";
 import { resolvePublicAssetPath } from "./publicAssetPath";
 
 const WEBSITE_BASE_IRI = "https://eliascrum.github.io/eliascrum/";
@@ -83,11 +84,6 @@ function asSearchResult(document: SearchDocument, score?: number): SearchResult 
   };
 }
 
-function sourceFileFromPath(filePath: string): string {
-  const segments = filePath.split("/");
-  return decodeURIComponent(segments[segments.length - 1] || filePath);
-}
-
 function normalizeInternalRoute(value: string): string | undefined {
   if (!value) {
     return undefined;
@@ -145,16 +141,26 @@ function buildSearchDocuments(): SearchDocument[] {
     });
   });
 
-  posters.forEach((posterEntry) => {
+  getPosterViewEntries().forEach((posterEntry) => {
     documents.push({
       id: `poster:${posterEntry.slug}`,
       type: "Poster",
-      title: posterEntry.title,
-      subtitle: "Poster • PDF",
-      snippet: `Poster file: ${sourceFileFromPath(posterEntry.path)}`,
-      route: "/talks",
+      title: posterEntry.displayTitle,
+      subtitle: `Poster • ${posterEntry.displayDateLabel}`,
+      snippet: posterEntry.summary,
+      route: `/talks/posters/${posterEntry.slug}`,
       href: resolvePublicAssetPath(posterEntry.path),
-      searchableText: [posterEntry.title, posterEntry.path, posterEntry.slug, "poster talk"].join(" "),
+      searchableText: [
+        posterEntry.displayTitle,
+        posterEntry.summary,
+        posterEntry.abstract,
+        posterEntry.displayDateLabel,
+        posterEntry.path,
+        posterEntry.slug,
+        posterEntry.venueTags.join(" "),
+        posterEntry.topicTags.join(" "),
+        "poster talk",
+      ].join(" "),
       boost: 7,
     });
   });

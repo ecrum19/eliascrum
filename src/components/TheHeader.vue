@@ -264,6 +264,7 @@ header {
   display: flex;
   align-items: center;
   position: relative;
+  min-height: 58px;
 }
 
 .desktop-nav-links {
@@ -280,12 +281,17 @@ header {
   margin: 0;
   opacity: 1 !important;
   background: transparent !important;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
 
 .header-logo {
   display: block;
   width: auto;
-  height: 42px;
+  height: 38px;
   margin: 0;
   border: none;
   border-radius: 0;
@@ -330,10 +336,11 @@ header {
 }
 
 header h1 {
-  font-family: var(--content-heading-font);
+  font-family: var(--font-family-display);
   color: var(--page-text);
   font-size: var(--site-title-size);
-  font-weight: 400;
+  font-weight: 500;
+  letter-spacing: 0.03em;
   margin: 0;
 }
 
@@ -401,40 +408,9 @@ header h1 {
   background: rgba(var(--accent-rgb), 0.16) !important;
 }
 
-@media (min-width: 769px) {
-  #myNavbar {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    align-items: center;
-  }
-
-  .desktop-nav-links {
-    justify-self: start;
-  }
-
-  .header-brand {
-    justify-self: center;
-  }
-
-  #myNavbar .desktop-right-controls {
-    justify-self: end;
-    margin-left: 0;
-    padding-left: 18px;
-  }
-}
-
 @media (max-width: 768px) {
   #myNavbar {
-    min-height: 52px;
-  }
-
-  .header-brand {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    padding-left: 10px !important;
-    padding-right: 10px !important;
+    min-height: 54px;
   }
 
   header h1 {
@@ -447,7 +423,7 @@ header h1 {
   }
 
   .header-logo {
-    height: 34px;
+    height: 38px;
   }
 }
 </style>

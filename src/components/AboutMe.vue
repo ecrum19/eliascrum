@@ -9,32 +9,35 @@
       <div class="w3-third">
         <div id="genInfo" class="w3-card-4">
           <div class="w3-container">
-            <p>
-              <a
-                href="https://research.ugent.be/web/person/elias-david-crum-0/en"
-              >
-                <i
-                  class="fa fa-briefcase fa-fw w3-margin-right w3-xlarge w3-text-white w3-hover-opacity"
-                ></i
-                >Ph.D. Candidate</a
-              >
-            </p>
-            <p>
-              <a href="https://www.google.com/maps/place/Ghent">
-                <i
-                  class="fa fa-map-marker fa-fw w3-margin-right w3-xlarge w3-text-white w3-hover-opacity"
-                ></i
-                >Ghent, BE</a
-              >
-            </p>
-            <p>
-              <a href="mailto:elias.crum@ugent.be">
-                <i
-                  class="fa fa-envelope fa-fw w3-margin-right w3-xlarge w3-text-white w3-hover-opacity"
-                ></i
-                >elias.crum@ugent.be</a
-              >
-            </p>
+            <div class="home-contact-list">
+              <p class="home-contact-row">
+                <a
+                  class="home-contact-link"
+                  href="https://research.ugent.be/web/person/elias-david-crum-0/en"
+                >
+                  <i
+                    class="home-contact-icon fa fa-briefcase fa-fw w3-xlarge w3-text-white w3-hover-opacity"
+                  ></i>
+                  <span>Ph.D. Candidate</span>
+                </a>
+              </p>
+              <p class="home-contact-row">
+                <a class="home-contact-link" href="https://www.google.com/maps/place/Ghent">
+                  <i
+                    class="home-contact-icon fa fa-map-marker fa-fw w3-xlarge w3-text-white w3-hover-opacity"
+                  ></i>
+                  <span>Ghent, BE</span>
+                </a>
+              </p>
+              <p class="home-contact-row">
+                <a class="home-contact-link" href="mailto:elias.crum@ugent.be">
+                  <i
+                    class="home-contact-icon fa fa-envelope fa-fw w3-xlarge w3-text-white w3-hover-opacity"
+                  ></i>
+                  <span>elias.crum@ugent.be</span>
+                </a>
+              </p>
+            </div>
             <hr />
 
             <p class="w3-large">
@@ -166,7 +169,7 @@
           </div>
         </div>
         <div id="aboutMe" class="w3-container w3-card">
-          <h1 class="w3-panel" id="about">About Me</h1>
+          <h2 class="w3-panel" id="recentWorkTitle">About Me</h2>
           <div class="w3-container" id="intro-container">
             <div id="intro">
               <p>
@@ -181,7 +184,7 @@
               <p>
                 I funded through the
                 <a href="https://www.fwo.be/en/support-programmes/all-calls/phd/phd-fellowship-strategic-basic-research/">
-                  PhD fellowship - strategic basic research
+                  <u>PhD fellowship - strategic basic research</u>
                 </a>
                 from the Research Foundation - Flanders (FWO).
               </p>
@@ -525,6 +528,30 @@ a {
   padding: 22px 24px 24px;
 }
 
+#genInfo .home-contact-list {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+
+#genInfo .home-contact-row {
+  margin: 0;
+}
+
+#genInfo .home-contact-link {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 20px;
+  min-height: 48px;
+  width: 100%;
+}
+
+#genInfo .home-contact-icon {
+  justify-self: center;
+  margin-right: 0 !important;
+}
+
 #genInfo i.w3-text-white {
   color: var(--page-text) !important;
 }
@@ -556,16 +583,17 @@ a {
 }
 
 #intro {
-  font-size: var(--font-size-prose-xl);
+  font-size: var(--font-size-prose-l);
   font-family: var(--font-family-base);
+  text-align: justify;
   background: transparent;
   color: var(--page-text);
-  max-width: 72ch;
+  max-width: auto;
   line-height: 1.72;
 }
 
 #intro p {
-  margin: 0 0 18px;
+  margin: 0;
 }
 
 #intro p:last-child {
@@ -777,6 +805,12 @@ div.school {
 @media (max-width: 768px) {
   #introduction {
     padding: 0 8px 118px;
+  }
+
+  #genInfo .home-contact-link {
+    grid-template-columns: 40px minmax(0, 1fr);
+    column-gap: 16px;
+    min-height: 44px;
   }
 
   #genInfo,

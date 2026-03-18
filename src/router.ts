@@ -7,6 +7,7 @@ import MyBlogs from "./components/MyBlogs.vue";
 import MyCV from "./components/CurrentCv.vue";
 import MySlides from "./components/MySlides.vue";
 import SlideDetail from "./components/SlideDetail.vue";
+import PosterDetail from "./components/PosterDetail.vue";
 import PublicationPaperPage from "./components/PublicationPaperPage.vue";
 
 /**
@@ -54,6 +55,11 @@ const router = createRouter({
       name: "Talks",
       path: "/talks",
       component: MySlides,
+    },
+    {
+      name: "Poster Detail",
+      path: "/talks/posters/:slug",
+      component: PosterDetail,
     },
     {
       name: "Talk Detail",

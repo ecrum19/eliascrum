@@ -69,8 +69,8 @@ export default defineComponent({
     updateSiteIcons(theme: ThemeMode) {
       const iconHref = resolvePublicAssetPath(
         theme === "dark"
-          ? "/branding/edc-logo-inverse.svg"
-          : "/branding/edc-logo.svg",
+          ? "/branding/favicon.svg"
+          : "/branding/favicon.svg"
       );
 
       const iconLinks = document.querySelectorAll<HTMLLinkElement>(
@@ -149,11 +149,12 @@ export default defineComponent({
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=KoHo:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=KoHo:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 
 :root {
   --font-family-base: "KoHo", sans-serif;
   --font-family-heading: "KoHo", sans-serif;
+  --font-family-display: "Cinzel", serif;
   --font-size-root: 17px;
   --text-scale-body: 1;
   --text-scale-small: 1;
@@ -170,6 +171,7 @@ export default defineComponent({
   --font-size-section-title: calc(1.34rem * var(--text-scale-heading));
   --font-size-card-title: calc(1.44rem * var(--text-scale-heading));
   --font-size-prose-xl: calc(1.72rem * var(--text-scale-body));
+  --font-size-prose-l: calc(1.42rem * var(--text-scale-body));
   --page-background: #000000;
   --page-text: #f7f9fc;
   --text-muted: #e7edf5;

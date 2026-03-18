@@ -127,7 +127,7 @@ export default defineComponent({
   },
   watch: {
     activeId() {
-      this.$nextTick(() => this.scrollActiveLinkIntoView());
+      this.$nextTick(() => this.scrollActiveLinkIntoView("auto"));
     },
     entries: {
       handler() {
@@ -302,34 +302,51 @@ export default defineComponent({
         return;
       }
 
-      const checkpoint = this.topOffset + 28;
-      let current = this.normalizedEntries[0]?.id ?? "";
-      let nearestBelow: { id: string; top: number } | null = null;
+      const firstEntryId = this.normalizedEntries[0]?.id ?? "";
+      const scrollTop = window.scrollY;
+      const viewportAnchor =
+        scrollTop +
+        this.topOffset +
+        Math.min(140, Math.max(32, window.innerHeight * 0.14));
 
-      this.normalizedEntries.forEach((entry) => {
+      let currentEntryId: string | null = null;
+      let nearestBelowEntry: { id: string; top: number } | null = null;
+
+      for (const entry of this.normalizedEntries) {
         const element = document.getElementById(entry.id);
         if (!element) {
-          return;
+          continue;
         }
 
-        const top = element.getBoundingClientRect().top;
-        if (top <= checkpoint) {
-          current = entry.id;
-          return;
+        const top = element.getBoundingClientRect().top + scrollTop;
+        if (top <= viewportAnchor) {
+          currentEntryId = entry.id;
+          continue;
         }
 
-        if (!nearestBelow || top < nearestBelow.top) {
-          nearestBelow = { id: entry.id, top };
+        if (!nearestBelowEntry || top < nearestBelowEntry.top) {
+          nearestBelowEntry = { id: entry.id, top };
         }
-      });
-
-      if (window.scrollY <= 4) {
-        current = this.normalizedEntries[0]?.id ?? current;
-      } else if (!current && nearestBelow) {
-        current = nearestBelow.id;
       }
 
-      this.activeId = current;
+      let resolvedActiveId = currentEntryId ?? nearestBelowEntry?.id ?? firstEntryId;
+
+      if (window.scrollY <= 4) {
+        resolvedActiveId = firstEntryId || resolvedActiveId;
+      } else {
+        const nearPageBottom =
+          window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 8;
+        if (nearPageBottom) {
+          resolvedActiveId =
+            this.normalizedEntries[this.normalizedEntries.length - 1]?.id ??
+            resolvedActiveId;
+        }
+      }
+
+      if (resolvedActiveId && resolvedActiveId !== this.activeId) {
+        this.activeId = resolvedActiveId;
+      }
     },
   },
 });
@@ -344,7 +361,7 @@ export default defineComponent({
   top: var(--toc-top-offset);
   align-self: start;
   width: var(--toc-open-width);
-  max-height: calc(100vh - (var(--toc-top-offset) + 16px));
+  max-height: auto;
   overflow: hidden;
   background: var(--surface-bg);
   outline: 2px solid var(--surface-outline);

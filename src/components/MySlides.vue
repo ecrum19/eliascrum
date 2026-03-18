@@ -455,7 +455,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { talks, posters } from "../data/talksData";
+import { talks } from "../data/talksData";
+import { getPosterViewEntries, type PosterViewEntry } from "../data/posterCatalog";
 import {
   DURATION_TAG_OPTIONS,
   getTalkViewEntries,
@@ -467,7 +468,6 @@ import {
   AUDIENCE_SIZE_TAG_OPTIONS,
   TOPIC_TAG_OPTIONS,
   VENUE_TAG_OPTIONS,
-  talkMetadataBySlug,
   type AudienceGroupTag,
   type AudienceSizeTag,
 } from "../data/talkMetadata";
@@ -515,48 +515,6 @@ interface WorkTocEntry {
 }
 
 const MATERIAL_TAG_OPTIONS: MaterialTypeTag[] = ["Slides", "Poster"];
-
-function labelFromIso(dateIso: string): string {
-  if (!dateIso || dateIso === "1900-01-01") {
-    return "Undated";
-  }
-
-  const parts = dateIso.split("-");
-  if (parts.length !== 3) {
-    return dateIso;
-  }
-
-  const [year, month, day] = parts;
-  return `${day}/${month}/${year}`;
-}
-
-function durationCategoryFromMinutes(durationMinutes?: number): DurationTag | null {
-  if (!Number.isFinite(durationMinutes)) {
-    return null;
-  }
-
-  if ((durationMinutes as number) <= 15) {
-    return "Short";
-  }
-  if ((durationMinutes as number) <= 45) {
-    return "Medium";
-  }
-  return "Long";
-}
-
-function audienceSizeCategoryFromApprox(audienceSizeApprox?: number): AudienceSizeTag | null {
-  if (!Number.isFinite(audienceSizeApprox)) {
-    return null;
-  }
-
-  if ((audienceSizeApprox as number) <= 25) {
-    return "Small";
-  }
-  if ((audienceSizeApprox as number) <= 70) {
-    return "Medium";
-  }
-  return "Large";
-}
 
 export default defineComponent({
   name: "MySlides",
@@ -611,40 +569,24 @@ export default defineComponent({
     talkEntries(): TalkViewEntry[] {
       return getTalkViewEntries(talks);
     },
+    posterViewEntries(): PosterViewEntry[] {
+      return getPosterViewEntries();
+    },
     posterEntries(): CatalogEntry[] {
-      return posters.map((poster) => {
-        const isEswcPoster = poster.slug === "eswc-24-poster-edc";
-        const linkedTalk = isEswcPoster
-          ? this.talkEntries.find((talk) => talk.slug === "eswc-phdsymp-pangquin")
-          : undefined;
-        const metadata = talkMetadataBySlug[poster.slug];
-        const displayDateIso = linkedTalk?.displayDateIso ?? metadata?.dateIso ?? "1900-01-01";
-        const displayDateLabel =
-          linkedTalk?.displayDateLabel ??
-          metadata?.dateLabel ??
-          labelFromIso(displayDateIso);
-        const durationCategory =
-          linkedTalk?.durationCategory ??
-          durationCategoryFromMinutes(metadata?.durationMinutes);
-        const audienceSizeCategory =
-          linkedTalk?.audienceSizeCategory ??
-          audienceSizeCategoryFromApprox(metadata?.audienceSizeApprox);
-
+      return this.posterViewEntries.map((poster) => {
         return {
           id: `poster:${poster.slug}`,
-          displayTitle: metadata?.title ?? poster.title,
-          summary: linkedTalk
-            ? "Poster linked to the ESWC 2024 slide deck."
-            : metadata?.summary ?? "Poster presentation file.",
-          displayDateIso,
-          displayDateLabel,
-          durationCategory,
-          audienceSizeCategory,
-          audienceGroups: linkedTalk?.audienceGroups ?? metadata?.audienceGroups ?? [],
-          venueTags: metadata?.venueTags ?? [],
-          topicTags: metadata?.topicTags ?? [],
+          displayTitle: poster.displayTitle,
+          summary: poster.summary,
+          displayDateIso: poster.displayDateIso,
+          displayDateLabel: poster.displayDateLabel,
+          durationCategory: null,
+          audienceSizeCategory: null,
+          audienceGroups: [...poster.audienceGroups],
+          venueTags: [...poster.venueTags],
+          topicTags: [...poster.topicTags],
           materialTag: "Poster",
-          detailRoute: linkedTalk ? `/talks/${linkedTalk.slug}` : undefined,
+          detailRoute: `/talks/posters/${poster.slug}`,
           primaryPath: resolvePublicAssetPath(poster.path),
           primaryActionLabel: "Open Poster PDF",
           relatedPublicationLinks: getRelatedPublicationLinksForPresentationFile(poster.path),

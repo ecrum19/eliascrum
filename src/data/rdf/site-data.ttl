@@ -560,7 +560,7 @@
 <https://eliascrum.github.io/eliascrum/id/cv-section/8> rdf:type ec:CvSection .
 <https://eliascrum.github.io/eliascrum/id/cv-section/8> schema:name "Organizations" .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:description "RDF/Turtle projection of the TypeScript data modules under src/data." .
-<https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:modified "2026-03-17T19:18:34.677Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:modified "2026-03-18T08:52:46.717Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:hasExternalProfile <https://eliascrum.github.io/eliascrum/id/profile/google-scholar> .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:hasExternalProfile <https://eliascrum.github.io/eliascrum/id/profile/semantic-scholar> .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:sourceDirectory "src/data" .
