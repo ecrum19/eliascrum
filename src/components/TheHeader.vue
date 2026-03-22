@@ -264,7 +264,7 @@ header {
   display: flex;
   align-items: center;
   position: relative;
-  min-height: 58px;
+  min-height: 52px;
 }
 
 .desktop-nav-links {
@@ -286,12 +286,14 @@ header {
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
+  max-width: min(20vw, 240px);
 }
 
 .header-logo {
   display: block;
   width: auto;
-  height: 38px;
+  height: clamp(26px, 2.1vw, 34px);
+  max-width: 100%;
   margin: 0;
   border: none;
   border-radius: 0;
@@ -304,8 +306,8 @@ header {
 }
 
 #myNavbar :is(a, button) {
-  min-height: 44px;
-  font-size: var(--font-size-body);
+  min-height: 38px;
+  font-size: var(--font-size-body-sm);
 }
 
 #navDemo {
@@ -408,9 +410,25 @@ header h1 {
   background: rgba(var(--accent-rgb), 0.16) !important;
 }
 
+@media (max-width: 1220px) {
+  .header-brand {
+    max-width: min(14vw, 150px);
+  }
+
+  .header-logo {
+    height: 28px;
+  }
+}
+
+@media (max-width: 1060px) {
+  .header-brand {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
   #myNavbar {
-    min-height: 54px;
+    min-height: 50px;
   }
 
   header h1 {
@@ -423,7 +441,7 @@ header h1 {
   }
 
   .header-logo {
-    height: 38px;
+    height: 34px;
   }
 }
 </style>

@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import AboutMe from "./components/AboutMe.vue";
 import MyPublications from "./components/MyPublications.vue";
 import MySoftware from "./components/MySoftware.vue";
+import SoftwareDetail from "./components/SoftwareDetail.vue";
 import MyBlogs from "./components/MyBlogs.vue";
 import MyCV from "./components/CurrentCv.vue";
 import MySlides from "./components/MySlides.vue";
@@ -40,6 +41,11 @@ const router = createRouter({
       name: "Software",
       path: "/software",
       components: { default: MySoftware },
+    },
+    {
+      name: "Software Detail",
+      path: "/software/:slug",
+      component: SoftwareDetail,
     },
     {
       name: "My Work",

@@ -1,18 +1,21 @@
 <template>
-  <section id="slide-detail" class="w3-content w3-margin-top" style="max-width: min(1780px, 97vw)">
-    <div v-if="talk" class="work-layout">
-      <work-toc :entries="tocEntries" />
-
-      <div class="work-main">
-        <section id="talk-detail-overview" class="work-section">
+  <work-page-layout
+    id="slide-detail"
+    :toc-entries="tocEntries"
+    :show-toc="Boolean(talk)"
+    max-width="min(1780px, 97vw)"
+    page-padding="0 16px 140px"
+  >
+    <template v-if="talk">
+      <section id="talk-detail-overview" class="work-section">
           <header class="slide-header toc-anchor">
             <div class="slide-header-top">
               <h1>{{ talk.displayTitle }}</h1>
               <p class="talk-date-detailed">{{ talk.displayDateIso }}</p>
             </div>
             <div class="slide-actions">
-              <router-link to="/talks" class="action-btn">Back to Talks</router-link>
-              <a :href="slidePdfUrl" target="_blank" rel="noopener noreferrer" class="action-btn primary">
+              <router-link to="/talks" class="action-btn btn-back">Back to Talks</router-link>
+              <a :href="slidePdfUrl" target="_blank" rel="noopener noreferrer" class="action-btn btn-pdf">
                 Open Slides PDF
               </a>
               <a
@@ -21,7 +24,7 @@
                 :href="publicationLink.url"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="action-btn"
+                class="action-btn btn-external"
               >
                 {{ publicationLink.label }}
               </a>
@@ -65,10 +68,10 @@
               </div>
             </div>
           </header>
-        </section>
+      </section>
 
-        <section id="talk-detail-slides" class="work-section">
-          <article class="slide-panel toc-anchor">
+      <section id="talk-detail-slides" class="work-section">
+        <article class="slide-panel toc-anchor">
             <h2>Slides</h2>
             <div
               ref="slideFrameShell"
@@ -119,11 +122,11 @@
                 </button>
               </div>
             </div>
-          </article>
-        </section>
+        </article>
+      </section>
 
-        <section id="talk-detail-poster" class="work-section">
-          <article v-if="talk.posterPath" class="slide-panel toc-anchor">
+      <section id="talk-detail-poster" class="work-section">
+        <article v-if="talk.posterPath" class="slide-panel toc-anchor">
             <h2>Poster</h2>
             <p class="poster-name">{{ talk.posterTitle || "Poster PDF" }}</p>
             <object :data="posterPdfUrl" type="application/pdf" class="poster-frame">
@@ -132,24 +135,23 @@
                 <a :href="posterPdfUrl" target="_blank" rel="noopener noreferrer">Open the poster</a>.
               </p>
             </object>
-          </article>
+        </article>
 
-          <article v-else class="slide-panel muted-panel toc-anchor">
-            <h2>Poster</h2>
-            <p>No poster is currently linked to this talk.</p>
-          </article>
-        </section>
-      </div>
-    </div>
+        <article v-else class="slide-panel muted-panel toc-anchor">
+          <h2>Poster</h2>
+          <p>No poster is currently linked to this talk.</p>
+        </article>
+      </section>
+    </template>
 
     <div v-else class="slide-shell">
       <article class="slide-panel">
         <h1>Talk not found</h1>
         <p>This talk slug does not exist in the generated talks data.</p>
-        <router-link to="/talks" class="action-btn">Back to Talks</router-link>
+        <router-link to="/talks" class="action-btn btn-back">Back to Talks</router-link>
       </article>
     </div>
-  </section>
+  </work-page-layout>
 </template>
 
 <script lang="ts">
@@ -170,7 +172,7 @@ import {
   type ResolvedPublicationLink,
 } from "../data/publicationsData";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
-import WorkToc from "./WorkToc.vue";
+import WorkPageLayout from "./layout/WorkPageLayout.vue";
 
 if (!GlobalWorkerOptions.workerPort) {
   try {
@@ -205,7 +207,7 @@ interface WorkTocEntry {
 export default defineComponent({
   name: "SlideDetail",
   components: {
-    WorkToc,
+    WorkPageLayout,
   },
   data() {
     return {
@@ -666,20 +668,7 @@ export default defineComponent({
 
 <style scoped>
 #slide-detail {
-  padding: 0 16px 140px;
-}
-
-.work-layout {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 12px;
-  align-items: start;
-}
-
-.work-main {
-  min-width: 0;
-  display: grid;
-  gap: 18px;
+  --work-main-gap: 18px;
 }
 
 .work-section {
@@ -1023,11 +1012,6 @@ export default defineComponent({
   transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.16s ease, box-shadow 0.2s ease;
 }
 
-.action-btn.primary {
-  border-color: rgba(var(--accent-rgb), 0.5);
-  background: rgba(var(--accent-rgb), 0.13);
-}
-
 .action-btn:hover {
   background: var(--nav-hover-bg);
   border-color: rgba(var(--accent-rgb), 0.45);
@@ -1043,10 +1027,6 @@ export default defineComponent({
 
 [data-theme="light"] .action-btn {
   background: rgba(16, 36, 59, 0.04);
-}
-
-[data-theme="light"] .action-btn.primary {
-  background: rgba(var(--accent-rgb), 0.1);
 }
 
 .slide-panel h2 {
@@ -1323,9 +1303,4 @@ export default defineComponent({
   }
 }
 
-@media (max-width: 1080px) {
-  .work-layout {
-    grid-template-columns: 1fr;
-  }
-}
 </style>

@@ -1,4 +1,7 @@
 .DS_Store
+*:sheild
+*:Zone.Identifier
+
 node_modules
 /dist
 

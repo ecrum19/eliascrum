@@ -17,7 +17,7 @@
             v-model="query"
             type="text"
             class="spotlight-input"
-            placeholder="Search talks, publications, CV, blogs, and updates..."
+            placeholder="Search talks, publications, software, CV, blogs, and updates..."
             autocomplete="off"
             @keydown.enter.prevent="handleEnter"
           />

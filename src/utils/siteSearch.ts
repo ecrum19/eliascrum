@@ -3,6 +3,7 @@ import { cvSections } from "../data/cvData";
 import { getAllHomepageUpdates } from "../data/homepageUpdates";
 import { getPosterViewEntries } from "../data/posterCatalog";
 import { getPublicationPagePath, publications } from "../data/publicationsData";
+import { getSoftwarePagePath, softwareSections } from "../data/softwareData";
 import { getTalkViewEntries } from "../data/talkCatalog";
 import { talks } from "../data/talksData";
 import { resolvePublicAssetPath } from "./publicAssetPath";
@@ -16,6 +17,7 @@ export type SearchResultType =
   | "Talk"
   | "Poster"
   | "Publication"
+  | "Software"
   | "CV"
   | "Blog"
   | "Update"
@@ -186,6 +188,34 @@ function buildSearchDocuments(): SearchDocument[] {
         publicationEntry.bibtex,
       ].join(" "),
       boost: 10,
+    });
+  });
+
+  softwareSections.forEach((softwareSection) => {
+    softwareSection.entries.forEach((softwareEntry) => {
+      documents.push({
+        id: `software:${softwareEntry.id}`,
+        type: "Software",
+        title: softwareEntry.title,
+        subtitle: `Software • ${softwareSection.title}`,
+        snippet: softwareEntry.summary,
+        route: getSoftwarePagePath(softwareEntry),
+        href: softwareEntry.webUrl ?? softwareEntry.repositoryUrl,
+        searchableText: [
+          softwareSection.title,
+          softwareSection.description,
+          softwareEntry.title,
+          softwareEntry.type,
+          softwareEntry.purpose,
+          softwareEntry.year,
+          softwareEntry.summary,
+          softwareEntry.description,
+          softwareEntry.mainTopics.join(" "),
+          softwareEntry.repositoryUrl ?? "",
+          softwareEntry.webUrl ?? "",
+        ].join(" "),
+        boost: 6,
+      });
     });
   });
 

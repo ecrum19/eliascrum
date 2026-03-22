@@ -83,6 +83,36 @@
                 <p class="w3-large home-sidebar-section-title">
                   <b
                     ><i
+                      class="fa fa-book fa-fw w3-xlarge w3-margin-right w3-text-white"
+                    ></i
+                    >Research Profiles</b
+                  >
+                </p>
+              </div>
+              <div class="home-profile-links">
+                <a
+                  v-for="profile in publicationProfileLinks"
+                  :key="profile.id"
+                  class="home-profile-link"
+                  :class="`home-profile-link-${profile.variant}`"
+                  :href="profile.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  :aria-label="profile.label"
+                  :title="profile.label"
+                >
+                  <img class="home-profile-icon" :src="profile.iconUrl" alt="" />
+                </a>
+              </div>
+            </section>
+
+            <hr />
+
+            <section class="home-sidebar-section">
+              <div class="home-sidebar-section-head">
+                <p class="w3-large home-sidebar-section-title">
+                  <b
+                    ><i
                       class="fa fa-graduation-cap fa-fw w3-xlarge w3-margin-right w3-text-white"
                     ></i
                     >Research Topics</b
@@ -215,6 +245,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { getRecentHomepageUpdates, type HomepageUpdate } from "../data/homepageUpdates";
+import {
+  publicationProfileLinks,
+  researchPortalProfileUrl,
+  type ExternalProfileLink,
+} from "../data/publicationsData";
 
 interface ResearchTopicLink {
   label: string;
@@ -229,6 +264,19 @@ interface ResearchTopicLink {
 export default defineComponent({
   name: "AboutMe",
   computed: {
+    publicationProfileLinks(): ExternalProfileLink[] {
+      return [
+        ...publicationProfileLinks,
+        {
+          id: "research-portal",
+          label: "Research Portal",
+          url: researchPortalProfileUrl,
+          iconUrl:
+            "https://www.datocms-assets.com/53443/1747235092-monogram-vlaamse-overheid.svg?auto=format&fit=max&w=1200",
+          variant: "research-portal",
+        },
+      ];
+    },
     recentUpdates(): HomepageUpdate[] {
       return getRecentHomepageUpdates(1);
     },
@@ -612,6 +660,57 @@ a {
 .home-sidebar-section {
   display: grid;
   gap: 12px;
+}
+
+.home-profile-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.home-profile-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid var(--surface-outline);
+  background: transparent;
+  transition: transform 0.18s ease, background-color 0.18s ease;
+}
+
+.home-profile-link:hover {
+  transform: translateY(-1px);
+  background: var(--nav-hover-bg);
+}
+
+.home-profile-link-scholar {
+  box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.35);
+}
+
+.home-profile-link-semantic {
+  box-shadow: inset 0 0 0 1px rgba(var(--accent-secondary-rgb), 0.35);
+}
+
+.home-profile-link-orcid {
+  box-shadow: inset 0 0 0 1px rgba(166, 206, 57, 0.46);
+}
+
+.home-profile-link-research-portal {
+  box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.34);
+}
+
+.home-profile-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  object-fit: contain;
+  filter: grayscale(1) brightness(0) contrast(1.05);
+}
+
+[data-theme="dark"] .home-profile-icon {
+  filter: grayscale(1) brightness(0) invert(1) contrast(1.05);
 }
 
 .home-sidebar-section-head {

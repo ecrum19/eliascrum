@@ -57,11 +57,49 @@ export interface ResolvedPublicationLink {
   url: string;
 }
 
+export interface ExternalProfileLink {
+  id: string;
+  label: string;
+  url: string;
+  iconUrl: string;
+  variant: "scholar" | "semantic" | "orcid" | "research-portal";
+}
+
 export const scholarProfileUrl =
   "https://scholar.google.com/citations?user=fAJsN2kAAAAJ&hl=en";
 
 export const semanticScholarUrl =
   "https://www.semanticscholar.org/author/Elias-Crum/2091963103";
+
+export const orcidProfileUrl = "https://orcid.org/0009-0005-3991-754X";
+
+export const researchPortalProfileUrl =
+  "https://www.researchportal.be/en/researcher/elias-david-crum";
+
+export const publicationProfileLinks: ExternalProfileLink[] = [
+  {
+    id: "google-scholar",
+    label: "Google Scholar",
+    url: scholarProfileUrl,
+    iconUrl:
+      "https://freepngimg.com/download/science/63222-google-scholar-doctor-science-university-philosophy-computer.png",
+    variant: "scholar",
+  },
+  {
+    id: "semantic-scholar",
+    label: "Semantic Scholar",
+    url: semanticScholarUrl,
+    iconUrl: "https://api.iconify.design/academicons/semantic-scholar.svg?color=%23000",
+    variant: "semantic",
+  },
+  {
+    id: "orcid",
+    label: "ORCID",
+    url: orcidProfileUrl,
+    iconUrl: "https://api.iconify.design/academicons/orcid.svg?color=%23000",
+    variant: "orcid",
+  },
+];
 
 export const publications: Publication[] = [
   {

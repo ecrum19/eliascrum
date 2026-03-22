@@ -1,11 +1,13 @@
 <template>
-  <section id='cv' class='w3-content w3-margin-top' style='max-width: min(1920px, 97vw)'>
-    <div class='work-layout'>
-      <work-toc :entries='tocEntries' title='CV' />
-
-      <div class='work-main'>
-        <section id='cv-overview' class='work-section toc-anchor'>
-          <header class='cv-header'>
+  <work-page-layout
+    id='cv'
+    :toc-entries='tocEntries'
+    toc-title='CV'
+    max-width='min(1920px, 97vw)'
+    page-padding='0 16px 140px'
+  >
+    <section id='cv-overview' class='work-section toc-anchor'>
+      <header class='cv-header'>
             <div class='cv-header-top'>
               <div class='cv-identity'>
                 <p class='cv-kicker'>Curriculum Vitae</p>
@@ -41,11 +43,11 @@
                 </span>
               </div>
             </div>
-          </header>
-        </section>
+      </header>
+    </section>
 
-        <section id='cv-sections' class='work-section'>
-          <div class='work-section-block'>
+    <section id='cv-sections' class='work-section'>
+      <work-section-block class='cv-sections-surface' :tinted-in-light-mode='false' :anchor='false'>
             <article
               v-for='section in cvSections'
               :id='sectionId(section.title)'
@@ -180,11 +182,9 @@
                 </article>
               </div>
             </article>
-          </div>
-        </section>
-      </div>
-    </div>
-  </section>
+      </work-section-block>
+    </section>
+  </work-page-layout>
 </template>
 
 <script lang='ts'>
@@ -198,7 +198,9 @@ import {
   type CvItem,
   type CvSection,
 } from '../data/cvData';
-import WorkToc, { type TocEntry as WorkTocEntry } from './WorkToc.vue';
+import type { TocEntry as WorkTocEntry } from './WorkToc.vue';
+import WorkPageLayout from './layout/WorkPageLayout.vue';
+import WorkSectionBlock from './layout/WorkSectionBlock.vue';
 import { resolvePublicAssetPath } from '../utils/publicAssetPath';
 
 type CvLinkDetail = Exclude<CvDetail, string>;
@@ -225,7 +227,8 @@ export default defineComponent({
   name: 'CurrentCv',
   components: {
     RouterLink,
-    WorkToc,
+    WorkPageLayout,
+    WorkSectionBlock,
   },
   data() {
     return {
@@ -331,8 +334,7 @@ export default defineComponent({
   --cv-surface-strong: var(--surface-elevated);
   --cv-border: rgba(255, 255, 255, 0.08);
   --cv-border-strong: var(--surface-outline);
-
-  padding: 0 16px 140px;
+  --work-main-gap: 16px;
 }
 
 [data-theme='dark'] #cv {
@@ -346,27 +348,12 @@ export default defineComponent({
   --cv-border-strong: rgba(226, 232, 240, 0.16);
 }
 
-.work-layout {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 18px;
-  align-items: start;
-}
-
-.work-main {
-  min-width: 0;
-  display: grid;
-  gap: 16px;
-}
-
 .work-section {
   min-width: 0;
 }
 
-.work-section-block {
+.cv-sections-surface {
   max-width: var(--work-content-max);
-  width: 100%;
-  margin: 0 auto;
   background: var(--cv-surface-strong);
   border: 1px solid var(--cv-border-strong);
   border-radius: 18px;
@@ -376,7 +363,7 @@ export default defineComponent({
   box-shadow: 0 18px 38px rgba(0, 0, 0, 0.18);
 }
 
-[data-theme='light'] .work-section-block {
+[data-theme='light'] .cv-sections-surface {
   background: linear-gradient(180deg, rgba(var(--accent-secondary-rgb), 0.46), rgba(var(--accent-rgb), 0.14));
   border-color: rgba(16, 36, 59, 0.12);
 }
@@ -782,12 +769,6 @@ export default defineComponent({
   background: rgba(var(--accent-ink-rgb), 0.18);
 }
 
-@media (max-width: 1080px) {
-  .work-layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
 @media (max-width: 900px) {
   .cv-header-top,
   .cv-item-meta,
@@ -812,14 +793,11 @@ export default defineComponent({
 @media (max-width: 768px) {
   #cv {
     padding: 0 10px 132px;
-  }
-
-  .work-main {
-    gap: 14px;
+    --work-main-gap: 14px;
   }
 
   .cv-header,
-  .work-section-block,
+  .cv-sections-surface,
   .cv-section-card {
     padding: 14px;
   }

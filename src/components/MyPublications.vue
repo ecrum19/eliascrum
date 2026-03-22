@@ -1,10 +1,11 @@
 <template>
-  <section id="publications" class="w3-content w3-margin-top" style="max-width: min(1920px, 97vw)">
-    <div class="work-layout">
-      <work-toc :entries="tocEntries" />
-
-      <div class="work-main">
-        <section id="publications-overview" class="work-section">
+  <work-page-layout
+    id="publications"
+    :toc-entries="tocEntries"
+    max-width="min(1920px, 97vw)"
+    page-padding="0 12px 118px"
+  >
+    <section id="publications-overview" class="work-section">
           <header class="publications-header">
             <div class="publications-intro">
               <h1>Publications</h1>
@@ -14,30 +15,19 @@
             </div>
             <div class="profile-links">
               <a
-                class="profile-link scholar"
-                :href="scholarProfileUrl"
+                v-for="profile in publicationProfileLinks"
+                :key="profile.id"
+                class="profile-link"
+                :class="profile.variant"
+                :href="profile.url"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Google Scholar"
-                title="Google Scholar"
+                :aria-label="profile.label"
+                :title="profile.label"
               >
                 <img
                   class="profile-icon"
-                  src="https://freepngimg.com/download/science/63222-google-scholar-doctor-science-university-philosophy-computer.png"
-                  alt=""
-                />
-              </a>
-              <a
-                class="profile-link semantic"
-                :href="semanticScholarUrl"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Semantic Scholar"
-                title="Semantic Scholar"
-              >
-                <img
-                  class="profile-icon"
-                  src="https://api.iconify.design/academicons/semantic-scholar.svg?color=%23000"
+                  :src="profile.iconUrl"
                   alt=""
                 />
               </a>
@@ -124,8 +114,8 @@
           </header>
         </section>
 
-        <section id="publications-content" class="work-section">
-          <div class="work-section-block publications-content-block">
+    <section id="publications-content" class="work-section">
+      <work-section-block class="publications-content-block" :anchor="false">
             <div class="publications-list">
             <article
               v-for="publication in filteredAndSortedPublications"
@@ -139,7 +129,15 @@
                     {{ publication.title }}
                   </router-link>
                 </h2>
-                <span class="publication-date">{{ publication.year }}</span>
+                <button
+                  type="button"
+                  class="publication-date"
+                  :class="{ 'publication-date-active': isPublicationYearActive(publication) }"
+                  data-category="Date"
+                  @click="applyPublicationYearFilter(publication)"
+                >
+                  {{ publication.year }}
+                </button>
               </div>
 
               <p class="publication-authors">{{ publication.authors }}</p>
@@ -292,53 +290,47 @@
                 </section>
 
                 <div
-                  v-if="publicationPaperRoute(publication) || publicationPdfHref(publication)"
+                  v-if="publicationPaperRoute(publication) || publicationPdfHref(publication) || publication.resolvedPresentationLinks.length"
                   class="publication-expanded-actions"
                 >
                   <router-link
                     v-if="publicationPaperRoute(publication)"
                     :to="publicationPaperRoute(publication)"
-                    class="publication-action-btn primary"
+                    class="publication-action-btn btn-detail"
                   >
-                    Paper Page
+                    More Details
                   </router-link>
                   <a
                     v-if="publicationPdfHref(publication)"
                     :href="publicationPdfHref(publication)"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="publication-action-btn"
+                    class="publication-action-btn btn-pdf"
                   >
                     Open Paper PDF
                   </a>
+                  <template
+                    v-for="link in publication.resolvedPresentationLinks"
+                    :key="link.key"
+                  >
+                    <router-link
+                      v-if="link.to"
+                      :to="link.to"
+                      class="publication-action-btn btn-detail"
+                    >
+                      {{ link.label }}
+                    </router-link>
+                    <a
+                      v-else
+                      :href="link.href"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="publication-action-btn btn-pdf"
+                    >
+                      {{ link.label }}
+                    </a>
+                  </template>
                 </div>
-              </div>
-
-              <div
-                v-if="publication.resolvedPresentationLinks.length"
-                class="publication-links"
-              >
-                <template
-                  v-for="link in publication.resolvedPresentationLinks"
-                  :key="link.key"
-                >
-                  <router-link
-                    v-if="link.to"
-                    :to="link.to"
-                    class="publication-action-btn primary"
-                  >
-                    {{ link.label }}
-                  </router-link>
-                  <a
-                    v-else
-                    :href="link.href"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="publication-action-btn"
-                  >
-                    {{ link.label }}
-                  </a>
-                </template>
               </div>
             </article>
 
@@ -346,12 +338,10 @@
               <h2>No Publications Match Current Filters</h2>
               <p>Try clearing one or more filters to see more entries.</p>
             </article>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-  </section>
+        </div>
+      </work-section-block>
+    </section>
+  </work-page-layout>
 </template>
 
 <script lang="ts">
@@ -360,9 +350,8 @@ import {
   PUBLICATION_TYPE_TAG_OPTIONS,
   getPublicationSlug,
   publications,
+  publicationProfileLinks,
   publicationPresentationLinksById,
-  scholarProfileUrl,
-  semanticScholarUrl,
   type PublicationPresentationLink,
   type Publication,
   type PublicationTypeTag,
@@ -375,7 +364,8 @@ import {
 import { getTalkViewBySlug } from "../data/talkCatalog";
 import { TOPIC_TAG_OPTIONS, VENUE_TAG_OPTIONS } from "../data/talkMetadata";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
-import WorkToc from "./WorkToc.vue";
+import WorkPageLayout from "./layout/WorkPageLayout.vue";
+import WorkSectionBlock from "./layout/WorkSectionBlock.vue";
 
 interface ResolvedPresentationLink {
   key: string;
@@ -434,14 +424,14 @@ function resolvePublicationPresentationLinks(
 export default defineComponent({
   name: "MyPublications",
   components: {
-    WorkToc,
+    WorkPageLayout,
+    WorkSectionBlock,
   },
   data() {
     return {
       publications,
+      publicationProfileLinks,
       publicationPresentationLinksById,
-      scholarProfileUrl,
-      semanticScholarUrl,
       filtersOpen: false,
       selectedVenue: "All",
       selectedTopic: "All",
@@ -673,6 +663,24 @@ export default defineComponent({
       this.selectedYear = "All";
       this.filtersOpen = true;
     },
+    publicationYearFilterValue(publication: Publication): string {
+      if (publication.sortDate) {
+        const year = publication.sortDate.slice(0, 4);
+        return year || "Undated";
+      }
+      return "Undated";
+    },
+    applyPublicationYearFilter(publication: Publication) {
+      const year = this.publicationYearFilterValue(publication);
+      this.selectedYear = year;
+      this.filtersOpen = true;
+    },
+    isPublicationYearActive(publication: Publication): boolean {
+      if (this.selectedYear === "All") {
+        return false;
+      }
+      return this.selectedYear === this.publicationYearFilterValue(publication);
+    },
     isPublicationTagActive(
       kind: PublicationTagFilterKind,
       value: string
@@ -784,21 +792,8 @@ export default defineComponent({
 <style scoped>
 #publications {
   --work-content-max: 100%;
-  padding: 0 12px 118px;
   font-size: var(--font-size-body-lg);
-}
-
-.work-layout {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 12px;
-  align-items: start;
-}
-
-.work-main {
-  min-width: 0;
-  display: grid;
-  gap: 14px;
+  --work-main-gap: 14px;
 }
 
 .work-section {
@@ -808,26 +803,10 @@ export default defineComponent({
   scroll-margin-top: 92px;
 }
 
-.work-section-block {
-  max-width: var(--work-content-max);
-  width: 100%;
-  margin: 0 auto;
-  background: var(--surface-elevated);
-  border: 1px solid var(--surface-outline);
-  border-radius: 14px;
-  padding: 16px 18px;
-  display: grid;
-  gap: 14px;
-}
-
 .publications-content-block {
+  max-width: var(--work-content-max);
   gap: 0;
   padding-top: 14px;
-}
-
-[data-theme="light"] .work-section-block {
-  background: linear-gradient(180deg, rgba(var(--accent-secondary-rgb), 0.56), rgba(var(--accent-rgb), 0.16));
-  border-color: rgba(16, 36, 59, 0.14);
 }
 
 .publications-header {
@@ -907,6 +886,10 @@ export default defineComponent({
   box-shadow: inset 0 0 0 1px rgba(var(--accent-secondary-rgb), 0.35);
 }
 
+.profile-link.orcid {
+  box-shadow: inset 0 0 0 1px rgba(166, 206, 57, 0.46);
+}
+
 .profile-icon {
   width: 24px;
   height: 24px;
@@ -972,13 +955,14 @@ export default defineComponent({
 
 .filter-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 7px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
 }
 
 .filter-control {
   display: grid;
-  gap: 4px;
+  gap: 5px;
+  min-width: 0;
   color: var(--text-muted);
   font-weight: 600;
   font-size: var(--font-size-caption);
@@ -990,6 +974,10 @@ export default defineComponent({
 .filter-control select {
   appearance: none;
   -webkit-appearance: none;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  height: 38px;
   border-radius: 999px;
   border: 1px solid var(--surface-outline);
   background-color: transparent;
@@ -998,12 +986,15 @@ export default defineComponent({
   background-position: right 11px center;
   background-size: 10px 6px;
   color: var(--page-text);
-  padding: 6px 30px 6px 10px;
+  padding: 7px 30px 7px 12px;
   font-size: var(--font-size-meta);
   font-weight: 500;
   letter-spacing: normal;
   text-transform: none;
   cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   transition: border-color 0.18s ease, background-color 0.18s ease;
 }
 
@@ -1062,33 +1053,54 @@ export default defineComponent({
 }
 
 .publication-card {
-  background: var(--surface-card);
-  border: 1px solid var(--surface-outline);
-  border-radius: 12px;
-  padding: 12px 14px;
-}
-
-[data-theme="light"] .publication-card {
-  background: rgba(255, 255, 255, 0.52);
+  background: var(--surface-elevated);
+  outline: 2px solid var(--surface-outline);
+  border-radius: 14px;
+  padding: 16px 20px;
+  position: relative;
 }
 
 .publication-title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-  flex-wrap: wrap;
+  display: block;
+  padding-right: 116px;
 }
 
 .publication-date {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  border: 1px solid var(--surface-outline);
+  border-radius: 999px;
+  padding: 5px 12px;
+  background: transparent;
   font-weight: 700;
+  font-size: var(--list-date-size);
+  letter-spacing: 0.01em;
   color: var(--text-muted);
   opacity: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.16s ease, border-color 0.16s ease;
+}
+
+.publication-date:hover {
+  background: var(--nav-hover-bg);
+  border-color: rgba(var(--accent-rgb), 0.52);
+}
+
+.publication-date:focus-visible {
+  outline: none;
+  border-color: rgba(var(--accent-rgb), 0.72);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.28);
+}
+
+.publication-date-active {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
 }
 
 .publication-title {
   margin: 0;
-  font-size: var(--font-size-card-title);
+  font-size: var(--list-title-size);
   line-height: 1.35;
 }
 
@@ -1134,7 +1146,7 @@ export default defineComponent({
   border: 1px solid var(--surface-outline);
   border-radius: 999px;
   padding: 3px 10px;
-  font-size: var(--font-size-body-sm);
+  font-size: var(--list-tag-size);
   color: var(--page-text);
   appearance: none;
   -webkit-appearance: none;
@@ -1189,49 +1201,55 @@ export default defineComponent({
 }
 
 .publication-tag-type {
-  background: rgba(244, 208, 63, 0.16);
-  --tag-tooltip-bg: rgba(244, 208, 63, 0.96);
-  --tag-tooltip-border: rgba(202, 138, 4, 0.96);
-  --tag-tooltip-text: #281b00;
+  background: rgba(245, 158, 11, 0.18);
+  border-color: rgba(245, 158, 11, 0.44);
+  color: #5f3a00;
+  --tag-tooltip-bg: rgba(245, 158, 11, 0.96);
+  --tag-tooltip-border: rgba(161, 98, 7, 0.96);
+  --tag-tooltip-text: #251401;
 }
 
 .publication-tag-venue {
-  background: rgba(var(--accent-rgb), 0.14);
-  --tag-tooltip-bg: rgba(var(--accent-rgb), 0.96);
-  --tag-tooltip-border: rgba(14, 165, 233, 0.96);
+  background: rgba(56, 189, 248, 0.16);
+  border-color: rgba(56, 189, 248, 0.44);
+  color: #053a52;
+  --tag-tooltip-bg: rgba(56, 189, 248, 0.96);
+  --tag-tooltip-border: rgba(2, 132, 199, 0.96);
   --tag-tooltip-text: #052634;
 }
 
 .publication-tag-topic {
-  background: rgba(var(--accent-secondary-rgb), 0.14);
-  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.96);
+  background: rgba(20, 184, 166, 0.16);
+  border-color: rgba(20, 184, 166, 0.44);
+  color: #06453f;
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.96);
   --tag-tooltip-border: rgba(13, 148, 136, 0.96);
   --tag-tooltip-text: #042320;
 }
 
 [data-theme="dark"] .publication-tag-type {
-  background: rgba(244, 208, 63, 0.28);
-  border-color: rgba(244, 208, 63, 0.62);
+  background: rgba(245, 158, 11, 0.28);
+  border-color: rgba(245, 158, 11, 0.62);
   color: #ffe7a8;
-  --tag-tooltip-bg: rgba(244, 208, 63, 0.98);
-  --tag-tooltip-border: rgba(250, 204, 21, 0.98);
+  --tag-tooltip-bg: rgba(245, 158, 11, 0.98);
+  --tag-tooltip-border: rgba(251, 191, 36, 0.98);
   --tag-tooltip-text: #1f1300;
 }
 
 [data-theme="dark"] .publication-tag-venue {
-  background: rgba(var(--accent-rgb), 0.26);
-  border-color: rgba(var(--accent-rgb), 0.6);
+  background: rgba(56, 189, 248, 0.26);
+  border-color: rgba(56, 189, 248, 0.6);
   color: #d3f4ff;
-  --tag-tooltip-bg: rgba(var(--accent-rgb), 0.98);
+  --tag-tooltip-bg: rgba(56, 189, 248, 0.98);
   --tag-tooltip-border: rgba(125, 211, 252, 0.98);
   --tag-tooltip-text: #041b25;
 }
 
 [data-theme="dark"] .publication-tag-topic {
-  background: rgba(var(--accent-secondary-rgb), 0.26);
-  border-color: rgba(var(--accent-secondary-rgb), 0.58);
+  background: rgba(20, 184, 166, 0.26);
+  border-color: rgba(20, 184, 166, 0.58);
   color: #d2fff4;
-  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.98);
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.98);
   --tag-tooltip-border: rgba(var(--accent-secondary-rgb), 0.98);
   --tag-tooltip-text: #021413;
 }
@@ -1242,7 +1260,7 @@ export default defineComponent({
   border-left: 3px solid rgba(var(--accent-rgb), 0.45);
   color: var(--text-muted);
   line-height: 1.6;
-  font-size: var(--font-size-body-lg);
+  font-size: var(--list-summary-size);
 }
 
 [data-theme="light"] .publication-summary {
@@ -1424,14 +1442,6 @@ export default defineComponent({
   background: var(--nav-hover-bg);
 }
 
-.publication-links {
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  row-gap: 8px;
-  column-gap: 10px;
-}
-
 .publication-action-btn {
   display: inline-flex;
   align-items: center;
@@ -1449,11 +1459,6 @@ export default defineComponent({
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-.publication-action-btn.primary {
-  border-color: rgba(var(--accent-rgb), 0.42);
-  background: rgba(var(--accent-rgb), 0.08);
-}
-
 .publication-action-btn:hover {
   background: var(--nav-hover-bg);
 }
@@ -1467,24 +1472,10 @@ export default defineComponent({
   margin: 8px 0 0;
 }
 
-@media (max-width: 1080px) {
-  .work-layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .work-main {
-    gap: 16px;
-  }
-}
-
 @media (max-width: 768px) {
   #publications {
     padding: 0 8px 118px;
-  }
-
-  .work-section-block {
-    padding: 10px 11px;
-    gap: 10px;
+    --work-main-gap: 16px;
   }
 
   .publications-header,
@@ -1509,6 +1500,19 @@ export default defineComponent({
   .filter-footer {
     flex-wrap: wrap;
     justify-content: flex-start;
+  }
+
+  .filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .publication-title-row {
+    padding-right: 0;
+  }
+
+  .publication-date {
+    position: static;
+    margin-top: 8px;
   }
 
   .publication-action-btn {

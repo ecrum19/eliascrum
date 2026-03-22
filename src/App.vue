@@ -172,6 +172,10 @@ export default defineComponent({
   --font-size-card-title: calc(1.44rem * var(--text-scale-heading));
   --font-size-prose-xl: calc(1.72rem * var(--text-scale-body));
   --font-size-prose-l: calc(1.42rem * var(--text-scale-body));
+  --list-date-size: var(--font-size-meta);
+  --list-title-size: calc(clamp(1.4rem, 2.25vw, 1.72rem) * var(--text-scale-heading));
+  --list-tag-size: var(--font-size-meta);
+  --list-summary-size: var(--font-size-body-sm);
   --page-background: #000000;
   --page-text: #f7f9fc;
   --text-muted: #e7edf5;
@@ -182,7 +186,7 @@ export default defineComponent({
   --surface-outline: rgba(255, 255, 255, 0.22);
   --header-bg: rgba(9, 9, 10, 0.86);
   --footer-bg: rgba(8, 8, 9, 0.72);
-  --link-color: #f2f7ff;
+  --link-color: #bf5e5e;
   --nav-hover-bg: rgba(255, 255, 255, 0.09);
   --toggle-bg: rgba(255, 255, 255, 0.065);
   --toggle-border: rgba(255, 255, 255, 0.28);
@@ -213,7 +217,7 @@ export default defineComponent({
   --accent-secondary-rgb: 246, 240, 231;
   --accent-ink-rgb: 13, 79, 136;
   --accent-ink: #0d4f88;
-  --link-color: var(--accent-ink);
+  --link-color: #8f6b1f;
   --nav-hover-bg: rgba(var(--accent-rgb), 0.18);
   --toggle-bg: rgba(var(--accent-rgb), 0.12);
   --toggle-border: rgba(var(--accent-rgb), 0.34);
@@ -258,6 +262,127 @@ h6 {
 
 a {
   color: var(--link-color);
+}
+
+.btn-detail,
+.btn-pdf,
+.btn-back,
+.btn-external {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: var(--font-size-body) !important;
+  font-weight: 600;
+  line-height: 1.2;
+  min-width: 0;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.16s ease, box-shadow 0.2s ease;
+}
+
+.btn-detail {
+  border-radius: 10px !important;
+  border: 1px solid rgba(216, 116, 116, 0.66) !important;
+  background: rgba(191, 94, 94, 0.14) !important;
+  box-shadow: 0 0 0 1px rgba(191, 94, 94, 0.18), 0 4px 12px rgba(8, 15, 31, 0.14);
+}
+
+.btn-detail:hover {
+  border-color: rgba(216, 116, 116, 0.82) !important;
+  background: rgba(191, 94, 94, 0.2) !important;
+  box-shadow: 0 0 0 1px rgba(216, 116, 116, 0.24), 0 8px 18px rgba(8, 15, 31, 0.2);
+  transform: translateY(-1px);
+}
+
+.btn-detail:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(216, 116, 116, 0.42), 0 6px 16px rgba(8, 15, 31, 0.2) !important;
+}
+
+.btn-external {
+  border-radius: 999px !important;
+  border: 1px solid var(--surface-outline) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.btn-external:hover {
+  border-color: rgba(196, 181, 253, 0.86) !important;
+  background: rgba(167, 139, 250, 0.16) !important;
+  box-shadow: 0 4px 12px rgba(8, 15, 31, 0.12);
+  transform: translateY(-1px);
+}
+
+.btn-external:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.34), 0 6px 16px rgba(8, 15, 31, 0.16) !important;
+}
+
+.btn-pdf {
+  border-radius: 999px !important;
+  border: 1px solid var(--surface-outline) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.btn-pdf:hover {
+  background: var(--nav-hover-bg) !important;
+  border-color: rgba(var(--accent-rgb), 0.45) !important;
+  transform: translateY(-1px);
+}
+
+.btn-pdf:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.24) !important;
+}
+
+.btn-back {
+  border-radius: 10px !important;
+  border: 1px solid rgba(56, 189, 248, 0.55) !important;
+  background: rgba(56, 189, 248, 0.13) !important;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.14), 0 4px 12px rgba(8, 15, 31, 0.12);
+}
+
+.btn-back:hover {
+  border-color: rgba(56, 189, 248, 0.78) !important;
+  background: rgba(56, 189, 248, 0.2) !important;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.24), 0 8px 18px rgba(8, 15, 31, 0.18);
+  transform: translateY(-1px);
+}
+
+.btn-back:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.36), 0 6px 16px rgba(8, 15, 31, 0.18) !important;
+}
+
+:root[data-theme="light"] .btn-detail {
+  border-color: rgba(143, 107, 31, 0.62) !important;
+  background: rgba(143, 107, 31, 0.14) !important;
+  box-shadow: 0 0 0 1px rgba(143, 107, 31, 0.14), 0 3px 10px rgba(84, 66, 38, 0.1);
+}
+
+:root[data-theme="light"] .btn-detail:hover {
+  border-color: rgba(143, 107, 31, 0.8) !important;
+  background: rgba(143, 107, 31, 0.2) !important;
+}
+
+:root[data-theme="light"] .btn-back {
+  border-color: rgba(13, 79, 136, 0.48) !important;
+  background: rgba(13, 79, 136, 0.12) !important;
+  box-shadow: 0 0 0 1px rgba(13, 79, 136, 0.12), 0 3px 10px rgba(84, 66, 38, 0.1);
+}
+
+:root[data-theme="light"] .btn-back:hover {
+  border-color: rgba(13, 79, 136, 0.68) !important;
+  background: rgba(13, 79, 136, 0.2) !important;
+}
+
+:root[data-theme="light"] .btn-external {
+  border-color: var(--surface-outline) !important;
+}
+
+:root[data-theme="light"] .btn-external:hover {
+  border-color: rgba(126, 34, 206, 0.64) !important;
+  background: rgba(126, 34, 206, 0.1) !important;
 }
 
 .w3-hover-black:hover {

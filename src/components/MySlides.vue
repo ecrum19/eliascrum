@@ -1,15 +1,13 @@
 <template>
-  <section id="talks" class="w3-content w3-margin-top" style="max-width: min(1780px, 97vw)">
-    <div class="work-layout">
-      <work-toc :entries="tocEntries" />
-
-      <div class="work-main">
-        <section id="talks-overview" class="work-section">
+  <work-page-layout
+    id="talks"
+    :toc-entries="tocEntries"
+    max-width="min(1780px, 97vw)"
+    page-padding="0 16px 140px"
+  >
+    <section id="talks-overview" class="work-section">
           <header class="talks-header">
             <h1>Talks and Posters</h1>
-            <p>
-              Slides and posters with metadata tags and optional previews.
-            </p>
 
             <section id="talks-filters" class="talk-filters toc-anchor">
               <button
@@ -134,14 +132,14 @@
           </header>
         </section>
 
-        <section id="talks-sections" class="work-section">
-          <div
+    <section id="talks-sections" class="work-section">
+          <work-section-block
             v-if="showTalkSection"
             id="talks-section-talks"
-            class="work-section-block toc-anchor"
           >
             <header class="talk-section-header">
               <h2>Talks</h2>
+              <p>Presentation slides and meta-data.</p>
             </header>
 
             <div class="talks-shell">
@@ -230,10 +228,10 @@
                     <p class="talk-description">{{ item.summary }}</p>
 
                     <div class="talk-actions">
-                      <router-link v-if="item.detailRoute" :to="item.detailRoute" class="talk-btn primary">
+                      <router-link v-if="item.detailRoute" :to="item.detailRoute" class="talk-btn btn-detail">
                         Show Details
                       </router-link>
-                      <a :href="item.primaryPath" target="_blank" rel="noopener noreferrer" class="talk-btn">
+                      <a :href="item.primaryPath" target="_blank" rel="noopener noreferrer" class="talk-btn btn-pdf">
                         {{ item.primaryActionLabel }}
                       </a>
                       <a
@@ -241,7 +239,7 @@
                         :href="item.secondaryPosterPath"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="talk-btn"
+                        class="talk-btn btn-pdf"
                       >
                         Open Poster PDF
                       </a>
@@ -251,7 +249,7 @@
                         :href="publicationLink.url"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="talk-btn"
+                        class="talk-btn btn-external"
                       >
                         {{ publicationLink.label }}
                       </a>
@@ -286,15 +284,15 @@
                 <p>Try clearing one or more filters to see more talk entries.</p>
               </article>
             </div>
-          </div>
+          </work-section-block>
 
-          <div
+          <work-section-block
             v-if="showPosterSection"
             id="talks-section-posters"
-            class="work-section-block toc-anchor"
           >
             <header class="talk-section-header">
               <h2>Posters</h2>
+              <p>Posters presented at conferences and symposiums.</p>
             </header>
 
             <div class="talks-shell">
@@ -383,10 +381,10 @@
                     <p class="talk-description">{{ item.summary }}</p>
 
                     <div class="talk-actions">
-                      <router-link v-if="item.detailRoute" :to="item.detailRoute" class="talk-btn primary">
+                      <router-link v-if="item.detailRoute" :to="item.detailRoute" class="talk-btn btn-detail">
                         Show Details
                       </router-link>
-                      <a :href="item.primaryPath" target="_blank" rel="noopener noreferrer" class="talk-btn">
+                      <a :href="item.primaryPath" target="_blank" rel="noopener noreferrer" class="talk-btn btn-pdf">
                         {{ item.primaryActionLabel }}
                       </a>
                       <a
@@ -394,7 +392,7 @@
                         :href="item.secondaryPosterPath"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="talk-btn"
+                        class="talk-btn btn-pdf"
                       >
                         Open Poster PDF
                       </a>
@@ -404,7 +402,7 @@
                         :href="publicationLink.url"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="talk-btn"
+                        class="talk-btn btn-external"
                       >
                         {{ publicationLink.label }}
                       </a>
@@ -439,18 +437,16 @@
                 <p>Try clearing one or more filters to see more poster entries.</p>
               </article>
             </div>
-          </div>
+          </work-section-block>
 
-          <div v-if="!hasFilteredItems" class="work-section-block">
+          <work-section-block v-if="!hasFilteredItems" :anchor="false">
             <article class="talk-card empty-state">
               <h2>No Items Match Current Filters</h2>
               <p>Try clearing one or more filters to see more talks and posters.</p>
             </article>
-          </div>
-        </section>
-      </div>
-    </div>
-  </section>
+          </work-section-block>
+    </section>
+  </work-page-layout>
 </template>
 
 <script lang="ts">
@@ -477,7 +473,8 @@ import {
   type ResolvedPublicationLink,
 } from "../data/publicationsData";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
-import WorkToc from "./WorkToc.vue";
+import WorkPageLayout from "./layout/WorkPageLayout.vue";
+import WorkSectionBlock from "./layout/WorkSectionBlock.vue";
 
 type MaterialTypeTag = "Slides" | "Poster";
 type TalkTagFilterKind =
@@ -519,7 +516,8 @@ const MATERIAL_TAG_OPTIONS: MaterialTypeTag[] = ["Slides", "Poster"];
 export default defineComponent({
   name: "MySlides",
   components: {
-    WorkToc,
+    WorkPageLayout,
+    WorkSectionBlock,
   },
   data() {
     return {
@@ -902,42 +900,14 @@ export default defineComponent({
 
 <style scoped>
 #talks {
-  padding: 0 16px 140px;
   font-size: var(--font-size-body-lg);
-}
-
-.work-layout {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 12px;
-  align-items: start;
-}
-
-.work-main {
-  min-width: 0;
-  display: grid;
-  gap: 16px;
+  --work-main-gap: 16px;
 }
 
 .work-section {
   min-width: 0;
   display: grid;
   gap: 12px;
-}
-
-.work-section-block {
-  width: 100%;
-  background: var(--surface-elevated);
-  border: 1px solid var(--surface-outline);
-  border-radius: 14px;
-  padding: 16px 18px;
-  display: grid;
-  gap: 14px;
-}
-
-[data-theme="light"] .work-section-block {
-  background: linear-gradient(180deg, rgba(var(--accent-secondary-rgb), 0.56), rgba(var(--accent-rgb), 0.16));
-  border-color: rgba(16, 36, 59, 0.14);
 }
 
 .talk-section-header {
@@ -1160,7 +1130,7 @@ export default defineComponent({
   border: 1px solid var(--surface-outline);
   border-radius: 999px;
   padding: 5px 12px;
-  font-size: var(--font-size-body);
+  font-size: var(--list-date-size);
   font-weight: 750;
   letter-spacing: 0.01em;
 }
@@ -1169,7 +1139,7 @@ export default defineComponent({
   margin: 10px 0 0;
   color: var(--page-text);
   font-family: var(--content-heading-font);
-  font-size: var(--content-h2-size);
+  font-size: var(--list-title-size);
   position: relative;
   z-index: 1;
 }
@@ -1187,6 +1157,7 @@ export default defineComponent({
   margin: 10px 0 0;
   line-height: 1.5;
   color: var(--text-muted);
+  font-size: var(--list-summary-size);
   opacity: 1;
 }
 
@@ -1208,7 +1179,7 @@ export default defineComponent({
   border: 1px solid var(--surface-outline);
   border-radius: 999px;
   padding: 3px 11px;
-  font-size: var(--font-size-body-sm);
+  font-size: var(--list-tag-size);
   color: var(--page-text);
   appearance: none;
   -webkit-appearance: none;
@@ -1384,11 +1355,6 @@ export default defineComponent({
   transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.16s ease, box-shadow 0.2s ease;
 }
 
-.talk-btn.primary {
-  border-color: rgba(var(--accent-rgb), 0.5);
-  background: rgba(var(--accent-rgb), 0.13);
-}
-
 .talk-btn:hover {
   background: var(--nav-hover-bg);
   border-color: rgba(var(--accent-rgb), 0.45);
@@ -1404,10 +1370,6 @@ export default defineComponent({
 
 [data-theme="light"] .talk-btn {
   background: rgba(16, 36, 59, 0.04);
-}
-
-[data-theme="light"] .talk-btn.primary {
-  background: rgba(var(--accent-rgb), 0.1);
 }
 
 .preview-shell {
@@ -1484,10 +1446,6 @@ export default defineComponent({
 }
 
 @media (max-width: 1080px) {
-  .work-layout {
-    grid-template-columns: 1fr;
-  }
-
   .filter-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -1517,8 +1475,7 @@ export default defineComponent({
   }
 
   .talks-header,
-  .talk-card,
-  .work-section-block {
+  .talk-card {
     padding: 14px;
   }
 

@@ -11,13 +11,13 @@
             <p class="paper-authors">{{ publication.authors }}</p>
             <p class="paper-meta">{{ publication.year }} • {{ publicationDateLabel }}</p>
             <div class="paper-actions">
-              <router-link to="/publications" class="paper-action-btn">Back to Publications</router-link>
+              <router-link to="/publications" class="paper-action-btn btn-back">Back to Publications</router-link>
               <a
                 v-if="paperOpenHref"
                 :href="paperOpenHref"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="paper-action-btn primary"
+                :class="['paper-action-btn', paperOpenButtonClass]"
               >
                 {{ paperOpenLabel }}
               </a>
@@ -207,7 +207,7 @@
                   :href="paperOpenHref"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="paper-action-btn primary"
+                  :class="['paper-action-btn', paperOpenButtonClass]"
                 >
                   {{ paperOpenLabel }}
                 </a>
@@ -220,7 +220,7 @@
           <div class="paper-panel">
             <h1>Publication Not Found</h1>
             <p>The requested publication paper page could not be resolved.</p>
-            <router-link to="/publications" class="paper-action-btn primary">Back to Publications</router-link>
+            <router-link to="/publications" class="paper-action-btn btn-back">Back to Publications</router-link>
           </div>
         </section>
       </div>
@@ -347,6 +347,9 @@ export default defineComponent({
       }
 
       return "Open Publication Page";
+    },
+    paperOpenButtonClass(): string {
+      return this.paperPreviewUrl ? "btn-pdf" : "btn-external";
     },
     previewUnavailableLabel(): string {
       if (this.publication?.url) {
@@ -1108,11 +1111,6 @@ export default defineComponent({
   transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.16s ease, box-shadow 0.2s ease;
 }
 
-.paper-action-btn.primary {
-  border-color: rgba(var(--accent-rgb), 0.5);
-  background: rgba(var(--accent-rgb), 0.13);
-}
-
 .paper-action-btn:hover {
   background: var(--nav-hover-bg);
   border-color: rgba(var(--accent-rgb), 0.45);
@@ -1128,10 +1126,6 @@ export default defineComponent({
 
 [data-theme="light"] .paper-action-btn {
   background: rgba(16, 36, 59, 0.04);
-}
-
-[data-theme="light"] .paper-action-btn.primary {
-  background: rgba(var(--accent-rgb), 0.1);
 }
 
 .paper-panel {

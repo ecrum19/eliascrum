@@ -1,25 +1,29 @@
 <template>
-  <section id="poster-detail" class="w3-content w3-margin-top" style="max-width: min(1780px, 97vw)">
-    <div v-if="poster" class="work-layout">
-      <work-toc :entries="tocEntries" title="Poster" />
-
-      <div class="work-main">
-        <section id="poster-detail-overview" class="work-section">
-          <header class="poster-header toc-anchor">
+  <work-page-layout
+    id="poster-detail"
+    :toc-entries="tocEntries"
+    toc-title="Poster"
+    :show-toc="Boolean(poster)"
+    max-width="min(1780px, 97vw)"
+    page-padding="0 16px 140px"
+  >
+    <template v-if="poster">
+      <section id="poster-detail-overview" class="work-section">
+        <header class="poster-header toc-anchor">
             <div class="poster-header-top">
               <h1>{{ poster.displayTitle }}</h1>
               <p class="poster-date-detailed">{{ headerDateLabel }}</p>
             </div>
 
             <div class="poster-actions">
-              <router-link to="/talks" class="action-btn">Back to Talks</router-link>
-              <a :href="posterPdfUrl" target="_blank" rel="noopener noreferrer" class="action-btn primary">
+              <router-link to="/talks" class="action-btn btn-back">Back to Talks</router-link>
+              <a :href="posterPdfUrl" target="_blank" rel="noopener noreferrer" class="action-btn btn-pdf">
                 Open Poster PDF
               </a>
               <router-link
                 v-if="poster.linkedTalkSlug"
                 :to="`/talks/${poster.linkedTalkSlug}`"
-                class="action-btn"
+                class="action-btn btn-detail"
               >
                 Related Talk
               </router-link>
@@ -29,7 +33,7 @@
                 :href="publicationLink.url"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="action-btn"
+                class="action-btn btn-external"
               >
                 {{ publicationLink.label }}
               </a>
@@ -76,31 +80,30 @@
                 </router-link>
               </div>
             </div>
-          </header>
-        </section>
+        </header>
+      </section>
 
-        <section id="poster-detail-pdf" class="work-section">
-          <article class="poster-panel toc-anchor">
-            <h2>Poster</h2>
-            <object :data="`${posterPdfUrl}#page=1&zoom=page-fit`" type="application/pdf" class="poster-frame">
-              <p>
-                Your browser cannot render the PDF inline.
-                <a :href="posterPdfUrl" target="_blank" rel="noopener noreferrer">Open the poster</a>.
-              </p>
-            </object>
-          </article>
-        </section>
-      </div>
-    </div>
+      <section id="poster-detail-pdf" class="work-section">
+        <article class="poster-panel toc-anchor">
+          <h2>Poster</h2>
+          <object :data="`${posterPdfUrl}#page=1&zoom=page-fit`" type="application/pdf" class="poster-frame">
+            <p>
+              Your browser cannot render the PDF inline.
+              <a :href="posterPdfUrl" target="_blank" rel="noopener noreferrer">Open the poster</a>.
+            </p>
+          </object>
+        </article>
+      </section>
+    </template>
 
     <div v-else class="poster-shell">
       <article class="poster-panel">
         <h1>Poster not found</h1>
         <p>This poster slug does not exist in the generated poster data.</p>
-        <router-link to="/talks" class="action-btn">Back to Talks</router-link>
+        <router-link to="/talks" class="action-btn btn-back">Back to Talks</router-link>
       </article>
     </div>
-  </section>
+  </work-page-layout>
 </template>
 
 <script lang="ts">
@@ -111,7 +114,7 @@ import {
   type ResolvedPublicationLink,
 } from "../data/publicationsData";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
-import WorkToc from "./WorkToc.vue";
+import WorkPageLayout from "./layout/WorkPageLayout.vue";
 
 type PosterDetailFilterKind =
   | "material"
@@ -142,7 +145,7 @@ interface WorkTocEntry {
 export default defineComponent({
   name: "PosterDetail",
   components: {
-    WorkToc,
+    WorkPageLayout,
   },
   computed: {
     tocEntries(): WorkTocEntry[] {
@@ -251,20 +254,7 @@ export default defineComponent({
 
 <style scoped>
 #poster-detail {
-  padding: 0 16px 140px;
-}
-
-.work-layout {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 12px;
-  align-items: start;
-}
-
-.work-main {
-  min-width: 0;
-  display: grid;
-  gap: 18px;
+  --work-main-gap: 18px;
 }
 
 .work-section {
@@ -344,11 +334,6 @@ export default defineComponent({
   transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.16s ease, box-shadow 0.2s ease;
 }
 
-.action-btn.primary {
-  border-color: rgba(var(--accent-rgb), 0.5);
-  background: rgba(var(--accent-rgb), 0.13);
-}
-
 .action-btn:hover {
   background: var(--nav-hover-bg);
   border-color: rgba(var(--accent-rgb), 0.45);
@@ -364,10 +349,6 @@ export default defineComponent({
 
 [data-theme="light"] .action-btn {
   background: rgba(16, 36, 59, 0.04);
-}
-
-[data-theme="light"] .action-btn.primary {
-  background: rgba(var(--accent-rgb), 0.1);
 }
 
 .poster-detail-heading {
@@ -695,9 +676,4 @@ export default defineComponent({
   }
 }
 
-@media (max-width: 1080px) {
-  .work-layout {
-    grid-template-columns: 1fr;
-  }
-}
 </style>
