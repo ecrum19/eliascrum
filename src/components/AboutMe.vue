@@ -83,6 +83,36 @@
                 <p class="w3-large home-sidebar-section-title">
                   <b
                     ><i
+                      class="fa fa-book fa-fw w3-xlarge w3-margin-right w3-text-white"
+                    ></i
+                    >Research Profiles</b
+                  >
+                </p>
+              </div>
+              <div class="home-profile-links">
+                <a
+                  v-for="profile in publicationProfileLinks"
+                  :key="profile.id"
+                  class="home-profile-link"
+                  :class="`home-profile-link-${profile.variant}`"
+                  :href="profile.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  :aria-label="profile.label"
+                  :title="profile.label"
+                >
+                  <img class="home-profile-icon" :src="profile.iconUrl" alt="" />
+                </a>
+              </div>
+            </section>
+
+            <hr />
+
+            <section class="home-sidebar-section">
+              <div class="home-sidebar-section-head">
+                <p class="w3-large home-sidebar-section-title">
+                  <b
+                    ><i
                       class="fa fa-graduation-cap fa-fw w3-xlarge w3-margin-right w3-text-white"
                     ></i
                     >Research Topics</b
@@ -93,16 +123,23 @@
                 </p>
               </div>
               <div id="keywords" class="home-topic-tags">
-                <router-link
+                <component
                   v-for="topic in researchTopicLinks"
                   :key="topic.label"
+                  :is="topic.external ? 'a' : 'router-link'"
                   class="home-topic-tag"
-                  :class="`home-topic-tag-${topic.variant}`"
+                  :class="[
+                    `home-topic-tag-${topic.variant}`,
+                    topic.external ? 'home-topic-tag-external' : 'home-topic-tag-internal',
+                  ]"
                   :data-destination="topic.destination"
-                  :to="topic.to"
+                  :to="topic.external ? undefined : topic.to"
+                  :href="topic.external ? topic.href : undefined"
+                  :target="topic.external ? '_blank' : undefined"
+                  :rel="topic.external ? 'noopener noreferrer' : undefined"
                 >
                   {{ topic.label }}
-                </router-link>
+                </component>
               </div>
             </section>
 
@@ -215,12 +252,19 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { getRecentHomepageUpdates, type HomepageUpdate } from "../data/homepageUpdates";
+import {
+  publicationProfileLinks,
+  researchPortalProfileUrl,
+  type ExternalProfileLink,
+} from "../data/publicationsData";
 
 interface ResearchTopicLink {
   label: string;
   destination: string;
   variant: "publication" | "talk";
-  to: {
+  external?: boolean;
+  href?: string;
+  to?: {
     path: string;
     query?: Record<string, string>;
   };
@@ -229,6 +273,19 @@ interface ResearchTopicLink {
 export default defineComponent({
   name: "AboutMe",
   computed: {
+    publicationProfileLinks(): ExternalProfileLink[] {
+      return [
+        ...publicationProfileLinks,
+        {
+          id: "research-portal",
+          label: "Research Portal",
+          url: researchPortalProfileUrl,
+          iconUrl:
+            "https://www.datocms-assets.com/53443/1747235092-monogram-vlaamse-overheid.svg?auto=format&fit=max&w=1200",
+          variant: "research-portal",
+        },
+      ];
+    },
     recentUpdates(): HomepageUpdate[] {
       return getRecentHomepageUpdates(1);
     },
@@ -614,6 +671,57 @@ a {
   gap: 12px;
 }
 
+.home-profile-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.home-profile-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid var(--surface-outline);
+  background: transparent;
+  transition: transform 0.18s ease, background-color 0.18s ease;
+}
+
+.home-profile-link:hover {
+  transform: translateY(-1px);
+  background: var(--nav-hover-bg);
+}
+
+.home-profile-link-scholar {
+  box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.35);
+}
+
+.home-profile-link-semantic {
+  box-shadow: inset 0 0 0 1px rgba(var(--accent-secondary-rgb), 0.35);
+}
+
+.home-profile-link-orcid {
+  box-shadow: inset 0 0 0 1px rgba(166, 206, 57, 0.46);
+}
+
+.home-profile-link-research-portal {
+  box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.34);
+}
+
+.home-profile-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  object-fit: contain;
+  filter: grayscale(1) brightness(0) contrast(1.05);
+}
+
+[data-theme="dark"] .home-profile-icon {
+  filter: grayscale(1) brightness(0) invert(1) contrast(1.05);
+}
+
 .home-sidebar-section-head {
   display: grid;
   gap: 6px;
@@ -655,7 +763,23 @@ a {
   text-decoration: none;
   line-height: 1.2;
   position: relative;
+  cursor: pointer;
   transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.home-topic-tag-internal {
+  border-radius: 999px;
+}
+
+.home-topic-tag-external {
+  border-radius: 10px;
+  border-color: var(--surface-outline);
+  background: transparent;
+}
+
+.home-topic-tag-external:hover {
+  border-color: rgba(196, 181, 253, 0.86);
+  background: rgba(167, 139, 250, 0.16);
 }
 
 .home-topic-tag::after {
@@ -697,33 +821,39 @@ a {
 }
 
 .home-topic-tag-publication {
-  background: rgba(var(--accent-secondary-rgb), 0.14);
-  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.96);
+  background: rgba(20, 184, 166, 0.16);
+  border-color: rgba(20, 184, 166, 0.44);
+  color: #06453f !important;
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.96);
   --tag-tooltip-border: rgba(13, 148, 136, 0.96);
   --tag-tooltip-text: #042320;
 }
 
 .home-topic-tag-talk {
-  background: rgba(var(--accent-rgb), 0.14);
-  --tag-tooltip-bg: rgba(var(--accent-rgb), 0.96);
-  --tag-tooltip-border: rgba(14, 165, 233, 0.96);
-  --tag-tooltip-text: #052634;
+  background: rgba(20, 184, 166, 0.16);
+  border-color: rgba(20, 184, 166, 0.44);
+  color: #06453f !important;
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.96);
+  --tag-tooltip-border: rgba(13, 148, 136, 0.96);
+  --tag-tooltip-text: #042320;
 }
 
 [data-theme="dark"] .home-topic-tag-publication {
-  background: rgba(var(--accent-secondary-rgb), 0.26);
-  border-color: rgba(var(--accent-secondary-rgb), 0.58);
-  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.98);
-  --tag-tooltip-border: rgba(var(--accent-secondary-rgb), 0.98);
+  background: rgba(20, 184, 166, 0.26);
+  border-color: rgba(20, 184, 166, 0.58);
+  color: #d2fff4 !important;
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.98);
+  --tag-tooltip-border: rgba(20, 184, 166, 0.98);
   --tag-tooltip-text: #021413;
 }
 
 [data-theme="dark"] .home-topic-tag-talk {
-  background: rgba(var(--accent-rgb), 0.26);
-  border-color: rgba(var(--accent-rgb), 0.6);
-  --tag-tooltip-bg: rgba(var(--accent-rgb), 0.98);
-  --tag-tooltip-border: rgba(125, 211, 252, 0.98);
-  --tag-tooltip-text: #041b25;
+  background: rgba(20, 184, 166, 0.26);
+  border-color: rgba(20, 184, 166, 0.58);
+  color: #d2fff4 !important;
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.98);
+  --tag-tooltip-border: rgba(20, 184, 166, 0.98);
+  --tag-tooltip-text: #021413;
 }
 
 #orgs {

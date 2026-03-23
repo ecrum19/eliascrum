@@ -1,0 +1,709 @@
+{
+  "generatedAt": "2026-03-23T08:58:32.521Z",
+  "baseIri": "https://eliascrum.github.io/eliascrum/",
+  "datasetUrl": "https://eliascrum.github.io/eliascrum/recent_work.json",
+  "sparqlGraphUrl": "https://eliascrum.github.io/eliascrum/recent_work.ttl",
+  "totalItems": 35,
+  "recentWork": [
+    {
+      "id": "Publication:vcf-to-rdf-rml-swat4hcls-2026",
+      "type": "Publication",
+      "title": "From VCF to RDF: RML-Based Conversion Approaches for the Semantic Representation of Variant Data",
+      "tags": [
+        "Poster Paper",
+        "SWAT4HCLS",
+        "Semantic Web",
+        "Genomics",
+        "Knowledge Representation",
+        "Bioinformatics"
+      ],
+      "slug": "vcf-to-rdf-rml-swat4hcls-2026",
+      "dateIso": "2026-03-24",
+      "summary": "Presents an RML-based approach for converting VCF genomic variant files into RDF using established ontologies, targeting more interoperable, queryable, and privacy-aware variant data representation.",
+      "url": "https://eliascrum.github.io/eliascrum/publications/vcf-to-rdf-rml-swat4hcls-2026/paper",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/publications/vcf-to-rdf-rml-swat4hcls-2026/paper"
+    },
+    {
+      "id": "Software:genome-sharing-paper-webpage",
+      "type": "Software",
+      "title": "Genome Sharing Paper Webpage",
+      "tags": [
+        "Companion Website",
+        "Public Data Resource",
+        "Clinical Genomics",
+        "Research Communication",
+        "Website",
+        "Companion Resource"
+      ],
+      "slug": "genome-sharing-paper-webpage",
+      "dateIso": "2026-01-01",
+      "summary": "Supporting website for the genomic sequence data sharing scoping review paper, intended to make national genome initiative data easier to browse, revisit, and update in the future.",
+      "url": "https://eliascrum.github.io/eliascrum/software/genome-sharing-paper-webpage",
+      "sourceUrl": "https://github.com/ecrum19/GenomeSharingPaper_Webpage",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/genome-sharing-paper-webpage"
+    },
+    {
+      "id": "Publication:genome-sharing-review-2026",
+      "type": "Publication",
+      "title": "Genomic sequence data sharing for clinical practice: A scoping review",
+      "tags": [
+        "Journal Article",
+        "Clinical Genomics",
+        "Personalized Medicine",
+        "Data Privacy"
+      ],
+      "slug": "genome-sharing-review-2026",
+      "dateIso": "2026-01-01",
+      "summary": "Scoping review of how genomic sequence data is shared in clinical practice, surveying implementations, infrastructure, and guidance. Identifies key barriers to scalability and adoption, and proposes concrete steps toward more unified, scalable clinical genomic data sharing systems.",
+      "url": "https://eliascrum.github.io/eliascrum/publications/genome-sharing-review-2026/paper",
+      "sourceUrl": "https://www.sciencedirect.com/science/article/pii/S0010482525016890",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/publications/genome-sharing-review-2026/paper"
+    },
+    {
+      "id": "Software:vcf-rdfizer",
+      "type": "Software",
+      "title": "VCF-RDFizer",
+      "tags": [
+        "RDF Conversion Tool",
+        "RDF Data Conversion",
+        "Genomics",
+        "Semantic Web",
+        "RDF",
+        "Data Conversion",
+        "Knowledge Graphs"
+      ],
+      "slug": "vcf-rdfizer",
+      "dateIso": "2026-01-01",
+      "summary": "A CLI tool for converting genomic variant data from VCF into RDF, supporting semantically interoperable downstream workflows.",
+      "url": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer",
+      "sourceUrl": "https://github.com/ecrum19/VCF-RDFizer",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer"
+    },
+    {
+      "id": "Software:vcf-rdfizer-vocabulary",
+      "type": "Software",
+      "title": "VCF-RDFizer Vocabulary",
+      "tags": [
+        "Documentation Website",
+        "Semantic Vocabulary Reference",
+        "Semantic Web",
+        "Genomics",
+        "Ontology Engineering",
+        "Documentation"
+      ],
+      "slug": "vcf-rdfizer-vocabulary",
+      "dateIso": "2026-01-01",
+      "summary": "Interactive vocabulary reference for the representation of VCF as semantic linked data with browsable documentation sections.",
+      "url": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer-vocabulary",
+      "sourceUrl": "https://ecrum19.github.io/VCF-RDFizer-vocabulary/ontology-reference.html",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer-vocabulary"
+    },
+    {
+      "id": "Talk:18m-vito-internal-jury",
+      "type": "Talk",
+      "title": "18-Month Internal VITO PhD Jury",
+      "tags": [
+        "Internal Meeting",
+        "Data Science",
+        "Clinical Genomics",
+        "Clinical Researchers",
+        "Short",
+        "Small"
+      ],
+      "slug": "18m-vito-internal-jury",
+      "dateIso": "2025-11-20",
+      "summary": "Internal PhD milestone review covering completed work, validation status, and the next research phase.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/18m-vito-internal-jury",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/slides/18m-vito-internal-jury.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/18m-vito-internal-jury"
+    },
+    {
+      "id": "Publication:wikidata-sparql-ISWC-2025",
+      "type": "Publication",
+      "title": "Observations on automated client-side query federation over Wikidata SPARQL endpoints",
+      "tags": [
+        "Workshop Paper",
+        "WikiData workshop at ISWC 2025",
+        "Semantic Web",
+        "Data Science",
+        "Semantic Querying"
+      ],
+      "slug": "wikidata-sparql-iswc-2025",
+      "dateIso": "2025-11-02",
+      "summary": "Client-side query federation can automatically combine data across the newly split Wikidata SPARQL endpoints, reducing the need for manual source annotations in queries while remaining feasible for queries that stay within client resource limits.",
+      "url": "https://eliascrum.github.io/eliascrum/publications/wikidata-sparql-iswc-2025/paper",
+      "sourceUrl": "https://wikidataworkshop.github.io/2025/papers/paper5.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/publications/wikidata-sparql-iswc-2025/paper"
+    },
+    {
+      "id": "Talk:dph-day-talk",
+      "type": "Talk",
+      "title": "Digital Precision Health Day",
+      "tags": [
+        "Internal Meeting",
+        "Clinical Genomics",
+        "Semantic Web",
+        "Data Science",
+        "Clinical Researchers",
+        "Computer Scientists",
+        "Medium",
+        "Medium"
+      ],
+      "slug": "dph-day-talk",
+      "dateIso": "2025-10-10",
+      "summary": "Presented progress on decentralized clinical-genomics workflows and interoperability priorities in precision health.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/dph-day-talk",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/slides/dph-day-talk.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/dph-day-talk"
+    },
+    {
+      "id": "Talk:sib-researchstay-reflection",
+      "type": "Talk",
+      "title": "SIB Research Stay Reflection",
+      "tags": [
+        "Internal Meeting",
+        "Semantic Web",
+        "Data Science",
+        "Knowledge Respresentation",
+        "Semantic Web Researchers",
+        "Computer Scientists",
+        "Medium",
+        "Small"
+      ],
+      "slug": "sib-researchstay-reflection",
+      "dateIso": "2025-05-15",
+      "summary": "Reflected on outcomes from the SIB research stay, including technical gains and collaboration opportunities.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/sib-researchstay-reflection",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/slides/sib-researchstay-reflection.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/sib-researchstay-reflection"
+    },
+    {
+      "id": "Talk:sphn-pengquin-talk",
+      "type": "Talk",
+      "title": "Swiss Public Health Network (SPHN)",
+      "tags": [
+        "Research Stay Presentation",
+        "Clinical Genomics",
+        "Data Science",
+        "Semantic Web",
+        "Data Privacy",
+        "Clinical Researchers",
+        "Bioinformaticians",
+        "Computer Scientists",
+        "Medium",
+        "Small"
+      ],
+      "slug": "sphn-pengquin-talk",
+      "dateIso": "2025-04-29",
+      "summary": "Introduced the PENGQUIN approach for privacy-aware clinical genomics integration using RDF and decentralized data pods.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/sphn-pengquin-talk",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/slides/sphn-pengquin-talk.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/sphn-pengquin-talk"
+    },
+    {
+      "id": "Talk:sib-vital-it-talk",
+      "type": "Talk",
+      "title": "SIB Vital-IT",
+      "tags": [
+        "Internal Meeting",
+        "Data Science",
+        "Genomics",
+        "Semantic Web",
+        "Bioinformaticians",
+        "Computer Scientists",
+        "Semantic Web Researchers",
+        "Medium",
+        "Medium"
+      ],
+      "slug": "sib-vital-it-talk",
+      "dateIso": "2025-04-04",
+      "summary": "Reviewed client-side federated SPARQL strategies for combining private Solid pod data with public knowledge graphs.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/sib-vital-it-talk",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/slides/sib-vital-it-talk.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/sib-vital-it-talk"
+    },
+    {
+      "id": "Talk:swissprot-talk",
+      "type": "Talk",
+      "title": "SIB / SwissProt",
+      "tags": [
+        "Research Stay Presentation",
+        "Bioinformatics",
+        "Semantic Web",
+        "Genomics",
+        "Bioinformaticians",
+        "Semantic Web Researchers",
+        "Medium",
+        "Small"
+      ],
+      "slug": "swissprot-talk",
+      "dateIso": "2025-03-25",
+      "summary": "Presented semantic integration opportunities between curated protein resources and decentralized query workflows.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/swissprot-talk",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/slides/swissprot-talk.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/swissprot-talk"
+    },
+    {
+      "id": "Publication:vcf2rdf-SWAT4HCLS-2025",
+      "type": "Publication",
+      "title": "Semantifying Genomic Variant Data: VCF to RDF Conversion Framework",
+      "tags": [
+        "Conference Paper",
+        "SWAT4HCLS",
+        "Semantic Web",
+        "Knowledge Representation",
+        "Clinical Genomics",
+        "Genomics"
+      ],
+      "slug": "semantifying-genomic-variant-data-swat4hcls-2025",
+      "dateIso": "2025-02-24",
+      "summary": "Introduces a framework for converting VCF genomic variant files into RDF, combining a comprehensive ontology, storage-efficient HDT serialization, and alignment with clinical metadata schemas to improve interoperability, data linking, querying, and semantic interpretability.",
+      "url": "https://eliascrum.github.io/eliascrum/publications/semantifying-genomic-variant-data-swat4hcls-2025/paper",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/publications/semantifying-genomic-variant-data-swat4hcls-2025/paper"
+    },
+    {
+      "id": "Publication:disjointness-llm-ISWC-2024",
+      "type": "Publication",
+      "title": "Enriching Ontologies with Disjointness Axioms using Large Language Models",
+      "tags": [
+        "Workshop Paper",
+        "KBC-LM'24 workshop at ISWC 2024",
+        "Semantic Web",
+        "Data Science",
+        "Knowledge Representation"
+      ],
+      "slug": "disjointness-llm-iswc-2024",
+      "dateIso": "2024-12-02",
+      "summary": "Investigates how large language models can propose class disjointness axioms for ontologies, with validation on DBpedia and a workflow that preserves logical consistency while reducing manual effort.",
+      "url": "https://eliascrum.github.io/eliascrum/publications/disjointness-llm-iswc-2024/paper",
+      "sourceUrl": "https://doi.org/10.48550/arXiv.2410.03235",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/publications/disjointness-llm-iswc-2024/paper"
+    },
+    {
+      "id": "Talk:solid-intro-triple-consortium",
+      "type": "Talk",
+      "title": "TRIPLE Consortium: Intro to Solid",
+      "tags": [
+        "Consortium Meeting",
+        "Semantic Web",
+        "Data Science",
+        "Computer Scientists",
+        "Biologists",
+        "Medium",
+        "Small"
+      ],
+      "slug": "solid-intro-triple-consortium",
+      "dateIso": "2024-10-10",
+      "summary": "Introductory consortium session on Solid concepts, architecture, and relevance to TRIPLE project goals.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/solid-intro-triple-consortium",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/slides/solid-intro-triple-consortium.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/solid-intro-triple-consortium"
+    },
+    {
+      "id": "Talk:fwo-interview",
+      "type": "Talk",
+      "title": "FWO Interview",
+      "tags": [
+        "Fellowship Interview",
+        "Clinical Genomics",
+        "Semantic Web",
+        "Semantic Querying",
+        "Data Privacy",
+        "Funding Reviewers",
+        "Interdisciplinary Researchers",
+        "Short",
+        "Small"
+      ],
+      "slug": "fwo-interview",
+      "dateIso": "2024-09-05",
+      "summary": "Funding interview pitch describing the PENGQUIN PhD vision, feasibility, and expected impact.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/fwo-interview",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/slides/fwo-interview.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/fwo-interview"
+    },
+    {
+      "id": "Talk:isws-group-project-presentation",
+      "type": "Talk",
+      "title": "International Semantic Web Summer School (ISWS) 2024: Group Project",
+      "tags": [
+        "Summer School",
+        "Semantic Web",
+        "Data Science",
+        "Knowledge Representation",
+        "Students / Trainees",
+        "Computer Scientists",
+        "Semantic Web Researchers",
+        "Short",
+        "Medium"
+      ],
+      "slug": "isws-group-project-presentation",
+      "dateIso": "2024-06-15",
+      "summary": "Final group project presentation from ISWS 2024 highlighting design choices and implementation outcomes.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/isws-group-project-presentation",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/slides/isws-group-project-presentation.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/isws-group-project-presentation"
+    },
+    {
+      "id": "Talk:eswc-phdsymp-pangquin",
+      "type": "Talk",
+      "title": "ESWC - PhD Symposium",
+      "tags": [
+        "Conference",
+        "Semantic Web",
+        "Clinical Genomics",
+        "Data Privacy",
+        "Semantic Querying",
+        "Semantic Web Researchers",
+        "Computer Scientists",
+        "Short",
+        "Medium"
+      ],
+      "slug": "eswc-phdsymp-pangquin",
+      "dateIso": "2024-05-28",
+      "summary": "PhD symposium talk on the PENGQUIN research agenda for decentralized and policy-aware genomic data use.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/eswc-phdsymp-pangquin",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/slides/eswc-phdsymp-pangquin.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/eswc-phdsymp-pangquin"
+    },
+    {
+      "id": "Publication:pengquin-eswc-2024",
+      "type": "Publication",
+      "title": "PErsoNal Genome QUery IN healthcare and clinical practice (PENGQUIN)",
+      "tags": [
+        "Conference Paper",
+        "ESWC",
+        "Semantic Web",
+        "Clinical Genomics",
+        "Semantic Querying",
+        "Data Privacy"
+      ],
+      "slug": "pengquin-eswc-2024",
+      "dateIso": "2024-05-26",
+      "summary": "Presents the PENGQUIN PhD framework for privacy-preserving genomic data sharing and querying using Solid pods, RDF/Linked Data representations, policy attachments, and link-traversal querying.",
+      "url": "https://eliascrum.github.io/eliascrum/publications/pengquin-eswc-2024/paper",
+      "sourceUrl": "https://doi.org/10.1007/978-3-031-78955-7_3",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/publications/pengquin-eswc-2024/paper"
+    },
+    {
+      "id": "Talk:solidsymp-genomepods",
+      "type": "Talk",
+      "title": "Solid Symposium",
+      "tags": [
+        "Symposium",
+        "Semantic Web",
+        "Solid",
+        "Personalized Medicine",
+        "Semantic Web Researchers",
+        "Computer Scientists",
+        "Industry Representatives",
+        "Short",
+        "Large"
+      ],
+      "slug": "solidsymp-genomepods",
+      "dateIso": "2024-04-02",
+      "summary": "Explored how Solid pods can host and govern personal genomic data for privacy-preserving analytics.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/solidsymp-genomepods",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/slides/solidsymp-genomepods.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/solidsymp-genomepods"
+    },
+    {
+      "id": "Talk:ugent-genomics-talk",
+      "type": "Talk",
+      "title": "KNoWS: An Intro to Genomics for Computer Scientists",
+      "tags": [
+        "Internal Meeting",
+        "Genomics",
+        "Clinical Genomics",
+        "Knowledge Representation",
+        "Computer Scientists",
+        "Semantic Web Researchers",
+        "Long",
+        "Small"
+      ],
+      "slug": "ugent-genomics-talk",
+      "dateIso": "2024-03-04",
+      "summary": "Foundational genomics overview tailored to computer science researchers entering health-data domains.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/ugent-genomics-talk",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/slides/ugent-genomics-talk.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/ugent-genomics-talk"
+    },
+    {
+      "id": "Publication:TRIPLE-SWAT4HCLS-2024",
+      "type": "Publication",
+      "title": "CHIST-ERA Triple: improving data interoperability and federation across RDF knowledge graphs and Solid Pods",
+      "tags": [
+        "Conference Paper",
+        "SWAT4HCLS",
+        "Semantic Web",
+        "Data Science",
+        "Knowledge Representation"
+      ],
+      "slug": "triple-swat4hcls-2024",
+      "dateIso": "2024-02-26",
+      "summary": "Describes how Solid-based data pods can address privacy and data-sharing bottlenecks in academic research by allowing felxible sharing of sensitive research data and result/experimental data provenance.",
+      "url": "https://eliascrum.github.io/eliascrum/publications/triple-swat4hcls-2024/paper",
+      "sourceUrl": "https://ceur-ws.org/Vol-3890/paper-28.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/publications/triple-swat4hcls-2024/paper"
+    },
+    {
+      "id": "Publication:pm-pods-SWAT4HCLS-2024",
+      "type": "Publication",
+      "title": "Personalized medicine through personal data pods",
+      "tags": [
+        "Conference Paper",
+        "SWAT4HCLS",
+        "Solid",
+        "Semantic Web",
+        "Personalized Medicine",
+        "Clinical Genomics"
+      ],
+      "slug": "pm-pods-swat4hcls-2024",
+      "dateIso": "2024-02-26",
+      "summary": "Describes how Solid-based personal data pods can address privacy and data-sharing bottlenecks in genomic medicine by decentralizing storage and giving patients finer control over sensitive genomic data.",
+      "url": "https://eliascrum.github.io/eliascrum/publications/pm-pods-swat4hcls-2024/paper",
+      "sourceUrl": "https://ceur-ws.org/Vol-3890/paper-25.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/publications/pm-pods-swat4hcls-2024/paper"
+    },
+    {
+      "id": "Publication:urinary-coliphages-2023",
+      "type": "Publication",
+      "title": "Coliphages of the human urinary microbiota",
+      "tags": [
+        "Journal Article",
+        "Bioinformatics",
+        "Bacteriophage",
+        "Genomics",
+        "Taxonomy"
+      ],
+      "slug": "urinary-coliphages-2023",
+      "dateIso": "2023-04-13",
+      "summary": "Catalogs urinary E. coli phage diversity and shows that multiple urinary and non-urinary coliphages can lyse urinary E. coli strains, supporting a role for phages in shaping urobiome composition.",
+      "url": "https://eliascrum.github.io/eliascrum/publications/urinary-coliphages-2023/paper",
+      "sourceUrl": "https://doi.org/10.1371/journal.pone.0283930",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/publications/urinary-coliphages-2023/paper"
+    },
+    {
+      "id": "Publication:engineering-coliphages-2022",
+      "type": "Publication",
+      "title": "Cataloging and Engineering Temperate Coliphages of the Human Urinary Microbiome",
+      "tags": [
+        "Thesis",
+        "Bioinformatics",
+        "Bacteriophage",
+        "Genomics",
+        "Genetic Engineering"
+      ],
+      "slug": "engineering-coliphages-2022",
+      "dateIso": "2022-09-01",
+      "summary": "Builds a large-scale catalog of urinary E. coli prophages and demonstrates induction plus engineering of temperate phages into obligately lytic variants for targeted lysis of non-native urinary strains.",
+      "url": "https://eliascrum.github.io/eliascrum/publications/engineering-coliphages-2022/paper",
+      "sourceUrl": "https://ecommons.luc.edu/luc_theses/4434/",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/publications/engineering-coliphages-2022/paper"
+    },
+    {
+      "id": "Publication:gardnerella-characterization-2021",
+      "type": "Publication",
+      "title": "Genome Investigation of Urinary Gardnerella Strains and Their Relationship to Isolates of the Vaginal Microbiota",
+      "tags": [
+        "Journal Article",
+        "Bioinformatics",
+        "Bacteria",
+        "Taxonomy",
+        "Genomics"
+      ],
+      "slug": "gardnerella-characterization-2021",
+      "dateIso": "2021-05-12",
+      "summary": "Compares urinary and vaginal Gardnerella genomes, identifying species-level structure and showing that whole-genome analysis is needed for reliable differentiation across groups in urogenital microbiota.",
+      "url": "https://eliascrum.github.io/eliascrum/publications/gardnerella-characterization-2021/paper",
+      "sourceUrl": "https://doi.org/10.1128/mSphere.00154-21",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/publications/gardnerella-characterization-2021/paper"
+    },
+    {
+      "id": "Software:ldp-permissions-notifications-specification",
+      "type": "Software",
+      "title": "LDP Permissions Notifications Specification",
+      "tags": [
+        "Technical Specification Draft",
+        "Standards Design",
+        "Linked Data",
+        "Permissions",
+        "Notifications",
+        "Semantic Web"
+      ],
+      "slug": "ldp-permissions-notifications-specification",
+      "summary": "Permissions and notification semantics technical specification for Linked Data Platform resources.",
+      "url": "https://eliascrum.github.io/eliascrum/software/ldp-permissions-notifications-specification",
+      "sourceUrl": "https://github.com/ecrum19/ldp-permissions-notifications-specification",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/ldp-permissions-notifications-specification"
+    },
+    {
+      "id": "Poster:e-i-xchange24-poster-edc",
+      "type": "Poster",
+      "title": "PENGQUIN: Personal Genome Query in Healthcare and Clinical Practice",
+      "tags": [
+        "Poster",
+        "Non-Academic Event",
+        "E(I)Xchange",
+        "Semantic Web",
+        "Genomics",
+        "Bioinformatics",
+        "Data Privacy",
+        "Interdisciplinary Researchers",
+        "Corporate Representatives",
+        "Computer Scientists"
+      ],
+      "slug": "e-i-xchange24-poster-edc",
+      "summary": "Poster overview of the PENGQUIN research direction, focusing on privacy-aware storage, RDF representation, and distributed querying for personal genomic data.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/e-i-xchange24-poster-edc",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/posters/E(i)xchange24_Poster_EDC.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/e-i-xchange24-poster-edc"
+    },
+    {
+      "id": "Poster:edc-poster-isws2024-award-winner",
+      "type": "Poster",
+      "title": "PENGQUIN: Personal Genome Query in Healthcare and Clinical Practice",
+      "tags": [
+        "Poster",
+        "Symposium",
+        "ISWS",
+        "Semantic Web",
+        "Genomics",
+        "Bioinformatics",
+        "Data Privacy",
+        "Students / Trainees",
+        "Semantic Web Researchers",
+        "Computer Scientists"
+      ],
+      "slug": "edc-poster-isws2024-award-winner",
+      "summary": "Award-winning poster introducing the PENGQUIN research problem space around personal genomic data storage, privacy, semantic representation, and distributed querying.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/edc-poster-isws2024-award-winner",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/posters/EDC_Poster_ISWS2024(award_winner).pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/edc-poster-isws2024-award-winner"
+    },
+    {
+      "id": "Poster:eswc-24-poster-edc",
+      "type": "Poster",
+      "title": "PENGQUIN: Personal Genome Query in Healthcare and Clinical Practice",
+      "tags": [
+        "Poster",
+        "Conference",
+        "ESWC",
+        "Semantic Web",
+        "Genomics",
+        "Bioinformatics",
+        "Data Privacy",
+        "Semantic Web Researchers",
+        "Computer Scientists",
+        "Interdisciplinary Researchers"
+      ],
+      "slug": "eswc-24-poster-edc",
+      "summary": "Conference poster summarizing the PENGQUIN approach for privacy-aware genomic data storage, RDF conversion, and patient-centric query workflows.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/eswc-24-poster-edc",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/posters/ESWC_24_Poster_EDC.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/eswc-24-poster-edc"
+    },
+    {
+      "id": "Poster:swat4hcls-24-poster-edc",
+      "type": "Poster",
+      "title": "Personalized Medicine Through Personal Data Pods",
+      "tags": [
+        "Poster",
+        "Conference",
+        "SWAT4HCLS",
+        "Semantic Web",
+        "Genomics",
+        "Bioinformatics",
+        "Personalized Medicine",
+        "Bioinformaticians",
+        "Semantic Web Researchers",
+        "Interdisciplinary Researchers"
+      ],
+      "slug": "swat4hcls-24-poster-edc",
+      "summary": "Poster describing how patient-controlled data pods could improve privacy, transparency, and data sharing for genomic medicine workflows.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/swat4hcls-24-poster-edc",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/posters/SWAT4HCLS_24_poster_EDC.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/swat4hcls-24-poster-edc"
+    },
+    {
+      "id": "Poster:swat4hcls-2025",
+      "type": "Poster",
+      "title": "Semantifying Genomic Variant Data: VCF to RDF Conversion Framework",
+      "tags": [
+        "Poster",
+        "Conference",
+        "SWAT4HCLS",
+        "Semantic Web",
+        "Bioinformatics",
+        "Genomics",
+        "Knowledge Representation",
+        "Bioinformaticians",
+        "Semantic Web Researchers",
+        "Interdisciplinary Researchers"
+      ],
+      "slug": "swat4hcls-2025",
+      "summary": "Poster presenting a framework for semantically converting VCF genomic variant data into RDF using a dedicated ontology, HDT-based storage, and reusable mapping specifications.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/swat4hcls-2025",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/posters/swat4hcls_2025.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/swat4hcls-2025"
+    },
+    {
+      "id": "Software:solid-cockpit",
+      "type": "Software",
+      "title": "Solid Cockpit",
+      "tags": [
+        "Web Application",
+        "Interface for Solid Pod Interaction",
+        "Solid",
+        "Semantic Web",
+        "Data Privacy",
+        "Web Application",
+        "Federated Querying"
+      ],
+      "slug": "solid-cockpit",
+      "summary": "Web application for interacting with Solid Pod resources in an integrated, user-friendly interface.",
+      "url": "https://eliascrum.github.io/eliascrum/software/solid-cockpit",
+      "sourceUrl": "https://github.com/KNowledgeOnWebScale/solid-cockpit",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/solid-cockpit"
+    },
+    {
+      "id": "Software:sparql-view-materialization-containers",
+      "type": "Software",
+      "title": "SPARQL View Materialization Containers Specification",
+      "tags": [
+        "Technical Specification Draft",
+        "Reproducible Query Execution",
+        "SPARQL",
+        "Semantic Web",
+        "View Materialization",
+        "Data Engineering"
+      ],
+      "slug": "sparql-view-materialization-containers",
+      "summary": "Container-based guidelines for reproducible SPARQL query view materialization for use in SPARQL query results provenance and caching.",
+      "url": "https://eliascrum.github.io/eliascrum/software/sparql-view-materialization-containers",
+      "sourceUrl": "https://github.com/ecrum19/sparql-view-materialization-containers",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/sparql-view-materialization-containers"
+    },
+    {
+      "id": "Poster:swat4hcls-2026",
+      "type": "Poster",
+      "title": "SWAT4HCLS 2026 Poster: From VCF to RDF",
+      "tags": [
+        "Poster",
+        "Conference",
+        "SWAT4HCLS",
+        "Semantic Web",
+        "Bioinformatics",
+        "Genomics",
+        "Knowledge Representation",
+        "Bioinformaticians",
+        "Semantic Web Researchers",
+        "Interdisciplinary Researchers"
+      ],
+      "slug": "swat4hcls-2026",
+      "summary": "Poster presenting an RML-based method for converting full VCF variant files into RDF with stronger structure, provenance, interoperability, and privacy-aware semantics.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/swat4hcls-2026",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/posters/swat4hcls_2026.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/swat4hcls-2026"
+    }
+  ]
+}

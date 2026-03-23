@@ -1,6 +1,6 @@
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
 import { blogPosts, type BlogPost } from "./blogPostsData";
-import { publications, type Publication } from "./publicationsData";
+import { getPublicationPagePath, publications, type Publication } from "./publicationsData";
 import { getTalkViewEntries, type TalkViewEntry } from "./talkCatalog";
 import { talks } from "./talksData";
 
@@ -20,7 +20,7 @@ export interface HomepageUpdate {
 // Required source fields for automatic "Recent Work" generation.
 export type RequiredPublicationUpdateFields = Pick<
   Publication,
-  "id" | "title" | "sortDate" | "summary" | "url"
+  "id" | "slug" | "title" | "sortDate" | "summary" | "url"
 >;
 export type RequiredTalkUpdateFields = Pick<
   TalkViewEntry,
@@ -73,7 +73,7 @@ function getPublicationUpdates(): HomepageUpdate[] {
     dateLabel: toDateLabel(publication.sortDate),
     title: publication.title,
     summary: publication.summary,
-    link: publication.url,
+    link: resolvePublicAssetPath(getPublicationPagePath(publication)),
     linkLabel: "Read publication",
   }));
 }

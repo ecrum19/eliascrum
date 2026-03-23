@@ -11,13 +11,13 @@
             <p class="paper-authors">{{ publication.authors }}</p>
             <p class="paper-meta">{{ publication.year }} • {{ publicationDateLabel }}</p>
             <div class="paper-actions">
-              <router-link to="/publications" class="paper-action-btn">Back to Publications</router-link>
+              <router-link to="/publications" class="paper-action-btn btn-back">Back to Publications</router-link>
               <a
                 v-if="paperOpenHref"
                 :href="paperOpenHref"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="paper-action-btn primary"
+                :class="['paper-action-btn', paperOpenButtonClass]"
               >
                 {{ paperOpenLabel }}
               </a>
@@ -207,7 +207,7 @@
                   :href="paperOpenHref"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="paper-action-btn primary"
+                  :class="['paper-action-btn', paperOpenButtonClass]"
                 >
                   {{ paperOpenLabel }}
                 </a>
@@ -220,7 +220,7 @@
           <div class="paper-panel">
             <h1>Publication Not Found</h1>
             <p>The requested publication paper page could not be resolved.</p>
-            <router-link to="/publications" class="paper-action-btn primary">Back to Publications</router-link>
+            <router-link to="/publications" class="paper-action-btn btn-back">Back to Publications</router-link>
           </div>
         </section>
       </div>
@@ -347,6 +347,9 @@ export default defineComponent({
       }
 
       return "Open Publication Page";
+    },
+    paperOpenButtonClass(): string {
+      return this.paperPreviewUrl ? "btn-pdf" : "btn-external";
     },
     previewUnavailableLabel(): string {
       if (this.publication?.url) {
@@ -1039,55 +1042,55 @@ export default defineComponent({
 }
 
 .paper-tag-type {
-  --tag-bg: rgba(244, 208, 63, 0.16);
-  --tag-border: rgba(202, 138, 4, 0.32);
+  --tag-bg: rgba(245, 158, 11, 0.18);
+  --tag-border: rgba(245, 158, 11, 0.44);
   --tag-text: #5f3a00;
-  --tag-tooltip-bg: rgba(244, 208, 63, 0.96);
-  --tag-tooltip-border: rgba(202, 138, 4, 0.96);
-  --tag-tooltip-text: #281b00;
+  --tag-tooltip-bg: rgba(245, 158, 11, 0.96);
+  --tag-tooltip-border: rgba(161, 98, 7, 0.96);
+  --tag-tooltip-text: #251401;
 }
 
 .paper-tag-venue {
-  --tag-bg: rgba(var(--accent-rgb), 0.14);
-  --tag-border: rgba(14, 165, 233, 0.34);
+  --tag-bg: rgba(56, 189, 248, 0.16);
+  --tag-border: rgba(56, 189, 248, 0.44);
   --tag-text: #053a52;
-  --tag-tooltip-bg: rgba(var(--accent-rgb), 0.96);
-  --tag-tooltip-border: rgba(14, 165, 233, 0.96);
+  --tag-tooltip-bg: rgba(56, 189, 248, 0.96);
+  --tag-tooltip-border: rgba(2, 132, 199, 0.96);
   --tag-tooltip-text: #052634;
 }
 
 .paper-tag-topic {
-  --tag-bg: rgba(var(--accent-secondary-rgb), 0.14);
-  --tag-border: rgba(13, 148, 136, 0.34);
+  --tag-bg: rgba(20, 184, 166, 0.16);
+  --tag-border: rgba(20, 184, 166, 0.44);
   --tag-text: #06453f;
-  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.96);
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.96);
   --tag-tooltip-border: rgba(13, 148, 136, 0.96);
   --tag-tooltip-text: #042320;
 }
 
 [data-theme="dark"] .paper-tag-type {
-  --tag-bg: rgba(244, 208, 63, 0.28);
-  --tag-border: rgba(244, 208, 63, 0.62);
+  --tag-bg: rgba(245, 158, 11, 0.28);
+  --tag-border: rgba(245, 158, 11, 0.62);
   --tag-text: #ffe7a8;
-  --tag-tooltip-bg: rgba(244, 208, 63, 0.98);
-  --tag-tooltip-border: rgba(250, 204, 21, 0.98);
+  --tag-tooltip-bg: rgba(245, 158, 11, 0.98);
+  --tag-tooltip-border: rgba(251, 191, 36, 0.98);
   --tag-tooltip-text: #1f1300;
 }
 
 [data-theme="dark"] .paper-tag-venue {
-  --tag-bg: rgba(var(--accent-rgb), 0.26);
-  --tag-border: rgba(var(--accent-rgb), 0.6);
+  --tag-bg: rgba(56, 189, 248, 0.26);
+  --tag-border: rgba(56, 189, 248, 0.6);
   --tag-text: #d3f4ff;
-  --tag-tooltip-bg: rgba(var(--accent-rgb), 0.98);
+  --tag-tooltip-bg: rgba(56, 189, 248, 0.98);
   --tag-tooltip-border: rgba(125, 211, 252, 0.98);
   --tag-tooltip-text: #041b25;
 }
 
 [data-theme="dark"] .paper-tag-topic {
-  --tag-bg: rgba(var(--accent-secondary-rgb), 0.26);
-  --tag-border: rgba(var(--accent-secondary-rgb), 0.58);
+  --tag-bg: rgba(20, 184, 166, 0.26);
+  --tag-border: rgba(20, 184, 166, 0.58);
   --tag-text: #d2fff4;
-  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.98);
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.98);
   --tag-tooltip-border: rgba(var(--accent-secondary-rgb), 0.98);
   --tag-tooltip-text: #021413;
 }
@@ -1108,11 +1111,6 @@ export default defineComponent({
   transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.16s ease, box-shadow 0.2s ease;
 }
 
-.paper-action-btn.primary {
-  border-color: rgba(var(--accent-rgb), 0.5);
-  background: rgba(var(--accent-rgb), 0.13);
-}
-
 .paper-action-btn:hover {
   background: var(--nav-hover-bg);
   border-color: rgba(var(--accent-rgb), 0.45);
@@ -1128,10 +1126,6 @@ export default defineComponent({
 
 [data-theme="light"] .paper-action-btn {
   background: rgba(16, 36, 59, 0.04);
-}
-
-[data-theme="light"] .paper-action-btn.primary {
-  background: rgba(var(--accent-rgb), 0.1);
 }
 
 .paper-panel {

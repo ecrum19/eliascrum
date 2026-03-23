@@ -1,11 +1,13 @@
 <template>
-  <section id='cv' class='w3-content w3-margin-top' style='max-width: min(1920px, 97vw)'>
-    <div class='work-layout'>
-      <work-toc :entries='tocEntries' title='CV' />
-
-      <div class='work-main'>
-        <section id='cv-overview' class='work-section toc-anchor'>
-          <header class='cv-header'>
+  <work-page-layout
+    id='cv'
+    :toc-entries='tocEntries'
+    toc-title='CV'
+    max-width='min(1920px, 97vw)'
+    page-padding='0 16px 140px'
+  >
+    <section id='cv-overview' class='work-section toc-anchor'>
+      <header class='cv-header'>
             <div class='cv-header-top'>
               <div class='cv-identity'>
                 <p class='cv-kicker'>Curriculum Vitae</p>
@@ -32,22 +34,34 @@
             <div id='cv-focus' class='cv-focus toc-anchor'>
               <span class='cv-focus-label'>Core Areas</span>
               <div class='cv-focus-tags'>
-                <span
-                  v-for='tag in cvProfile.focusTags'
+                <button
+                  v-for='tag in coreAreaTags'
                   :key='tag'
                   class='cv-focus-tag'
+                  :class='{ "cv-focus-tag--active": activeCoreAreaTag === tag }'
+                  type='button'
+                  :aria-pressed='activeCoreAreaTag === tag'
+                  @click='toggleCoreAreaTag(tag)'
                 >
                   {{ tag }}
-                </span>
+                </button>
+                <button
+                  v-if='activeCoreAreaTag'
+                  type='button'
+                  class='cv-focus-clear-btn'
+                  @click='clearCoreAreaFilter'
+                >
+                  Clear Filters
+                </button>
               </div>
             </div>
-          </header>
-        </section>
+      </header>
+    </section>
 
-        <section id='cv-sections' class='work-section'>
-          <div class='work-section-block'>
+    <section id='cv-sections' class='work-section'>
+      <work-section-block class='cv-sections-surface' :tinted-in-light-mode='false' :anchor='false'>
             <article
-              v-for='section in cvSections'
+              v-for='section in filteredCvSections'
               :id='sectionId(section.title)'
               :key='section.title'
               class='cv-section-card toc-anchor'
@@ -180,11 +194,9 @@
                 </article>
               </div>
             </article>
-          </div>
-        </section>
-      </div>
-    </div>
-  </section>
+      </work-section-block>
+    </section>
+  </work-page-layout>
 </template>
 
 <script lang='ts'>
@@ -198,7 +210,9 @@ import {
   type CvItem,
   type CvSection,
 } from '../data/cvData';
-import WorkToc, { type TocEntry as WorkTocEntry } from './WorkToc.vue';
+import type { TocEntry as WorkTocEntry } from './WorkToc.vue';
+import WorkPageLayout from './layout/WorkPageLayout.vue';
+import WorkSectionBlock from './layout/WorkSectionBlock.vue';
 import { resolvePublicAssetPath } from '../utils/publicAssetPath';
 
 type CvLinkDetail = Exclude<CvDetail, string>;
@@ -218,28 +232,52 @@ const EMPHASIS_PATTERNS: RegExp[] = [
   /Linked Data/gi,
   /decentralized querying/gi,
   /ontology definition/gi,
-  /Bioinformatics/gi,
 ];
+
+const CV_CORE_AREA_TAGS = [
+  'Bioinformatics',
+  'Computer Science',
+  'Healthcare',
+  'Teaching',
+  'Leadership',
+] as const;
 
 export default defineComponent({
   name: 'CurrentCv',
   components: {
     RouterLink,
-    WorkToc,
+    WorkPageLayout,
+    WorkSectionBlock,
   },
   data() {
     return {
       cvProfile,
       cvSections,
+      activeCoreAreaTag: null as string | null,
     };
   },
   computed: {
+    coreAreaTags(): string[] {
+      return [...CV_CORE_AREA_TAGS];
+    },
+    filteredCvSections(): CvSection[] {
+      if (!this.activeCoreAreaTag) {
+        return this.cvSections;
+      }
+
+      return this.cvSections
+        .map((section) => ({
+          ...section,
+          items: section.items.filter((item) => this.doesCvEntryMatchActiveCoreArea(item)),
+        }))
+        .filter((section) => section.items.length > 0);
+    },
     tocEntries(): WorkTocEntry[] {
       return [
         { id: 'cv-overview', label: 'Overview', level: 1 },
         { id: 'cv-focus', label: 'Core Areas', level: 2 },
         { id: 'cv-sections', label: 'Sections', level: 1 },
-        ...this.cvSections.map((section) => ({
+        ...this.filteredCvSections.map((section) => ({
           id: this.sectionId(section.title),
           label: section.title,
           level: 2,
@@ -248,6 +286,114 @@ export default defineComponent({
     },
   },
   methods: {
+    toggleCoreAreaTag(tag: string) {
+      this.activeCoreAreaTag = this.activeCoreAreaTag === tag ? null : tag;
+    },
+    clearCoreAreaFilter() {
+      this.activeCoreAreaTag = null;
+    },
+    cvEntryText(item: CvItem): string {
+      const detailText = (item.details ?? [])
+        .map((detail) => {
+          if (typeof detail === 'string') {
+            return detail;
+          }
+          return `${detail.prefix ?? ''} ${detail.text}`.trim();
+        })
+        .join(' ');
+      return `${item.role} ${item.organization ?? ''} ${item.location ?? ''} ${detailText}`
+        .toLowerCase()
+        .replace(/\s+/g, ' ')
+        .trim();
+    },
+    coreAreaSearchTerms(tag: string): string[] {
+      const lowered = tag.toLowerCase();
+      const terms = [lowered];
+
+      if (lowered === 'bioinformatics') {
+        terms.push(
+          'bioinformatics',
+          'genomics',
+          'genomic',
+          'sequence',
+          'sequencing',
+          'phage',
+          'bacteria',
+          'taxonomy',
+          'microbiome',
+          'variant',
+        );
+      }
+      if (lowered === 'computer science') {
+        terms.push(
+          'computer science',
+          'semantic web',
+          'sparql',
+          'rdf',
+          'linked data',
+          'ontology',
+          'solid',
+          'query',
+          'decentralized',
+          'software',
+          'typescript',
+          'javascript',
+          'python',
+        );
+      }
+      if (lowered === 'healthcare') {
+        terms.push(
+          'healthcare',
+          'clinical',
+          'medical',
+          'patient',
+          'hospital',
+          'medicine',
+          'emergency department',
+          'scribe',
+          'precision health',
+          'genomic medicine',
+        );
+      }
+      if (lowered === 'teaching') {
+        terms.push(
+          'teaching',
+          'taught',
+          'professor',
+          'lectures',
+          'tutor',
+          'tutoring',
+          'student',
+          'instructor',
+          'training',
+          'course',
+          'biology lab',
+        );
+      }
+      if (lowered === 'leadership') {
+        terms.push(
+          'lead',
+          'led',
+          'leadership',
+          'committee',
+          'supervised',
+          'organized',
+          'coordinated',
+          'managed',
+          'chair',
+          'project activities',
+        );
+      }
+
+      return Array.from(new Set(terms));
+    },
+    doesCvEntryMatchActiveCoreArea(item: CvItem): boolean {
+      if (!this.activeCoreAreaTag) {
+        return true;
+      }
+      const haystack = this.cvEntryText(item);
+      return this.coreAreaSearchTerms(this.activeCoreAreaTag).some((term) => haystack.includes(term));
+    },
     sectionId(title: string): string {
       return `cv-section-${title
         .toLowerCase()
@@ -331,8 +477,7 @@ export default defineComponent({
   --cv-surface-strong: var(--surface-elevated);
   --cv-border: rgba(255, 255, 255, 0.08);
   --cv-border-strong: var(--surface-outline);
-
-  padding: 0 16px 140px;
+  --work-main-gap: 16px;
 }
 
 [data-theme='dark'] #cv {
@@ -346,27 +491,12 @@ export default defineComponent({
   --cv-border-strong: rgba(226, 232, 240, 0.16);
 }
 
-.work-layout {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 18px;
-  align-items: start;
-}
-
-.work-main {
-  min-width: 0;
-  display: grid;
-  gap: 16px;
-}
-
 .work-section {
   min-width: 0;
 }
 
-.work-section-block {
+.cv-sections-surface {
   max-width: var(--work-content-max);
-  width: 100%;
-  margin: 0 auto;
   background: var(--cv-surface-strong);
   border: 1px solid var(--cv-border-strong);
   border-radius: 18px;
@@ -376,7 +506,7 @@ export default defineComponent({
   box-shadow: 0 18px 38px rgba(0, 0, 0, 0.18);
 }
 
-[data-theme='light'] .work-section-block {
+[data-theme='light'] .cv-sections-surface {
   background: linear-gradient(180deg, rgba(var(--accent-secondary-rgb), 0.46), rgba(var(--accent-rgb), 0.14));
   border-color: rgba(16, 36, 59, 0.12);
 }
@@ -492,19 +622,66 @@ export default defineComponent({
 }
 
 .cv-focus-tag {
+  appearance: none;
+  -webkit-appearance: none;
   border: 1px solid var(--cv-border-strong);
   border-radius: 999px;
   padding: 4px 11px;
   font-size: var(--font-size-body-sm);
+  color: #06453f;
+  line-height: 1.2;
+  background: rgba(20, 184, 166, 0.16);
+  border-color: rgba(20, 184, 166, 0.44);
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.cv-focus-clear-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid var(--cv-border-strong);
+  border-radius: 10px;
+  padding: 4px 11px;
+  font-size: var(--font-size-body-sm);
+  font-weight: 600;
   color: var(--cv-ink);
   line-height: 1.2;
-  background: rgba(var(--accent-secondary-rgb), 0.14);
+  background: rgba(56, 189, 248, 0.12);
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.cv-focus-clear-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(56, 189, 248, 0.2);
+}
+
+.cv-focus-clear-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.32);
+}
+
+.cv-focus-tag:hover {
+  transform: translateY(-1px);
+}
+
+.cv-focus-tag:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.3);
+}
+
+.cv-focus-tag--active {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.32), 0 0 0 1px rgba(20, 184, 166, 0.2);
 }
 
 [data-theme='dark'] .cv-focus-tag {
-  background: rgba(var(--accent-secondary-rgb), 0.3);
-  border-color: rgba(var(--accent-secondary-rgb), 0.68);
+  background: rgba(20, 184, 166, 0.26);
+  border-color: rgba(20, 184, 166, 0.58);
   color: #effff9;
+}
+
+[data-theme='dark'] .cv-focus-tag:focus-visible {
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.36);
 }
 
 .cv-section-card {
@@ -773,19 +950,9 @@ export default defineComponent({
 :deep(.auto-emphasis) {
   font-weight: 700;
   color: var(--cv-ink);
-  background: rgba(250, 204, 21, 0.2);
-  border-radius: 4px;
-  padding: 0 4px;
-}
-
-[data-theme='light'] :deep(.auto-emphasis) {
-  background: rgba(var(--accent-ink-rgb), 0.18);
-}
-
-@media (max-width: 1080px) {
-  .work-layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
 }
 
 @media (max-width: 900px) {
@@ -812,14 +979,11 @@ export default defineComponent({
 @media (max-width: 768px) {
   #cv {
     padding: 0 10px 132px;
-  }
-
-  .work-main {
-    gap: 14px;
+    --work-main-gap: 14px;
   }
 
   .cv-header,
-  .work-section-block,
+  .cv-sections-surface,
   .cv-section-card {
     padding: 14px;
   }

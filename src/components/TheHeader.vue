@@ -45,12 +45,6 @@
         >
           <i class="fa fa-slideshare"></i> TALKS
         </router-link>
-        <router-link
-          to="/blogs"
-          class="nav-link w3-bar-item w3-button w3-hover-black w3-opacity w3-hover-opacity-off"
-        >
-          <i class="fa fa-pencil"></i> BLOGS
-        </router-link>
       </div>
       <router-link
         v-if="showCompactBrand"
@@ -118,12 +112,6 @@
       >
       <router-link to="/talks" class="w3-bar-item w3-button" @click="closeMenu"
         >TALKS</router-link
-      >
-      <router-link
-        to="/blogs"
-        class="w3-bar-item w3-button"
-        @click="closeMenu"
-        >BLOGS</router-link
       >
       <button
         type="button"
@@ -264,7 +252,7 @@ header {
   display: flex;
   align-items: center;
   position: relative;
-  min-height: 58px;
+  min-height: 52px;
 }
 
 .desktop-nav-links {
@@ -286,12 +274,14 @@ header {
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
+  max-width: min(20vw, 240px);
 }
 
 .header-logo {
   display: block;
   width: auto;
-  height: 38px;
+  height: clamp(26px, 2.1vw, 34px);
+  max-width: 100%;
   margin: 0;
   border: none;
   border-radius: 0;
@@ -304,8 +294,8 @@ header {
 }
 
 #myNavbar :is(a, button) {
-  min-height: 44px;
-  font-size: var(--font-size-body);
+  min-height: 38px;
+  font-size: var(--font-size-body-sm);
 }
 
 #navDemo {
@@ -408,9 +398,25 @@ header h1 {
   background: rgba(var(--accent-rgb), 0.16) !important;
 }
 
+@media (max-width: 1220px) {
+  .header-brand {
+    max-width: min(12vw, 130px);
+  }
+
+  .header-logo {
+    height: 26px;
+  }
+}
+
+@media (max-width: 980px) {
+  .header-brand {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
   #myNavbar {
-    min-height: 54px;
+    min-height: 50px;
   }
 
   header h1 {
@@ -420,10 +426,6 @@ header h1 {
   .identity-photo {
     width: 60px;
     height: 80px;
-  }
-
-  .header-logo {
-    height: 38px;
   }
 }
 </style>
