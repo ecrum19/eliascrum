@@ -4,7 +4,7 @@ Personal academic website built with Vue 3, Vite, Vuetify, and TypeScript.
 
 ## Release
 
-Current release: **v0.1.0**
+Current release: **v0.2.0**
 
 
 ## Tech Stack
