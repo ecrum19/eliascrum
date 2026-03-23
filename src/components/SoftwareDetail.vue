@@ -142,6 +142,7 @@ import {
   type SoftwareDetail as SoftwareDetailRow,
   type SoftwareEntry,
 } from "../data/softwareData";
+import { softwareReleasesBySoftwareId, type SoftwareReleaseInfo } from "../data/softwareReleases";
 import {
   getPublicationById,
   getPublicationPagePath,
@@ -190,6 +191,23 @@ export default defineComponent({
       }
       return this.software.description.trim() !== this.software.summary.trim();
     },
+    softwareRelease(): SoftwareReleaseInfo | null {
+      if (!this.software) {
+        return null;
+      }
+      return softwareReleasesBySoftwareId[this.software.id] ?? null;
+    },
+    softwareReleaseLabel(): string | null {
+      const release = this.softwareRelease;
+      if (!release) {
+        return null;
+      }
+      const primary = release.name || release.tagName;
+      if (!primary) {
+        return null;
+      }
+      return primary;
+    },
     detailRows(): SoftwareDetailRow[] {
       if (!this.software) {
         return [];
@@ -204,6 +222,32 @@ export default defineComponent({
           : []),
         ...(this.software.webUrl
           ? [{ label: "Web Page", value: this.software.webUrl, href: this.software.webUrl }]
+          : []),
+        ...(this.softwareRelease?.tagName
+          ? [
+              {
+                label: "Release Version",
+                value: this.softwareRelease.tagName,
+                href: this.softwareRelease?.url ?? undefined,
+              },
+            ]
+          : []),
+        ...(this.softwareReleaseLabel
+          ? [
+              {
+                label: "Latest Release",
+                value: this.softwareReleaseLabel,
+                href: this.softwareRelease?.url ?? undefined,
+              },
+            ]
+          : []),
+        ...(this.softwareRelease?.publishedAt
+          ? [
+              {
+                label: "Latest Release Date",
+                value: this.softwareRelease.publishedAt.slice(0, 10),
+              },
+            ]
           : []),
         ...(this.software.details ?? []),
       ];

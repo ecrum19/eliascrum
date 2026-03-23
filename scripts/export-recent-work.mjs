@@ -166,6 +166,7 @@ function buildRecentWorkItems({
   talkCatalogModule,
   posterCatalogModule,
   softwareModule,
+  softwareReleasesModule,
   blogsModule,
 }) {
   const publicationItems = (publicationsModule.publications ?? []).map((publication) => {
@@ -235,6 +236,7 @@ function buildRecentWorkItems({
   const softwareItems = (softwareModule.softwareProjects ?? []).map((software) => {
     const yearDate = parseYearToDate(software.year);
     const dateIso = yearDate ? yearDate.toISOString().slice(0, 10) : undefined;
+    const release = softwareReleasesModule?.softwareReleasesBySoftwareId?.[software.id] ?? null;
     return {
       ...jsonItemBase("Software", software.id, software.title),
       slug: softwareModule.getSoftwareSlug(software),
@@ -244,6 +246,20 @@ function buildRecentWorkItems({
       sourceUrl: toAbsoluteUrl(software.repositoryUrl || software.webUrl),
       itemUrl: toAbsoluteUrl(softwareModule.getSoftwarePagePath(software)),
       tags: [software.type, software.purpose, ...(software.mainTopics ?? [])].filter(Boolean),
+      latestRelease:
+        release &&
+        (release.tagName || release.name || release.url || release.publishedAt)
+          ? {
+              tagName: release.tagName ?? null,
+              name: release.name ?? null,
+              url: toAbsoluteUrl(release.url),
+              publishedAt: release.publishedAt ?? null,
+            }
+          : null,
+      latestReleaseDateIso:
+        release?.publishedAt && typeof release.publishedAt === "string"
+          ? release.publishedAt.slice(0, 10)
+          : null,
       sortTimestamp: yearDate ? yearDate.getTime() : null,
     };
   });
@@ -343,6 +359,24 @@ function buildRecentWorkTtl(items) {
     if (item.slug) {
       addTriple(triples, itemRef, "ec:slug", literal(item.slug));
     }
+    if (item.type === "Software" && item.latestRelease) {
+      if (item.latestRelease.tagName) {
+        addTriple(triples, itemRef, "schema:softwareVersion", literal(item.latestRelease.tagName));
+        addTriple(triples, itemRef, "ec:releaseTag", literal(item.latestRelease.tagName));
+      }
+      if (item.latestRelease.name) {
+        addTriple(triples, itemRef, "ec:releaseName", literal(item.latestRelease.name));
+      }
+      if (item.latestRelease.url) {
+        addTriple(triples, itemRef, "ec:releaseUrl", iri(item.latestRelease.url));
+      }
+      if (item.latestRelease.publishedAt) {
+        addTriple(triples, itemRef, "ec:releasePublishedAt", literal(item.latestRelease.publishedAt, "xsd:dateTime"));
+      }
+    }
+    if (item.type === "Software" && item.latestReleaseDateIso) {
+      addTriple(triples, itemRef, "ec:latestReleaseDate", literal(item.latestReleaseDateIso, "xsd:date"));
+    }
 
     for (const tag of item.tags ?? []) {
       addTriple(triples, itemRef, "schema:keywords", literal(tag));
@@ -365,12 +399,14 @@ async function main() {
     talkCatalogModule,
     posterCatalogModule,
     softwareModule,
+    softwareReleasesModule,
     blogsModule,
   ] = await Promise.all([
     loadTsModule("publicationsData.ts"),
     loadTsModule("talkCatalog.ts"),
     loadTsModule("posterCatalog.ts"),
     loadTsModule("softwareData.ts"),
+    loadTsModule("softwareReleases.ts"),
     loadTsModule("blogPostsData.ts"),
   ]);
 
@@ -379,6 +415,7 @@ async function main() {
     talkCatalogModule,
     posterCatalogModule,
     softwareModule,
+    softwareReleasesModule,
     blogsModule,
   });
 

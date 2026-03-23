@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-23T08:58:32.521Z",
+  "generatedAt": "2026-03-23T09:39:35.671Z",
   "baseIri": "https://eliascrum.github.io/eliascrum/",
   "datasetUrl": "https://eliascrum.github.io/eliascrum/recent_work.json",
   "sparqlGraphUrl": "https://eliascrum.github.io/eliascrum/recent_work.ttl",
@@ -40,7 +40,9 @@
       "summary": "Supporting website for the genomic sequence data sharing scoping review paper, intended to make national genome initiative data easier to browse, revisit, and update in the future.",
       "url": "https://eliascrum.github.io/eliascrum/software/genome-sharing-paper-webpage",
       "sourceUrl": "https://github.com/ecrum19/GenomeSharingPaper_Webpage",
-      "itemUrl": "https://eliascrum.github.io/eliascrum/software/genome-sharing-paper-webpage"
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/genome-sharing-paper-webpage",
+      "latestRelease": null,
+      "latestReleaseDateIso": null
     },
     {
       "id": "Publication:genome-sharing-review-2026",
@@ -77,7 +79,9 @@
       "summary": "A CLI tool for converting genomic variant data from VCF into RDF, supporting semantically interoperable downstream workflows.",
       "url": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer",
       "sourceUrl": "https://github.com/ecrum19/VCF-RDFizer",
-      "itemUrl": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer"
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer",
+      "latestRelease": null,
+      "latestReleaseDateIso": null
     },
     {
       "id": "Software:vcf-rdfizer-vocabulary",
@@ -96,7 +100,9 @@
       "summary": "Interactive vocabulary reference for the representation of VCF as semantic linked data with browsable documentation sections.",
       "url": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer-vocabulary",
       "sourceUrl": "https://ecrum19.github.io/VCF-RDFizer-vocabulary/ontology-reference.html",
-      "itemUrl": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer-vocabulary"
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer-vocabulary",
+      "latestRelease": null,
+      "latestReleaseDateIso": null
     },
     {
       "id": "Talk:18m-vito-internal-jury",
@@ -534,7 +540,9 @@
       "summary": "Permissions and notification semantics technical specification for Linked Data Platform resources.",
       "url": "https://eliascrum.github.io/eliascrum/software/ldp-permissions-notifications-specification",
       "sourceUrl": "https://github.com/ecrum19/ldp-permissions-notifications-specification",
-      "itemUrl": "https://eliascrum.github.io/eliascrum/software/ldp-permissions-notifications-specification"
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/ldp-permissions-notifications-specification",
+      "latestRelease": null,
+      "latestReleaseDateIso": null
     },
     {
       "id": "Poster:e-i-xchange24-poster-edc",
@@ -663,7 +671,9 @@
       "summary": "Web application for interacting with Solid Pod resources in an integrated, user-friendly interface.",
       "url": "https://eliascrum.github.io/eliascrum/software/solid-cockpit",
       "sourceUrl": "https://github.com/KNowledgeOnWebScale/solid-cockpit",
-      "itemUrl": "https://eliascrum.github.io/eliascrum/software/solid-cockpit"
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/solid-cockpit",
+      "latestRelease": null,
+      "latestReleaseDateIso": null
     },
     {
       "id": "Software:sparql-view-materialization-containers",
@@ -681,7 +691,9 @@
       "summary": "Container-based guidelines for reproducible SPARQL query view materialization for use in SPARQL query results provenance and caching.",
       "url": "https://eliascrum.github.io/eliascrum/software/sparql-view-materialization-containers",
       "sourceUrl": "https://github.com/ecrum19/sparql-view-materialization-containers",
-      "itemUrl": "https://eliascrum.github.io/eliascrum/software/sparql-view-materialization-containers"
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/sparql-view-materialization-containers",
+      "latestRelease": null,
+      "latestReleaseDateIso": null
     },
     {
       "id": "Poster:swat4hcls-2026",
