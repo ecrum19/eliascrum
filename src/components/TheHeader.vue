@@ -45,12 +45,6 @@
         >
           <i class="fa fa-slideshare"></i> TALKS
         </router-link>
-        <router-link
-          to="/blogs"
-          class="nav-link w3-bar-item w3-button w3-hover-black w3-opacity w3-hover-opacity-off"
-        >
-          <i class="fa fa-pencil"></i> BLOGS
-        </router-link>
       </div>
       <router-link
         v-if="showCompactBrand"
@@ -118,12 +112,6 @@
       >
       <router-link to="/talks" class="w3-bar-item w3-button" @click="closeMenu"
         >TALKS</router-link
-      >
-      <router-link
-        to="/blogs"
-        class="w3-bar-item w3-button"
-        @click="closeMenu"
-        >BLOGS</router-link
       >
       <button
         type="button"
@@ -412,15 +400,15 @@ header h1 {
 
 @media (max-width: 1220px) {
   .header-brand {
-    max-width: min(14vw, 150px);
+    max-width: min(12vw, 130px);
   }
 
   .header-logo {
-    height: 28px;
+    height: 26px;
   }
 }
 
-@media (max-width: 1060px) {
+@media (max-width: 980px) {
   .header-brand {
     display: none;
   }
@@ -438,10 +426,6 @@ header h1 {
   .identity-photo {
     width: 60px;
     height: 80px;
-  }
-
-  .header-logo {
-    height: 34px;
   }
 }
 </style>

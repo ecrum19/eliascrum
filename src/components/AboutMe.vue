@@ -123,16 +123,23 @@
                 </p>
               </div>
               <div id="keywords" class="home-topic-tags">
-                <router-link
+                <component
                   v-for="topic in researchTopicLinks"
                   :key="topic.label"
+                  :is="topic.external ? 'a' : 'router-link'"
                   class="home-topic-tag"
-                  :class="`home-topic-tag-${topic.variant}`"
+                  :class="[
+                    `home-topic-tag-${topic.variant}`,
+                    topic.external ? 'home-topic-tag-external' : 'home-topic-tag-internal',
+                  ]"
                   :data-destination="topic.destination"
-                  :to="topic.to"
+                  :to="topic.external ? undefined : topic.to"
+                  :href="topic.external ? topic.href : undefined"
+                  :target="topic.external ? '_blank' : undefined"
+                  :rel="topic.external ? 'noopener noreferrer' : undefined"
                 >
                   {{ topic.label }}
-                </router-link>
+                </component>
               </div>
             </section>
 
@@ -255,7 +262,9 @@ interface ResearchTopicLink {
   label: string;
   destination: string;
   variant: "publication" | "talk";
-  to: {
+  external?: boolean;
+  href?: string;
+  to?: {
     path: string;
     query?: Record<string, string>;
   };
@@ -754,7 +763,23 @@ a {
   text-decoration: none;
   line-height: 1.2;
   position: relative;
+  cursor: pointer;
   transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.home-topic-tag-internal {
+  border-radius: 999px;
+}
+
+.home-topic-tag-external {
+  border-radius: 10px;
+  border-color: var(--surface-outline);
+  background: transparent;
+}
+
+.home-topic-tag-external:hover {
+  border-color: rgba(196, 181, 253, 0.86);
+  background: rgba(167, 139, 250, 0.16);
 }
 
 .home-topic-tag::after {
@@ -796,33 +821,39 @@ a {
 }
 
 .home-topic-tag-publication {
-  background: rgba(var(--accent-secondary-rgb), 0.14);
-  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.96);
+  background: rgba(20, 184, 166, 0.16);
+  border-color: rgba(20, 184, 166, 0.44);
+  color: #06453f !important;
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.96);
   --tag-tooltip-border: rgba(13, 148, 136, 0.96);
   --tag-tooltip-text: #042320;
 }
 
 .home-topic-tag-talk {
-  background: rgba(var(--accent-rgb), 0.14);
-  --tag-tooltip-bg: rgba(var(--accent-rgb), 0.96);
-  --tag-tooltip-border: rgba(14, 165, 233, 0.96);
-  --tag-tooltip-text: #052634;
+  background: rgba(20, 184, 166, 0.16);
+  border-color: rgba(20, 184, 166, 0.44);
+  color: #06453f !important;
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.96);
+  --tag-tooltip-border: rgba(13, 148, 136, 0.96);
+  --tag-tooltip-text: #042320;
 }
 
 [data-theme="dark"] .home-topic-tag-publication {
-  background: rgba(var(--accent-secondary-rgb), 0.26);
-  border-color: rgba(var(--accent-secondary-rgb), 0.58);
-  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.98);
-  --tag-tooltip-border: rgba(var(--accent-secondary-rgb), 0.98);
+  background: rgba(20, 184, 166, 0.26);
+  border-color: rgba(20, 184, 166, 0.58);
+  color: #d2fff4 !important;
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.98);
+  --tag-tooltip-border: rgba(20, 184, 166, 0.98);
   --tag-tooltip-text: #021413;
 }
 
 [data-theme="dark"] .home-topic-tag-talk {
-  background: rgba(var(--accent-rgb), 0.26);
-  border-color: rgba(var(--accent-rgb), 0.6);
-  --tag-tooltip-bg: rgba(var(--accent-rgb), 0.98);
-  --tag-tooltip-border: rgba(125, 211, 252, 0.98);
-  --tag-tooltip-text: #041b25;
+  background: rgba(20, 184, 166, 0.26);
+  border-color: rgba(20, 184, 166, 0.58);
+  color: #d2fff4 !important;
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.98);
+  --tag-tooltip-border: rgba(20, 184, 166, 0.98);
+  --tag-tooltip-text: #021413;
 }
 
 #orgs {

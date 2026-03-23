@@ -495,49 +495,55 @@ export default defineComponent({
 }
 
 .software-tag-type {
-  background: rgba(244, 208, 63, 0.16);
-  --tag-tooltip-bg: rgba(244, 208, 63, 0.96);
-  --tag-tooltip-border: rgba(202, 138, 4, 0.96);
-  --tag-tooltip-text: #281b00;
+  background: rgba(245, 158, 11, 0.18);
+  border-color: rgba(245, 158, 11, 0.44);
+  color: #5f3a00;
+  --tag-tooltip-bg: rgba(245, 158, 11, 0.96);
+  --tag-tooltip-border: rgba(161, 98, 7, 0.96);
+  --tag-tooltip-text: #251401;
 }
 
 .software-tag-purpose {
-  background: rgba(236, 72, 153, 0.14);
-  --tag-tooltip-bg: rgba(236, 72, 153, 0.96);
-  --tag-tooltip-border: rgba(190, 24, 93, 0.96);
-  --tag-tooltip-text: #300518;
+  background: rgba(168, 85, 247, 0.16);
+  border-color: rgba(168, 85, 247, 0.44);
+  color: #3d1362;
+  --tag-tooltip-bg: rgba(168, 85, 247, 0.96);
+  --tag-tooltip-border: rgba(147, 51, 234, 0.96);
+  --tag-tooltip-text: #12031f;
 }
 
 .software-tag-topic {
-  background: rgba(var(--accent-secondary-rgb), 0.14);
-  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.96);
+  background: rgba(20, 184, 166, 0.16);
+  border-color: rgba(20, 184, 166, 0.44);
+  color: #06453f;
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.96);
   --tag-tooltip-border: rgba(13, 148, 136, 0.96);
   --tag-tooltip-text: #042320;
 }
 
 [data-theme="dark"] .software-tag-type {
-  background: rgba(244, 208, 63, 0.28);
-  border-color: rgba(244, 208, 63, 0.62);
+  background: rgba(245, 158, 11, 0.28);
+  border-color: rgba(245, 158, 11, 0.62);
   color: #ffe7a8;
-  --tag-tooltip-bg: rgba(244, 208, 63, 0.98);
-  --tag-tooltip-border: rgba(250, 204, 21, 0.98);
+  --tag-tooltip-bg: rgba(245, 158, 11, 0.98);
+  --tag-tooltip-border: rgba(251, 191, 36, 0.98);
   --tag-tooltip-text: #1f1300;
 }
 
 [data-theme="dark"] .software-tag-purpose {
-  background: rgba(236, 72, 153, 0.28);
-  border-color: rgba(236, 72, 153, 0.6);
-  color: #ffd7ea;
-  --tag-tooltip-bg: rgba(236, 72, 153, 0.98);
-  --tag-tooltip-border: rgba(244, 114, 182, 0.98);
-  --tag-tooltip-text: #2a0617;
+  background: rgba(168, 85, 247, 0.26);
+  border-color: rgba(168, 85, 247, 0.58);
+  color: #ece4ff;
+  --tag-tooltip-bg: rgba(168, 85, 247, 0.98);
+  --tag-tooltip-border: rgba(192, 132, 252, 0.98);
+  --tag-tooltip-text: #11021f;
 }
 
 [data-theme="dark"] .software-tag-topic {
-  background: rgba(var(--accent-secondary-rgb), 0.26);
-  border-color: rgba(var(--accent-secondary-rgb), 0.58);
+  background: rgba(20, 184, 166, 0.26);
+  border-color: rgba(20, 184, 166, 0.58);
   color: #d2fff4;
-  --tag-tooltip-bg: rgba(var(--accent-secondary-rgb), 0.98);
+  --tag-tooltip-bg: rgba(20, 184, 166, 0.98);
   --tag-tooltip-border: rgba(var(--accent-secondary-rgb), 0.98);
   --tag-tooltip-text: #021413;
 }

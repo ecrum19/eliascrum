@@ -33,6 +33,7 @@ Current release: **v0.1.0**
 - `npm run lint`: lint Vue/TypeScript source
 - `npm run build:slides`: rebuild generated talks/posters data and PDF outputs (adds small bottom-left watermark; compresses PDFs when Ghostscript is available)
 - `npm run update:scholar`: refresh Google Scholar citation counts
+- `npm run recent-work:export`: aggregate website data into `public/recent_work.json` and `public/recent_work.ttl`
 - `npm run rdf:export`: export all `src/data/*.ts` content to `src/data/rdf/site-data.ttl`
 - `npm run rdf:update -- --update <file.ru>`: apply SPARQL `INSERT DATA`/`DELETE DATA` updates to RDF data
 
@@ -81,9 +82,15 @@ Constraints for the current updater:
 
 - Workflow: `.github/workflows/build-on-push.yml`
 - Runs install, optional `build:slides`, lint, and build on each push.
+ - `npm run build` runs `prebuild`, which auto-generates `recent_work.json` and `recent_work.ttl`.
 
 ### Scholar Citation Refresh
 
 - Workflow: `.github/workflows/update-scholar-citations.yml`
 - Scheduled weekly and available via manual dispatch.
 - Updates `src/data/scholarCitations.ts` and auto-commits changes.
+
+## Public Recent Work Endpoints
+
+- JSON feed: `/recent_work.json`
+- Turtle/RDF feed: `/recent_work.ttl`
