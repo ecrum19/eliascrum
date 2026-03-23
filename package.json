@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
-    "prebuild": "npm run recent-work:export",
+    "prebuild": "npm run update:software-releases && npm run recent-work:export",
     "build": "vite build",
     "lint": "eslint --ext .ts,.tsx,.vue src",
     "build:slides": "node scripts/build-slides.mjs",
+    "update:software-releases": "node scripts/update-software-releases.mjs",
     "update:scholar": "node scripts/update-scholar-citations.mjs",
     "recent-work:export": "node scripts/export-recent-work.mjs",
     "rdf:export": "node scripts/export-rdf-data.mjs",

@@ -4,6 +4,7 @@
 
 node_modules
 /dist
+.cache
 
 # local env files
 .env.local

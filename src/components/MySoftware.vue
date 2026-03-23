@@ -167,6 +167,21 @@
                   </div>
 
                   <p class="software-summary">{{ project.summary }}</p>
+                  <p v-if="softwareReleaseText(project)" class="software-release">
+                    Latest release:
+                    <a
+                      v-if="softwareReleaseLink(project)"
+                      :href="softwareReleaseLink(project) || undefined"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {{ softwareReleaseText(project) }}
+                    </a>
+                    <span v-else>{{ softwareReleaseText(project) }}</span>
+                  </p>
+                  <p v-if="softwareReleaseDateText(project)" class="software-release-date">
+                    Latest release date: {{ softwareReleaseDateText(project) }}
+                  </p>
 
                   <div class="software-links">
                     <router-link :to="softwareDetailRoute(project)" class="software-action-btn btn-detail">
@@ -214,6 +229,7 @@ import {
   type SoftwareEntry,
   type SoftwareSection,
 } from "../data/softwareData";
+import { softwareReleasesBySoftwareId, type SoftwareReleaseInfo } from "../data/softwareReleases";
 import WorkPageLayout from "./layout/WorkPageLayout.vue";
 import WorkSectionBlock from "./layout/WorkSectionBlock.vue";
 
@@ -386,6 +402,30 @@ export default defineComponent({
     },
     softwareDetailRoute(project: SoftwareEntry): string {
       return getSoftwarePagePath(project);
+    },
+    softwareRelease(project: SoftwareEntry): SoftwareReleaseInfo | null {
+      return softwareReleasesBySoftwareId[project.id] ?? null;
+    },
+    softwareReleaseText(project: SoftwareEntry): string | null {
+      const release = this.softwareRelease(project);
+      if (!release) {
+        return null;
+      }
+      const primary = release.tagName || release.name || "Latest update";
+      return primary;
+    },
+    softwareReleaseDateText(project: SoftwareEntry): string | null {
+      const release = this.softwareRelease(project);
+      if (!release?.publishedAt) {
+        return null;
+      }
+      if (release.publishedAt.length < 10) {
+        return null;
+      }
+      return release.publishedAt.slice(0, 10);
+    },
+    softwareReleaseLink(project: SoftwareEntry): string | null {
+      return this.softwareRelease(project)?.url ?? null;
     },
     clearSoftwareFilters() {
       this.selectedSection = "All";
@@ -745,6 +785,27 @@ export default defineComponent({
   color: var(--page-text);
   line-height: 1.6;
   font-size: var(--list-summary-size);
+}
+
+.software-release {
+  margin: 8px 0 0;
+  color: var(--text-soft);
+  font-size: var(--font-size-body-sm);
+}
+
+.software-release a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.software-release a:hover {
+  text-decoration: underline;
+}
+
+.software-release-date {
+  margin: 2px 0 0;
+  color: var(--text-soft);
+  font-size: var(--font-size-caption);
 }
 
 .software-tags {
