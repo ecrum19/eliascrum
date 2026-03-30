@@ -102,18 +102,49 @@
                           class='cv-award-organization'
                           v-html='formatWithEmphasis(item.organization)'
                         ></p>
-                        <div v-if='item.artifacts?.length' class='cv-artifacts'>
-                          <a
-                            v-for='artifact in item.artifacts'
-                            :key='`${getItemKey(section.title, item)}-${artifact.path}`'
-                            class='cv-artifact-link'
-                            :href='artifactHref(artifact)'
-                            target='_blank'
-                            rel='noopener noreferrer'
-                          >
-                            <i class='fa fa-file-pdf-o' aria-hidden='true'></i>
-                            <span>{{ artifact.label }}</span>
-                          </a>
+                        <div
+                          v-if='item.details?.length || item.artifacts?.length'
+                          class='cv-award-actions'
+                        >
+                          <ul v-if='item.details?.length' class='cv-details cv-details-award'>
+                            <li
+                              v-for='(detail, detailIndex) in item.details'
+                              :key='getDetailKey(item, detail, detailIndex)'
+                            >
+                              <template v-if='isLinkDetail(detail)'>
+                                <router-link
+                                  v-if='detail.internal'
+                                  :to='detail.url'
+                                >
+                                  See Details
+                                </router-link>
+                                <a
+                                  v-else
+                                  :href='detail.url'
+                                  target='_blank'
+                                  rel='noopener noreferrer'
+                                >
+                                  See Details
+                                </a>
+                              </template>
+                              <template v-else>
+                                <span>{{ detail }}</span>
+                              </template>
+                            </li>
+                          </ul>
+                          <div v-if='item.artifacts?.length' class='cv-artifacts cv-artifacts-award'>
+                            <a
+                              v-for='artifact in item.artifacts'
+                              :key='`${getItemKey(section.title, item)}-${artifact.path}`'
+                              class='cv-artifact-link'
+                              :href='artifactHref(artifact)'
+                              target='_blank'
+                              rel='noopener noreferrer'
+                            >
+                              <i class='fa fa-file-pdf-o' aria-hidden='true'></i>
+                              <span>{{ artifact.label }}</span>
+                            </a>
+                          </div>
                         </div>
                       </div>
                       <span v-if='item.location' class='cv-award-location'>{{ item.location }}</span>
@@ -906,10 +937,12 @@ export default defineComponent({
   grid-template-columns: 90px minmax(0, 1fr) auto;
   gap: 14px;
   align-items: start;
-  padding: 12px 14px;
-  border-radius: 12px;
+  padding: 15px 16px 16px;
+  border-radius: 14px;
   border: 1px solid var(--cv-border);
+  border-left: 3px solid rgba(var(--accent-rgb), 0.38);
   background: var(--cv-surface-alt);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
 }
 
 .cv-award-date {
@@ -945,6 +978,67 @@ export default defineComponent({
   line-height: 1.45;
   text-align: right;
   white-space: nowrap;
+}
+
+[data-theme='light'] .cv-award-item {
+  background: rgba(16, 36, 59, 0.045);
+  border-color: rgba(16, 36, 59, 0.08);
+  border-left-color: rgba(var(--accent-ink-rgb), 0.45);
+}
+
+[data-theme='dark'] .cv-award-item {
+  border-color: rgba(226, 232, 240, 0.12);
+  border-left-color: rgba(147, 197, 253, 0.42);
+}
+
+.cv-details-award {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cv-details-award li {
+  margin: 0;
+}
+
+.cv-details-award .cv-detail-prefix {
+  display: none;
+}
+
+.cv-details-award a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--cv-border-strong);
+  border-radius: 999px;
+  padding: 7px 12px;
+  background: rgba(var(--accent-rgb), 0.08);
+  color: var(--link-color);
+  text-decoration: none;
+  font-size: var(--font-size-body-sm);
+  line-height: 1.2;
+  transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+
+.cv-details-award a:hover {
+  background: var(--nav-hover-bg);
+  border-color: rgba(var(--accent-rgb), 0.4);
+  transform: translateY(-1px);
+}
+
+.cv-award-actions {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.cv-artifacts-award {
+  margin-top: 0;
 }
 
 :deep(.auto-emphasis) {

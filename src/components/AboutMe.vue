@@ -210,11 +210,11 @@
           <div class="w3-container" id="intro-container">
             <div id="intro">
               <p>
-                I am a 1st year PhD candidate in the
+                I am a 3rd year PhD candidate in the
                 <a href="https://knows.idlab.ugent.be/"><u>KNoWS group</u></a>
-                of IDLab at Ghent University and the Digital Precision Health
+                of IDLab at Ghent University and the Digital Precision Biosystems
                 group of
-                <a href="https://vito.be/en/theme/sustainable-health"
+                <a href="https://vito.be/en/healthy-living-environment"
                   ><u>VITO NV</u></a
                 >.
               </p>
@@ -240,6 +240,11 @@
                 the world around me, especially in the realms of genomics and
                 healthcare.
               </p>
+              <div class="about-links-row">
+                <router-link class="about-detail-btn btn-detail" :to="fellowshipDetailPath">
+                  Fellowship Details
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -257,6 +262,7 @@ import {
   researchPortalProfileUrl,
   type ExternalProfileLink,
 } from "../data/publicationsData";
+import { getFellowshipDetailPath } from "../data/fellowshipData";
 
 interface ResearchTopicLink {
   label: string;
@@ -288,6 +294,9 @@ export default defineComponent({
     },
     recentUpdates(): HomepageUpdate[] {
       return getRecentHomepageUpdates(1);
+    },
+    fellowshipDetailPath(): string {
+      return getFellowshipDetailPath();
     },
     researchTopicLinks(): ResearchTopicLink[] {
       return [
@@ -655,6 +664,17 @@ a {
 
 #intro p:last-child {
   margin-bottom: 0;
+}
+
+.about-links-row {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.about-detail-btn {
+  padding: 7px 14px;
 }
 
 #intro-container {

@@ -141,23 +141,108 @@ export const cvSections: CvSection[] = [
     ],
   },
   {
-    title: "Professional Development",
-    layout: "timeline",
+    title: "Honors and Awards",
+    layout: "awards",
     items: [
       {
-        organization: "International Semantic Web Summer School 2024",
-        role: "Participant",
-        location: "Bertinoro, Italy",
-        date: "2024",
+        group: "Graduate Education",
+        date: "2024-28",
+        role: "Strategic Basic PhD Fellowship Awardee",
+        organization: "The Research Foundation - Flanders (FWO)",
+        location: "Brussels, Belgium",
         details: [
-          "Participated in the 2024 International Semantic Web Summer School and related project activities.",
+          {
+            prefix: "Details:",
+            text: "FWO Fellowship Record",
+            url: "/about/fellowships/fwo-phd-fellowship",
+            internal: true,
+          },
+        ],
+      },
+      {
+        group: "Graduate Education",
+        date: "2026",
+        role: "Aaibaar (most astheticly pleasing) Poster Award",
+        organization: "SWAT4HCLS 2026",
+        location: "Amsterdam, The Netherlands",
+        details: [
+          {
+            prefix: "Publication:",
+            text: "From VCF to RDF: RML-Based Conversion Approaches for the Semantic Representation of Variant Data",
+            url: "/publications/vcf-to-rdf-rml-swat4hcls-2026/paper",
+            internal: true,
+          },
+        ],
+      },
+      {
+        group: "Graduate Education",
+        date: "2024",
+        role: "Best Paper (Group)",
+        organization: "International Semantic Web Summer School 2024",
+        location: "Bertinoro, Italy",
+        details: [
+          {
+            prefix: "Slides:",
+            text: "ISWS 2024 Group Project Presentation",
+            url: "/talks/isws-group-project-presentation",
+            internal: true,
+          },
         ],
         artifacts: [
           {
-            label: "Participation Certificate",
-            path: "/cv/artifacts/isws24-participation-certificate.pdf",
+            label: "Best Paper Certificate",
+            path: "/cv/artifacts/isws24-best-paper-certificate.pdf",
           },
         ],
+      },
+      {
+        group: "Graduate Education",
+        date: "2024",
+        role: "Best Poster (Individual)",
+        organization: "International Semantic Web Summer School 2024",
+        location: "Bertinoro, Italy",
+        details: [
+          {
+            prefix: "Poster:",
+            text: "ISWS 2024 Award-Winning Poster (PENGQUIN)",
+            url: "/talks/posters/edc-poster-isws2024-award-winner",
+            internal: true,
+          },
+        ],
+        artifacts: [
+          {
+            label: "Best Poster Certificate",
+            path: "/cv/artifacts/isws24-best-poster-certificate.pdf",
+          },
+        ],
+      },
+      {
+        group: "Pre-Graduate Education",
+        date: "2020-21",
+        role: "Mulcahy Research Fellowship Award",
+        organization: "Recipient of a research scholarship for the 2020-2021 school year",
+        location: "Chicago, IL, USA",
+      },
+      {
+        group: "Pre-Graduate Education",
+        date: "2017-21",
+        role: "College of Arts and Sciences Dean's List Mention",
+        organization: "Eight-time Dean's List recipient",
+        location: "Chicago, IL, USA",
+      },
+      {
+        group: "Pre-Graduate Education",
+        date: "2017-18",
+        role: "Employee of the Year",
+        organization: "Campus Recreation, Loyola University Chicago",
+        location: "Chicago, IL, USA",
+      },
+      {
+        group: "Pre-Graduate Education",
+        date: "2017-21",
+        role: "Presidential Scholarship Recipient",
+        organization: "College of Arts and Sciences, Loyola University Chicago",
+        location: "Chicago, IL, USA",
       },
     ],
   },
@@ -285,6 +370,27 @@ export const cvSections: CvSection[] = [
     ],
   },
   {
+    title: "Professional Development",
+    layout: "timeline",
+    items: [
+      {
+        organization: "International Semantic Web Summer School 2024",
+        role: "Participant",
+        location: "Bertinoro, Italy",
+        date: "2024",
+        details: [
+          "Participated in the 2024 International Semantic Web Summer School and related project activities.",
+        ],
+        artifacts: [
+          {
+            label: "Participation Certificate",
+            path: "/cv/artifacts/isws24-participation-certificate.pdf",
+          },
+        ],
+      },
+    ],
+  },
+  {
     title: "Volunteer Experience",
     layout: "timeline",
     items: [
@@ -337,73 +443,6 @@ export const cvSections: CvSection[] = [
           "Instructed underprivileged inner-city children in the fundamentals of skating and ice hockey.",
           "Assisted St. Paul Police officers with program coordination and participant organization.",
         ],
-      },
-    ],
-  },
-  {
-    title: "Honors and Awards",
-    layout: "awards",
-    items: [
-      {
-        group: "Graduate Education",
-        date: "2024-28",
-        role: "PhD Fellowship Grant Holder",
-        organization: "The Research Foundation - Flanders (FWO)",
-        location: "Brussels, Belgium",
-      },
-      {
-        group: "Graduate Education",
-        date: "2024",
-        role: "Best Paper (Group)",
-        organization: "International Semantic Web Summer School 2024",
-        location: "Bertinoro, Italy",
-        artifacts: [
-          {
-            label: "Best Paper Certificate",
-            path: "/cv/artifacts/isws24-best-paper-certificate.pdf",
-          },
-        ],
-      },
-      {
-        group: "Graduate Education",
-        date: "2024",
-        role: "Best Poster (Individual)",
-        organization: "International Semantic Web Summer School 2024",
-        location: "Bertinoro, Italy",
-        artifacts: [
-          {
-            label: "Best Poster Certificate",
-            path: "/cv/artifacts/isws24-best-poster-certificate.pdf",
-          },
-        ],
-      },
-      {
-        group: "Pre-Graduate Education",
-        date: "2020-21",
-        role: "Mulcahy Research Fellowship Award",
-        organization: "Recipient of a research scholarship for the 2020-2021 school year",
-        location: "Chicago, IL, USA",
-      },
-      {
-        group: "Pre-Graduate Education",
-        date: "2017-21",
-        role: "College of Arts and Sciences Dean's List Mention",
-        organization: "Eight-time Dean's List recipient",
-        location: "Chicago, IL, USA",
-      },
-      {
-        group: "Pre-Graduate Education",
-        date: "2017-18",
-        role: "Employee of the Year",
-        organization: "Campus Recreation, Loyola University Chicago",
-        location: "Chicago, IL, USA",
-      },
-      {
-        group: "Pre-Graduate Education",
-        date: "2017-21",
-        role: "Presidential Scholarship Recipient",
-        organization: "College of Arts and Sciences, Loyola University Chicago",
-        location: "Chicago, IL, USA",
       },
     ],
   },
