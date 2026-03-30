@@ -61,16 +61,16 @@ export const talkMetadataBySlug: Record<string, TalkMetadata> = {
     summary:
       "KNoWS Day presentation outlining how semantic representations can improve genomic-data interoperability, privacy-aware access control, and federated querying in healthcare settings.",
     abstract:
-      "This talk introduced the motivation for applying semantic-web methods to clinical genomic data workflows, starting from key barriers to genomic medicine identified in recent literature. It compared file-centric handling of genome data with granular RDF-based representations and discussed how policy vocabularies such as ODRL can support more dynamic, role-specific access control. The presentation then covered the VCF-to-RDF conversion layer, practical interoperability benefits through data linkages, and query capabilities spanning decentralized and public resources. It concluded with project framing for PENGQUIN and a roadmap from current PhD outputs to broader healthcare and ecosystem adoption.",
+      "An overview of genomic medicine and the principal barriers limiting broader genomic data use in healthcare was presented, grounded in findings from a recent scoping review. Semantic representation was then proposed as a response to several of these challenges by supporting richer data linkages, more granular privacy and access-control definitions, and future federated querying capabilities across distributed resources. The conversion layer required to enable such workflows was introduced through a tool and accompanying semantic vocabulary for translating genomic variant data from VCF into RDF. The presentation concluded by framing my PhD as the unifying research program connecting this completed work to the next stages of investigation into linkage, privacy-aware data use, and federated query workflows for genomic data.",
     goal:
       "Show how semantic representation and policy-aware querying can make genomic data more usable, interoperable, and privacy-conscious in healthcare.",
     audienceExpertise:
-      "Semantic web researchers with interests in data interoperability, querying, and translational applications in healthcare and genomics.",
+      "Semantic web researchers with interests in data spaces, semantic querying, and knowledge representation.",
     audienceGroups: ["Semantic Web Researchers"],
     durationMinutes: 10,
     audienceSizeApprox: 30,
     venueTags: ["Internal Meeting", "KNoWS Day"],
-    topicTags: ["Semantic Web", "Clinical Genomics", "Semantic Querying", "Data Privacy"],
+    topicTags: ["Semantic Web", "Clinical Genomics", "Knowledge Representation", "Data Privacy"],
   },
   "sphn-pengquin-talk": {
     title: "Swiss Public Health Network (SPHN)",
