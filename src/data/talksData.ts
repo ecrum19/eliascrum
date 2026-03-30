@@ -21,6 +21,14 @@ export interface PosterEntry {
 
 export const talks: TalkEntry[] = [
   {
+    slug: "edc-knows-26",
+    title: "EDC KNoWS 26",
+    sourceFile: "EDC-KNoWS-26.pdf",
+    dateIso: "2026-03-31",
+    dateLabel: "31/03/2026",
+    slidePath: "/talks/slides/edc-knows-26.pdf",
+  },
+  {
     slug: "18m-vito-internal-jury",
     title: "EDC 18m VITO Jury",
     sourceFile: "EDC-18m-VITO-Jury.pdf",

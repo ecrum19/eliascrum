@@ -10,6 +10,7 @@ import MySlides from "./components/MySlides.vue";
 import SlideDetail from "./components/SlideDetail.vue";
 import PosterDetail from "./components/PosterDetail.vue";
 import PublicationPaperPage from "./components/PublicationPaperPage.vue";
+import FellowshipDetail from "./components/FellowshipDetail.vue";
 
 /**
  * The router here allows for navigation between different pages of the website
@@ -76,6 +77,11 @@ const router = createRouter({
       name: 'My CV',
       path: '/about/cv',
       component: MyCV
+    },
+    {
+      name: "Fellowship Detail",
+      path: "/about/fellowships/:slug",
+      component: FellowshipDetail,
     }
   ],
 });

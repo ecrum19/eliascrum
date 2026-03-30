@@ -1,10 +1,32 @@
 {
-  "generatedAt": "2026-03-23T09:39:35.671Z",
+  "generatedAt": "2026-03-30T13:26:20.686Z",
   "baseIri": "https://eliascrum.github.io/eliascrum/",
   "datasetUrl": "https://eliascrum.github.io/eliascrum/recent_work.json",
   "sparqlGraphUrl": "https://eliascrum.github.io/eliascrum/recent_work.ttl",
-  "totalItems": 35,
+  "totalItems": 36,
   "recentWork": [
+    {
+      "id": "Talk:edc-knows-26",
+      "type": "Talk",
+      "title": "Genomic Data, Healthcare, and the Semantic Web",
+      "tags": [
+        "Internal Meeting",
+        "KNoWS Day",
+        "Semantic Web",
+        "Clinical Genomics",
+        "Semantic Querying",
+        "Data Privacy",
+        "Semantic Web Researchers",
+        "Short",
+        "Medium"
+      ],
+      "slug": "edc-knows-26",
+      "dateIso": "2026-03-31",
+      "summary": "KNoWS Day presentation outlining how semantic representations can improve genomic-data interoperability, privacy-aware access control, and federated querying in healthcare settings.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/edc-knows-26",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/slides/edc-knows-26.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/edc-knows-26"
+    },
     {
       "id": "Publication:vcf-to-rdf-rml-swat4hcls-2026",
       "type": "Publication",
