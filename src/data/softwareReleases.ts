@@ -8,7 +8,7 @@ export interface SoftwareReleaseInfo {
   publishedAt: string | null;
 }
 
-export const softwareReleaseLastUpdatedIso: string | null = "2026-03-30T12:56:04.963Z";
+export const softwareReleaseLastUpdatedIso: string | null = "2026-03-30T13:26:20.234Z";
 
 export const softwareReleasesBySoftwareId: Record<string, SoftwareReleaseInfo | null> = {
   "genome-sharing-paper-webpage": null,

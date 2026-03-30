@@ -55,6 +55,23 @@ export interface TalkMetadata {
 // Edit this object to quickly update talk titles, dates, summaries, and detail metadata.
 // Keys must match talk "slug" values in src/data/talksData.ts.
 export const talkMetadataBySlug: Record<string, TalkMetadata> = {
+  "edc-knows-26": {
+    title: "Genomic Data, Healthcare, and the Semantic Web",
+    dateIso: "2026-03-31",
+    summary:
+      "KNoWS Day presentation outlining how semantic representations can improve genomic-data interoperability, privacy-aware access control, and federated querying in healthcare settings.",
+    abstract:
+      "This talk introduced the motivation for applying semantic-web methods to clinical genomic data workflows, starting from key barriers to genomic medicine identified in recent literature. It compared file-centric handling of genome data with granular RDF-based representations and discussed how policy vocabularies such as ODRL can support more dynamic, role-specific access control. The presentation then covered the VCF-to-RDF conversion layer, practical interoperability benefits through data linkages, and query capabilities spanning decentralized and public resources. It concluded with project framing for PENGQUIN and a roadmap from current PhD outputs to broader healthcare and ecosystem adoption.",
+    goal:
+      "Show how semantic representation and policy-aware querying can make genomic data more usable, interoperable, and privacy-conscious in healthcare.",
+    audienceExpertise:
+      "Semantic web researchers with interests in data interoperability, querying, and translational applications in healthcare and genomics.",
+    audienceGroups: ["Semantic Web Researchers"],
+    durationMinutes: 10,
+    audienceSizeApprox: 30,
+    venueTags: ["Internal Meeting", "KNoWS Day"],
+    topicTags: ["Semantic Web", "Clinical Genomics", "Semantic Querying", "Data Privacy"],
+  },
   "sphn-pengquin-talk": {
     title: "Swiss Public Health Network (SPHN)",
     dateIso: "2025-04-29",
