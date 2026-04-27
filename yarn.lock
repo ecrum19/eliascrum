@@ -36,38 +36,6 @@
   dependencies:
     buffer "^6.0.3"
 
-"@chevrotain/cst-dts-gen@11.2.0":
-  version "11.2.0"
-  resolved "https://registry.npmjs.org/@chevrotain/cst-dts-gen/-/cst-dts-gen-11.2.0.tgz"
-  integrity sha512-ssJFvn/UXhQQeICw3SR/fZPmYVj+JM2mP+Lx7bZ51cOeHaMWOKp3AUMuyM3QR82aFFXTfcAp67P5GpPjGmbZWQ==
-  dependencies:
-    "@chevrotain/gast" "11.2.0"
-    "@chevrotain/types" "11.2.0"
-    lodash-es "4.17.23"
-
-"@chevrotain/gast@11.2.0":
-  version "11.2.0"
-  resolved "https://registry.npmjs.org/@chevrotain/gast/-/gast-11.2.0.tgz"
-  integrity sha512-c+KoD6eSI1xjAZZoNUW+V0l13UEn+a4ShmUrjIKs1BeEWCji0Kwhmqn5FSx1K4BhWL7IQKlV7wLR4r8lLArORQ==
-  dependencies:
-    "@chevrotain/types" "11.2.0"
-    lodash-es "4.17.23"
-
-"@chevrotain/regexp-to-ast@11.2.0":
-  version "11.2.0"
-  resolved "https://registry.npmjs.org/@chevrotain/regexp-to-ast/-/regexp-to-ast-11.2.0.tgz"
-  integrity sha512-lG73pBFqbXODTbXhdZwv0oyUaI+3Irm+uOv5/W79lI3g5hasYaJnVJOm3H2NkhA0Ef4XLBU4Scr7TJDJwgFkAw==
-
-"@chevrotain/types@11.2.0":
-  version "11.2.0"
-  resolved "https://registry.npmjs.org/@chevrotain/types/-/types-11.2.0.tgz"
-  integrity sha512-vBMSj/lz/LqolbGQEHB0tlpW5BnljHVtp+kzjQfQU+5BtGMTuZCPVgaAjtKvQYXnHb/8i/02Kii00y0tsuwfsw==
-
-"@chevrotain/utils@11.2.0":
-  version "11.2.0"
-  resolved "https://registry.npmjs.org/@chevrotain/utils/-/utils-11.2.0.tgz"
-  integrity sha512-+7whECg4yNWHottjvr2To2BRxL4XJVjIyyv5J4+bJ0iMOVU8j/8n1qPDLZS/90W/BObDR8VNL46lFbzY/Hosmw==
-
 "@colors/colors@1.6.0", "@colors/colors@^1.6.0":
   version "1.6.0"
   resolved "https://registry.npmjs.org/@colors/colors/-/colors-1.6.0.tgz"
@@ -4304,11 +4272,9 @@
     rdf-string "^2.0.0"
 
 "@traqula/chevrotain@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@traqula/chevrotain/-/chevrotain-1.0.0.tgz"
-  integrity sha512-kyyT9aXpcJmJ3Bvq/MoeGA9e2vhrPdgOrswHaGC9WEQqXfsxJAye2Y+6aJdSGYZJMiH6CcAzgYLIJt1UDBvB0A==
-  dependencies:
-    chevrotain "^11.0.3"
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@traqula/chevrotain/-/chevrotain-1.0.7.tgz#03c952a25645a2507f4f3559de56d53d7f326f78"
+  integrity sha512-SnyiSVuTqmniuysm2p298awhss6DeHeySGXaNI+amU1X+47Kl5DBjh0xInGHLJ/LIG2/wsxG16+8zx756MABDQ==
 
 "@traqula/core@^1.0.0", "@traqula/core@^1.0.3":
   version "1.0.3"
@@ -4840,18 +4806,6 @@ chalk@^4.0.0:
   dependencies:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
-
-chevrotain@^11.0.3:
-  version "11.2.0"
-  resolved "https://registry.npmjs.org/chevrotain/-/chevrotain-11.2.0.tgz"
-  integrity sha512-mHCHTxM51nCklUw9RzRVc0DLjAh/SAUPM4k/zMInlTIo25ldWXOZoPt7XEIk/LwoT4lFVmJcu9g5MHtx371x3A==
-  dependencies:
-    "@chevrotain/cst-dts-gen" "11.2.0"
-    "@chevrotain/gast" "11.2.0"
-    "@chevrotain/regexp-to-ast" "11.2.0"
-    "@chevrotain/types" "11.2.0"
-    "@chevrotain/utils" "11.2.0"
-    lodash-es "4.17.23"
 
 cliui@^8.0.1:
   version "8.0.1"
@@ -5701,11 +5655,6 @@ levn@^0.4.1:
   dependencies:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
-
-lodash-es@4.17.23:
-  version "4.17.23"
-  resolved "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.23.tgz"
-  integrity sha512-kVI48u3PZr38HdYz98UmfPnXl2DXrpdctLrFLCd3kOx1xUkOmpFPx7gCWWM5MPkL/fD8zb+Ph0QzjGFs4+hHWg==
 
 lodash.merge@^4.6.2:
   version "4.6.2"
