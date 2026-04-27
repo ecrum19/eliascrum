@@ -49,6 +49,7 @@ export const softwareSections: SoftwareSection[] = [
           "Solid Cockpit is an application for exploring and interacting with Solid Pod resources. Specifically, it offers functionalities to upload data, manage the privacy of data, and query connected a Solid Pod. It is relevant to the broader semantic-web and decentralized-data tooling space because it provides a user-friendly interface for interacting with decentralized data.",
         repositoryUrl: "https://github.com/KNowledgeOnWebScale/solid-cockpit",
         mainTopics: ["Solid", "Semantic Web", "Data Privacy", "Web Application", "Federated Querying"],
+        relatedPublicationIds: ["solid-cockpit-eswc-2026-demo"],
       },
       {
         id: "genome-sharing-paper-webpage",
