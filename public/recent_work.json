@@ -1,10 +1,28 @@
 {
-  "generatedAt": "2026-03-30T14:18:08.096Z",
+  "generatedAt": "2026-04-27T13:19:51.069Z",
   "baseIri": "https://eliascrum.github.io/eliascrum/",
   "datasetUrl": "https://eliascrum.github.io/eliascrum/recent_work.json",
   "sparqlGraphUrl": "https://eliascrum.github.io/eliascrum/recent_work.ttl",
-  "totalItems": 36,
+  "totalItems": 37,
   "recentWork": [
+    {
+      "id": "Publication:solid-cockpit-eswc-2026-demo",
+      "type": "Publication",
+      "title": "Solid Cockpit: Data manager, privacy editor, and query facilitator for Solid pods",
+      "tags": [
+        "Conference Paper",
+        "ESWC",
+        "Solid",
+        "Semantic Web",
+        "Data Privacy",
+        "Semantic Querying"
+      ],
+      "slug": "solid-cockpit-eswc-2026-demo",
+      "dateIso": "2026-06-01",
+      "summary": "Presents Solid Cockpit, a browser-based interface for managing Solid Pods that integrates data management, privacy-aware permission workflows, and embedded SPARQL querying with result materialization.",
+      "url": "https://eliascrum.github.io/eliascrum/publications/solid-cockpit-eswc-2026-demo/paper",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/publications/solid-cockpit-eswc-2026-demo/paper"
+    },
     {
       "id": "Talk:edc-knows-26",
       "type": "Talk",
@@ -14,7 +32,7 @@
         "KNoWS Day",
         "Semantic Web",
         "Clinical Genomics",
-        "Semantic Querying",
+        "Knowledge Representation",
         "Data Privacy",
         "Semantic Web Researchers",
         "Short",

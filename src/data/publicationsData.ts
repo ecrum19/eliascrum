@@ -103,6 +103,51 @@ export const publicationProfileLinks: ExternalProfileLink[] = [
 
 export const publications: Publication[] = [
   {
+    id: "solid-cockpit-eswc-2026-demo",
+    slug: "solid-cockpit-eswc-2026-demo",
+    title:
+      "Solid Cockpit: Data manager, privacy editor, and query facilitator for Solid pods",
+    authors: "E. Crum, B. Buelens, G. Ertaylan, R. Taelman",
+    venue: "European Semantic Web Conference (ESWC) 2026",
+    year: 2026,
+    sortDate: "2026-06-01",
+    type: "Conference Paper",
+    venueTags: ["ESWC"],
+    topicTags: ["Solid", "Semantic Web", "Data Privacy", "Semantic Querying"],
+    url: "",
+    summary:
+      "Presents Solid Cockpit, a browser-based interface for managing Solid Pods that integrates data management, privacy-aware permission workflows, and embedded SPARQL querying with result materialization.",
+    abstract:
+      "Solid enables decentralized, user-controlled personal data management, but practical Pod interaction remains difficult because existing interfaces typically cover only isolated workflow fragments. This demo paper presents Solid Cockpit, a browser-based system that unifies Pod data management, visual privacy control, and semantic querying in one interface. In addition to CRUD-style Pod interaction, the system supports auditable permission-change notifications and Pod-native storage of query results through draft technical specifications. The application is positioned against related Solid systems and demonstrates how privacy-transparent sharing and query workflows can be operationalized for broader Solid usage.",
+    bibtex: `@inproceedings{crum2026solidcockpitdemo,
+  title={Solid Cockpit: Data manager, privacy editor, and query facilitator for Solid pods},
+  author={Crum, Elias and Buelens, Bart and Ertaylan, Gokhan and Taelman, Ruben},
+  booktitle={European Semantic Web Conference (ESWC) 2026},
+  address={Dubrovnik, Croatia},
+  year={2026},
+  note={Demo paper},
+}`,
+    details: [
+      { label: "Publication Type", value: "Demo Paper (Conference Paper)" },
+      { label: "Conference", value: "European Semantic Web Conference (ESWC) 2026" },
+      { label: "Location", value: "Dubrovnik, Croatia" },
+      { label: "Date", value: "2026-06-01" },
+      {
+        label: "Related Software",
+        value: "Solid Cockpit",
+        href: "/software/solid-cockpit",
+      },
+      {
+        label: "Demo Link",
+        value: "Solid Cockpit live demo",
+        href: "https://knowledgeonwebscale.github.io/solid-cockpit/",
+      },
+      { label: "DOI", value: "Not yet available" },
+      { label: "Web Version", value: "Not yet available" },
+    ],
+    paperPdfPath: "/publications/papers/eswc-2026-demo-paper.pdf",
+  },
+  {
     id: "vcf-to-rdf-rml-swat4hcls-2026",
     slug: "vcf-to-rdf-rml-swat4hcls-2026",
     title:
