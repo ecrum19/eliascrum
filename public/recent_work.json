@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-04-27T13:19:51.069Z",
+  "generatedAt": "2026-05-01T13:25:24.897Z",
   "baseIri": "https://eliascrum.github.io/eliascrum/",
   "datasetUrl": "https://eliascrum.github.io/eliascrum/recent_work.json",
   "sparqlGraphUrl": "https://eliascrum.github.io/eliascrum/recent_work.ttl",
-  "totalItems": 37,
+  "totalItems": 38,
   "recentWork": [
     {
       "id": "Publication:solid-cockpit-eswc-2026-demo",
@@ -22,6 +22,29 @@
       "summary": "Presents Solid Cockpit, a browser-based interface for managing Solid Pods that integrates data management, privacy-aware permission workflows, and embedded SPARQL querying with result materialization.",
       "url": "https://eliascrum.github.io/eliascrum/publications/solid-cockpit-eswc-2026-demo/paper",
       "itemUrl": "https://eliascrum.github.io/eliascrum/publications/solid-cockpit-eswc-2026-demo/paper"
+    },
+    {
+      "id": "Talk:sosy2026",
+      "type": "Talk",
+      "title": "Solid Cockpit",
+      "tags": [
+        "Symposium",
+        "Solid Symposium",
+        "Solid",
+        "Semantic Web",
+        "Data Privacy",
+        "Semantic Querying",
+        "Semantic Web Researchers",
+        "Computer Scientists",
+        "Short",
+        "Small"
+      ],
+      "slug": "sosy2026",
+      "dateIso": "2026-04-30",
+      "summary": "Demonstration of Solid Cockpit as a unified web interface for Solid Pods, integrating data management, privacy and access-control editing, notification support, and in-browser SPARQL data discovery.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/sosy2026",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/slides/sosy2026.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/sosy2026"
     },
     {
       "id": "Talk:edc-knows-26",

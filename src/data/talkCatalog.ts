@@ -23,6 +23,7 @@ export interface TalkViewEntry extends TalkEntry {
   displayDateIso: string;
   displayDateLabel: string;
   displayDateDetailedLabel: string;
+  slideEmbedUrl?: string;
   summary: string;
   abstract: string;
   goal: string;
@@ -160,6 +161,7 @@ function hydrateTalkEntry(talk: TalkEntry): TalkViewEntry {
     displayDateIso,
     displayDateLabel,
     displayDateDetailedLabel,
+    slideEmbedUrl: meta?.slideEmbedUrl,
     summary,
     abstract,
     goal,
