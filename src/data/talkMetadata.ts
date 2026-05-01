@@ -39,6 +39,7 @@ export interface TalkMetadata {
   title?: string;
   dateIso?: string; // YYYY-MM-DD
   dateLabel?: string; // Optional display label, e.g. "April 2025"
+  slideEmbedUrl?: string;
 
   // Required content used in the list/detail UIs and homepage update aggregation.
   summary: string;
@@ -71,6 +72,25 @@ export const talkMetadataBySlug: Record<string, TalkMetadata> = {
     audienceSizeApprox: 30,
     venueTags: ["Internal Meeting", "KNoWS Day"],
     topicTags: ["Semantic Web", "Clinical Genomics", "Knowledge Representation", "Data Privacy"],
+  },
+  "sosy2026": {
+    title: "Solid Cockpit",
+    dateIso: "2026-04-30",
+    slideEmbedUrl:
+      "https://docs.google.com/presentation/d/e/2PACX-1vSpl7vZPFJZhowI5LQCYgmOvjPNfESqYIHMaNdDlcJdYKvoS9PH-Fz-NWBVPwTbGmnpGbfciYG0SJDc/pubembed?start=false&loop=false&delayms=3000",
+    summary:
+      "Demonstration of Solid Cockpit as a unified web interface for Solid Pods, integrating data management, privacy and access-control editing, notification support, and in-browser SPARQL data discovery.",
+    abstract:
+      "Solid Pods provide decentralized, user-controlled data storage with fine-grained privacy controls, but practical usage still presents a steep learning curve for users unfamiliar with RDF and web-server concepts. This work introduces Solid Cockpit, a web-based interface designed to lower that barrier by bringing core Solid workflows into a single environment. The application supports uploading and organizing Pod data, modifying privacy and access permissions, and querying connected resources, while maintaining a fully client-side architecture through the Inrupt Solid-Client SDK. The system also incorporates linked-data privacy notification and SPARQL result-materialization specifications to improve workflow transparency and reusable query outcomes. Together, these capabilities position Solid Cockpit as a practical bridge between Solid’s decentralized architecture and everyday user interaction needs.",
+    goal:
+      "Show that a single, user-oriented interface can make decentralized Solid Pod workflows substantially more accessible without sacrificing privacy-aware controls or query capabilities.",
+    audienceExpertise:
+      "Semantic web and decentralized-data researchers evaluating practical user interfaces for privacy-aware Solid ecosystem workflows.",
+    audienceGroups: ["Semantic Web Researchers", "Computer Scientists"],
+    durationMinutes: 5,
+    audienceSizeApprox: 25,
+    venueTags: ["Symposium", "Solid Symposium"],
+    topicTags: ["Solid", "Semantic Web", "Data Privacy", "Semantic Querying"],
   },
   "sphn-pengquin-talk": {
     title: "Swiss Public Health Network (SPHN)",

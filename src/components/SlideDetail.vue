@@ -15,6 +15,15 @@
             </div>
             <div class="slide-actions">
               <router-link to="/talks" class="action-btn btn-back">Back to Talks</router-link>
+              <a
+                v-if="slideEmbedUrl"
+                :href="slideEmbedUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="action-btn btn-external"
+              >
+                Open Google Slides
+              </a>
               <a :href="slidePdfUrl" target="_blank" rel="noopener noreferrer" class="action-btn btn-pdf">
                 Open Slides PDF
               </a>
@@ -73,7 +82,19 @@
       <section id="talk-detail-slides" class="work-section">
         <article class="slide-panel toc-anchor">
             <h2>Slides</h2>
+            <div v-if="useEmbeddedSlides" class="slide-embed-shell">
+              <iframe
+                class="slide-embed-frame"
+                :src="slideEmbedUrl"
+                frameborder="0"
+                allowfullscreen="true"
+                mozallowfullscreen="true"
+                webkitallowfullscreen="true"
+                loading="lazy"
+              ></iframe>
+            </div>
             <div
+              v-else
               ref="slideFrameShell"
               class="slide-frame-shell"
             >
@@ -308,6 +329,12 @@ export default defineComponent({
     slidePdfUrl(): string {
       return this.talk ? resolvePublicAssetPath(this.talk.slidePath) : "";
     },
+    slideEmbedUrl(): string {
+      return this.talk?.slideEmbedUrl?.trim() ?? "";
+    },
+    useEmbeddedSlides(): boolean {
+      return Boolean(this.slideEmbedUrl);
+    },
     slidePageInputStyle(): Record<string, string> {
       const digitCount = String(Math.max(1, this.currentSlidePage)).length;
       const widthCh = Math.min(4.4, Math.max(1.7, digitCount + 0.35));
@@ -345,6 +372,9 @@ export default defineComponent({
   mounted() {
     window.addEventListener("keydown", this.onSlideKeyboardNav);
     this.$nextTick(() => {
+      if (this.useEmbeddedSlides) {
+        return;
+      }
       this.initSlideResizeObserver();
       this.queueSlideRender();
     });
@@ -355,7 +385,28 @@ export default defineComponent({
       handler(nextUrl: string) {
         this.currentSlidePage = 1;
         this.maxSlidePage = null;
+        if (this.useEmbeddedSlides) {
+          this.isPdfLoading = false;
+          this.isPdfRenderError = false;
+          this.pdfRenderErrorMessage = "";
+          return;
+        }
         void this.loadSlidePdfDocument(nextUrl);
+      },
+    },
+    useEmbeddedSlides: {
+      immediate: true,
+      handler(useEmbedded: boolean) {
+        if (useEmbedded) {
+          this.isPdfLoading = false;
+          this.isPdfRenderError = false;
+          this.pdfRenderErrorMessage = "";
+          return;
+        }
+        this.$nextTick(() => {
+          this.initSlideResizeObserver();
+          this.queueSlideRender();
+        });
       },
     },
     "$route.params.slug"() {
@@ -1163,6 +1214,21 @@ export default defineComponent({
   resize: vertical;
 }
 
+.slide-embed-shell {
+  width: 100%;
+  border: 1px solid var(--surface-outline);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0f0f0f;
+}
+
+.slide-embed-frame {
+  width: 100%;
+  height: clamp(560px, 80vh, 980px);
+  display: block;
+  border: 0;
+}
+
 .slide-canvas-shell {
   width: 100%;
   flex: 1 1 auto;
@@ -1288,6 +1354,12 @@ export default defineComponent({
     height: 62vh;
     max-height: 78vh;
     resize: none;
+  }
+
+  .slide-embed-frame {
+    min-height: 56vh;
+    height: 62vh;
+    max-height: 78vh;
   }
 
   .slide-canvas-shell {
