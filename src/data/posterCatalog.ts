@@ -19,6 +19,10 @@ export interface PosterViewEntry extends PosterEntry {
   audienceGroups: AudienceGroupTag[];
   venueTags: VenueTag[];
   topicTags: TopicTag[];
+  relatedResources: Array<{
+    label: string;
+    url: string;
+  }>;
   linkedTalkSlug?: string;
   linkedTalkTitle?: string;
 }
@@ -84,6 +88,7 @@ function hydratePosterEntry(
     audienceGroups: metadata?.audienceGroups ?? linkedTalk?.audienceGroups ?? [],
     venueTags: metadata?.venueTags ?? linkedTalk?.venueTags ?? [],
     topicTags: metadata?.topicTags ?? linkedTalk?.topicTags ?? [],
+    relatedResources: metadata?.relatedResources ?? linkedTalk?.relatedResources ?? [],
     linkedTalkSlug: linkedTalk?.slug,
     linkedTalkTitle: linkedTalk?.displayTitle,
   };

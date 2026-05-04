@@ -50,6 +50,8 @@ export const softwareSections: SoftwareSection[] = [
         repositoryUrl: "https://github.com/KNowledgeOnWebScale/solid-cockpit",
         mainTopics: ["Solid", "Semantic Web", "Data Privacy", "Web Application", "Federated Querying"],
         relatedPublicationIds: ["solid-cockpit-eswc-2026-demo"],
+        relatedTalkSlugs: ["sosy2026"],
+        relatedPosterSlugs: ["eswc-2026-print"],
       },
       {
         id: "genome-sharing-paper-webpage",

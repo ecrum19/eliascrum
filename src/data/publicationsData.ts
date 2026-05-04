@@ -563,6 +563,18 @@ export const publicationPresentationLinksById: Record<
   string,
   PublicationPresentationLink[]
 > = {
+  "solid-cockpit-eswc-2026-demo": [
+    {
+      kind: "talk",
+      talkSlug: "sosy2026",
+      label: "Presentation (Solid Symposium 2026)",
+    },
+    {
+      kind: "file",
+      filePath: "/talks/posters/eswc_2026_print.pdf",
+      label: "Poster (ESWC 2026)",
+    },
+  ],
   "pengquin-eswc-2024-paper": [
     {
       kind: "talk",

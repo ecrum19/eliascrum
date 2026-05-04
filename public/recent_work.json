@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-05-01T13:25:24.897Z",
+  "generatedAt": "2026-05-04T18:48:13.787Z",
   "baseIri": "https://eliascrum.github.io/eliascrum/",
   "datasetUrl": "https://eliascrum.github.io/eliascrum/recent_work.json",
   "sparqlGraphUrl": "https://eliascrum.github.io/eliascrum/recent_work.ttl",
-  "totalItems": 38,
+  "totalItems": 39,
   "recentWork": [
     {
       "id": "Publication:solid-cockpit-eswc-2026-demo",
@@ -737,6 +737,27 @@
       "itemUrl": "https://eliascrum.github.io/eliascrum/software/solid-cockpit",
       "latestRelease": null,
       "latestReleaseDateIso": null
+    },
+    {
+      "id": "Poster:eswc-2026-print",
+      "type": "Poster",
+      "title": "Solid Cockpit - ESWC 2026 Poster",
+      "tags": [
+        "Poster",
+        "Conference",
+        "ESWC",
+        "Solid",
+        "Semantic Web",
+        "Data Privacy",
+        "Semantic Querying",
+        "Semantic Web Researchers",
+        "Computer Scientists"
+      ],
+      "slug": "eswc-2026-print",
+      "summary": "Poster overview of Solid Cockpit, a unified user interface for Solid Pods that combines data management, privacy control, notifications, and semantic querying.",
+      "url": "https://eliascrum.github.io/eliascrum/talks/eswc-2026-print",
+      "sourceUrl": "https://eliascrum.github.io/eliascrum/talks/posters/eswc_2026_print.pdf",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/talks/eswc-2026-print"
     },
     {
       "id": "Software:sparql-view-materialization-containers",
