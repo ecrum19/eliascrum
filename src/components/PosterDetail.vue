@@ -60,7 +60,17 @@
             >
               <div v-for="row in detailRows" :key="row.label" class="poster-detail-row">
                 <dt>{{ row.label }}</dt>
-                <dd>{{ row.value }}</dd>
+                <dd>
+                  <a
+                    v-if="row.href"
+                    :href="row.href"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {{ row.value }}
+                  </a>
+                  <span v-else>{{ row.value }}</span>
+                </dd>
               </div>
             </dl>
 
@@ -134,6 +144,7 @@ interface PosterDetailTag {
 interface PosterDetailRow {
   label: string;
   value: string;
+  href?: string;
 }
 
 interface WorkTocEntry {
@@ -211,6 +222,13 @@ export default defineComponent({
       if (this.poster.linkedTalkTitle) {
         rows.push({ label: "Linked Talk", value: this.poster.linkedTalkTitle });
       }
+      this.poster.relatedResources.forEach((resource) => {
+        rows.push({
+          label: resource.label,
+          value: resource.url,
+          href: resource.url,
+        });
+      });
       return rows;
     },
     detailTags(): PosterDetailTag[] {

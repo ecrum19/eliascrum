@@ -27,6 +27,8 @@ export const talks: TalkEntry[] = [
     dateIso: "2026-04-30",
     dateLabel: "30/04/2026",
     slidePath: "/talks/slides/sosy2026.pdf",
+    posterPath: "/talks/posters/eswc_2026_print.pdf",
+    posterTitle: "Eswc 2026 Print",
   },
   {
     slug: "edc-knows-26",
@@ -146,6 +148,11 @@ export const posters: PosterEntry[] = [
     slug: "edc-poster-isws2024-award-winner",
     title: "EDC Poster ISWS2024(Award Winner)",
     path: "/talks/posters/EDC_Poster_ISWS2024(award_winner).pdf",
+  },
+  {
+    slug: "eswc-2026-print",
+    title: "Eswc 2026 Print",
+    path: "/talks/posters/eswc_2026_print.pdf",
   },
   {
     slug: "eswc-24-poster-edc",

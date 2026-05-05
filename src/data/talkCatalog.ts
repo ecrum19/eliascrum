@@ -39,6 +39,10 @@ export interface TalkViewEntry extends TalkEntry {
   description: string;
   venueTags: VenueTag[];
   topicTags: TopicTag[];
+  relatedResources: Array<{
+    label: string;
+    url: string;
+  }>;
 }
 
 const DEFAULT_SUMMARY =
@@ -176,6 +180,7 @@ function hydrateTalkEntry(talk: TalkEntry): TalkViewEntry {
     description: summary,
     venueTags: meta?.venueTags ?? [],
     topicTags: meta?.topicTags ?? [],
+    relatedResources: meta?.relatedResources ?? [],
   };
 }
 

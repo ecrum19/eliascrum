@@ -40,6 +40,10 @@ export interface TalkMetadata {
   dateIso?: string; // YYYY-MM-DD
   dateLabel?: string; // Optional display label, e.g. "April 2025"
   slideEmbedUrl?: string;
+  relatedResources?: Array<{
+    label: string;
+    url: string;
+  }>;
 
   // Required content used in the list/detail UIs and homepage update aggregation.
   summary: string;
@@ -91,6 +95,10 @@ export const talkMetadataBySlug: Record<string, TalkMetadata> = {
     audienceSizeApprox: 25,
     venueTags: ["Symposium", "Solid Symposium"],
     topicTags: ["Solid", "Semantic Web", "Data Privacy", "Semantic Querying"],
+    relatedResources: [
+      { label: "Related Software", url: "/software/solid-cockpit" },
+      { label: "Related Publication", url: "/publications/solid-cockpit-eswc-2026-demo/paper" },
+    ],
   },
   "sphn-pengquin-talk": {
     title: "Swiss Public Health Network (SPHN)",
@@ -387,5 +395,26 @@ export const talkMetadataBySlug: Record<string, TalkMetadata> = {
     audienceSizeApprox: 70,
     venueTags: ["Conference", "SWAT4HCLS"],
     topicTags: ["Semantic Web", "Bioinformatics", "Genomics", "Knowledge Representation"],
+  },
+  "eswc-2026-print": {
+    title: "Solid Cockpit - ESWC 2026 Poster",
+    dateIso: "2026-06-01",
+    summary:
+      "Poster overview of Solid Cockpit, a unified user interface for Solid Pods that combines data management, privacy control, notifications, and semantic querying.",
+    abstract:
+      "This poster presents Solid Cockpit as a client-side web interface designed to reduce the practical complexity of working with Solid Pods. It integrates key workflows for uploading and organizing data, managing access and privacy controls, and querying resources through SPARQL in a single environment, while preserving a decentralized architecture. The approach emphasizes usability for non-expert users without removing advanced capabilities needed for semantic data workflows.",
+    goal:
+      "Communicate the Solid Cockpit architecture, usability focus, and privacy-aware data interaction model for decentralized Solid Pod workflows.",
+    audienceExpertise:
+      "Semantic web and decentralized data researchers interested in practical interfaces for privacy-aware Solid ecosystems.",
+    audienceGroups: ["Semantic Web Researchers", "Computer Scientists"],
+    venueTags: ["Conference", "ESWC"],
+    topicTags: ["Solid", "Semantic Web", "Data Privacy", "Semantic Querying"],
+    relatedResources: [
+      { label: "Demo Video", url: "https://www.youtube.com/watch?v=eKKpJv-1U4s" },
+      { label: "Related Software", url: "/software/solid-cockpit" },
+      { label: "Related Publication", url: "/publications/solid-cockpit-eswc-2026-demo/paper" },
+      { label: "Related Talk", url: "/talks/sosy2026" },
+    ],
   },
 };

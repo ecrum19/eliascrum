@@ -35,6 +35,7 @@ const WATERMARK_Y_PT = 11;
 
 const MANUAL_POSTER_MAP = {
   "eswc-phdsymp-pangquin": "ESWC_24_Poster_EDC.pdf",
+  sosy2026: "eswc_2026_print.pdf",
 };
 
 // Source-file level mapping so talksData slugs stay aligned with talkMetadata keys.

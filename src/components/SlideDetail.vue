@@ -43,21 +43,19 @@
               <p class="talk-summary">{{ talk.abstract }}</p>
             </section>
             <dl id="talk-detail-metadata" class="talk-details-list toc-anchor">
-              <div class="talk-detail-row">
-                <dt>Goal</dt>
-                <dd>{{ talk.goal }}</dd>
-              </div>
-              <div class="talk-detail-row">
-                <dt>Audience Expertise</dt>
-                <dd>{{ talk.audienceExpertise }}</dd>
-              </div>
-              <div class="talk-detail-row">
-                <dt>Duration</dt>
-                <dd>~ {{ talk.durationMinutes }} minutes</dd>
-              </div>
-              <div class="talk-detail-row">
-                <dt>Audience Size</dt>
-                <dd>{{ talk.audienceSizeEstimate.replace(/^Approx\.?\s*/i, "~ ") }}</dd>
+              <div v-for="row in talkDetailRows" :key="row.label" class="talk-detail-row">
+                <dt>{{ row.label }}</dt>
+                <dd>
+                  <a
+                    v-if="row.href"
+                    :href="row.href"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {{ row.value }}
+                  </a>
+                  <span v-else>{{ row.value }}</span>
+                </dd>
               </div>
             </dl>
             <div id="talk-detail-tags" class="talk-tags-footer toc-anchor" v-if="detailTags.length">
@@ -225,6 +223,12 @@ interface WorkTocEntry {
   level?: number;
 }
 
+interface TalkDetailRow {
+  label: string;
+  value: string;
+  href?: string;
+}
+
 export default defineComponent({
   name: "SlideDetail",
   components: {
@@ -325,6 +329,28 @@ export default defineComponent({
       pushTag("duration", "Duration", this.talk.durationCategory, "talk-tag-duration");
 
       return tags;
+    },
+    talkDetailRows(): TalkDetailRow[] {
+      if (!this.talk) {
+        return [];
+      }
+
+      const rows: TalkDetailRow[] = [
+        { label: "Goal", value: this.talk.goal },
+        { label: "Audience Expertise", value: this.talk.audienceExpertise },
+        { label: "Duration", value: `~ ${this.talk.durationMinutes} minutes` },
+        { label: "Audience Size", value: this.talk.audienceSizeEstimate.replace(/^Approx\\.?\\s*/i, "~ ") },
+      ];
+
+      this.talk.relatedResources.forEach((resource) => {
+        rows.push({
+          label: resource.label,
+          value: resource.url,
+          href: resource.url,
+        });
+      });
+
+      return rows;
     },
     slidePdfUrl(): string {
       return this.talk ? resolvePublicAssetPath(this.talk.slidePath) : "";
