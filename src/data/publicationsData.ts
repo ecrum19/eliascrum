@@ -594,13 +594,6 @@ export const publicationPresentationLinksById: Record<
       label: "Poster (SWAT4HCLS 2024)",
     },
   ],
-  "TRIPLE-SWAT4HCLS-2024": [
-    {
-      kind: "file",
-      filePath: "/talks/posters/...",
-      label: "Consortium Poster (SWAT4HCLS 2024)",
-    },
-  ],
   "vcf2rdf-SWAT4HCLS-2025": [
     {
       kind: "file",

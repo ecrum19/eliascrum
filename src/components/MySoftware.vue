@@ -171,9 +171,9 @@
                     Latest release:
                     <a
                       v-if="softwareReleaseLink(project)"
-                      :href="softwareReleaseLink(project) || undefined"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      :href="normalizeLinkUrl(softwareReleaseLink(project) || '')"
+                      :target="linkTarget(softwareReleaseLink(project) || '')"
+                      :rel="linkRel(softwareReleaseLink(project) || '')"
                     >
                       {{ softwareReleaseText(project) }}
                     </a>
@@ -189,18 +189,18 @@
                     </router-link>
                     <a
                       v-if="project.repositoryUrl"
-                      :href="project.repositoryUrl"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      :href="normalizeLinkUrl(project.repositoryUrl)"
+                      :target="linkTarget(project.repositoryUrl)"
+                      :rel="linkRel(project.repositoryUrl)"
                       class="software-action-btn btn-external"
                     >
                       To Git Repo
                     </a>
                     <a
                       v-if="project.webUrl"
-                      :href="project.webUrl"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      :href="normalizeLinkUrl(project.webUrl)"
+                      :target="linkTarget(project.webUrl)"
+                      :rel="linkRel(project.webUrl)"
                       class="software-action-btn btn-external"
                     >
                       To Web Page
@@ -230,6 +230,7 @@ import {
   type SoftwareSection,
 } from "../data/softwareData";
 import { softwareReleasesBySoftwareId, type SoftwareReleaseInfo } from "../data/softwareReleases";
+import { resolvePublicAssetPath } from "../utils/publicAssetPath";
 import WorkPageLayout from "./layout/WorkPageLayout.vue";
 import WorkSectionBlock from "./layout/WorkSectionBlock.vue";
 
@@ -394,6 +395,28 @@ export default defineComponent({
     },
   },
   methods: {
+    isExternalUrl(url: string): boolean {
+      return /^(?:[a-z][a-z\d+\-.]*:|\/\/)/i.test(url);
+    },
+    normalizeLinkUrl(url: string): string {
+      if (!url || this.isExternalUrl(url)) {
+        return url;
+      }
+
+      const baseUrl = import.meta.env.BASE_URL || "/";
+      const normalizedBase = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+      if (url.startsWith(normalizedBase)) {
+        return url;
+      }
+
+      return resolvePublicAssetPath(url);
+    },
+    linkTarget(url: string): string | undefined {
+      return this.isExternalUrl(url) ? "_blank" : undefined;
+    },
+    linkRel(url: string): string | undefined {
+      return this.isExternalUrl(url) ? "noopener noreferrer" : undefined;
+    },
     softwareBlockId(sectionId: string): string {
       return `software-section-${sectionId}`;
     },
