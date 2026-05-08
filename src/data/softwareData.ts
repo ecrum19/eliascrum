@@ -93,6 +93,27 @@ export const softwareSections: SoftwareSection[] = [
     ],
   },
   {
+    id: "utilities",
+    title: "Utilities",
+    description:
+      "Small practical tools for day-to-day research and communication workflows.",
+    entries: [
+      {
+        id: "qr-code-generator",
+        title: "QR Code Generator",
+        type: "Utility Tool",
+        purpose: "Research Communication",
+        year: "2026",
+        summary:
+          "Lightweight generator for producing QR codes that can be reused in posters, slides, and project materials.",
+        description:
+          "A utility project for quickly creating QR codes for links and references in research-facing assets such as conference posters, presentation slides, and supporting documentation.",
+        repositoryUrl: "https://github.com/ecrum19/qr-code-generator",
+        mainTopics: ["Utilities", "Research Communication", "Web Application"],
+      },
+    ],
+  },
+  {
     id: "websites-companion-resources",
     title: "Semantic Resources",
     description:

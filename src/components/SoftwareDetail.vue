@@ -21,18 +21,18 @@
               <router-link to="/software" class="action-btn btn-back">Back to Software</router-link>
               <a
                 v-if="software.repositoryUrl"
-                :href="software.repositoryUrl"
-                target="_blank"
-                rel="noopener noreferrer"
+                :href="normalizeLinkUrl(software.repositoryUrl)"
+                :target="linkTarget(software.repositoryUrl)"
+                :rel="linkRel(software.repositoryUrl)"
                 class="action-btn btn-external"
               >
                 To Git Repo
               </a>
               <a
                 v-if="software.webUrl"
-                :href="software.webUrl"
-                target="_blank"
-                rel="noopener noreferrer"
+                :href="normalizeLinkUrl(software.webUrl)"
+                :target="linkTarget(software.webUrl)"
+                :rel="linkRel(software.webUrl)"
                 class="action-btn btn-external"
               >
                 To Web Page
@@ -63,9 +63,9 @@
                 <dd>
                   <a
                     v-if="row.href"
-                    :href="row.href"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    :href="normalizeLinkUrl(row.href)"
+                    :target="linkTarget(row.href)"
+                    :rel="linkRel(row.href)"
                   >
                     {{ row.value }}
                   </a>
@@ -149,6 +149,7 @@ import {
 } from "../data/publicationsData";
 import { getPosterViewBySlug } from "../data/posterCatalog";
 import { getTalkViewBySlug } from "../data/talkCatalog";
+import { resolvePublicAssetPath } from "../utils/publicAssetPath";
 import WorkPageLayout from "./layout/WorkPageLayout.vue";
 
 interface WorkTocEntry {
@@ -167,6 +168,30 @@ export default defineComponent({
   name: "SoftwareDetail",
   components: {
     WorkPageLayout,
+  },
+  methods: {
+    isExternalUrl(url: string): boolean {
+      return /^(?:[a-z][a-z\d+\-.]*:|\/\/)/i.test(url);
+    },
+    normalizeLinkUrl(url: string): string {
+      if (!url || this.isExternalUrl(url)) {
+        return url;
+      }
+
+      const baseUrl = import.meta.env.BASE_URL || "/";
+      const normalizedBase = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+      if (url.startsWith(normalizedBase)) {
+        return url;
+      }
+
+      return resolvePublicAssetPath(url);
+    },
+    linkTarget(url: string): string | undefined {
+      return this.isExternalUrl(url) ? "_blank" : undefined;
+    },
+    linkRel(url: string): string | undefined {
+      return this.isExternalUrl(url) ? "noopener noreferrer" : undefined;
+    },
   },
   computed: {
     software(): SoftwareEntry | undefined {
@@ -222,15 +247,6 @@ export default defineComponent({
           : []),
         ...(this.software.webUrl
           ? [{ label: "Web Page", value: this.software.webUrl, href: this.software.webUrl }]
-          : []),
-        ...(this.softwareRelease?.tagName
-          ? [
-              {
-                label: "Release Version",
-                value: this.softwareRelease.tagName,
-                href: this.softwareRelease?.url ?? undefined,
-              },
-            ]
           : []),
         ...(this.softwareReleaseLabel
           ? [

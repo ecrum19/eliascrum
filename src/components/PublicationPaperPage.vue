@@ -14,9 +14,9 @@
               <router-link to="/publications" class="paper-action-btn btn-back">Back to Publications</router-link>
               <a
                 v-if="paperOpenHref"
-                :href="paperOpenHref"
-                target="_blank"
-                rel="noopener noreferrer"
+                :href="normalizeLinkUrl(paperOpenHref)"
+                :target="linkTarget(paperOpenHref)"
+                :rel="linkRel(paperOpenHref)"
                 :class="['paper-action-btn', paperOpenButtonClass]"
               >
                 {{ paperOpenLabel }}
@@ -64,9 +64,9 @@
                   <span class="paper-detail-label">{{ detail.label }}:</span>
                   <a
                     v-if="detail.href"
-                    :href="detail.href"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    :href="normalizeLinkUrl(detail.href)"
+                    :target="linkTarget(detail.href)"
+                    :rel="linkRel(detail.href)"
                   >
                     {{ detail.value }}
                   </a>
@@ -130,9 +130,9 @@
                   </div>
                   <a
                     v-if="paperOpenHref"
-                    :href="paperOpenHref"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    :href="normalizeLinkUrl(paperOpenHref)"
+                    :target="linkTarget(paperOpenHref)"
+                    :rel="linkRel(paperOpenHref)"
                     class="paper-inline-link"
                   >
                     {{ paperOpenLabel }}
@@ -157,9 +157,9 @@
                     <span v-if="pdfRenderErrorMessage" class="paper-error-text">{{ pdfRenderErrorMessage }}</span>
                     <a
                       v-if="paperOpenHref"
-                      :href="paperOpenHref"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      :href="normalizeLinkUrl(paperOpenHref)"
+                      :target="linkTarget(paperOpenHref)"
+                      :rel="linkRel(paperOpenHref)"
                     >
                       {{ paperOpenLabel }}
                     </a>
@@ -204,9 +204,9 @@
                 <p>{{ previewUnavailableLabel }}</p>
                 <a
                   v-if="paperOpenHref"
-                  :href="paperOpenHref"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  :href="normalizeLinkUrl(paperOpenHref)"
+                  :target="linkTarget(paperOpenHref)"
+                  :rel="linkRel(paperOpenHref)"
                   :class="['paper-action-btn', paperOpenButtonClass]"
                 >
                   {{ paperOpenLabel }}
@@ -500,6 +500,28 @@ export default defineComponent({
     });
   },
   methods: {
+    isExternalUrl(url: string): boolean {
+      return /^(?:[a-z][a-z\d+\-.]*:|\/\/)/i.test(url);
+    },
+    normalizeLinkUrl(url: string): string {
+      if (!url || this.isExternalUrl(url)) {
+        return url;
+      }
+
+      const baseUrl = import.meta.env.BASE_URL || "/";
+      const normalizedBase = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+      if (url.startsWith(normalizedBase)) {
+        return url;
+      }
+
+      return resolvePublicAssetPath(url);
+    },
+    linkTarget(url: string): string | undefined {
+      return this.isExternalUrl(url) ? "_blank" : undefined;
+    },
+    linkRel(url: string): string | undefined {
+      return this.isExternalUrl(url) ? "noopener noreferrer" : undefined;
+    },
     isPdfCancellationError(error: unknown): boolean {
       const errorName = (error as { name?: string })?.name;
       return (

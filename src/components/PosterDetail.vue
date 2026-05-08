@@ -17,7 +17,7 @@
 
             <div class="poster-actions">
               <router-link to="/talks" class="action-btn btn-back">Back to Talks</router-link>
-              <a :href="posterPdfUrl" target="_blank" rel="noopener noreferrer" class="action-btn btn-pdf">
+              <a :href="posterPdfUrl" class="action-btn btn-pdf">
                 Open Poster PDF
               </a>
               <router-link
@@ -30,9 +30,7 @@
               <a
                 v-for="publicationLink in relatedPublicationLinks"
                 :key="publicationLink.key"
-                :href="publicationLink.url"
-                target="_blank"
-                rel="noopener noreferrer"
+                :href="toNavigableUrl(publicationLink.url)"
                 class="action-btn btn-external"
               >
                 {{ publicationLink.label }}
@@ -63,9 +61,9 @@
                 <dd>
                   <a
                     v-if="row.href"
-                    :href="row.href"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    :href="toNavigableUrl(row.href)"
+                    :target="linkTarget(row.href)"
+                    :rel="linkRel(row.href)"
                   >
                     {{ row.value }}
                   </a>
@@ -99,7 +97,7 @@
           <object :data="`${posterPdfUrl}#page=1&zoom=page-fit`" type="application/pdf" class="poster-frame">
             <p>
               Your browser cannot render the PDF inline.
-              <a :href="posterPdfUrl" target="_blank" rel="noopener noreferrer">Open the poster</a>.
+              <a :href="posterPdfUrl">Open the poster</a>.
             </p>
           </object>
         </article>
@@ -157,6 +155,20 @@ export default defineComponent({
   name: "PosterDetail",
   components: {
     WorkPageLayout,
+  },
+  methods: {
+    isExternalUrl(url: string): boolean {
+      return /^(?:[a-z][a-z\d+\-.]*:|\/\/)/i.test(url);
+    },
+    toNavigableUrl(url: string): string {
+      return this.isExternalUrl(url) ? url : resolvePublicAssetPath(url);
+    },
+    linkTarget(url: string): string | undefined {
+      return this.isExternalUrl(url) ? "_blank" : undefined;
+    },
+    linkRel(url: string): string | undefined {
+      return this.isExternalUrl(url) ? "noopener noreferrer" : undefined;
+    },
   },
   computed: {
     tocEntries(): WorkTocEntry[] {

@@ -18,21 +18,19 @@
               <a
                 v-if="slideEmbedUrl"
                 :href="slideEmbedUrl"
-                target="_blank"
-                rel="noopener noreferrer"
+                :target="linkTarget(slideEmbedUrl)"
+                :rel="linkRel(slideEmbedUrl)"
                 class="action-btn btn-external"
               >
                 Open Google Slides
               </a>
-              <a :href="slidePdfUrl" target="_blank" rel="noopener noreferrer" class="action-btn btn-pdf">
+              <a :href="slidePdfUrl" class="action-btn btn-pdf">
                 Open Slides PDF
               </a>
               <a
                 v-for="publicationLink in relatedPublicationLinks"
                 :key="publicationLink.key"
-                :href="publicationLink.url"
-                target="_blank"
-                rel="noopener noreferrer"
+                :href="toNavigableUrl(publicationLink.url)"
                 class="action-btn btn-external"
               >
                 {{ publicationLink.label }}
@@ -48,9 +46,9 @@
                 <dd>
                   <a
                     v-if="row.href"
-                    :href="row.href"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    :href="toNavigableUrl(row.href)"
+                    :target="linkTarget(row.href)"
+                    :rel="linkRel(row.href)"
                   >
                     {{ row.value }}
                   </a>
@@ -104,7 +102,7 @@
                 <div v-else-if="isPdfRenderError" class="slide-canvas-overlay">
                   <span>Preview unavailable.</span>
                   <span v-if="pdfRenderErrorMessage" class="slide-error-text">{{ pdfRenderErrorMessage }}</span>
-                  <a :href="slidePdfUrl" target="_blank" rel="noopener noreferrer">Open the slides</a>
+                  <a :href="slidePdfUrl">Open the slides</a>
                 </div>
               </div>
               <div class="slide-pagination slide-pagination-footer" aria-label="Slide navigation controls">
@@ -151,7 +149,7 @@
             <object :data="posterPdfUrl" type="application/pdf" class="poster-frame">
               <p>
                 Your browser cannot render the PDF inline.
-                <a :href="posterPdfUrl" target="_blank" rel="noopener noreferrer">Open the poster</a>.
+                <a :href="posterPdfUrl">Open the poster</a>.
               </p>
             </object>
         </article>
@@ -443,6 +441,18 @@ export default defineComponent({
     },
   },
   methods: {
+    isExternalUrl(url: string): boolean {
+      return /^(?:[a-z][a-z\d+\-.]*:|\/\/)/i.test(url);
+    },
+    toNavigableUrl(url: string): string {
+      return this.isExternalUrl(url) ? url : resolvePublicAssetPath(url);
+    },
+    linkTarget(url: string): string | undefined {
+      return this.isExternalUrl(url) ? "_blank" : undefined;
+    },
+    linkRel(url: string): string | undefined {
+      return this.isExternalUrl(url) ? "noopener noreferrer" : undefined;
+    },
     isPdfCancellationError(error: unknown): boolean {
       const errorName = (error as { name?: string })?.name;
       return (

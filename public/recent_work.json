@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-05-04T18:48:13.787Z",
+  "generatedAt": "2026-05-08T07:24:25.369Z",
   "baseIri": "https://eliascrum.github.io/eliascrum/",
   "datasetUrl": "https://eliascrum.github.io/eliascrum/recent_work.json",
   "sparqlGraphUrl": "https://eliascrum.github.io/eliascrum/recent_work.ttl",
-  "totalItems": 39,
+  "totalItems": 40,
   "recentWork": [
     {
       "id": "Publication:solid-cockpit-eswc-2026-demo",
@@ -123,6 +123,26 @@
       "url": "https://eliascrum.github.io/eliascrum/publications/genome-sharing-review-2026/paper",
       "sourceUrl": "https://www.sciencedirect.com/science/article/pii/S0010482525016890",
       "itemUrl": "https://eliascrum.github.io/eliascrum/publications/genome-sharing-review-2026/paper"
+    },
+    {
+      "id": "Software:qr-code-generator",
+      "type": "Software",
+      "title": "QR Code Generator",
+      "tags": [
+        "Utility Tool",
+        "Research Communication",
+        "Utilities",
+        "Research Communication",
+        "Web Application"
+      ],
+      "slug": "qr-code-generator",
+      "dateIso": "2026-01-01",
+      "summary": "Lightweight generator for producing QR codes that can be reused in posters, slides, and project materials.",
+      "url": "https://eliascrum.github.io/eliascrum/software/qr-code-generator",
+      "sourceUrl": "https://github.com/ecrum19/qr-code-generator",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/qr-code-generator",
+      "latestRelease": null,
+      "latestReleaseDateIso": null
     },
     {
       "id": "Software:vcf-rdfizer",

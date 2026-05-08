@@ -19,9 +19,9 @@
                 :key="profile.id"
                 class="profile-link"
                 :class="profile.variant"
-                :href="profile.url"
-                target="_blank"
-                rel="noopener noreferrer"
+                :href="normalizeLinkUrl(profile.url)"
+                :target="linkTarget(profile.url)"
+                :rel="linkRel(profile.url)"
                 :aria-label="profile.label"
                 :title="profile.label"
               >
@@ -236,9 +236,9 @@
                         <span class="detail-label">{{ detail.label }}:</span>
                         <a
                           v-if="detail.href"
-                          :href="detail.href"
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          :href="normalizeLinkUrl(detail.href)"
+                          :target="linkTarget(detail.href)"
+                          :rel="linkRel(detail.href)"
                         >
                           {{ detail.value }}
                         </a>
@@ -302,9 +302,9 @@
                   </router-link>
                   <a
                     v-if="publicationPdfHref(publication)"
-                    :href="publicationPdfHref(publication)"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    :href="normalizeLinkUrl(publicationPdfHref(publication) || '')"
+                    :target="linkTarget(publicationPdfHref(publication) || '')"
+                    :rel="linkRel(publicationPdfHref(publication) || '')"
                     class="publication-action-btn btn-pdf"
                   >
                     Open Paper PDF
@@ -322,9 +322,9 @@
                     </router-link>
                     <a
                       v-else
-                      :href="link.href"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      :href="normalizeLinkUrl(link.href || '')"
+                      :target="linkTarget(link.href || '')"
+                      :rel="linkRel(link.href || '')"
                       class="publication-action-btn btn-pdf"
                     >
                       {{ link.label }}
@@ -584,6 +584,28 @@ export default defineComponent({
     },
   },
   methods: {
+    isExternalUrl(url: string): boolean {
+      return /^(?:[a-z][a-z\d+\-.]*:|\/\/)/i.test(url);
+    },
+    normalizeLinkUrl(url: string): string {
+      if (!url || this.isExternalUrl(url)) {
+        return url;
+      }
+
+      const baseUrl = import.meta.env.BASE_URL || "/";
+      const normalizedBase = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+      if (url.startsWith(normalizedBase)) {
+        return url;
+      }
+
+      return resolvePublicAssetPath(url);
+    },
+    linkTarget(url: string): string | undefined {
+      return this.isExternalUrl(url) ? "_blank" : undefined;
+    },
+    linkRel(url: string): string | undefined {
+      return this.isExternalUrl(url) ? "noopener noreferrer" : undefined;
+    },
     publicationSectionId(publicationId: string): string {
       return `publication-${publicationId}`;
     },
