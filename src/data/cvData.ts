@@ -162,7 +162,7 @@ export const cvSections: CvSection[] = [
       {
         group: "Graduate Education",
         date: "2026",
-        role: "Aaibaar (most astheticly pleasing) Poster Award",
+        role: "AIbare Award",
         organization: "SWAT4HCLS 2026",
         location: "Amsterdam, The Netherlands",
         details: [
@@ -171,6 +171,12 @@ export const cvSections: CvSection[] = [
             text: "From VCF to RDF: RML-Based Conversion Approaches for the Semantic Representation of Variant Data",
             url: "/publications/vcf-to-rdf-rml-swat4hcls-2026/paper",
             internal: true,
+          },
+        ],
+        artifacts: [
+          {
+            label: "AIbare Award Certificate",
+            path: "/cv/artifacts/swat4hcls26-aibare-award-certificate.pdf",
           },
         ],
       },
