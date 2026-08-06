@@ -103,6 +103,63 @@ export const publicationProfileLinks: ExternalProfileLink[] = [
 
 export const publications: Publication[] = [
   {
+    id: "real-world-federation-iswc-2026",
+    slug: "real-world-federation-iswc-2026",
+    title:
+      "Does SPARQL federation work in the real world? A case study over large biological SPARQL endpoints",
+    authors:
+      "E. Crum, B.-E. Tam, J. Hanski, A.-C. Sima, T. Mendes de Farias, J. Bolleman, R. Taelman",
+    venue: "International Semantic Web Conference (ISWC) 2026",
+    year: 2026,
+    sortDate: "2026-10-27",
+    type: "Conference Paper",
+    venueTags: ["ISWC"],
+    topicTags: [
+      "Semantic Web",
+      "Federated Querying",
+      "Semantic Querying",
+      "Bioinformatics",
+    ],
+    url: "",
+    summary:
+      "Presents an 18-month longitudinal study of 67 real-world federated biological SPARQL queries over more than 20 public endpoints, showing that current algorithmic federation approaches perform substantially worse than manual federation and that execution success declines over time for both.",
+    abstract:
+      "Federated SPARQL querying theoretically enables data integration over distributed knowledge sources without requiring centralized data replication. In practice, federated SPARQL querying can be performed manually (i.e., the user provides SERVICE clauses that specify targets for operations) or algorithmically (i.e., an adaptive approach for automatic source assignment for operations). To date, most evaluations of SPARQL federation, both manual and algorithmic, are conducted under controlled benchmark conditions and say relatively little about how federation behaves against public endpoints in everyday use. We present a longitudinal study that executes 67 real-world federated SPARQL queries that target over 20 widely-used, large public SPARQL endpoints, using both manual and algorithmic federation approaches, at four different time points between Spring 2025 and Spring 2026. The federated queries were obtained from users of these endpoints and the majority represent complex, biologically relevant questions. We found that the current state-of-the-art algorithmic federation approaches perform substantially worse than manual approaches across all time points, and in most cases encounter errors when executing the queries tested. We also found that query execution success decreased over the time points tested for both manual and automatic methods. These findings are framed from both user and endpoint-maintainer perspectives to encourage collaborative, community-driven improvements for users and data source maintainers alike.",
+    bibtex: `@inproceedings{crum2026realworldfederation,
+  title={Does SPARQL federation work in the real world? A case study over large biological SPARQL endpoints},
+  author={Crum, Elias and Tam, Bryan-Elliott and Hanski, Jonni and Sima, Ana-Claudia and Mendes de Farias, Tarcisio and Bolleman, Jerven and Taelman, Ruben},
+  booktitle={International Semantic Web Conference (ISWC) 2026},
+  address={Bari, Italy},
+  month={oct},
+  year={2026},
+  note={Accepted conference paper},
+}`,
+    details: [
+      { label: "Publication Type", value: "Conference Paper" },
+      { label: "Conference", value: "International Semantic Web Conference (ISWC) 2026" },
+      { label: "Location", value: "Bari, Italy" },
+      { label: "Date", value: "2026-10-27" },
+      { label: "Status", value: "Accepted" },
+      {
+        label: "Keywords",
+        value: "SPARQL Querying, Federated Querying, Real-World Querying, SPARQL Endpoints",
+      },
+      {
+        label: "Related Software",
+        value: "Federated Query Results Explorer",
+        href: "/software/fed-survey-results-explorer",
+      },
+      {
+        label: "Companion Results Website",
+        value: "fed-survey-results",
+        href: "https://ecrum19.github.io/fed-survey-results/",
+      },
+      { label: "DOI", value: "Not yet available" },
+      { label: "Web Version", value: "Not yet available" },
+    ],
+    paperPdfPath: "/publications/papers/iswc-2026-real-world-federation-paper.pdf",
+  },
+  {
     id: "solid-cockpit-eswc-2026-demo",
     slug: "solid-cockpit-eswc-2026-demo",
     title:

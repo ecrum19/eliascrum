@@ -1,10 +1,28 @@
 {
-  "generatedAt": "2026-05-08T07:24:25.369Z",
+  "generatedAt": "2026-08-06T08:45:33.281Z",
   "baseIri": "https://eliascrum.github.io/eliascrum/",
   "datasetUrl": "https://eliascrum.github.io/eliascrum/recent_work.json",
   "sparqlGraphUrl": "https://eliascrum.github.io/eliascrum/recent_work.ttl",
-  "totalItems": 40,
+  "totalItems": 42,
   "recentWork": [
+    {
+      "id": "Publication:real-world-federation-iswc-2026",
+      "type": "Publication",
+      "title": "Does SPARQL federation work in the real world? A case study over large biological SPARQL endpoints",
+      "tags": [
+        "Conference Paper",
+        "ISWC",
+        "Semantic Web",
+        "Federated Querying",
+        "Semantic Querying",
+        "Bioinformatics"
+      ],
+      "slug": "real-world-federation-iswc-2026",
+      "dateIso": "2026-10-27",
+      "summary": "Presents an 18-month longitudinal study of 67 real-world federated biological SPARQL queries over more than 20 public endpoints, showing that current algorithmic federation approaches perform substantially worse than manual federation and that execution success declines over time for both.",
+      "url": "https://eliascrum.github.io/eliascrum/publications/real-world-federation-iswc-2026/paper",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/publications/real-world-federation-iswc-2026/paper"
+    },
     {
       "id": "Publication:solid-cockpit-eswc-2026-demo",
       "type": "Publication",
@@ -87,6 +105,27 @@
       "itemUrl": "https://eliascrum.github.io/eliascrum/publications/vcf-to-rdf-rml-swat4hcls-2026/paper"
     },
     {
+      "id": "Software:fed-survey-results-explorer",
+      "type": "Software",
+      "title": "Federated Query Results Explorer",
+      "tags": [
+        "Companion Website",
+        "Experimental Results Exploration",
+        "Semantic Web",
+        "Federated Querying",
+        "Semantic Querying",
+        "Research Communication"
+      ],
+      "slug": "fed-survey-results-explorer",
+      "dateIso": "2026-01-01",
+      "summary": "Interactive results website for exploring longitudinal federation experiments over real-world biological SPARQL endpoints.",
+      "url": "https://eliascrum.github.io/eliascrum/software/fed-survey-results-explorer",
+      "sourceUrl": "https://ecrum19.github.io/fed-survey-results",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/fed-survey-results-explorer",
+      "latestRelease": null,
+      "latestReleaseDateIso": null
+    },
+    {
       "id": "Software:genome-sharing-paper-webpage",
       "type": "Software",
       "title": "Genome Sharing Paper Webpage",
@@ -104,8 +143,13 @@
       "url": "https://eliascrum.github.io/eliascrum/software/genome-sharing-paper-webpage",
       "sourceUrl": "https://github.com/ecrum19/GenomeSharingPaper_Webpage",
       "itemUrl": "https://eliascrum.github.io/eliascrum/software/genome-sharing-paper-webpage",
-      "latestRelease": null,
-      "latestReleaseDateIso": null
+      "latestRelease": {
+        "tagName": null,
+        "name": "Latest update (main)",
+        "url": "https://github.com/ecrum19/GenomeSharingPaper_Webpage",
+        "publishedAt": "2026-03-19T11:59:08.000Z"
+      },
+      "latestReleaseDateIso": "2026-03-19"
     },
     {
       "id": "Publication:genome-sharing-review-2026",
@@ -141,8 +185,13 @@
       "url": "https://eliascrum.github.io/eliascrum/software/qr-code-generator",
       "sourceUrl": "https://github.com/ecrum19/qr-code-generator",
       "itemUrl": "https://eliascrum.github.io/eliascrum/software/qr-code-generator",
-      "latestRelease": null,
-      "latestReleaseDateIso": null
+      "latestRelease": {
+        "tagName": null,
+        "name": "Latest update (main)",
+        "url": "https://github.com/ecrum19/qr-code-generator",
+        "publishedAt": "2026-08-04T08:33:54.000Z"
+      },
+      "latestReleaseDateIso": "2026-08-04"
     },
     {
       "id": "Software:vcf-rdfizer",
@@ -163,8 +212,13 @@
       "url": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer",
       "sourceUrl": "https://github.com/ecrum19/VCF-RDFizer",
       "itemUrl": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer",
-      "latestRelease": null,
-      "latestReleaseDateIso": null
+      "latestRelease": {
+        "tagName": "v1.2.3",
+        "name": "v1.2.3",
+        "url": "https://github.com/ecrum19/VCF-RDFizer/releases/tag/v1.2.3",
+        "publishedAt": "2026-06-02T11:47:19.000Z"
+      },
+      "latestReleaseDateIso": "2026-06-02"
     },
     {
       "id": "Software:vcf-rdfizer-vocabulary",
@@ -624,8 +678,13 @@
       "url": "https://eliascrum.github.io/eliascrum/software/ldp-permissions-notifications-specification",
       "sourceUrl": "https://github.com/ecrum19/ldp-permissions-notifications-specification",
       "itemUrl": "https://eliascrum.github.io/eliascrum/software/ldp-permissions-notifications-specification",
-      "latestRelease": null,
-      "latestReleaseDateIso": null
+      "latestRelease": {
+        "tagName": null,
+        "name": "Latest update (main)",
+        "url": "https://github.com/ecrum19/ldp-permissions-notifications-specification",
+        "publishedAt": "2026-02-11T10:17:57.000Z"
+      },
+      "latestReleaseDateIso": "2026-02-11"
     },
     {
       "id": "Poster:e-i-xchange24-poster-edc",
@@ -755,8 +814,13 @@
       "url": "https://eliascrum.github.io/eliascrum/software/solid-cockpit",
       "sourceUrl": "https://github.com/KNowledgeOnWebScale/solid-cockpit",
       "itemUrl": "https://eliascrum.github.io/eliascrum/software/solid-cockpit",
-      "latestRelease": null,
-      "latestReleaseDateIso": null
+      "latestRelease": {
+        "tagName": "v1.3.0",
+        "name": "v1.3.0",
+        "url": "https://github.com/KNowledgeOnWebScale/solid-cockpit/releases/tag/v1.3.0",
+        "publishedAt": "2026-06-04T09:54:06.000Z"
+      },
+      "latestReleaseDateIso": "2026-06-04"
     },
     {
       "id": "Poster:eswc-2026-print",
@@ -796,8 +860,13 @@
       "url": "https://eliascrum.github.io/eliascrum/software/sparql-view-materialization-containers",
       "sourceUrl": "https://github.com/ecrum19/sparql-view-materialization-containers",
       "itemUrl": "https://eliascrum.github.io/eliascrum/software/sparql-view-materialization-containers",
-      "latestRelease": null,
-      "latestReleaseDateIso": null
+      "latestRelease": {
+        "tagName": null,
+        "name": "Latest update (main)",
+        "url": "https://github.com/ecrum19/sparql-view-materialization-containers",
+        "publishedAt": "2026-02-03T09:02:44.000Z"
+      },
+      "latestReleaseDateIso": "2026-02-03"
     },
     {
       "id": "Poster:swat4hcls-2026",

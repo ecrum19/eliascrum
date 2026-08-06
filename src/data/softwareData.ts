@@ -67,6 +67,20 @@ export const softwareSections: SoftwareSection[] = [
         mainTopics: ["Clinical Genomics", "Research Communication", "Website", "Companion Resource"],
         relatedPublicationIds: ["genome-sharing-review-2026"],
       },
+      {
+        id: "fed-survey-results-explorer",
+        title: "Federated Query Results Explorer",
+        type: "Companion Website",
+        purpose: "Experimental Results Exploration",
+        year: "2026",
+        summary:
+          "Interactive results website for exploring longitudinal federation experiments over real-world biological SPARQL endpoints.",
+        description:
+          "This companion website exposes the outcome summaries, query-level views, endpoint breakdowns, and complexity analyses associated with the ISWC 2026 paper on real-world SPARQL federation. It is intended to make the experimental findings easier to inspect, revisit, and communicate beyond the static paper.",
+        webUrl: "https://ecrum19.github.io/fed-survey-results",
+        mainTopics: ["Semantic Web", "Federated Querying", "Semantic Querying", "Research Communication"],
+        relatedPublicationIds: ["real-world-federation-iswc-2026"],
+      },
     ],
   },
   {
