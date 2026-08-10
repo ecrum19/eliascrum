@@ -6,6 +6,7 @@ export const PUBLICATION_TYPE_TAG_OPTIONS = [
   "Journal Article",
   "Workshop Paper",
   "Thesis",
+  "Preprint",
 ] as const;
 
 export type PublicationTypeTag =
@@ -122,7 +123,7 @@ export const publications: Publication[] = [
     ],
     url: "",
     summary:
-      "Presents an 18-month longitudinal study of 67 real-world federated biological SPARQL queries over more than 20 public endpoints, showing that current algorithmic federation approaches perform substantially worse than manual federation and that execution success declines over time for both.",
+      "Presents an 18-month longitudinal study of 67 real-world federated biological SPARQL queries over more than 20 public endpoints, and shows that a) execution success declines over time with very few queries functional by June 2026, b) current algorithmic federation approaches perform substantially worse than manual federation, and c) work is needed to assess how to enable federation over public endpoints in the age of the LLM.",
     abstract:
       "Federated SPARQL querying theoretically enables data integration over distributed knowledge sources without requiring centralized data replication. In practice, federated SPARQL querying can be performed manually (i.e., the user provides SERVICE clauses that specify targets for operations) or algorithmically (i.e., an adaptive approach for automatic source assignment for operations). To date, most evaluations of SPARQL federation, both manual and algorithmic, are conducted under controlled benchmark conditions and say relatively little about how federation behaves against public endpoints in everyday use. We present a longitudinal study that executes 67 real-world federated SPARQL queries that target over 20 widely-used, large public SPARQL endpoints, using both manual and algorithmic federation approaches, at four different time points between Spring 2025 and Spring 2026. The federated queries were obtained from users of these endpoints and the majority represent complex, biologically relevant questions. We found that the current state-of-the-art algorithmic federation approaches perform substantially worse than manual approaches across all time points, and in most cases encounter errors when executing the queries tested. We also found that query execution success decreased over the time points tested for both manual and automatic methods. These findings are framed from both user and endpoint-maintainer perspectives to encourage collaborative, community-driven improvements for users and data source maintainers alike.",
     bibtex: `@inproceedings{crum2026realworldfederation,
@@ -358,6 +359,52 @@ export const publications: Publication[] = [
         href: "https://wikidataworkshop.github.io/2025/papers/paper5.pdf",
       },
     ],
+  },
+  {
+    id: "genomic-variant-representation-rdf-preprint-2025",
+    slug: "genomic-variant-representation-rdf-preprint-2025",
+    title: "Variant representation in RDF",
+    authors:
+      "N. Queralt-Rosinach, A. J. Kellmann, A. Bodrug-Schepers, A. Gaignard, E. Crum, P. Larmande, A. Waagmeester, J. Bolleman",
+    venue: "BioHackrXiv",
+    year: 2025,
+    sortDate: "2025-02-24",
+    type: "Preprint",
+    venueTags: ["SWAT4HCLS"],
+    topicTags: ["Semantic Web", "Knowledge Representation", "Clinical Genomics", "Genomics"],
+    url: "https://doi.org/10.37044/osf.io/jazsb_v1",
+    summary:
+      "Reports initial BioHackathon results on aligning genomic variant RDF schemas identified at SWAT4HCLS 2025, with focus on improving interoperability and reuse of variant data for clinical applications.",
+    abstract:
+      "During the International SWAT4HCLS conference held on 24-27th February 2025 in Barcelona (Spain), we detected an emerging number of novel RDF models to represent variant information in genomic datasets potentially hindering data reuse. We tackled the question how semantic representations can enhance the interoperability of variant data for clinical applications. Here we report our initial results on genomic variant schema alignment.",
+    bibtex: `@misc{crum2025genomicvariantrdf,
+  title={Variant representation in RDF},
+  author={Queralt-Rosinach, Nuria and Kellmann, Alexander Jonathan and Bodrug-Schepers, Alexandrina and Gaignard, Alban and Crum, Elias and Larmande, Pierre and Waagmeester, Andra and Bolleman, Jerven},
+  year={2025},
+  month={feb},
+  note={BioHackrXiv preprint associated with SWAT4HCLS BioHackathon 2025},
+  doi={10.37044/osf.io/jazsb_v1},
+  url={https://doi.org/10.37044/osf.io/jazsb_v1},
+}`,
+    details: [
+      { label: "Publication Type", value: "Preprint" },
+      { label: "Repository", value: "BioHackrXiv" },
+      { label: "Context", value: "SWAT4HCLS BioHackathon 2025" },
+      { label: "Conference", value: "Semantic Web for Healthcare and Life Sciences (SWAT4HCLS) 2025" },
+      { label: "Location", value: "Barcelona, Spain" },
+      { label: "Date", value: "2025-02-24" },
+      {
+        label: "DOI",
+        value: "10.37044/osf.io/jazsb_v1",
+        href: "https://doi.org/10.37044/osf.io/jazsb_v1",
+      },
+      {
+        label: "Related Resource",
+        value: "genomic-variant-schema repository",
+        href: "https://github.com/swat4hcls-2025-genomic-variation/genomic-variant-schema",
+      },
+    ],
+    paperPdfPath: "/publications/papers/variant-representation-in-rdf.pdf",
   },
   {
     id: "vcf2rdf-SWAT4HCLS-2025",

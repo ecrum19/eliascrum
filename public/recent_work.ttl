@@ -6,7 +6,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix ec: <https://eliascrum.github.io/eliascrum/vocab#> .
-<https://eliascrum.github.io/eliascrum/data/recent-work> dcterms:modified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/data/recent-work> dcterms:modified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/data/recent-work> rdf:type ec:WebsiteDataset .
 <https://eliascrum.github.io/eliascrum/data/recent-work> rdf:type schema:Dataset .
 <https://eliascrum.github.io/eliascrum/data/recent-work> schema:description "Aggregated recent work items from publications, talks, posters, software, and blogs." .
@@ -23,6 +23,7 @@
 <https://eliascrum.github.io/eliascrum/data/recent-work> schema:hasPart <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-engineering-coliphages-2022> .
 <https://eliascrum.github.io/eliascrum/data/recent-work> schema:hasPart <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-gardnerella-characterization-2021> .
 <https://eliascrum.github.io/eliascrum/data/recent-work> schema:hasPart <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genome-sharing-review-2026> .
+<https://eliascrum.github.io/eliascrum/data/recent-work> schema:hasPart <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> .
 <https://eliascrum.github.io/eliascrum/data/recent-work> schema:hasPart <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pengquin-eswc-2024> .
 <https://eliascrum.github.io/eliascrum/data/recent-work> schema:hasPart <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pm-pods-swat4hcls-2024> .
 <https://eliascrum.github.io/eliascrum/data/recent-work> schema:hasPart <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-real-world-federation-iswc-2026> .
@@ -62,7 +63,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-e-i-xchange24-poster-edc> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-e-i-xchange24-poster-edc> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-e-i-xchange24-poster-edc> schema:abstract "Poster overview of the PENGQUIN research direction, focusing on privacy-aware storage, RDF representation, and distributed querying for personal genomic data." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-e-i-xchange24-poster-edc> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-e-i-xchange24-poster-edc> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-e-i-xchange24-poster-edc> schema:keywords "Bioinformatics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-e-i-xchange24-poster-edc> schema:keywords "Computer Scientists" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-e-i-xchange24-poster-edc> schema:keywords "Corporate Representatives" .
@@ -82,7 +83,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-edc-poster-isws2024-award-winner> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-edc-poster-isws2024-award-winner> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-edc-poster-isws2024-award-winner> schema:abstract "Award-winning poster introducing the PENGQUIN research problem space around personal genomic data storage, privacy, semantic representation, and distributed querying." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-edc-poster-isws2024-award-winner> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-edc-poster-isws2024-award-winner> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-edc-poster-isws2024-award-winner> schema:keywords "Bioinformatics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-edc-poster-isws2024-award-winner> schema:keywords "Computer Scientists" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-edc-poster-isws2024-award-winner> schema:keywords "Data Privacy" .
@@ -102,7 +103,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-2026-print> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-2026-print> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-2026-print> schema:abstract "Poster overview of Solid Cockpit, a unified user interface for Solid Pods that combines data management, privacy control, notifications, and semantic querying." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-2026-print> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-2026-print> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-2026-print> schema:keywords "Computer Scientists" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-2026-print> schema:keywords "Conference" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-2026-print> schema:keywords "Data Privacy" .
@@ -121,7 +122,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-24-poster-edc> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-24-poster-edc> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-24-poster-edc> schema:abstract "Conference poster summarizing the PENGQUIN approach for privacy-aware genomic data storage, RDF conversion, and patient-centric query workflows." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-24-poster-edc> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-24-poster-edc> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-24-poster-edc> schema:keywords "Bioinformatics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-24-poster-edc> schema:keywords "Computer Scientists" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-eswc-24-poster-edc> schema:keywords "Conference" .
@@ -141,7 +142,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2025> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2025> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2025> schema:abstract "Poster presenting a framework for semantically converting VCF genomic variant data into RDF using a dedicated ontology, HDT-based storage, and reusable mapping specifications." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2025> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2025> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2025> schema:keywords "Bioinformaticians" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2025> schema:keywords "Bioinformatics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2025> schema:keywords "Conference" .
@@ -161,7 +162,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2026> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2026> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2026> schema:abstract "Poster presenting an RML-based method for converting full VCF variant files into RDF with stronger structure, provenance, interoperability, and privacy-aware semantics." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2026> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2026> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2026> schema:keywords "Bioinformaticians" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2026> schema:keywords "Bioinformatics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-2026> schema:keywords "Conference" .
@@ -181,7 +182,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-24-poster-edc> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-24-poster-edc> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-24-poster-edc> schema:abstract "Poster describing how patient-controlled data pods could improve privacy, transparency, and data sharing for genomic medicine workflows." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-24-poster-edc> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-24-poster-edc> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-24-poster-edc> schema:keywords "Bioinformaticians" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-24-poster-edc> schema:keywords "Bioinformatics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/poster/poster-swat4hcls-24-poster-edc> schema:keywords "Conference" .
@@ -201,7 +202,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-disjointness-llm-iswc-2024> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-disjointness-llm-iswc-2024> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-disjointness-llm-iswc-2024> schema:abstract "Investigates how large language models can propose class disjointness axioms for ontologies, with validation on DBpedia and a workflow that preserves logical consistency while reducing manual effort." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-disjointness-llm-iswc-2024> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-disjointness-llm-iswc-2024> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-disjointness-llm-iswc-2024> schema:datePublished "2024-12-02"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-disjointness-llm-iswc-2024> schema:keywords "Data Science" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-disjointness-llm-iswc-2024> schema:keywords "KBC-LM'24 workshop at ISWC 2024" .
@@ -217,7 +218,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-engineering-coliphages-2022> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-engineering-coliphages-2022> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-engineering-coliphages-2022> schema:abstract "Builds a large-scale catalog of urinary E. coli prophages and demonstrates induction plus engineering of temperate phages into obligately lytic variants for targeted lysis of non-native urinary strains." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-engineering-coliphages-2022> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-engineering-coliphages-2022> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-engineering-coliphages-2022> schema:datePublished "2022-09-01"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-engineering-coliphages-2022> schema:keywords "Bacteriophage" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-engineering-coliphages-2022> schema:keywords "Bioinformatics" .
@@ -233,7 +234,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-gardnerella-characterization-2021> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-gardnerella-characterization-2021> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-gardnerella-characterization-2021> schema:abstract "Compares urinary and vaginal Gardnerella genomes, identifying species-level structure and showing that whole-genome analysis is needed for reliable differentiation across groups in urogenital microbiota." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-gardnerella-characterization-2021> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-gardnerella-characterization-2021> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-gardnerella-characterization-2021> schema:datePublished "2021-05-12"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-gardnerella-characterization-2021> schema:keywords "Bacteria" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-gardnerella-characterization-2021> schema:keywords "Bioinformatics" .
@@ -249,7 +250,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genome-sharing-review-2026> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genome-sharing-review-2026> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genome-sharing-review-2026> schema:abstract "Scoping review of how genomic sequence data is shared in clinical practice, surveying implementations, infrastructure, and guidance. Identifies key barriers to scalability and adoption, and proposes concrete steps toward more unified, scalable clinical genomic data sharing systems." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genome-sharing-review-2026> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genome-sharing-review-2026> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genome-sharing-review-2026> schema:datePublished "2026-01-01"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genome-sharing-review-2026> schema:keywords "Clinical Genomics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genome-sharing-review-2026> schema:keywords "Data Privacy" .
@@ -258,13 +259,30 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genome-sharing-review-2026> schema:name "Genomic sequence data sharing for clinical practice: A scoping review" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genome-sharing-review-2026> schema:sameAs <https://www.sciencedirect.com/science/article/pii/S0010482525016890> .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genome-sharing-review-2026> schema:url <https://eliascrum.github.io/eliascrum/publications/genome-sharing-review-2026/paper> .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> dcterms:identifier "Publication:genomic-variant-representation-rdf-preprint-2025" .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> ec:slug "genomic-variant-representation-rdf-preprint-2025" .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> ec:workType "Publication" .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> rdf:type ec:RecentWorkItem .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> rdf:type schema:CreativeWork .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> schema:abstract "Reports initial BioHackathon results on aligning genomic variant RDF schemas identified at SWAT4HCLS 2025, with focus on improving interoperability and reuse of variant data for clinical applications." .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> schema:datePublished "2025-02-24"^^xsd:date .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> schema:keywords "Clinical Genomics" .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> schema:keywords "Genomics" .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> schema:keywords "Knowledge Representation" .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> schema:keywords "Preprint" .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> schema:keywords "Semantic Web" .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> schema:keywords "SWAT4HCLS" .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> schema:name "Variant representation in RDF" .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> schema:sameAs <https://doi.org/10.37044/osf.io/jazsb_v1> .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-genomic-variant-representation-rdf-preprint-2025> schema:url <https://eliascrum.github.io/eliascrum/publications/genomic-variant-representation-rdf-preprint-2025/paper> .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pengquin-eswc-2024> dcterms:identifier "Publication:pengquin-eswc-2024" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pengquin-eswc-2024> ec:slug "pengquin-eswc-2024" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pengquin-eswc-2024> ec:workType "Publication" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pengquin-eswc-2024> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pengquin-eswc-2024> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pengquin-eswc-2024> schema:abstract "Presents the PENGQUIN PhD framework for privacy-preserving genomic data sharing and querying using Solid pods, RDF/Linked Data representations, policy attachments, and link-traversal querying." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pengquin-eswc-2024> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pengquin-eswc-2024> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pengquin-eswc-2024> schema:datePublished "2024-05-26"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pengquin-eswc-2024> schema:keywords "Clinical Genomics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pengquin-eswc-2024> schema:keywords "Conference Paper" .
@@ -281,7 +299,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pm-pods-swat4hcls-2024> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pm-pods-swat4hcls-2024> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pm-pods-swat4hcls-2024> schema:abstract "Describes how Solid-based personal data pods can address privacy and data-sharing bottlenecks in genomic medicine by decentralizing storage and giving patients finer control over sensitive genomic data." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pm-pods-swat4hcls-2024> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pm-pods-swat4hcls-2024> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pm-pods-swat4hcls-2024> schema:datePublished "2024-02-26"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pm-pods-swat4hcls-2024> schema:keywords "Clinical Genomics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-pm-pods-swat4hcls-2024> schema:keywords "Conference Paper" .
@@ -297,8 +315,8 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-real-world-federation-iswc-2026> ec:workType "Publication" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-real-world-federation-iswc-2026> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-real-world-federation-iswc-2026> rdf:type schema:CreativeWork .
-<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-real-world-federation-iswc-2026> schema:abstract "Presents an 18-month longitudinal study of 67 real-world federated biological SPARQL queries over more than 20 public endpoints, showing that current algorithmic federation approaches perform substantially worse than manual federation and that execution success declines over time for both." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-real-world-federation-iswc-2026> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-real-world-federation-iswc-2026> schema:abstract "Presents an 18-month longitudinal study of 67 real-world federated biological SPARQL queries over more than 20 public endpoints, and shows that a) execution success declines over time with very few queries functional by June 2026, b) current algorithmic federation approaches perform substantially worse than manual federation, and c) work is needed to assess how to enable federation over public endpoints in the age of the LLM." .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-real-world-federation-iswc-2026> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-real-world-federation-iswc-2026> schema:datePublished "2026-10-27"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-real-world-federation-iswc-2026> schema:keywords "Bioinformatics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-real-world-federation-iswc-2026> schema:keywords "Conference Paper" .
@@ -314,7 +332,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-solid-cockpit-eswc-2026-demo> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-solid-cockpit-eswc-2026-demo> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-solid-cockpit-eswc-2026-demo> schema:abstract "Presents Solid Cockpit, a browser-based interface for managing Solid Pods that integrates data management, privacy-aware permission workflows, and embedded SPARQL querying with result materialization." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-solid-cockpit-eswc-2026-demo> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-solid-cockpit-eswc-2026-demo> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-solid-cockpit-eswc-2026-demo> schema:datePublished "2026-06-01"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-solid-cockpit-eswc-2026-demo> schema:keywords "Conference Paper" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-solid-cockpit-eswc-2026-demo> schema:keywords "Data Privacy" .
@@ -330,7 +348,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-triple-swat4hcls-2024> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-triple-swat4hcls-2024> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-triple-swat4hcls-2024> schema:abstract "Describes how Solid-based data pods can address privacy and data-sharing bottlenecks in academic research by allowing felxible sharing of sensitive research data and result/experimental data provenance." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-triple-swat4hcls-2024> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-triple-swat4hcls-2024> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-triple-swat4hcls-2024> schema:datePublished "2024-02-26"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-triple-swat4hcls-2024> schema:keywords "Conference Paper" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-triple-swat4hcls-2024> schema:keywords "Data Science" .
@@ -346,7 +364,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-urinary-coliphages-2023> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-urinary-coliphages-2023> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-urinary-coliphages-2023> schema:abstract "Catalogs urinary E. coli phage diversity and shows that multiple urinary and non-urinary coliphages can lyse urinary E. coli strains, supporting a role for phages in shaping urobiome composition." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-urinary-coliphages-2023> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-urinary-coliphages-2023> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-urinary-coliphages-2023> schema:datePublished "2023-04-13"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-urinary-coliphages-2023> schema:keywords "Bacteriophage" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-urinary-coliphages-2023> schema:keywords "Bioinformatics" .
@@ -362,7 +380,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf-to-rdf-rml-swat4hcls-2026> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf-to-rdf-rml-swat4hcls-2026> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf-to-rdf-rml-swat4hcls-2026> schema:abstract "Presents an RML-based approach for converting VCF genomic variant files into RDF using established ontologies, targeting more interoperable, queryable, and privacy-aware variant data representation." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf-to-rdf-rml-swat4hcls-2026> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf-to-rdf-rml-swat4hcls-2026> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf-to-rdf-rml-swat4hcls-2026> schema:datePublished "2026-03-24"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf-to-rdf-rml-swat4hcls-2026> schema:keywords "Bioinformatics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf-to-rdf-rml-swat4hcls-2026> schema:keywords "Genomics" .
@@ -378,7 +396,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf2rdf-swat4hcls-2025> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf2rdf-swat4hcls-2025> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf2rdf-swat4hcls-2025> schema:abstract "Introduces a framework for converting VCF genomic variant files into RDF, combining a comprehensive ontology, storage-efficient HDT serialization, and alignment with clinical metadata schemas to improve interoperability, data linking, querying, and semantic interpretability." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf2rdf-swat4hcls-2025> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf2rdf-swat4hcls-2025> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf2rdf-swat4hcls-2025> schema:datePublished "2025-02-24"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf2rdf-swat4hcls-2025> schema:keywords "Clinical Genomics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-vcf2rdf-swat4hcls-2025> schema:keywords "Conference Paper" .
@@ -394,7 +412,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-wikidata-sparql-iswc-2025> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-wikidata-sparql-iswc-2025> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-wikidata-sparql-iswc-2025> schema:abstract "Client-side query federation can automatically combine data across the newly split Wikidata SPARQL endpoints, reducing the need for manual source annotations in queries while remaining feasible for queries that stay within client resource limits." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-wikidata-sparql-iswc-2025> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-wikidata-sparql-iswc-2025> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-wikidata-sparql-iswc-2025> schema:datePublished "2025-11-02"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-wikidata-sparql-iswc-2025> schema:keywords "Data Science" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/publication/publication-wikidata-sparql-iswc-2025> schema:keywords "Semantic Querying" .
@@ -410,7 +428,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-fed-survey-results-explorer> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-fed-survey-results-explorer> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-fed-survey-results-explorer> schema:abstract "Interactive results website for exploring longitudinal federation experiments over real-world biological SPARQL endpoints." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-fed-survey-results-explorer> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-fed-survey-results-explorer> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-fed-survey-results-explorer> schema:datePublished "2026-01-01"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-fed-survey-results-explorer> schema:keywords "Companion Website" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-fed-survey-results-explorer> schema:keywords "Experimental Results Exploration" .
@@ -431,7 +449,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-genome-sharing-paper-webpage> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-genome-sharing-paper-webpage> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-genome-sharing-paper-webpage> schema:abstract "Supporting website for the genomic sequence data sharing scoping review paper, intended to make national genome initiative data easier to browse, revisit, and update in the future." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-genome-sharing-paper-webpage> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-genome-sharing-paper-webpage> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-genome-sharing-paper-webpage> schema:datePublished "2026-01-01"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-genome-sharing-paper-webpage> schema:keywords "Clinical Genomics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-genome-sharing-paper-webpage> schema:keywords "Companion Resource" .
@@ -452,7 +470,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-ldp-permissions-notifications-specification> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-ldp-permissions-notifications-specification> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-ldp-permissions-notifications-specification> schema:abstract "Permissions and notification semantics technical specification for Linked Data Platform resources." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-ldp-permissions-notifications-specification> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-ldp-permissions-notifications-specification> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-ldp-permissions-notifications-specification> schema:keywords "Linked Data" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-ldp-permissions-notifications-specification> schema:keywords "Notifications" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-ldp-permissions-notifications-specification> schema:keywords "Permissions" .
@@ -472,7 +490,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-qr-code-generator> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-qr-code-generator> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-qr-code-generator> schema:abstract "Lightweight generator for producing QR codes that can be reused in posters, slides, and project materials." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-qr-code-generator> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-qr-code-generator> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-qr-code-generator> schema:datePublished "2026-01-01"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-qr-code-generator> schema:keywords "Research Communication" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-qr-code-generator> schema:keywords "Research Communication" .
@@ -493,7 +511,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-solid-cockpit> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-solid-cockpit> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-solid-cockpit> schema:abstract "Web application for interacting with Solid Pod resources in an integrated, user-friendly interface." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-solid-cockpit> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-solid-cockpit> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-solid-cockpit> schema:keywords "Data Privacy" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-solid-cockpit> schema:keywords "Federated Querying" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-solid-cockpit> schema:keywords "Interface for Solid Pod Interaction" .
@@ -515,7 +533,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-sparql-view-materialization-containers> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-sparql-view-materialization-containers> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-sparql-view-materialization-containers> schema:abstract "Container-based guidelines for reproducible SPARQL query view materialization for use in SPARQL query results provenance and caching." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-sparql-view-materialization-containers> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-sparql-view-materialization-containers> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-sparql-view-materialization-containers> schema:keywords "Data Engineering" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-sparql-view-materialization-containers> schema:keywords "Reproducible Query Execution" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-sparql-view-materialization-containers> schema:keywords "Semantic Web" .
@@ -531,7 +549,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer-vocabulary> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer-vocabulary> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer-vocabulary> schema:abstract "Interactive vocabulary reference for the representation of VCF as semantic linked data with browsable documentation sections." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer-vocabulary> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer-vocabulary> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer-vocabulary> schema:datePublished "2026-01-01"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer-vocabulary> schema:keywords "Documentation Website" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer-vocabulary> schema:keywords "Documentation" .
@@ -553,7 +571,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer> schema:abstract "A CLI tool for converting genomic variant data from VCF into RDF, supporting semantically interoperable downstream workflows." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer> schema:datePublished "2026-01-01"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer> schema:keywords "Data Conversion" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/software/software-vcf-rdfizer> schema:keywords "Genomics" .
@@ -572,7 +590,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-18m-vito-internal-jury> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-18m-vito-internal-jury> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-18m-vito-internal-jury> schema:abstract "Internal PhD milestone review covering completed work, validation status, and the next research phase." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-18m-vito-internal-jury> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-18m-vito-internal-jury> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-18m-vito-internal-jury> schema:datePublished "2025-11-20"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-18m-vito-internal-jury> schema:keywords "Clinical Genomics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-18m-vito-internal-jury> schema:keywords "Clinical Researchers" .
@@ -589,7 +607,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-dph-day-talk> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-dph-day-talk> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-dph-day-talk> schema:abstract "Presented progress on decentralized clinical-genomics workflows and interoperability priorities in precision health." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-dph-day-talk> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-dph-day-talk> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-dph-day-talk> schema:datePublished "2025-10-10"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-dph-day-talk> schema:keywords "Clinical Genomics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-dph-day-talk> schema:keywords "Clinical Researchers" .
@@ -608,7 +626,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-edc-knows-26> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-edc-knows-26> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-edc-knows-26> schema:abstract "KNoWS Day presentation outlining how semantic representations can improve genomic-data interoperability, privacy-aware access control, and federated querying in healthcare settings." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-edc-knows-26> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-edc-knows-26> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-edc-knows-26> schema:datePublished "2026-03-31"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-edc-knows-26> schema:keywords "Clinical Genomics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-edc-knows-26> schema:keywords "Data Privacy" .
@@ -628,7 +646,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-eswc-phdsymp-pangquin> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-eswc-phdsymp-pangquin> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-eswc-phdsymp-pangquin> schema:abstract "PhD symposium talk on the PENGQUIN research agenda for decentralized and policy-aware genomic data use." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-eswc-phdsymp-pangquin> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-eswc-phdsymp-pangquin> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-eswc-phdsymp-pangquin> schema:datePublished "2024-05-28"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-eswc-phdsymp-pangquin> schema:keywords "Clinical Genomics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-eswc-phdsymp-pangquin> schema:keywords "Computer Scientists" .
@@ -648,7 +666,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-fwo-interview> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-fwo-interview> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-fwo-interview> schema:abstract "Funding interview pitch describing the PENGQUIN PhD vision, feasibility, and expected impact." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-fwo-interview> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-fwo-interview> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-fwo-interview> schema:datePublished "2024-09-05"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-fwo-interview> schema:keywords "Clinical Genomics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-fwo-interview> schema:keywords "Data Privacy" .
@@ -668,7 +686,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-isws-group-project-presentation> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-isws-group-project-presentation> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-isws-group-project-presentation> schema:abstract "Final group project presentation from ISWS 2024 highlighting design choices and implementation outcomes." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-isws-group-project-presentation> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-isws-group-project-presentation> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-isws-group-project-presentation> schema:datePublished "2024-06-15"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-isws-group-project-presentation> schema:keywords "Computer Scientists" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-isws-group-project-presentation> schema:keywords "Data Science" .
@@ -688,7 +706,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-researchstay-reflection> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-researchstay-reflection> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-researchstay-reflection> schema:abstract "Reflected on outcomes from the SIB research stay, including technical gains and collaboration opportunities." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-researchstay-reflection> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-researchstay-reflection> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-researchstay-reflection> schema:datePublished "2025-05-15"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-researchstay-reflection> schema:keywords "Computer Scientists" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-researchstay-reflection> schema:keywords "Data Science" .
@@ -707,7 +725,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-vital-it-talk> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-vital-it-talk> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-vital-it-talk> schema:abstract "Reviewed client-side federated SPARQL strategies for combining private Solid pod data with public knowledge graphs." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-vital-it-talk> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-vital-it-talk> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-vital-it-talk> schema:datePublished "2025-04-04"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-vital-it-talk> schema:keywords "Bioinformaticians" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sib-vital-it-talk> schema:keywords "Computer Scientists" .
@@ -727,7 +745,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solid-intro-triple-consortium> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solid-intro-triple-consortium> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solid-intro-triple-consortium> schema:abstract "Introductory consortium session on Solid concepts, architecture, and relevance to TRIPLE project goals." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solid-intro-triple-consortium> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solid-intro-triple-consortium> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solid-intro-triple-consortium> schema:datePublished "2024-10-10"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solid-intro-triple-consortium> schema:keywords "Biologists" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solid-intro-triple-consortium> schema:keywords "Computer Scientists" .
@@ -745,7 +763,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solidsymp-genomepods> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solidsymp-genomepods> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solidsymp-genomepods> schema:abstract "Explored how Solid pods can host and govern personal genomic data for privacy-preserving analytics." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solidsymp-genomepods> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solidsymp-genomepods> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solidsymp-genomepods> schema:datePublished "2024-04-02"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solidsymp-genomepods> schema:keywords "Computer Scientists" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-solidsymp-genomepods> schema:keywords "Industry Representatives" .
@@ -765,7 +783,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sosy2026> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sosy2026> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sosy2026> schema:abstract "Demonstration of Solid Cockpit as a unified web interface for Solid Pods, integrating data management, privacy and access-control editing, notification support, and in-browser SPARQL data discovery." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sosy2026> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sosy2026> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sosy2026> schema:datePublished "2026-04-30"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sosy2026> schema:keywords "Computer Scientists" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sosy2026> schema:keywords "Data Privacy" .
@@ -786,7 +804,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sphn-pengquin-talk> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sphn-pengquin-talk> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sphn-pengquin-talk> schema:abstract "Introduced the PENGQUIN approach for privacy-aware clinical genomics integration using RDF and decentralized data pods." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sphn-pengquin-talk> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sphn-pengquin-talk> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sphn-pengquin-talk> schema:datePublished "2025-04-29"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sphn-pengquin-talk> schema:keywords "Bioinformaticians" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-sphn-pengquin-talk> schema:keywords "Clinical Genomics" .
@@ -807,7 +825,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-swissprot-talk> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-swissprot-talk> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-swissprot-talk> schema:abstract "Presented semantic integration opportunities between curated protein resources and decentralized query workflows." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-swissprot-talk> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-swissprot-talk> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-swissprot-talk> schema:datePublished "2025-03-25"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-swissprot-talk> schema:keywords "Bioinformaticians" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-swissprot-talk> schema:keywords "Bioinformatics" .
@@ -826,7 +844,7 @@
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-ugent-genomics-talk> rdf:type ec:RecentWorkItem .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-ugent-genomics-talk> rdf:type schema:CreativeWork .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-ugent-genomics-talk> schema:abstract "Foundational genomics overview tailored to computer science researchers entering health-data domains." .
-<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-ugent-genomics-talk> schema:dateModified "2026-08-06T08:45:33.282Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-ugent-genomics-talk> schema:dateModified "2026-08-10T08:23:12.797Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-ugent-genomics-talk> schema:datePublished "2024-03-04"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-ugent-genomics-talk> schema:keywords "Clinical Genomics" .
 <https://eliascrum.github.io/eliascrum/id/recent-work/talk/talk-ugent-genomics-talk> schema:keywords "Computer Scientists" .
