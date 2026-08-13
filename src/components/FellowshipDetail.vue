@@ -153,31 +153,20 @@
 
 <script lang="ts">
 import { defineComponent, markRaw } from "vue";
-import {
-  GlobalWorkerOptions,
-  getDocument,
-  type PDFDocumentLoadingTask,
-  type PDFDocumentProxy,
-  type RenderTask,
-} from "pdfjs-dist/build/pdf.mjs";
-import PdfJsWorker from "pdfjs-dist/build/pdf.worker.mjs?worker";
-import pdfWorkerSrc from "pdfjs-dist/build/pdf.worker.mjs?url";
 import WorkPageLayout from "./layout/WorkPageLayout.vue";
 import { fwoPhdFellowship } from "../data/fellowshipData";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
+import {
+  loadPdfJs,
+  type PDFDocumentLoadingTask,
+  type PDFDocumentProxy,
+  type RenderTask,
+} from "../utils/pdfJs";
 
 interface WorkTocEntry {
   id: string;
   label: string;
   level?: number;
-}
-
-if (!GlobalWorkerOptions.workerPort) {
-  try {
-    GlobalWorkerOptions.workerPort = new PdfJsWorker();
-  } catch {
-    GlobalWorkerOptions.workerSrc = pdfWorkerSrc;
-  }
 }
 
 export default defineComponent({
@@ -391,6 +380,7 @@ export default defineComponent({
 
       let loadingTask: PDFDocumentLoadingTask | null = null;
       try {
+        const { getDocument } = await loadPdfJs();
         loadingTask = getDocument({ url: pdfUrl });
         this.pdfLoadingTask = markRaw(loadingTask);
         const nextDocument = await loadingTask.promise;

@@ -7,7 +7,11 @@
       @toggle-text-scale="toggleTextScale"
       @open-search="openSearch"
     />
-    <spotlight-search :open="isSearchOpen" @close="closeSearch" />
+    <spotlight-search
+      v-if="isSearchOpen"
+      :open="isSearchOpen"
+      @close="closeSearch"
+    />
     <div class="background">
       <video
         id="background-video"
@@ -25,11 +29,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineAsyncComponent, defineComponent } from "vue";
 import TheHeader from './components/TheHeader.vue';
 import TheFooter from './components/TheFooter.vue';
-import SpotlightSearch from "./components/SpotlightSearch.vue";
 import { resolvePublicAssetPath } from "./utils/publicAssetPath";
+
+const SpotlightSearch = defineAsyncComponent(() => import("./components/SpotlightSearch.vue"));
 
 type ThemeMode = "dark" | "light";
 type TextScaleMode = "small" | "normal" | "large";
