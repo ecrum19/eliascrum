@@ -8,7 +8,7 @@
     <section id="software-overview" class="work-section">
       <header class="software-header">
         <h1>Software</h1>
-        <p>Software platforms, tooling, web resources, and technical specifications.</p>
+        <p class="page-subheader">Software platforms, tooling, web resources, and technical specifications.</p>
 
         <section id="software-filters" class="software-filters">
           <button
@@ -566,11 +566,12 @@ export default defineComponent({
   font-weight: 600;
 }
 
-.software-header p {
+.page-subheader {
   margin: 0;
   color: var(--text-muted);
   opacity: 1;
-  font-size: var(--font-size-body-xl);
+  font-size: var(--font-size-body-lg);
+  line-height: 1.4;
 }
 
 .software-filters {

@@ -194,8 +194,9 @@
                         <router-link
                           v-if='detail.internal'
                           :to='detail.url'
-                          v-html='formatWithEmphasis(detail.text)'
-                        ></router-link>
+                        >
+                          <span v-html='formatWithEmphasis(detail.text)'></span>
+                        </router-link>
                         <a
                           v-else
                           :href='detail.url'

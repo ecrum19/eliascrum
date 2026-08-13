@@ -9,6 +9,9 @@
           <header class="publications-header">
             <div class="publications-intro">
               <h1>Publications</h1>
+              <p class="page-subheader">
+                Journal publications, conference papers, preprints, and linked paper materials.
+              </p>
               <p class="citation-update-note">
                 Google Scholar citation counts last updated: <strong>{{ scholarCitationLastUpdatedLabel }}</strong>
               </p>
@@ -856,11 +859,12 @@ export default defineComponent({
   font-weight: 600;
 }
 
-.publications-header p {
+.page-subheader {
   margin: 6px 0 0;
   color: var(--text-muted);
   opacity: 1;
-  font-size: var(--font-size-body-xl);
+  font-size: var(--font-size-body-lg);
+  line-height: 1.4;
 }
 
 .citation-update-note {

@@ -669,7 +669,6 @@ export default defineComponent({
         }
         this.isPdfRenderError = true;
         this.pdfRenderErrorMessage = this.stringifyPdfError(error);
-        // eslint-disable-next-line no-console
         console.error("Paper preview load failed:", error);
       } finally {
         if (this.pdfLoadingTask === loadingTask) {
@@ -735,7 +734,6 @@ export default defineComponent({
           if (!this.isPdfCancellationError(error)) {
             this.isPdfRenderError = true;
             this.pdfRenderErrorMessage = this.stringifyPdfError(error);
-            // eslint-disable-next-line no-console
             console.error("Paper preview cancellation failed:", error);
             return;
           }
@@ -759,7 +757,6 @@ export default defineComponent({
         }
         this.isPdfRenderError = true;
         this.pdfRenderErrorMessage = this.stringifyPdfError(error);
-        // eslint-disable-next-line no-console
         console.error("Paper preview getPage failed:", error);
         return;
       }
@@ -807,7 +804,6 @@ export default defineComponent({
         if (!this.isPdfCancellationError(error)) {
           this.isPdfRenderError = true;
           this.pdfRenderErrorMessage = this.stringifyPdfError(error);
-          // eslint-disable-next-line no-console
           console.error("Paper preview render failed:", error);
         }
       } finally {

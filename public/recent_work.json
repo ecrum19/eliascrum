@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T10:14:56.562Z",
+  "generatedAt": "2026-08-13T11:08:07.445Z",
   "baseIri": "https://eliascrum.github.io/eliascrum/",
   "datasetUrl": "https://eliascrum.github.io/eliascrum/recent_work.json",
   "sparqlGraphUrl": "https://eliascrum.github.io/eliascrum/recent_work.ttl",
@@ -251,7 +251,7 @@
       "type": "Software",
       "title": "VCF-RDFizer Vocabulary",
       "tags": [
-        "Documentation Website",
+        "Semantic Vocabulary",
         "Semantic Vocabulary Reference",
         "Semantic Web",
         "Genomics",
@@ -270,9 +270,9 @@
     {
       "id": "Software:vord",
       "type": "Software",
-      "title": "VoRD Vocabulary",
+      "title": "Vocabulary of Restrictive Datasets (VoRD)",
       "tags": [
-        "Documentation Website",
+        "Semantic Vocabulary",
         "Semantic Vocabulary Reference",
         "Semantic Web",
         "Ontology Engineering",
