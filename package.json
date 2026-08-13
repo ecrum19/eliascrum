@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
-    "prebuild": "npm run update:software-releases && npm run recent-work:export",
+    "prebuild": "npm run update:software-releases && npm run recent-work:export && npm run rdf:export",
     "build": "vite build",
     "lint": "eslint --ext .ts,.tsx,.vue src",
     "build:slides": "node scripts/build-slides.mjs",

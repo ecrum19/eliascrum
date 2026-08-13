@@ -5,10 +5,11 @@ This plan keeps the current TypeScript data model intact while introducing RDF i
 ## Phase 1: Parallel RDF Mirror (Current)
 
 1. Keep existing `src/data/*.ts` as source of truth for UI.
-2. Generate RDF mirror into `src/data/rdf/site-data.ttl`:
+2. Generate RDF mirror into `src/data/rdf/site-data.ttl` and the public `public/site-data.ttl` endpoint:
    - Command: `npm run rdf:export`
-3. Maintain SHACL constraints in `src/data/rdf/site-shapes.ttl`.
-4. Allow additive RDF edits via SPARQL Update:
+3. The export includes CV, talks, posters, publications, software, software release observations, fellowship data, profiles, homepage updates, and citation snapshots.
+4. Maintain SHACL constraints in `src/data/rdf/site-shapes.ttl`.
+5. Allow additive RDF edits via SPARQL Update:
    - Command: `npm run rdf:update -- --update src/data/rdf/updates/<file>.ru`
 
 ## Phase 2: Validation in CI
@@ -34,6 +35,7 @@ This plan keeps the current TypeScript data model intact while introducing RDF i
 ## Operational Rules
 
 - Regenerate RDF after TS changes: `npm run rdf:export`
+- Production builds run the RDF export automatically through `prebuild`.
 - Apply hand-authored RDF updates with `rdf:update`.
 - Validate against SHACL before deployment.
 - Prefer stable IDs (`publication/{id}`, `talk/{slug}`, `blog-post/{id}`) for all joins.

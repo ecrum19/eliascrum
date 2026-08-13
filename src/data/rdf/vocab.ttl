@@ -64,6 +64,21 @@ ec:CvDetail
   rdfs:label "CV Detail"@en ;
   rdfs:comment "Detail line attached to a CV item, optionally with link metadata."@en .
 
+ec:CvProfile
+  a rdfs:Class ;
+  rdfs:label "CV Profile"@en ;
+  rdfs:comment "Profile and contact metadata displayed on the CV page."@en .
+
+ec:CvContact
+  a rdfs:Class ;
+  rdfs:label "CV Contact"@en ;
+  rdfs:comment "Contact method attached to the CV profile."@en .
+
+ec:CvArtifact
+  a rdfs:Class ;
+  rdfs:label "CV Artifact"@en ;
+  rdfs:comment "Linked certificate or other artifact attached to a CV item."@en .
+
 ec:Talk
   a rdfs:Class ;
   rdfs:subClassOf schema:CreativeWork ;
@@ -107,6 +122,43 @@ ec:PublicationPresentationLink
   rdfs:label "Publication Presentation Link"@en ;
   rdfs:comment "Join entity connecting publications to talks or static files."@en .
 
+ec:SoftwareSection
+  a rdfs:Class ;
+  rdfs:label "Software Section"@en ;
+  rdfs:comment "Curated section grouping software, tools, specifications, and semantic resources."@en .
+
+ec:Software
+  a rdfs:Class ;
+  rdfs:subClassOf schema:SoftwareApplication ;
+  rdfs:label "Software"@en ;
+  rdfs:comment "Software, web application, utility, specification, or semantic resource displayed on the website."@en .
+
+ec:SoftwareDetail
+  a rdfs:Class ;
+  rdfs:label "Software Detail"@en ;
+  rdfs:comment "Label-value detail row attached to a software entry."@en .
+
+ec:SoftwareRelease
+  a rdfs:Class ;
+  rdfs:label "Software Release"@en ;
+  rdfs:comment "Latest release or repository-update record associated with software."@en .
+
+ec:Fellowship
+  a rdfs:Class ;
+  rdfs:subClassOf schema:Grant ;
+  rdfs:label "Fellowship"@en ;
+  rdfs:comment "Fellowship or grant record presented on the website."@en .
+
+ec:FellowshipDetail
+  a rdfs:Class ;
+  rdfs:label "Fellowship Detail"@en ;
+  rdfs:comment "Label-value detail row attached to a fellowship record."@en .
+
+ec:RelatedResource
+  a rdfs:Class ;
+  rdfs:label "Related Resource"@en ;
+  rdfs:comment "Named external or internal resource related to a talk or poster."@en .
+
 ec:BlogPost
   a rdfs:Class ;
   rdfs:subClassOf schema:BlogPosting ;
@@ -141,6 +193,44 @@ ec:abstract
   rdfs:label "abstract"@en ;
   rdfs:comment "Long-form abstract text for a publication."@en ;
   rdfs:domain ec:Publication ;
+  rdfs:range xsd:string .
+
+ec:audienceExpertise
+  a rdf:Property ;
+  rdfs:label "audience expertise"@en ;
+  rdfs:comment "Description of the intended audience's domain or technical background."@en ;
+  rdfs:range xsd:string .
+
+ec:audienceGroups
+  a rdf:Property ;
+  rdfs:label "audience groups"@en ;
+  rdfs:comment "Audience group labels associated with a talk or poster."@en ;
+  rdfs:range xsd:string .
+
+ec:audienceSizeApprox
+  a rdf:Property ;
+  rdfs:label "approximate audience size"@en ;
+  rdfs:comment "Approximate number of attendees for a talk."@en ;
+  rdfs:domain ec:Talk ;
+  rdfs:range xsd:integer .
+
+ec:audienceSizeCategory
+  a rdf:Property ;
+  rdfs:label "audience size category"@en ;
+  rdfs:comment "Categorical audience size label such as Small, Medium, or Large."@en ;
+  rdfs:range xsd:string .
+
+ec:audienceSizeEstimate
+  a rdf:Property ;
+  rdfs:label "audience size estimate"@en ;
+  rdfs:comment "Display-oriented audience size estimate."@en ;
+  rdfs:range xsd:string .
+
+ec:address
+  a rdf:Property ;
+  rdfs:label "address"@en ;
+  rdfs:comment "Address text from the CV profile."@en ;
+  rdfs:domain ec:CvProfile ;
   rdfs:range xsd:string .
 
 ec:authors
@@ -183,11 +273,26 @@ ec:dateText
   rdfs:comment "Non-ISO textual date when exact xsd:date is unavailable."@en ;
   rdfs:range xsd:string .
 
+ec:group
+  a rdf:Property ;
+  rdfs:label "group"@en ;
+  rdfs:comment "Optional grouping label for a CV item."@en ;
+  rdfs:domain ec:CvItem ;
+  rdfs:range xsd:string .
+
 ec:description
   a rdf:Property ;
   rdfs:label "description"@en ;
   rdfs:comment "Description text for talks or talk metadata."@en ;
   rdfs:range xsd:string .
+
+ec:codeRepository
+  a rdf:Property ;
+  rdfs:subPropertyOf schema:codeRepository ;
+  rdfs:label "code repository"@en ;
+  rdfs:comment "Repository containing the source code or specification for a software entry."@en ;
+  rdfs:domain ec:Software ;
+  rdfs:range rdfs:Resource .
 
 ec:displayDate
   a rdf:Property ;
@@ -210,6 +315,32 @@ ec:displayDateText
   rdfs:domain ec:Talk ;
   rdfs:range xsd:string .
 
+ec:displayDateDetailedLabel
+  a rdf:Property ;
+  rdfs:label "detailed display date label"@en ;
+  rdfs:comment "Long-form human-readable date label for a talk or poster."@en ;
+  rdfs:range xsd:string .
+
+ec:defenseSlidesUrl
+  a rdf:Property ;
+  rdfs:label "defense slides URL"@en ;
+  rdfs:comment "URL for fellowship defense presentation slides."@en ;
+  rdfs:domain ec:Fellowship ;
+  rdfs:range rdfs:Resource .
+
+ec:durationCategory
+  a rdf:Property ;
+  rdfs:label "duration category"@en ;
+  rdfs:comment "Categorical duration label such as Short, Medium, or Long."@en ;
+  rdfs:range xsd:string .
+
+ec:durationMinutes
+  a rdf:Property ;
+  rdfs:label "duration in minutes"@en ;
+  rdfs:comment "Approximate duration of a talk in minutes."@en ;
+  rdfs:domain ec:Talk ;
+  rdfs:range xsd:integer .
+
 ec:filePath
   a rdf:Property ;
   rdfs:label "file path"@en ;
@@ -228,6 +359,12 @@ ec:forTalk
   rdfs:comment "Associates a talk metadata node with a talk."@en ;
   rdfs:domain ec:TalkMetadata ;
   rdfs:range ec:Talk .
+
+ec:goal
+  a rdf:Property ;
+  rdfs:label "goal"@en ;
+  rdfs:comment "Primary objective of a talk or fellowship-related presentation."@en ;
+  rdfs:range xsd:string .
 
 ec:fromSnapshot
   a rdf:Property ;
@@ -249,12 +386,86 @@ ec:hasExternalProfile
   rdfs:domain ec:WebsiteDataset ;
   rdfs:range ec:ExternalProfile .
 
+ec:hasAudienceGroupTag
+  a rdf:Property ;
+  rdfs:label "has audience group tag"@en ;
+  rdfs:comment "Associates a talk or poster with an audience group tag."@en ;
+  rdfs:range ec:Tag .
+
+ec:hasAudienceSizeTag
+  a rdf:Property ;
+  rdfs:label "has audience size tag"@en ;
+  rdfs:comment "Associates a talk with a categorical audience size tag."@en ;
+  rdfs:range ec:Tag .
+
+ec:hasArtifact
+  a rdf:Property ;
+  rdfs:label "has artifact"@en ;
+  rdfs:comment "Associates a CV item with a linked artifact."@en ;
+  rdfs:domain ec:CvItem ;
+  rdfs:range ec:CvArtifact .
+
+ec:hasContact
+  a rdf:Property ;
+  rdfs:label "has contact"@en ;
+  rdfs:comment "Associates a CV profile with a contact method."@en ;
+  rdfs:domain ec:CvProfile ;
+  rdfs:range ec:CvContact .
+
+ec:hasCvProfile
+  a rdf:Property ;
+  rdfs:label "has CV profile"@en ;
+  rdfs:comment "Links the website dataset to the displayed CV profile."@en ;
+  rdfs:domain ec:WebsiteDataset ;
+  rdfs:range ec:CvProfile .
+
+ec:hasFocusTag
+  a rdf:Property ;
+  rdfs:label "has focus tag"@en ;
+  rdfs:comment "Associates the CV profile with a focus-area tag."@en ;
+  rdfs:domain ec:CvProfile ;
+  rdfs:range ec:Tag .
+
+ec:hasDefenseTalk
+  a rdf:Property ;
+  rdfs:label "has defense talk"@en ;
+  rdfs:comment "Links a fellowship to its defense presentation."@en ;
+  rdfs:domain ec:Fellowship ;
+  rdfs:range ec:Talk .
+
+ec:hasFellowship
+  a rdf:Property ;
+  rdfs:label "has fellowship"@en ;
+  rdfs:comment "Links the website dataset to a fellowship record."@en ;
+  rdfs:domain ec:WebsiteDataset ;
+  rdfs:range ec:Fellowship .
+
 ec:hasItem
   a rdf:Property ;
   rdfs:label "has item"@en ;
   rdfs:comment "Associates a CV section with its CV items."@en ;
   rdfs:domain ec:CvSection ;
   rdfs:range ec:CvItem .
+
+ec:hasRelatedResource
+  a rdf:Property ;
+  rdfs:label "has related resource"@en ;
+  rdfs:comment "Links a talk or poster to a named resource."@en ;
+  rdfs:range ec:RelatedResource .
+
+ec:hasSoftware
+  a rdf:Property ;
+  rdfs:label "has software"@en ;
+  rdfs:comment "Links a software section to one of its software entries."@en ;
+  rdfs:domain ec:SoftwareSection ;
+  rdfs:range ec:Software .
+
+ec:hasSoftwareSection
+  a rdf:Property ;
+  rdfs:label "has software section"@en ;
+  rdfs:comment "Links the website dataset to a software section."@en ;
+  rdfs:domain ec:WebsiteDataset ;
+  rdfs:range ec:SoftwareSection .
 
 ec:hasPoster
   a rdf:Property ;
@@ -301,6 +512,13 @@ ec:isDeclaredOption
   rdfs:domain ec:Tag ;
   rdfs:range xsd:boolean .
 
+ec:isInternal
+  a rdf:Property ;
+  rdfs:label "is internal"@en ;
+  rdfs:comment "Indicates whether a CV detail links to an internal website route."@en ;
+  rdfs:domain ec:CvDetail ;
+  rdfs:range xsd:boolean .
+
 ec:isPosterForTalk
   a rdf:Property ;
   rdfs:label "is poster for talk"@en ;
@@ -314,10 +532,24 @@ ec:isResolved
   rdfs:comment "Indicates whether a reference placeholder resolves to a concrete entity."@en ;
   rdfs:range xsd:boolean .
 
+ec:latestRelease
+  a rdf:Property ;
+  rdfs:label "latest release"@en ;
+  rdfs:comment "Links software to its most recently observed release or repository update."@en ;
+  rdfs:domain ec:Software ;
+  rdfs:range ec:SoftwareRelease .
+
 ec:linkLabel
   a rdf:Property ;
   rdfs:label "link label"@en ;
   rdfs:comment "Display label for rendered link buttons."@en ;
+  rdfs:range xsd:string .
+
+ec:headline
+  a rdf:Property ;
+  rdfs:label "headline"@en ;
+  rdfs:comment "Professional headline from the CV profile."@en ;
+  rdfs:domain ec:CvProfile ;
   rdfs:range xsd:string .
 
 ec:linksTalk
@@ -332,11 +564,32 @@ ec:modifiedText
   rdfs:comment "Fallback textual modified timestamp when xsd:dateTime cannot be emitted."@en ;
   rdfs:range xsd:string .
 
+ec:moreInfoUrl
+  a rdf:Property ;
+  rdfs:label "more information URL"@en ;
+  rdfs:comment "External URL containing more information about a fellowship."@en ;
+  rdfs:domain ec:Fellowship ;
+  rdfs:range rdfs:Resource .
+
 ec:order
   a rdf:Property ;
   rdfs:label "order"@en ;
   rdfs:comment "Numeric sort/display order for list members."@en ;
   rdfs:range xsd:integer .
+
+ec:icon
+  a rdf:Property ;
+  rdfs:label "icon"@en ;
+  rdfs:comment "Icon identifier used for a CV contact method."@en ;
+  rdfs:domain ec:CvContact ;
+  rdfs:range xsd:string .
+
+ec:layout
+  a rdf:Property ;
+  rdfs:label "layout"@en ;
+  rdfs:comment "Display layout identifier for a CV section."@en ;
+  rdfs:domain ec:CvSection ;
+  rdfs:range xsd:string .
 
 ec:organization
   a rdf:Property ;
@@ -344,6 +597,108 @@ ec:organization
   rdfs:comment "Organization text for CV items."@en ;
   rdfs:domain ec:CvItem ;
   rdfs:range xsd:string .
+
+ec:location
+  a rdf:Property ;
+  rdfs:label "location"@en ;
+  rdfs:comment "Location text for a CV item."@en ;
+  rdfs:domain ec:CvItem ;
+  rdfs:range xsd:string .
+
+ec:paperPdfPath
+  a rdf:Property ;
+  rdfs:label "paper PDF path"@en ;
+  rdfs:comment "Relative website path to a publication PDF asset."@en ;
+  rdfs:domain ec:Publication ;
+  rdfs:range xsd:string .
+
+ec:profileVariant
+  a rdf:Property ;
+  rdfs:label "profile variant"@en ;
+  rdfs:comment "Profile category identifier such as scholar, semantic, ORCID, or research-portal."@en ;
+  rdfs:domain ec:ExternalProfile ;
+  rdfs:range xsd:string .
+
+ec:projectDescriptionPdfPath
+  a rdf:Property ;
+  rdfs:label "project description PDF path"@en ;
+  rdfs:comment "Relative website path to a fellowship project-description PDF."@en ;
+  rdfs:domain ec:Fellowship ;
+  rdfs:range xsd:string .
+
+ec:projectDescriptionPdfUrl
+  a rdf:Property ;
+  rdfs:label "project description PDF URL"@en ;
+  rdfs:comment "URL to a fellowship project-description PDF."@en ;
+  rdfs:domain ec:Fellowship ;
+  rdfs:range rdfs:Resource .
+
+ec:purpose
+  a rdf:Property ;
+  rdfs:label "purpose"@en ;
+  rdfs:comment "Curated purpose of a software entry."@en ;
+  rdfs:domain ec:Software ;
+  rdfs:range xsd:string .
+
+ec:releaseKind
+  a rdf:Property ;
+  rdfs:label "release kind"@en ;
+  rdfs:comment "Whether an observed software record is a tagged release or repository update."@en ;
+  rdfs:domain ec:SoftwareRelease ;
+  rdfs:range xsd:string .
+
+ec:releasePublishedAt
+  a rdf:Property ;
+  rdfs:label "release published at"@en ;
+  rdfs:comment "Timestamp when a software release or repository update was published."@en ;
+  rdfs:domain ec:SoftwareRelease ;
+  rdfs:range xsd:dateTime .
+
+ec:releasePublishedAtText
+  a rdf:Property ;
+  rdfs:label "release published at text"@en ;
+  rdfs:comment "Fallback textual release timestamp."@en ;
+  rdfs:domain ec:SoftwareRelease ;
+  rdfs:range xsd:string .
+
+ec:releaseTag
+  a rdf:Property ;
+  rdfs:label "release tag"@en ;
+  rdfs:comment "Version tag for a software release."@en ;
+  rdfs:domain ec:SoftwareRelease ;
+  rdfs:range xsd:string .
+
+ec:releaseUrl
+  a rdf:Property ;
+  rdfs:label "release URL"@en ;
+  rdfs:comment "URL of a software release or repository-update source."@en ;
+  rdfs:domain ec:SoftwareRelease ;
+  rdfs:range rdfs:Resource .
+
+ec:relatedFellowship
+  a rdf:Property ;
+  rdfs:label "related fellowship"@en ;
+  rdfs:comment "Associates an entity with a fellowship record."@en ;
+  rdfs:range ec:Fellowship .
+
+ec:relatedPoster
+  a rdf:Property ;
+  rdfs:label "related poster"@en ;
+  rdfs:comment "Associates software with a related poster."@en ;
+  rdfs:range ec:Poster .
+
+ec:relatedSoftware
+  a rdf:Property ;
+  rdfs:label "related software"@en ;
+  rdfs:comment "Associates publications, talks, posters, or other entities with software."@en ;
+  rdfs:range ec:Software .
+
+ec:repositoryUrl
+  a rdf:Property ;
+  rdfs:label "repository URL"@en ;
+  rdfs:comment "URL of the source repository for a software entry."@en ;
+  rdfs:domain ec:Software ;
+  rdfs:range rdfs:Resource .
 
 ec:posterPath
   a rdf:Property ;
@@ -419,6 +774,12 @@ ec:slidePath
   rdfs:domain ec:Talk ;
   rdfs:range xsd:string .
 
+ec:slug
+  a rdf:Property ;
+  rdfs:label "slug"@en ;
+  rdfs:comment "Stable URL-friendly identifier used by a displayed entity."@en ;
+  rdfs:range xsd:string .
+
 ec:sortDate
   a rdf:Property ;
   rdfs:label "sort date"@en ;
@@ -475,6 +836,20 @@ ec:sourceTitle
   rdfs:domain ec:Talk ;
   rdfs:range xsd:string .
 
+ec:softwareType
+  a rdf:Property ;
+  rdfs:label "software type"@en ;
+  rdfs:comment "Curated type label for a software entry."@en ;
+  rdfs:domain ec:Software ;
+  rdfs:range xsd:string .
+
+ec:subtitle
+  a rdf:Property ;
+  rdfs:label "subtitle"@en ;
+  rdfs:comment "Subtitle or fellowship scheme label."@en ;
+  rdfs:domain ec:Fellowship ;
+  rdfs:range xsd:string .
+
 ec:summary
   a rdf:Property ;
   rdfs:label "summary"@en ;
@@ -521,4 +896,18 @@ ec:venue
   rdfs:label "venue"@en ;
   rdfs:comment "Venue/publication outlet label."@en ;
   rdfs:domain ec:Publication ;
+  rdfs:range xsd:string .
+
+ec:webUrl
+  a rdf:Property ;
+  rdfs:label "web URL"@en ;
+  rdfs:comment "Primary website URL for a software entry."@en ;
+  rdfs:domain ec:Software ;
+  rdfs:range rdfs:Resource .
+
+ec:year
+  a rdf:Property ;
+  rdfs:label "year"@en ;
+  rdfs:comment "Year or ongoing status associated with a software entry."@en ;
+  rdfs:domain ec:Software ;
   rdfs:range xsd:string .
