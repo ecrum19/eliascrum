@@ -172,7 +172,6 @@
           <div id="recentWorkHeader">
             <div class="recentWorkTitleBlock">
               <span class="recentWorkEyebrow">Latest Highlight</span>
-              <h2 class="w3-panel" id="recentWorkTitle">Recent Work</h2>
             </div>
           </div>
           <p class="recentWorkIntro">
@@ -403,19 +402,6 @@ export default defineComponent({
   letter-spacing: 0.16em;
   text-transform: uppercase;
   line-height: 1.1;
-}
-
-#recentWorkTitle {
-  background: transparent;
-  color: var(--page-text);
-  margin: 0;
-  padding: 0;
-  font-family: var(--content-heading-font);
-  font-size: var(--content-h1-size);
-  font-weight: 600;
-  line-height: 1.02;
-  letter-spacing: -0.02em;
-  text-align: left;
 }
 
 .recentWorkCount {

@@ -8,6 +8,9 @@
     <section id="talks-overview" class="work-section">
           <header class="talks-header">
             <h1>Talks and Posters</h1>
+            <p class="page-subheader">
+              Presentation slide decks and conference posters from talks, symposiums, and research events.
+            </p>
 
             <section id="talks-filters" class="talk-filters toc-anchor">
               <button
@@ -922,6 +925,13 @@ export default defineComponent({
   font-weight: 600;
 }
 
+.talk-section-header p {
+  margin: 5px 0 0;
+  color: var(--text-muted);
+  opacity: 1;
+  font-size: var(--font-size-body);
+}
+
 .toc-anchor {
   scroll-margin-top: 92px;
 }
@@ -946,10 +956,11 @@ export default defineComponent({
   font-weight: 600;
 }
 
-.talks-header p {
+.page-subheader {
   margin: 8px 0 0;
   color: var(--text-muted);
   opacity: 1;
+  font-size: var(--font-size-body-lg);
   line-height: 1.45;
 }
 

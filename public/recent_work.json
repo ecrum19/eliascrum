@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-08-10T08:23:12.797Z",
+  "generatedAt": "2026-08-13T12:36:24.421Z",
   "baseIri": "https://eliascrum.github.io/eliascrum/",
   "datasetUrl": "https://eliascrum.github.io/eliascrum/recent_work.json",
   "sparqlGraphUrl": "https://eliascrum.github.io/eliascrum/recent_work.ttl",
-  "totalItems": 43,
+  "totalItems": 45,
   "recentWork": [
     {
       "id": "Publication:real-world-federation-iswc-2026",
@@ -169,6 +169,32 @@
       "itemUrl": "https://eliascrum.github.io/eliascrum/publications/genome-sharing-review-2026/paper"
     },
     {
+      "id": "Software:ontology-companion-generator",
+      "type": "Software",
+      "title": "Ontology Companion Generator",
+      "tags": [
+        "Ontology Documentation Tool",
+        "Ontology Documentation Generation",
+        "Semantic Web",
+        "Ontology Engineering",
+        "Documentation",
+        "Web Application"
+      ],
+      "slug": "ontology-companion-generator",
+      "dateIso": "2026-01-01",
+      "summary": "An npm-based generator that creates GitHub Pages companions for exploring, visualizing, and documenting ontologies with configurable output.",
+      "url": "https://eliascrum.github.io/eliascrum/software/ontology-companion-generator",
+      "sourceUrl": "https://github.com/ecrum19/ocg",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/ontology-companion-generator",
+      "latestRelease": {
+        "tagName": "v1.1.1",
+        "name": "v1.1.1",
+        "url": "https://github.com/ecrum19/ocg/releases/tag/v1.1.1",
+        "publishedAt": "2026-08-13T07:56:36.000Z"
+      },
+      "latestReleaseDateIso": "2026-08-13"
+    },
+    {
       "id": "Software:qr-code-generator",
       "type": "Software",
       "title": "QR Code Generator",
@@ -225,7 +251,7 @@
       "type": "Software",
       "title": "VCF-RDFizer Vocabulary",
       "tags": [
-        "Documentation Website",
+        "Semantic Vocabulary",
         "Semantic Vocabulary Reference",
         "Semantic Web",
         "Genomics",
@@ -240,6 +266,31 @@
       "itemUrl": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer-vocabulary",
       "latestRelease": null,
       "latestReleaseDateIso": null
+    },
+    {
+      "id": "Software:vord",
+      "type": "Software",
+      "title": "Vocabulary of Restrictive Datasets (VoRD)",
+      "tags": [
+        "Semantic Vocabulary",
+        "Semantic Vocabulary Reference",
+        "Semantic Web",
+        "Ontology Engineering",
+        "Documentation"
+      ],
+      "slug": "vord",
+      "dateIso": "2026-01-01",
+      "summary": "Semantic vocabulary resource for documenting and exploring VoRD in a browsable, companion-style format.",
+      "url": "https://eliascrum.github.io/eliascrum/software/vord",
+      "sourceUrl": "https://github.com/ecrum19/vord",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/vord",
+      "latestRelease": {
+        "tagName": "v0.1",
+        "name": "v0.1",
+        "url": "https://github.com/ecrum19/vord/tree/v0.1",
+        "publishedAt": "2026-05-29T07:48:05.000Z"
+      },
+      "latestReleaseDateIso": "2026-05-29"
     },
     {
       "id": "Talk:18m-vito-internal-jury",

@@ -11,9 +11,10 @@ Current release: **v0.2.0**
 
 - Vue 3
 - TypeScript
-- Vue Router 4
-- Vuetify 3
-- Vite 6
+- Vue Router 5
+- Vuetify 4
+- Vite 8
+- TypeScript 6
 - ESLint
 
 ## Local Development
@@ -34,7 +35,7 @@ Current release: **v0.2.0**
 - `npm run build:slides`: rebuild generated talks/posters data and PDF outputs (adds small bottom-left watermark; compresses PDFs when Ghostscript is available)
 - `npm run update:scholar`: refresh Google Scholar citation counts
 - `npm run recent-work:export`: aggregate website data into `public/recent_work.json` and `public/recent_work.ttl`
-- `npm run rdf:export`: export all `src/data/*.ts` content to `src/data/rdf/site-data.ttl`
+- `npm run rdf:export`: export all current website data to `src/data/rdf/site-data.ttl` and the public `/site-data.ttl` endpoint, while publishing the vocabulary and SHACL shapes
 - `npm run rdf:update -- --update <file.ru>`: apply SPARQL `INSERT DATA`/`DELETE DATA` updates to RDF data
 
 
@@ -82,7 +83,7 @@ Constraints for the current updater:
 
 - Workflow: `.github/workflows/build-on-push.yml`
 - Runs install, optional `build:slides`, lint, and build on each push.
- - `npm run build` runs `prebuild`, which auto-generates `recent_work.json` and `recent_work.ttl`.
+- `npm run build` runs `prebuild`, which refreshes the recent-work feeds and all public RDF artifacts.
 
 ### Scholar Citation Refresh
 
@@ -94,3 +95,6 @@ Constraints for the current updater:
 
 - JSON feed: `/recent_work.json`
 - Turtle/RDF feed: `/recent_work.ttl`
+- Full RDF graph: `/site-data.ttl`
+- Public vocabulary: `/vocab.ttl`
+- Public SHACL shapes: `/site-shapes.ttl`

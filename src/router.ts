@@ -1,17 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import AboutMe from "./components/AboutMe.vue";
-import MyPublications from "./components/MyPublications.vue";
-import MySoftware from "./components/MySoftware.vue";
-import SoftwareDetail from "./components/SoftwareDetail.vue";
-import MyBlogs from "./components/MyBlogs.vue";
-import MyCV from "./components/CurrentCv.vue";
-import MySlides from "./components/MySlides.vue";
-import SlideDetail from "./components/SlideDetail.vue";
-import PosterDetail from "./components/PosterDetail.vue";
-import PublicationPaperPage from "./components/PublicationPaperPage.vue";
-import FellowshipDetail from "./components/FellowshipDetail.vue";
-
 /**
  * The router here allows for navigation between different pages of the website
  */
@@ -26,27 +14,27 @@ const router = createRouter({
     {
       name: "About Me",
       path: "/about",
-      components: { default: AboutMe },
+      component: () => import("./components/AboutMe.vue"),
     },
     {
       name: "Publications",
       path: "/publications",
-      components: { default: MyPublications },
+      component: () => import("./components/MyPublications.vue"),
     },
     {
       name: "Publication Paper",
       path: "/publications/:slug/paper",
-      component: PublicationPaperPage,
+      component: () => import("./components/PublicationPaperPage.vue"),
     },
     {
       name: "Software",
       path: "/software",
-      components: { default: MySoftware },
+      component: () => import("./components/MySoftware.vue"),
     },
     {
       name: "Software Detail",
       path: "/software/:slug",
-      component: SoftwareDetail,
+      component: () => import("./components/SoftwareDetail.vue"),
     },
     {
       name: "My Work",
@@ -56,32 +44,32 @@ const router = createRouter({
     {
       name: "Blogs",
       path: "/blogs",
-      components: { default: MyBlogs },
+      component: () => import("./components/MyBlogs.vue"),
     },
     {
       name: "Talks",
       path: "/talks",
-      component: MySlides,
+      component: () => import("./components/MySlides.vue"),
     },
     {
       name: "Poster Detail",
       path: "/talks/posters/:slug",
-      component: PosterDetail,
+      component: () => import("./components/PosterDetail.vue"),
     },
     {
       name: "Talk Detail",
       path: "/talks/:slug",
-      component: SlideDetail,
+      component: () => import("./components/SlideDetail.vue"),
     },
     {
       name: 'My CV',
       path: '/about/cv',
-      component: MyCV
+      component: () => import("./components/CurrentCv.vue")
     },
     {
       name: "Fellowship Detail",
       path: "/about/fellowships/:slug",
-      component: FellowshipDetail,
+      component: () => import("./components/FellowshipDetail.vue"),
     }
   ],
 });

@@ -97,16 +97,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, ref, watch } from "vue";
+import { defineComponent, nextTick, onBeforeUnmount, ref, watch } from "vue";
 import { type PropType } from "vue";
 import { useRouter } from "vue-router";
-import {
-  getDefaultSearchResults,
-  runSparqlSearch,
-  searchByKeyword,
-  type SearchMode,
-  type SearchResult,
-} from "../utils/siteSearch";
+import type { SearchMode, SearchResult } from "../utils/siteSearch";
+
+type SearchApi = typeof import("../utils/siteSearch");
+
+let searchApiPromise: Promise<SearchApi> | null = null;
+
+function loadSearchApi(): Promise<SearchApi> {
+  searchApiPromise ??= import("../utils/siteSearch");
+  return searchApiPromise;
+}
 
 export default defineComponent({
   name: "SpotlightSearch",
@@ -123,25 +126,30 @@ export default defineComponent({
     const query = ref("");
     const sparqlQuery = ref("SELECT ?s ?p ?o WHERE { ?s ?p ?o } LIMIT 20");
     const activeMode = ref<SearchMode>("keyword");
-    const displayResults = ref<SearchResult[]>(getDefaultSearchResults(10));
+    const displayResults = ref<SearchResult[]>([]);
     const sparqlLoading = ref(false);
     const sparqlNotice = ref("");
+
+    onBeforeUnmount(() => {
+      document.body.classList.remove("spotlight-open");
+    });
 
     function closeOverlay() {
       emit("close");
     }
 
-    function resetKeywordResults() {
+    async function resetKeywordResults() {
+      const searchApi = await loadSearchApi();
       displayResults.value = query.value.trim()
-        ? searchByKeyword(query.value, 16)
-        : getDefaultSearchResults(10);
+        ? searchApi.searchByKeyword(query.value, 16)
+        : searchApi.getDefaultSearchResults(10);
     }
 
-    function setMode(mode: SearchMode) {
+    async function setMode(mode: SearchMode) {
       activeMode.value = mode;
       sparqlNotice.value = "";
       if (mode === "keyword") {
-        resetKeywordResults();
+        await resetKeywordResults();
       } else {
         displayResults.value = [];
       }
@@ -155,7 +163,8 @@ export default defineComponent({
       sparqlLoading.value = true;
       sparqlNotice.value = "";
       try {
-        const response = await runSparqlSearch(sparqlQuery.value, 30);
+        const searchApi = await loadSearchApi();
+        const response = await searchApi.runSparqlSearch(sparqlQuery.value, 30);
         displayResults.value = response.results;
         sparqlNotice.value = response.error
           ? `${response.notice || ""}${response.notice ? " " : ""}(Runtime note: ${response.error})`
@@ -183,9 +192,9 @@ export default defineComponent({
 
     watch(
       () => query.value,
-      () => {
+      async () => {
         if (activeMode.value === "keyword") {
-          resetKeywordResults();
+          await resetKeywordResults();
         }
       },
     );
@@ -198,7 +207,11 @@ export default defineComponent({
           query.value = "";
           sparqlNotice.value = "";
           activeMode.value = "keyword";
-          displayResults.value = getDefaultSearchResults(10);
+          const searchApi = await loadSearchApi();
+          if (!props.open) {
+            return;
+          }
+          displayResults.value = searchApi.getDefaultSearchResults(10);
           await nextTick();
           queryInputRef.value?.focus();
           queryInputRef.value?.select();

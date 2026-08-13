@@ -8,7 +8,7 @@ export interface SoftwareReleaseInfo {
   publishedAt: string | null;
 }
 
-export const softwareReleaseLastUpdatedIso: string | null = "2026-08-10T08:23:12.533Z";
+export const softwareReleaseLastUpdatedIso: string | null = "2026-08-13T12:36:24.133Z";
 
 export const softwareReleasesBySoftwareId: Record<string, SoftwareReleaseInfo | null> = {
   "genome-sharing-paper-webpage": {
@@ -22,6 +22,12 @@ export const softwareReleasesBySoftwareId: Record<string, SoftwareReleaseInfo | 
     name: "Latest update (main)",
     url: "https://github.com/ecrum19/ldp-permissions-notifications-specification",
     publishedAt: "2026-02-11T10:17:57.000Z",
+  },
+  "ontology-companion-generator": {
+    tagName: "v1.1.1",
+    name: "v1.1.1",
+    url: "https://github.com/ecrum19/ocg/releases/tag/v1.1.1",
+    publishedAt: "2026-08-13T07:56:36.000Z",
   },
   "qr-code-generator": {
     tagName: null,
@@ -46,5 +52,11 @@ export const softwareReleasesBySoftwareId: Record<string, SoftwareReleaseInfo | 
     name: "v1.2.3",
     url: "https://github.com/ecrum19/VCF-RDFizer/releases/tag/v1.2.3",
     publishedAt: "2026-06-02T11:47:19.000Z",
+  },
+  "vord": {
+    tagName: "v0.1",
+    name: "v0.1",
+    url: "https://github.com/ecrum19/vord/tree/v0.1",
+    publishedAt: "2026-05-29T07:48:05.000Z",
   },
 };

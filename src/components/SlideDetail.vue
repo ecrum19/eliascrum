@@ -173,15 +173,6 @@
 
 <script lang="ts">
 import { defineComponent, markRaw } from "vue";
-import {
-  GlobalWorkerOptions,
-  getDocument,
-  type PDFDocumentLoadingTask,
-  type PDFDocumentProxy,
-  type RenderTask,
-} from "pdfjs-dist/build/pdf.mjs";
-import PdfJsWorker from "pdfjs-dist/build/pdf.worker.mjs?worker";
-import pdfWorkerSrc from "pdfjs-dist/build/pdf.worker.mjs?url";
 import { getTalkViewBySlug, type TalkViewEntry } from "../data/talkCatalog";
 import {
   getRelatedPublicationLinksForPresentationFile,
@@ -189,15 +180,13 @@ import {
   type ResolvedPublicationLink,
 } from "../data/publicationsData";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
+import {
+  loadPdfJs,
+  type PDFDocumentLoadingTask,
+  type PDFDocumentProxy,
+  type RenderTask,
+} from "../utils/pdfJs";
 import WorkPageLayout from "./layout/WorkPageLayout.vue";
-
-if (!GlobalWorkerOptions.workerPort) {
-  try {
-    GlobalWorkerOptions.workerPort = new PdfJsWorker();
-  } catch {
-    GlobalWorkerOptions.workerSrc = pdfWorkerSrc;
-  }
-}
 
 type TalkDetailFilterKind =
   | "venue"
@@ -534,6 +523,7 @@ export default defineComponent({
 
       let loadingTask: PDFDocumentLoadingTask | null = null;
       try {
+        const { getDocument } = await loadPdfJs();
         loadingTask = getDocument({ url: pdfUrl });
         this.pdfLoadingTask = markRaw(loadingTask);
         const nextDocument = await loadingTask.promise;
@@ -561,7 +551,6 @@ export default defineComponent({
         }
         this.isPdfRenderError = true;
         this.pdfRenderErrorMessage = this.stringifyPdfError(error);
-        // eslint-disable-next-line no-console
         console.error("Slide preview load failed:", error);
       } finally {
         if (this.pdfLoadingTask === loadingTask) {
@@ -620,7 +609,6 @@ export default defineComponent({
           if (!this.isPdfCancellationError(error)) {
             this.isPdfRenderError = true;
             this.pdfRenderErrorMessage = this.stringifyPdfError(error);
-            // eslint-disable-next-line no-console
             console.error("Slide preview cancellation failed:", error);
             return;
           }
@@ -644,7 +632,6 @@ export default defineComponent({
         }
         this.isPdfRenderError = true;
         this.pdfRenderErrorMessage = this.stringifyPdfError(error);
-        // eslint-disable-next-line no-console
         console.error("Slide preview getPage failed:", error);
         return;
       }
@@ -691,7 +678,6 @@ export default defineComponent({
         if (!this.isPdfCancellationError(error)) {
           this.isPdfRenderError = true;
           this.pdfRenderErrorMessage = this.stringifyPdfError(error);
-          // eslint-disable-next-line no-console
           console.error("Slide preview render failed:", error);
         }
       } finally {

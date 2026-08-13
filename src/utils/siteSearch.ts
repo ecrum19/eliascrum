@@ -377,12 +377,18 @@ export function getDefaultSearchResults(limit = 10): SearchResult[] {
 async function getComunicaStore() {
   if (!cachedRdfStorePromise) {
     cachedRdfStorePromise = (async () => {
-      const n3ModuleName = "n3";
-      const n3Module = await import(/* @vite-ignore */ n3ModuleName);
+      const n3Module = await import("n3");
       if (!cachedRdfSourcePromise) {
-        cachedRdfSourcePromise = import("../data/rdf/site-data.ttl?raw").then(
-          (module) => module.default,
-        );
+        cachedRdfSourcePromise = fetch(resolvePublicAssetPath("/site-data.ttl"), {
+          headers: {
+            Accept: "text/turtle",
+          },
+        }).then(async (response) => {
+          if (!response.ok) {
+            throw new Error(`RDF data request failed with HTTP ${response.status}.`);
+          }
+          return response.text();
+        });
       }
 
       const rdfSource = await cachedRdfSourcePromise;
@@ -484,8 +490,7 @@ export async function runSparqlSearch(query: string, limit = 25): Promise<Sparql
   }
 
   try {
-    const comunicaModuleName = "@comunica/query-sparql";
-    const comunicaModule = await import(/* @vite-ignore */ comunicaModuleName);
+    const comunicaModule = await import("@comunica/query-sparql");
     const comunicaAny = comunicaModule as unknown as {
       QueryEngine: new () => {
         queryBindings: (

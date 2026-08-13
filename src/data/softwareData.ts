@@ -104,6 +104,27 @@ export const softwareSections: SoftwareSection[] = [
         relatedPublicationIds: ["genomic-variant-representation-rdf-preprint-2025", "vcf2rdf-SWAT4HCLS-2025", "vcf-to-rdf-rml-swat4hcls-2026"],
         relatedPosterSlugs: ["swat4hcls-2025", "swat4hcls-2026"],
       },
+      {
+        id: "ontology-companion-generator",
+        title: "Ontology Companion Generator",
+        type: "Ontology Documentation Tool",
+        purpose: "Ontology Documentation Generation",
+        year: "2026",
+        summary:
+          "An npm-based generator that creates GitHub Pages companions for exploring, visualizing, and documenting ontologies with configurable output.",
+        description:
+          "Ontology Companion Generator is a tool for automatically generating a companion website for an ontology directly from the ontology's home GitHub repository. It runs as an npm package and can produce GitHub Pages-ready outputs for ontology exploration, visualization, and documentation, while allowing extensive customization through a configuration file.",
+        repositoryUrl: "https://github.com/ecrum19/ocg",
+        webUrl: "https://www.npmjs.com/package/ontology-companion-generator",
+        details: [
+          {
+            label: "Package Registry",
+            value: "ontology-companion-generator on npm",
+            href: "https://www.npmjs.com/package/ontology-companion-generator",
+          },
+        ],
+        mainTopics: ["Semantic Web", "Ontology Engineering", "Documentation", "Web Application"],
+      },
     ],
   },
   {
@@ -136,7 +157,7 @@ export const softwareSections: SoftwareSection[] = [
       {
         id: "vcf-rdfizer-vocabulary",
         title: "VCF-RDFizer Vocabulary",
-        type: "Documentation Website",
+        type: "Semantic Vocabulary",
         purpose: "Semantic Vocabulary Reference",
         year: "2026",
         summary:
@@ -147,6 +168,19 @@ export const softwareSections: SoftwareSection[] = [
         mainTopics: ["Semantic Web", "Genomics", "Ontology Engineering", "Documentation"],
         relatedPublicationIds: ["genomic-variant-representation-rdf-preprint-2025", "vcf2rdf-SWAT4HCLS-2025", "vcf-to-rdf-rml-swat4hcls-2026"],
         relatedPosterSlugs: ["swat4hcls-2025", "swat4hcls-2026"],
+      },
+      {
+        id: "vord",
+        title: "Vocabulary of Restrictive Datasets (VoRD)",
+        type: "Semantic Vocabulary",
+        purpose: "Semantic Vocabulary Reference",
+        year: "2026",
+        summary:
+          "Semantic vocabulary resource for documenting and exploring VoRD in a browsable, companion-style format.",
+        description:
+          "This repository provides the VoRD vocabulary as a semantic resource intended for exploration, visualization, and documentation. It fits the same companion-resource pattern as other ontology-facing sites in the project and supports clearer inspection of vocabulary structure and intended usage.",
+        repositoryUrl: "https://github.com/ecrum19/vord",
+        mainTopics: ["Semantic Web", "Ontology Engineering", "Documentation"],
       },
     ],
   },

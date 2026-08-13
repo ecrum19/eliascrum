@@ -714,6 +714,8 @@ export const publicationPresentationLinksById: Record<
   ],
 };
 
+type PublicationSlugSource = Pick<Publication, "id" | "slug" | "title">;
+
 function slugifyPublicationValue(value: string): string {
   return value
     .trim()
@@ -722,7 +724,7 @@ function slugifyPublicationValue(value: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-export function getPublicationSlug(publication: Publication): string {
+export function getPublicationSlug(publication: PublicationSlugSource): string {
   if (publication.slug && publication.slug.trim().length > 0) {
     return publication.slug.trim();
   }
@@ -735,7 +737,7 @@ export function getPublicationSlug(publication: Publication): string {
   return slugifyPublicationValue(publication.title);
 }
 
-export function getPublicationPagePath(publication: Publication): string {
+export function getPublicationPagePath(publication: PublicationSlugSource): string {
   return `/publications/${getPublicationSlug(publication)}/paper`;
 }
 
