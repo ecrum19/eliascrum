@@ -58,7 +58,7 @@
       <div class="desktop-right-controls w3-hide-small">
         <button
           type="button"
-          class="w3-bar-item w3-button w3-hover-opacity-off search-trigger"
+          class="w3-bar-item w3-button w3-hover-black w3-hover-opacity-off search-trigger"
           aria-label="Open search"
           title="Search (Ctrl/Cmd+K)"
           @click="openSearch"
@@ -67,7 +67,7 @@
         </button>
         <button
           type="button"
-          class="w3-bar-item w3-button w3-hover-opacity-off text-size-toggle"
+          class="w3-bar-item w3-button w3-hover-black w3-hover-opacity-off text-size-toggle"
           @click="toggleTextScale"
           :aria-label="`Text size: ${textScaleDisplayLabel}. Click to change text size`"
           :title="`Text size: ${textScaleDisplayLabel}`"
@@ -79,7 +79,7 @@
         </button>
         <button
           type="button"
-          class="w3-bar-item w3-button w3-hover-opacity-off theme-toggle"
+          class="w3-bar-item w3-button w3-hover-black w3-hover-opacity-off theme-toggle"
           @click="toggleTheme"
           :aria-label="theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
         >
@@ -115,21 +115,21 @@
       >
       <button
         type="button"
-        class="w3-bar-item w3-button theme-toggle-mobile"
+        class="w3-bar-item w3-button w3-hover-black theme-toggle-mobile"
         @click="openSearch"
       >
         SEARCH
       </button>
       <button
         type="button"
-        class="w3-bar-item w3-button theme-toggle-mobile"
+        class="w3-bar-item w3-button w3-hover-black theme-toggle-mobile"
         @click="toggleTextScale"
       >
         TEXT SIZE: {{ textScaleDisplayLabel.toUpperCase() }}
       </button>
       <button
         type="button"
-        class="w3-bar-item w3-button theme-toggle-mobile"
+        class="w3-bar-item w3-button w3-hover-black theme-toggle-mobile"
         @click="toggleTheme"
       >
         {{ theme === "dark" ? "LIGHT MODE" : "DARK MODE" }}
@@ -347,9 +347,11 @@ header h1 {
 .search-trigger,
 .text-size-toggle {
   border: none;
-  background: var(--toggle-bg);
-  color: var(--toggle-text);
+  background: transparent !important;
+  color: var(--page-text);
   cursor: pointer;
+  opacity: 0.68;
+  transition: background-color 0.18s ease, color 0.18s ease, opacity 0.18s ease;
 }
 
 .text-size-toggle {
@@ -381,21 +383,20 @@ header h1 {
 .theme-toggle-mobile:hover,
 .search-trigger:hover,
 .text-size-toggle:hover {
-  background: var(--nav-hover-bg) !important;
+  background-color: var(--nav-hover-bg) !important;
+  color: var(--page-text);
+  opacity: 1;
 }
 
-[data-theme="light"] .theme-toggle,
-[data-theme="light"] .theme-toggle-mobile,
-[data-theme="light"] .search-trigger,
-[data-theme="light"] .text-size-toggle {
-  background: transparent;
-}
-
-[data-theme="light"] .theme-toggle:hover,
-[data-theme="light"] .theme-toggle-mobile:hover,
-[data-theme="light"] .search-trigger:hover,
-[data-theme="light"] .text-size-toggle:hover {
-  background: rgba(var(--accent-rgb), 0.16) !important;
+.theme-toggle:focus-visible,
+.theme-toggle-mobile:focus-visible,
+.search-trigger:focus-visible,
+.text-size-toggle:focus-visible {
+  background-color: var(--nav-hover-bg) !important;
+  color: var(--page-text);
+  opacity: 1;
+  outline: 2px solid var(--link-color);
+  outline-offset: -2px;
 }
 
 @media (max-width: 1220px) {

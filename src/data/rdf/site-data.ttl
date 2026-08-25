@@ -720,7 +720,7 @@
 <https://eliascrum.github.io/eliascrum/id/cv-section/8> rdf:type ec:CvSection .
 <https://eliascrum.github.io/eliascrum/id/cv-section/8> schema:name "Organizations" .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:description "RDF/Turtle projection of the TypeScript data modules under src/data." .
-<https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:modified "2026-08-13T12:36:24.675Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:modified "2026-08-25T06:49:07.360Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:hasCvProfile <https://eliascrum.github.io/eliascrum/id/cv-profile/elias-crum> .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:hasExternalProfile <https://eliascrum.github.io/eliascrum/id/profile/google-scholar> .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:hasExternalProfile <https://eliascrum.github.io/eliascrum/id/profile/orcid> .
@@ -2288,7 +2288,7 @@
 <https://eliascrum.github.io/eliascrum/id/software/qr-code-generator> schema:url <https://github.com/ecrum19/qr-code-generator> .
 <https://eliascrum.github.io/eliascrum/id/software/solid-cockpit> dcterms:identifier "solid-cockpit" .
 <https://eliascrum.github.io/eliascrum/id/software/solid-cockpit> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software-section/platforms-applications> .
-<https://eliascrum.github.io/eliascrum/id/software/solid-cockpit> ec:description "Solid Cockpit is an application for exploring and interacting with Solid Pod resources. Specifically, it offers functionalities to upload data, manage the privacy of data, and query connected a Solid Pod. It is relevant to the broader semantic-web and decentralized-data tooling space because it provides a user-friendly interface for interacting with decentralized data." .
+<https://eliascrum.github.io/eliascrum/id/software/solid-cockpit> ec:description "Solid Cockpit is a browser-based interface for managing Solid Pod data, editing permissions, handling notifications, and executing SPARQL queries. It also supports materializing query results for reuse." .
 <https://eliascrum.github.io/eliascrum/id/software/solid-cockpit> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/data-privacy-21d7a0e8> .
 <https://eliascrum.github.io/eliascrum/id/software/solid-cockpit> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/federated-querying-e0ac23a5> .
 <https://eliascrum.github.io/eliascrum/id/software/solid-cockpit> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/semantic-web-501ff810> .

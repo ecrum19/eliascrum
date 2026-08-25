@@ -5,7 +5,10 @@
         <a href="https://github.com/ecrum19"><i class="fa fa-github w3-hover-opacity"></i></a>
         <a href="https://www.linkedin.com/in/elias-crum-413178142/"><i class="fa fa-linkedin w3-hover-opacity"></i></a>
       </div>
-      <div id="runner">{{ new Date().getFullYear() }} — Elias D. Crum</div>
+      <div class="footer-meta">
+        <div id="runner">{{ new Date().getFullYear() }} — Elias D. Crum</div>
+        <router-link class="footer-privacy-link" to="/privacy">Privacy &amp; Analytics</router-link>
+      </div>
     </div>
   </footer>
 </template>
@@ -35,6 +38,21 @@ export default {
   opacity: 0.95;
 }
 
+.footer-privacy-link {
+  color: var(--text-soft);
+  font-size: var(--font-size-caption);
+  letter-spacing: 0.04em;
+  opacity: 0.82;
+  text-decoration: none;
+  transition: color 0.18s ease, opacity 0.18s ease;
+}
+
+.footer-privacy-link:hover {
+  color: var(--link-color);
+  opacity: 1;
+  text-decoration: underline;
+}
+
 #myFooter {
   width: 100%;
   background: var(--footer-bg);
@@ -52,8 +70,16 @@ export default {
   background: transparent;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 14px;
+  flex-wrap: wrap;
+}
+
+.footer-meta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -61,6 +87,11 @@ export default {
   .footer-inner {
     flex-direction: column;
     gap: 8px;
+  }
+
+  .footer-meta {
+    justify-content: center;
+    gap: 5px 10px;
   }
 
   #runner {

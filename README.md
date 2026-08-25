@@ -1,100 +1,55 @@
-# Elias Crum Personal Website
+# Elias Crum
 
-Personal academic website built with Vue 3, Vite, Vuetify, and TypeScript.
+Personal academic website for Elias D. Crum, Ph.D. candidate working at the intersection of
+semantic web technologies, clinical genomics, bioinformatics, and privacy-aware data
+infrastructure.
+
+Visit the live website at [eliascrum.github.io/eliascrum](https://eliascrum.github.io/eliascrum/).
+
+## Explore
+
+- [About](https://eliascrum.github.io/eliascrum/about): background, research topics, affiliations,
+  and CV.
+- [Publications](https://eliascrum.github.io/eliascrum/publications): journal articles, conference
+  papers, preprints, and linked paper materials.
+- [Talks and Posters](https://eliascrum.github.io/eliascrum/talks): presentation slides and
+  conference posters.
+- [Software](https://eliascrum.github.io/eliascrum/software): research tools, applications,
+  specifications, vocabularies, and utilities.
+
+The site supports keyword and tag-based discovery across the underlying research, presentation,
+publication, and software records.
+
+## Research Themes
+
+The website brings together work involving:
+
+- Semantic web and linked data
+- Clinical genomics and bioinformatics
+- RDF representation and knowledge graphs
+- Federated SPARQL querying
+- Solid Pods and decentralized data infrastructure
+- Data privacy and patient-controlled data
+
+## Public Data
+
+Selected website content is available as machine-readable resources:
+
+- [Recent work JSON](https://eliascrum.github.io/eliascrum/recent_work.json)
+- [Recent work RDF](https://eliascrum.github.io/eliascrum/recent_work.ttl)
+- [Full site RDF graph](https://eliascrum.github.io/eliascrum/site-data.ttl)
+- [Site vocabulary](https://eliascrum.github.io/eliascrum/vocab.ttl)
+- [SHACL shapes](https://eliascrum.github.io/eliascrum/site-shapes.ttl)
+
+These resources are intended to make the website easier to reuse, query, and connect with other
+research information systems.
+
+## Privacy
+
+Optional Google Analytics is disabled by default and is loaded only after explicit visitor
+consent. The site provides a [Privacy & Analytics](https://eliascrum.github.io/eliascrum/privacy)
+page describing the information collected and allowing visitors to change their choice.
 
 ## Release
 
-Current release: **v0.2.0**
-
-
-## Tech Stack
-
-- Vue 3
-- TypeScript
-- Vue Router 5
-- Vuetify 4
-- Vite 8
-- TypeScript 6
-- ESLint
-
-## Local Development
-
-### Prerequisites
-
-- Node.js 20+
-- npm 10+
-- Optional: Ghostscript (`gs`) for additional PDF compression in `build:slides` (watermarking runs regardless)
-
-
-## Project Scripts
-
-- `npm run dev`: start Vite dev server
-- `npm run preview`: preview production build
-- `npm run build`: production build (`dist/`)
-- `npm run lint`: lint Vue/TypeScript source
-- `npm run build:slides`: rebuild generated talks/posters data and PDF outputs (adds small bottom-left watermark; compresses PDFs when Ghostscript is available)
-- `npm run update:scholar`: refresh Google Scholar citation counts
-- `npm run recent-work:export`: aggregate website data into `public/recent_work.json` and `public/recent_work.ttl`
-- `npm run rdf:export`: export all current website data to `src/data/rdf/site-data.ttl` and the public `/site-data.ttl` endpoint, while publishing the vocabulary and SHACL shapes
-- `npm run rdf:update -- --update <file.ru>`: apply SPARQL `INSERT DATA`/`DELETE DATA` updates to RDF data
-
-
-## RDF Data Layer
-
-### Files
-
-- Data graph: `src/data/rdf/site-data.ttl` (generated mirror of `src/data` modules)
-- SHACL constraints: `src/data/rdf/site-shapes.ttl`
-- Vocabulary: `src/data/rdf/vocab.ttl` (published as `public/vocab.ttl`)
-- Transition plan: `src/data/rdf/TRANSITION_PLAN.md`
-- SPARQL update example: `src/data/rdf/updates/example-add-blog-post.ru`
-
-### Generate RDF Mirror
-
-```bash
-npm run rdf:export
-```
-
-### Apply SPARQL Updates
-
-```bash
-# Dry-run
-npm run rdf:update -- --update src/data/rdf/updates/example-add-blog-post.ru --dry-run
-
-# Apply
-npm run rdf:update -- --update src/data/rdf/updates/example-add-blog-post.ru
-```
-
-### Supported SPARQL Update Subset
-
-- `PREFIX ...`
-- `INSERT DATA { ... }`
-- `DELETE DATA { ... }`
-
-Constraints for the current updater:
-- one triple per line inside each DATA block
-- no blank nodes
-- no `WHERE` updates yet
-
-
-## Automation and CI
-
-### Build Validation
-
-- Workflow: `.github/workflows/build-on-push.yml`
-- Runs install, optional `build:slides`, lint, and build on each push.
-- `npm run build` runs `prebuild`, which refreshes the recent-work feeds and all public RDF artifacts.
-
-### Scholar Citation Refresh
-
-- Workflow: `.github/workflows/update-scholar-citations.yml`
-- Scheduled weekly and available via manual dispatch.
-- Updates `src/data/scholarCitations.ts` and auto-commits changes.
-
-## Public Recent Work Endpoints
-
-- JSON feed: `/recent_work.json`
-- Turtle/RDF feed: `/recent_work.ttl`
-- Full RDF graph: `/site-data.ttl`
-- Public vocabulary: `/vocab.ttl`
-- Public SHACL shapes: `/site-shapes.ttl`
+Current release: **v1.0.0**

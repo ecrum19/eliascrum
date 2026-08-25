@@ -1,0 +1,14 @@
+{
+  "ticker": "GOOGL",
+  "company": "Alphabet Inc. Class A",
+  "currency": "USD",
+  "firstCommitDate": "2024-03-20",
+  "initialPriceDate": "2024-03-20",
+  "initialPrice": 148.74,
+  "currentDate": "2026-08-24",
+  "currentClose": 348.06,
+  "changeAmount": 199.32,
+  "changePercent": 134.01,
+  "source": "Yahoo Finance",
+  "sourceUrl": "https://finance.yahoo.com/quote/GOOGL/"
+}

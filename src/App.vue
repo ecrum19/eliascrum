@@ -12,6 +12,7 @@
       :open="isSearchOpen"
       @close="closeSearch"
     />
+    <analytics-consent-banner />
     <div class="background">
       <video
         id="background-video"
@@ -36,6 +37,7 @@
 import { defineAsyncComponent, defineComponent } from "vue";
 import TheHeader from './components/TheHeader.vue';
 import TheFooter from './components/TheFooter.vue';
+import AnalyticsConsentBanner from './components/AnalyticsConsentBanner.vue';
 import { resolvePublicAssetPath } from "./utils/publicAssetPath";
 
 const SpotlightSearch = defineAsyncComponent(() => import("./components/SpotlightSearch.vue"));
@@ -56,6 +58,7 @@ export default defineComponent({
   components: {
     TheHeader,
     TheFooter,
+    AnalyticsConsentBanner,
     SpotlightSearch,
   },
   data(): { theme: ThemeMode; textScaleMode: TextScaleMode; isSearchOpen: boolean } {
