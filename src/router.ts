@@ -70,7 +70,12 @@ const router = createRouter({
       name: "Fellowship Detail",
       path: "/about/fellowships/:slug",
       component: () => import("./components/FellowshipDetail.vue"),
-    }
+    },
+    {
+      name: "Privacy & Analytics",
+      path: "/privacy",
+      component: () => import("./components/PrivacyAnalytics.vue"),
+    },
   ],
 });
 

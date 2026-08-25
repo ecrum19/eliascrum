@@ -12,6 +12,7 @@
       :open="isSearchOpen"
       @close="closeSearch"
     />
+    <analytics-consent-banner />
     <div class="background">
       <video
         id="background-video"
@@ -22,7 +23,11 @@
       ></video>
     </div>
     <main class="app-main" :class="{ 'app-main--compact': !isHomeRoute }">
-      <router-view></router-view>
+      <router-view v-slot="{ Component }">
+        <transition name="page-fade" mode="out-in">
+          <component :is="Component" :key="$route.path" />
+        </transition>
+      </router-view>
     </main>
     <the-footer />
   </div>
@@ -32,6 +37,7 @@
 import { defineAsyncComponent, defineComponent } from "vue";
 import TheHeader from './components/TheHeader.vue';
 import TheFooter from './components/TheFooter.vue';
+import AnalyticsConsentBanner from './components/AnalyticsConsentBanner.vue';
 import { resolvePublicAssetPath } from "./utils/publicAssetPath";
 
 const SpotlightSearch = defineAsyncComponent(() => import("./components/SpotlightSearch.vue"));
@@ -52,6 +58,7 @@ export default defineComponent({
   components: {
     TheHeader,
     TheFooter,
+    AnalyticsConsentBanner,
     SpotlightSearch,
   },
   data(): { theme: ThemeMode; textScaleMode: TextScaleMode; isSearchOpen: boolean } {
@@ -425,6 +432,36 @@ a {
 
 .app-main.app-main--compact {
   padding-top: 94px;
+}
+
+.page-fade-enter-active,
+.page-fade-leave-active {
+  transition:
+    opacity 0.32s ease,
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.page-fade-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-fade-enter-active,
+  .page-fade-leave-active {
+    transition: none;
+  }
+
+  .page-fade-enter-from,
+  .page-fade-leave-to {
+    transform: none;
+  }
 }
 
 @media (max-width: 768px) {
