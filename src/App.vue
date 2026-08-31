@@ -3,23 +3,33 @@
     <the-header
       :theme="theme"
       :text-scale-mode="textScaleMode"
+      :performance-mode="performanceMode"
+      :effective-performance-mode="effectivePerformanceMode"
       @toggle-theme="toggleTheme"
       @toggle-text-scale="toggleTextScale"
+      @toggle-performance-mode="togglePerformanceMode"
       @open-search="openSearch"
     />
     <spotlight-search
       v-if="isSearchOpen"
       :open="isSearchOpen"
+      :allow-sparql="effectivePerformanceMode === 'standard'"
       @close="closeSearch"
     />
     <analytics-consent-banner />
-    <div class="background">
+    <div class="background" :class="{ 'background--video-ready': backgroundVideoReady }" aria-hidden="true">
+      <img class="background-poster" :src="backgroundPosterUrl" alt="" />
       <video
-        id="background-video"
-        src="./assets/Abstract DNA Medical Animation.mp4"
+        v-if="backgroundVideoEnabled"
+        ref="backgroundVideo"
+        class="background-video"
+        :src="backgroundVideoUrl"
         muted
         loop
         autoplay
+        playsinline
+        preload="metadata"
+        @canplay="activateBackgroundVideo"
       ></video>
     </div>
     <main class="app-main" :class="{ 'app-main--compact': !isHomeRoute }">
@@ -38,7 +48,19 @@ import { defineAsyncComponent, defineComponent } from "vue";
 import TheHeader from './components/TheHeader.vue';
 import TheFooter from './components/TheFooter.vue';
 import AnalyticsConsentBanner from './components/AnalyticsConsentBanner.vue';
+import backgroundPosterUrl from "./assets/abstract-dna-poster.webp";
+import backgroundVideoUrl from "./assets/Abstract DNA Medical Animation.mp4";
 import { resolvePublicAssetPath } from "./utils/publicAssetPath";
+import {
+  addPerformanceSignalListeners,
+  getNextPerformanceMode,
+  readPerformanceMode,
+  resolvePerformanceMode,
+  savePerformanceMode,
+  scheduleWhenIdle,
+  type EffectivePerformanceMode,
+  type PerformanceMode,
+} from "./utils/performanceMode";
 
 const SpotlightSearch = defineAsyncComponent(() => import("./components/SpotlightSearch.vue"));
 
@@ -61,10 +83,31 @@ export default defineComponent({
     AnalyticsConsentBanner,
     SpotlightSearch,
   },
-  data(): { theme: ThemeMode; textScaleMode: TextScaleMode; isSearchOpen: boolean } {
+  data(): {
+    theme: ThemeMode;
+    textScaleMode: TextScaleMode;
+    performanceMode: PerformanceMode;
+    effectivePerformanceMode: EffectivePerformanceMode;
+    backgroundPosterUrl: string;
+    backgroundVideoUrl: string;
+    backgroundVideoEnabled: boolean;
+    backgroundVideoReady: boolean;
+    backgroundVideoCancel: (() => void) | null;
+    removePerformanceSignalListeners: (() => void) | null;
+    isSearchOpen: boolean;
+  } {
+    const performanceMode = readPerformanceMode();
     return {
       theme: "dark",
       textScaleMode: "normal",
+      performanceMode,
+      effectivePerformanceMode: resolvePerformanceMode(performanceMode),
+      backgroundPosterUrl,
+      backgroundVideoUrl,
+      backgroundVideoEnabled: false,
+      backgroundVideoReady: false,
+      backgroundVideoCancel: null,
+      removePerformanceSignalListeners: null,
       isSearchOpen: false,
     };
   },
@@ -111,6 +154,46 @@ export default defineComponent({
       this.applyTextScale(this.textScaleMode);
       localStorage.setItem(TEXT_SCALE_STORAGE_KEY, this.textScaleMode);
     },
+    refreshPerformanceMode(scheduleVideo = true) {
+      this.effectivePerformanceMode = resolvePerformanceMode(this.performanceMode);
+      document.documentElement.dataset.performanceMode = this.effectivePerformanceMode;
+      if (scheduleVideo) {
+        this.scheduleBackgroundVideo();
+      }
+    },
+    togglePerformanceMode() {
+      this.performanceMode = getNextPerformanceMode(this.performanceMode);
+      savePerformanceMode(this.performanceMode);
+      this.refreshPerformanceMode();
+    },
+    scheduleBackgroundVideo() {
+      this.backgroundVideoCancel?.();
+      this.backgroundVideoCancel = null;
+      this.backgroundVideoReady = false;
+      this.backgroundVideoEnabled = false;
+
+      if (this.effectivePerformanceMode !== "standard") {
+        return;
+      }
+
+      // The still image is rendered first; the MP4 is only inserted after the page is responsive.
+      this.backgroundVideoCancel = scheduleWhenIdle(() => {
+        this.backgroundVideoCancel = null;
+        if (this.effectivePerformanceMode === "standard") {
+          this.backgroundVideoEnabled = true;
+        }
+      });
+    },
+    activateBackgroundVideo() {
+      const video = this.$refs.backgroundVideo as HTMLVideoElement | undefined;
+      if (!video) {
+        return;
+      }
+
+      video.playbackRate = 0.45;
+      this.backgroundVideoReady = true;
+      void video.play().catch(() => undefined);
+    },
     openSearch() {
       this.isSearchOpen = true;
     },
@@ -144,18 +227,21 @@ export default defineComponent({
 
     this.applyTheme(this.theme);
     this.applyTextScale(this.textScaleMode);
+    this.refreshPerformanceMode(false);
   },
   mounted() {
-
-    const video = document.querySelector<HTMLVideoElement>('#background-video');
-    if (video) {
-      video.playbackRate = 0.45;
-    }
-
     window.addEventListener("keydown", this.handleGlobalSearchShortcut);
+    this.removePerformanceSignalListeners = addPerformanceSignalListeners(() => {
+      if (this.performanceMode === "auto") {
+        this.refreshPerformanceMode();
+      }
+    });
+    this.scheduleBackgroundVideo();
   },
   beforeUnmount() {
     window.removeEventListener("keydown", this.handleGlobalSearchShortcut);
+    this.backgroundVideoCancel?.();
+    this.removePerformanceSignalListeners?.();
   },
 });
 </script>
@@ -410,13 +496,30 @@ a {
   pointer-events: none;
 }
 
-.background video {
+.background-poster,
+.background-video {
   position: absolute;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.background-poster {
   opacity: var(--video-opacity);
-  transition: opacity 0.25s ease;
+  transition: opacity 0.35s ease;
+}
+
+.background-video {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.background--video-ready .background-poster {
+  opacity: 0;
+}
+
+.background--video-ready .background-video {
+  opacity: var(--video-opacity);
 }
 
 .app-shell {
@@ -450,6 +553,12 @@ a {
 .page-fade-leave-to {
   opacity: 0;
   transform: translateY(-4px);
+}
+
+/* Lite mode favors immediate navigation over decorative route motion. */
+:root[data-performance-mode="lite"] .page-fade-enter-active,
+:root[data-performance-mode="lite"] .page-fade-leave-active {
+  transition: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

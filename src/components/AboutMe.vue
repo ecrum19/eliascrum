@@ -37,6 +37,14 @@
                   <span>elias.crum@ugent.be</span>
                 </a>
               </p>
+              <p class="home-contact-row">
+                <router-link class="home-contact-link" to="/about/cv">
+                  <i
+                    class="home-contact-icon fa fa-address-card fa-fw w3-xlarge w3-text-white w3-hover-opacity"
+                  ></i>
+                  <span>Curriculum Vitae</span>
+                </router-link>
+              </p>
             </div>
             <hr />
 
@@ -143,22 +151,6 @@
               </div>
             </section>
 
-            <section class="cv-preview">
-              <p class="w3-large w3-text-theme cv-preview-title">
-                <b
-                  ><i
-                    class="fa fa-address-card fa-fw w3-xlarge w3-margin-right w3-text-white"
-                  ></i>
-                  Curriculum Vitae</b
-                >
-              </p>
-              <p class="cv-preview-copy">
-                Structured overview of research experience, teaching, education, awards, and computational expertise.
-              </p>
-              <router-link class="cv-preview-link" to="/about/cv">
-                Open Full CV
-              </router-link>
-            </section>
           </div>
         </div>
         <br />
@@ -888,43 +880,6 @@ a {
 [data-theme="light"] .ugent-logo {
   filter: brightness(0) saturate(100%) invert(21%) sepia(74%) saturate(1841%)
     hue-rotate(192deg) brightness(96%) contrast(91%);
-}
-
-.cv-preview {
-  margin-top: 18px;
-  padding-top: 18px;
-  border-top: 1px solid var(--surface-outline);
-}
-
-.cv-preview-title {
-  margin: 0;
-}
-
-.cv-preview-copy {
-  margin: 8px 0 10px;
-  color: var(--text-soft);
-  font-size: var(--font-size-body);
-  line-height: 1.45;
-  max-width: 36ch;
-}
-
-.cv-preview-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(var(--accent-rgb), 0.42);
-  border-radius: 999px;
-  background: rgba(var(--accent-rgb), 0.08);
-  padding: 7px 14px;
-  font-weight: 650;
-  font-size: var(--font-size-body-sm);
-  transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.16s ease;
-}
-
-.cv-preview-link:hover {
-  background: var(--nav-hover-bg);
-  border-color: rgba(var(--accent-rgb), 0.5);
-  transform: translateY(-1px);
 }
 
 div.school {

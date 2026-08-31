@@ -94,12 +94,18 @@
       <section id="poster-detail-pdf" class="work-section">
         <article class="poster-panel toc-anchor">
           <h2>Poster</h2>
-          <object :data="`${posterPdfUrl}#page=1&zoom=page-fit`" type="application/pdf" class="poster-frame">
+          <object v-if="posterPreviewRequested" :data="`${posterPdfUrl}#page=1&zoom=page-fit`" type="application/pdf" class="poster-frame">
             <p>
               Your browser cannot render the PDF inline.
               <a :href="posterPdfUrl">Open the poster</a>.
             </p>
           </object>
+          <deferred-preview-notice
+            v-else
+            message="Lite mode pauses poster previews until you choose to load one."
+            action-label="Load Poster Preview"
+            @load="requestPosterPreview"
+          />
         </article>
       </section>
     </template>
@@ -122,6 +128,8 @@ import {
   type ResolvedPublicationLink,
 } from "../data/publicationsData";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
+import { shouldDeferPdfPreviews } from "../utils/performanceMode";
+import DeferredPreviewNotice from "./layout/DeferredPreviewNotice.vue";
 import WorkPageLayout from "./layout/WorkPageLayout.vue";
 
 type PosterDetailFilterKind =
@@ -154,9 +162,19 @@ interface WorkTocEntry {
 export default defineComponent({
   name: "PosterDetail",
   components: {
+    DeferredPreviewNotice,
     WorkPageLayout,
   },
+  data() {
+    return {
+      // Native PDF embedding is also delayed so Lite mode avoids PDF network requests.
+      posterPreviewRequested: !shouldDeferPdfPreviews(),
+    };
+  },
   methods: {
+    requestPosterPreview() {
+      this.posterPreviewRequested = true;
+    },
     isExternalUrl(url: string): boolean {
       return /^(?:[a-z][a-z\d+\-.]*:|\/\/)/i.test(url);
     },

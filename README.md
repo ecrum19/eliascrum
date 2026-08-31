@@ -20,6 +20,13 @@ Visit the live website at [eliascrum.github.io/eliascrum](https://eliascrum.gith
 The site supports keyword and tag-based discovery across the underlying research, presentation,
 publication, and software records.
 
+## Performance
+
+The navigation bar includes an `Auto / Standard / Lite` performance setting. Lite preserves the
+site content and keyword search while using a static background and deferring optional PDF previews
+and semantic search until requested. [Performance mode details](docs/PERFORMANCE_MODE.md) explain
+the behavior and verification steps.
+
 ## Research Themes
 
 The website brings together work involving:
