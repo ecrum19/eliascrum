@@ -103,7 +103,7 @@
               <div class="paper-panel-header">
                 <h2>PDF</h2>
                 <div class="paper-panel-tools">
-                  <div v-if="paperPreviewUrl" class="paper-zoom-controls" aria-label="Paper zoom controls">
+                  <div v-if="paperPreviewUrl && pdfPreviewRequested" class="paper-zoom-controls" aria-label="Paper zoom controls">
                     <button
                       type="button"
                       class="paper-zoom-btn"
@@ -140,7 +140,7 @@
                 </div>
               </div>
 
-              <div v-if="paperPreviewUrl" class="paper-frame-shell">
+              <div v-if="paperPreviewUrl && pdfPreviewRequested" class="paper-frame-shell">
                 <div
                   ref="paperCanvasShell"
                   class="paper-canvas-shell"
@@ -200,6 +200,13 @@
                 </div>
               </div>
 
+              <deferred-preview-notice
+                v-else-if="paperPreviewUrl"
+                message="Lite mode pauses inline paper previews until you choose to load one."
+                action-label="Load Paper Preview"
+                @load="requestPaperPdfPreview"
+              />
+
               <div v-else class="paper-preview-empty">
                 <p>{{ previewUnavailableLabel }}</p>
                 <a
@@ -245,6 +252,8 @@ import {
   type PDFDocumentProxy,
   type RenderTask,
 } from "../utils/pdfJs";
+import { shouldDeferPdfPreviews } from "../utils/performanceMode";
+import DeferredPreviewNotice from "./layout/DeferredPreviewNotice.vue";
 import WorkToc from "./WorkToc.vue";
 
 interface TocEntry {
@@ -276,6 +285,7 @@ function isLikelyPdfUrl(url: string): boolean {
 export default defineComponent({
   name: "PublicationPaperPage",
   components: {
+    DeferredPreviewNotice,
     WorkToc,
   },
   data() {
@@ -295,6 +305,8 @@ export default defineComponent({
       paperRenderToken: 0,
       pendingPaperRenderFrame: null as number | null,
       paperResizeObserver: null as ResizeObserver | null,
+      // Lite mode waits for an explicit click before importing PDF.js or fetching the file.
+      pdfPreviewRequested: !shouldDeferPdfPreviews(),
       scholarCitationsByPublicationId,
       publicationDownloadsByPublicationId,
     };
@@ -442,7 +454,7 @@ export default defineComponent({
         this.currentPaperPage = 1;
         this.paperZoomScale = 1;
         this.maxPaperPage = null;
-        void this.loadPaperPdfDocument(nextUrl || "");
+        void this.loadPaperPdfDocument(this.pdfPreviewRequested ? (nextUrl || "") : "");
       },
     },
     "$route.params.slug"() {
@@ -484,6 +496,9 @@ export default defineComponent({
   },
   mounted() {
     this.$nextTick(() => {
+      if (!this.pdfPreviewRequested) {
+        return;
+      }
       this.initPaperResizeObserver();
       this.queuePaperRender();
     });
@@ -594,6 +609,17 @@ export default defineComponent({
 
       shell.scrollTop = 0;
       shell.scrollLeft = 0;
+    },
+    requestPaperPdfPreview() {
+      if (this.pdfPreviewRequested || !this.paperPreviewUrl) {
+        return;
+      }
+
+      this.pdfPreviewRequested = true;
+      this.$nextTick(() => {
+        this.initPaperResizeObserver();
+        void this.loadPaperPdfDocument(this.paperPreviewUrl || "");
+      });
     },
     async loadPaperPdfDocument(pdfUrl: string) {
       const loadToken = ++this.pdfLoadToken;
@@ -905,11 +931,6 @@ export default defineComponent({
 
 .paper-header {
   background: var(--surface-elevated);
-}
-
-[data-theme="light"] .paper-header {
-  background: linear-gradient(180deg, rgba(var(--accent-secondary-rgb), 0.6), rgba(var(--accent-rgb), 0.18));
-  border-color: rgba(16, 36, 59, 0.14);
 }
 
 .paper-kicker {

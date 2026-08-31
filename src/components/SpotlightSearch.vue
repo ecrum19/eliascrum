@@ -28,6 +28,7 @@
 
         <div class="spotlight-mode-switch">
           <button
+            v-if="allowSparql"
             type="button"
             class="spotlight-mode-btn"
             :class="{ active: activeMode === 'keyword' }"
@@ -44,6 +45,10 @@
             SPARQL (Comunica)
           </button>
         </div>
+
+        <p v-if="!allowSparql" class="spotlight-performance-note">
+          Lite mode keeps semantic search offline until Standard mode is selected.
+        </p>
 
         <div v-if="activeMode === 'sparql'" class="spotlight-sparql-shell">
           <textarea
@@ -118,6 +123,10 @@ export default defineComponent({
       type: Boolean as PropType<boolean>,
       default: false,
     },
+    allowSparql: {
+      type: Boolean as PropType<boolean>,
+      default: true,
+    },
   },
   emits: ["close"],
   setup(props, { emit }) {
@@ -146,6 +155,11 @@ export default defineComponent({
     }
 
     async function setMode(mode: SearchMode) {
+      if (mode === "sparql" && !props.allowSparql) {
+        sparqlNotice.value = "SPARQL search is disabled while Lite mode is active.";
+        return;
+      }
+
       activeMode.value = mode;
       sparqlNotice.value = "";
       if (mode === "keyword") {
@@ -156,7 +170,7 @@ export default defineComponent({
     }
 
     async function executeSparqlQuery() {
-      if (sparqlLoading.value) {
+      if (sparqlLoading.value || !props.allowSparql) {
         return;
       }
 
@@ -221,6 +235,19 @@ export default defineComponent({
         document.body.classList.remove("spotlight-open");
       },
       { immediate: true },
+    );
+
+    watch(
+      () => props.allowSparql,
+      async (isAllowed) => {
+        if (isAllowed || activeMode.value !== "sparql") {
+          return;
+        }
+
+        activeMode.value = "keyword";
+        sparqlNotice.value = "SPARQL search is disabled while Lite mode is active.";
+        await resetKeywordResults();
+      },
     );
 
     return {
@@ -319,6 +346,12 @@ export default defineComponent({
   padding: 3px;
   gap: 4px;
   background: color-mix(in srgb, var(--surface-bg) 86%, transparent);
+}
+
+.spotlight-performance-note {
+  margin: 10px 0 0;
+  color: var(--text-soft);
+  font-size: var(--font-size-meta);
 }
 
 .spotlight-mode-btn {

@@ -78,7 +78,7 @@
       <section id="talk-detail-slides" class="work-section">
         <article class="slide-panel toc-anchor">
             <h2>Slides</h2>
-            <div v-if="useEmbeddedSlides" class="slide-embed-shell">
+            <div v-if="useEmbeddedSlides && slidePreviewRequested" class="slide-embed-shell">
               <iframe
                 class="slide-embed-frame"
                 :src="slideEmbedUrl"
@@ -89,6 +89,12 @@
                 loading="lazy"
               ></iframe>
             </div>
+            <deferred-preview-notice
+              v-else-if="!slidePreviewRequested"
+              message="Lite mode pauses slide previews until you choose to load one."
+              action-label="Load Slides Preview"
+              @load="requestSlidePreview"
+            />
             <div
               v-else
               ref="slideFrameShell"
@@ -146,12 +152,18 @@
         <article v-if="talk.posterPath" class="slide-panel toc-anchor">
             <h2>Poster</h2>
             <p class="poster-name">{{ talk.posterTitle || "Poster PDF" }}</p>
-            <object :data="posterPdfUrl" type="application/pdf" class="poster-frame">
+            <object v-if="posterPreviewRequested" :data="posterPdfUrl" type="application/pdf" class="poster-frame">
               <p>
                 Your browser cannot render the PDF inline.
                 <a :href="posterPdfUrl">Open the poster</a>.
               </p>
             </object>
+            <deferred-preview-notice
+              v-else
+              message="Lite mode pauses poster previews until you choose to load one."
+              action-label="Load Poster Preview"
+              @load="requestPosterPreview"
+            />
         </article>
 
         <article v-else class="slide-panel muted-panel toc-anchor">
@@ -186,6 +198,8 @@ import {
   type PDFDocumentProxy,
   type RenderTask,
 } from "../utils/pdfJs";
+import { shouldDeferPdfPreviews } from "../utils/performanceMode";
+import DeferredPreviewNotice from "./layout/DeferredPreviewNotice.vue";
 import WorkPageLayout from "./layout/WorkPageLayout.vue";
 
 type TalkDetailFilterKind =
@@ -219,6 +233,7 @@ interface TalkDetailRow {
 export default defineComponent({
   name: "SlideDetail",
   components: {
+    DeferredPreviewNotice,
     WorkPageLayout,
   },
   data() {
@@ -235,6 +250,9 @@ export default defineComponent({
       slideRenderToken: 0,
       pendingSlideRenderFrame: null as number | null,
       slideResizeObserver: null as ResizeObserver | null,
+      // Both PDF.js and embedded slide providers are opt-in while Lite mode is active.
+      slidePreviewRequested: !shouldDeferPdfPreviews(),
+      posterPreviewRequested: !shouldDeferPdfPreviews(),
     };
   },
   computed: {
@@ -385,7 +403,7 @@ export default defineComponent({
   mounted() {
     window.addEventListener("keydown", this.onSlideKeyboardNav);
     this.$nextTick(() => {
-      if (this.useEmbeddedSlides) {
+      if (this.useEmbeddedSlides || !this.slidePreviewRequested) {
         return;
       }
       this.initSlideResizeObserver();
@@ -398,7 +416,7 @@ export default defineComponent({
       handler(nextUrl: string) {
         this.currentSlidePage = 1;
         this.maxSlidePage = null;
-        if (this.useEmbeddedSlides) {
+        if (this.useEmbeddedSlides || !this.slidePreviewRequested) {
           this.isPdfLoading = false;
           this.isPdfRenderError = false;
           this.pdfRenderErrorMessage = "";
@@ -410,7 +428,7 @@ export default defineComponent({
     useEmbeddedSlides: {
       immediate: true,
       handler(useEmbedded: boolean) {
-        if (useEmbedded) {
+        if (useEmbedded || !this.slidePreviewRequested) {
           this.isPdfLoading = false;
           this.isPdfRenderError = false;
           this.pdfRenderErrorMessage = "";
@@ -486,6 +504,23 @@ export default defineComponent({
         this.queueSlideRender();
       }));
       this.slideResizeObserver.observe(shell);
+    },
+    requestSlidePreview() {
+      if (this.slidePreviewRequested) {
+        return;
+      }
+
+      this.slidePreviewRequested = true;
+      this.$nextTick(() => {
+        if (this.useEmbeddedSlides) {
+          return;
+        }
+        this.initSlideResizeObserver();
+        void this.loadSlidePdfDocument(this.slidePdfUrl);
+      });
+    },
+    requestPosterPreview() {
+      this.posterPreviewRequested = true;
     },
     async loadSlidePdfDocument(pdfUrl: string) {
       const loadToken = ++this.pdfLoadToken;
@@ -707,7 +742,7 @@ export default defineComponent({
       }
     },
     onSlideKeyboardNav(event: KeyboardEvent) {
-      if (!this.talk) {
+      if (!this.talk || !this.slidePreviewRequested || this.useEmbeddedSlides) {
         return;
       }
 

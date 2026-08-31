@@ -67,6 +67,16 @@
         </button>
         <button
           type="button"
+          class="w3-bar-item w3-button w3-hover-black w3-hover-opacity-off performance-toggle"
+          @click="togglePerformanceMode"
+          :aria-label="performanceModeLabel"
+          :title="performanceModeLabel"
+        >
+          <i class="fa fa-tachometer" aria-hidden="true"></i>
+          <span class="performance-toggle-label">{{ performanceMode.toUpperCase() }}</span>
+        </button>
+        <button
+          type="button"
           class="w3-bar-item w3-button w3-hover-black w3-hover-opacity-off text-size-toggle"
           @click="toggleTextScale"
           :aria-label="`Text size: ${textScaleDisplayLabel}. Click to change text size`"
@@ -130,6 +140,13 @@
       <button
         type="button"
         class="w3-bar-item w3-button w3-hover-black theme-toggle-mobile"
+        @click="togglePerformanceMode"
+      >
+        PERFORMANCE: {{ performanceMode.toUpperCase() }}
+      </button>
+      <button
+        type="button"
+        class="w3-bar-item w3-button w3-hover-black theme-toggle-mobile"
         @click="toggleTheme"
       >
         {{ theme === "dark" ? "LIGHT MODE" : "DARK MODE" }}
@@ -152,6 +169,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
+import type { EffectivePerformanceMode, PerformanceMode } from "../utils/performanceMode";
 
 type ThemeMode = "dark" | "light";
 type TextScaleMode = "small" | "normal" | "large";
@@ -166,8 +184,16 @@ export default defineComponent({
       type: String as PropType<TextScaleMode>,
       default: "normal",
     },
+    performanceMode: {
+      type: String as PropType<PerformanceMode>,
+      default: "auto",
+    },
+    effectivePerformanceMode: {
+      type: String as PropType<EffectivePerformanceMode>,
+      default: "standard",
+    },
   },
-  emits: ["toggle-theme", "toggle-text-scale", "open-search"],
+  emits: ["toggle-theme", "toggle-text-scale", "toggle-performance-mode", "open-search"],
   data() {
     return {
       mobileMenuOpen: false,
@@ -182,6 +208,10 @@ export default defineComponent({
         return "Large";
       }
       return "Normal";
+    },
+    performanceModeLabel(): string {
+      const activeMode = this.effectivePerformanceMode === "lite" ? "Lite" : "Standard";
+      return `Performance: ${this.performanceMode} (${activeMode} active). Click to change.`;
     },
     showIdentityHeader(): boolean {
       return this.$route.path === "/about" || this.$route.path === "/";
@@ -214,6 +244,9 @@ export default defineComponent({
     },
     toggleTextScale() {
       this.$emit("toggle-text-scale");
+    },
+    togglePerformanceMode() {
+      this.$emit("toggle-performance-mode");
     },
     openSearch() {
       this.closeMenu();
@@ -345,7 +378,8 @@ header h1 {
 .theme-toggle,
 .theme-toggle-mobile,
 .search-trigger,
-.text-size-toggle {
+.text-size-toggle,
+.performance-toggle {
   border: none;
   background: transparent !important;
   color: var(--page-text);
@@ -358,6 +392,21 @@ header h1 {
   min-width: 42px;
   padding-left: 10px !important;
   padding-right: 10px !important;
+}
+
+.performance-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  font-size: var(--font-size-label) !important;
+}
+
+.performance-toggle-label {
+  font-size: 0.78em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
 }
 
 .text-size-icon {
@@ -382,7 +431,8 @@ header h1 {
 .theme-toggle:hover,
 .theme-toggle-mobile:hover,
 .search-trigger:hover,
-.text-size-toggle:hover {
+.text-size-toggle:hover,
+.performance-toggle:hover {
   background-color: var(--nav-hover-bg) !important;
   color: var(--page-text);
   opacity: 1;
@@ -391,7 +441,8 @@ header h1 {
 .theme-toggle:focus-visible,
 .theme-toggle-mobile:focus-visible,
 .search-trigger:focus-visible,
-.text-size-toggle:focus-visible {
+.text-size-toggle:focus-visible,
+.performance-toggle:focus-visible {
   background-color: var(--nav-hover-bg) !important;
   color: var(--page-text);
   opacity: 1;
@@ -406,6 +457,10 @@ header h1 {
 
   .header-logo {
     height: 26px;
+  }
+
+  .performance-toggle-label {
+    display: none;
   }
 }
 

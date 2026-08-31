@@ -52,7 +52,7 @@
         <div class="fellowship-panel-header">
           <h2>Project Description PDF</h2>
           <div class="fellowship-panel-tools">
-            <div class="fellowship-zoom-controls" aria-label="PDF zoom controls">
+            <div v-if="pdfPreviewRequested" class="fellowship-zoom-controls" aria-label="PDF zoom controls">
               <button
                 type="button"
                 class="fellowship-zoom-btn"
@@ -88,7 +88,7 @@
           </div>
         </div>
 
-        <div class="fellowship-frame-shell">
+        <div v-if="pdfPreviewRequested" class="fellowship-frame-shell">
           <div
             ref="fellowshipCanvasShell"
             class="fellowship-canvas-shell"
@@ -146,6 +146,12 @@
             </button>
           </div>
         </div>
+        <deferred-preview-notice
+          v-else
+          message="Lite mode pauses inline PDF previews until you choose to load one."
+          action-label="Load Project Description Preview"
+          @load="requestPdfPreview"
+        />
       </article>
     </section>
   </work-page-layout>
@@ -162,6 +168,8 @@ import {
   type PDFDocumentProxy,
   type RenderTask,
 } from "../utils/pdfJs";
+import { shouldDeferPdfPreviews } from "../utils/performanceMode";
+import DeferredPreviewNotice from "./layout/DeferredPreviewNotice.vue";
 
 interface WorkTocEntry {
   id: string;
@@ -172,6 +180,7 @@ interface WorkTocEntry {
 export default defineComponent({
   name: "FellowshipDetail",
   components: {
+    DeferredPreviewNotice,
     WorkPageLayout,
   },
   data() {
@@ -189,6 +198,8 @@ export default defineComponent({
       pdfRenderToken: 0,
       pendingPdfRenderFrame: null as number | null,
       pdfResizeObserver: null as ResizeObserver | null,
+      // Keep the PDF.js import and PDF request behind a user action in Lite mode.
+      pdfPreviewRequested: !shouldDeferPdfPreviews(),
     };
   },
   computed: {
@@ -226,7 +237,7 @@ export default defineComponent({
         this.currentPdfPage = 1;
         this.pdfZoomScale = 1;
         this.maxPdfPage = null;
-        void this.loadPdfDocument(nextUrl || "");
+        void this.loadPdfDocument(this.pdfPreviewRequested ? (nextUrl || "") : "");
       },
     },
     currentPdfPage() {
@@ -239,6 +250,9 @@ export default defineComponent({
   },
   mounted() {
     this.$nextTick(() => {
+      if (!this.pdfPreviewRequested) {
+        return;
+      }
       this.initPdfResizeObserver();
       this.queuePdfRender();
     });
@@ -343,6 +357,17 @@ export default defineComponent({
       }
       shell.scrollTop = 0;
       shell.scrollLeft = 0;
+    },
+    requestPdfPreview() {
+      if (this.pdfPreviewRequested) {
+        return;
+      }
+
+      this.pdfPreviewRequested = true;
+      this.$nextTick(() => {
+        this.initPdfResizeObserver();
+        void this.loadPdfDocument(this.projectDescriptionPdfHref);
+      });
     },
     async loadPdfDocument(pdfUrl: string) {
       const loadToken = ++this.pdfLoadToken;
