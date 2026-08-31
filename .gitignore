@@ -13,7 +13,7 @@ node_modules
 CHANGELOG.md
 
 # Local engineering notes that document bundle-size investigations.
-/docs/BUILD_OPTIMIZATION_NOTES.md
+/docs
 
 # Log files
 npm-debug.log*
