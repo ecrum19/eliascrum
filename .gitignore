@@ -5,6 +5,7 @@
 node_modules
 /dist
 .cache
+/tmp/pdfs/
 
 # local env files
 .env.local

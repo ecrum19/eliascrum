@@ -107,7 +107,7 @@ export const cvSections: CvSection[] = [
         location: "Chicago, IL, USA",
         date: "Aug. 2017 - May 2021",
         details: [
-          "Majors: Bioinformatics and Biology",
+          "Double Major: Bioinformatics & Biology",
           "Minor: History",
           "GPA: 3.991 / 4.000",
         ],
@@ -119,8 +119,8 @@ export const cvSections: CvSection[] = [
     layout: "skills",
     items: [
       {
-        role: "Programming Languages",
-        details: ["Python, BASH, R, Java, JavaScript, TypeScript, HTML, CSS, Vue, LaTeX"],
+        role: "Programming/Querying Languages",
+        details: ["Python, BASH, R, Java, JavaScript, TypeScript, SPARQL, SHACL, HTML, CSS, Vue, LaTeX"],
       },
       {
         role: "Bioinformatics Tools",
@@ -264,7 +264,33 @@ export const cvSections: CvSection[] = [
         details: [
           "Developing framework for clinical genomic data storage, sharing, and querying.",
           "Implementation of the framework utilizes the Solid protocol.",
-          "Experience with SPARQL, RDF, Linked Data, decentralized querying, and ontology definition.",
+          "Experience with SPARQL, RDF, ODRL, Linked Data, decentralized querying, and ontology definition.",
+        ],
+      },
+      {
+        organization: "SIB Swiss Institute of Bioinformatics",
+        role: "Research Stay",
+        location: "Lausanne, CH",
+        date: "Mar. - Apr. 2025 (2 months)",
+        details: [
+          "Hosted by the Knowledge Representation Unit (KRU); worked directly with Jerven Bolleman, Tarcisio Mendes de Farias, Ana-Claudia Sima, and Vincent Emonet.",
+          "Gained practical knowledge of public SPARQL endpoint maintenance.",
+          "Developed Solid Cockpit to perform federated queries across public SPARQL endpoints and Solid pods containing research data, as part of the CHIST-ERA TRIPLE project.",
+          // Funding identifiers: federation paper acknowledgments, p. 16 (FWO);
+          // Solid Cockpit ESWC 2026 demo paper acknowledgments, p. 5 (TRIPLE).
+          "Funding: FWO Long Research Stay grant V416635N; project support through CHIST-ERA TRIPLE (CHIST-ERA-22-ORD-09).",
+          {
+            prefix: "Direct contribution to:",
+            text: "Does SPARQL federation work in the real world? A case study over large biological SPARQL endpoints (ISWC, Oct. 2026; accepted)",
+            url: "/publications/real-world-federation-iswc-2026/paper",
+            internal: true,
+          },
+          {
+            prefix: "Direct contribution to:",
+            text: "Solid Cockpit: Data manager, privacy editor, and query facilitator for Solid pods (ESWC 2026 demo paper)",
+            url: "/publications/solid-cockpit-eswc-2026-demo/paper",
+            internal: true,
+          },
         ],
       },
       {
@@ -275,7 +301,7 @@ export const cvSections: CvSection[] = [
         details: [
           "Identified and characterized novel, medically relevant bacteria and bacteriophage sequences.",
           "Master's thesis: Cataloguing Coliphages of the Human Urinary Microbiome.",
-          "Experience with gene annotation and clustering, taxonomic classification screening, and gene-similarity network production.",
+          "Experience with gene annotation and clustering, taxonomic classification screening, gene-similarity network production, genetic engineering and phage virulence augmentation.",
           {
             prefix: "Publication:",
             text: "10.1371/journal.pone.0283930",
@@ -333,7 +359,7 @@ export const cvSections: CvSection[] = [
         location: "Chicago, IL, USA",
         date: "Nov. 2021 - Jan. 2023",
         details: [
-          "Assisted physicians by taking notes on and charting patient visits.",
+          "Directly assisted physician care of patients through patient intake charting, ordering tests, and other EPIC platform mediated physician logistical support.",
           "Interpreted and integrated medical charts to aid in the diagnosis and treatment of patients.",
           "Operated EPIC software for medical documentation.",
         ],

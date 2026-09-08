@@ -20,6 +20,14 @@ Visit the live website at [eliascrum.github.io/eliascrum](https://eliascrum.gith
 The site supports keyword and tag-based discovery across the underlying research, presentation,
 publication, and software records.
 
+## PDF CVs
+
+The [CV page](https://eliascrum.github.io/eliascrum/about/cv) offers a complete PDF
+CV and a focused, two-page medical semantic web CV, with separate view and download
+buttons. Both are regenerated from the site's content on every build. Run
+`npm run build:cv` to regenerate them locally and `npm run test:cv` to verify them.
+See [CV generator maintenance](scripts/cv/README.md) for content selection and formatting.
+
 ## Performance
 
 The navigation bar includes an `Auto / Standard / Lite` performance setting. Lite preserves the

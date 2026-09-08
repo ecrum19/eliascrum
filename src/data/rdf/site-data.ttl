@@ -125,7 +125,7 @@
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-2-2> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/1-3> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-1> ec:text "Majors: Bioinformatics and Biology" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-1> ec:text "Double Major: Bioinformatics & Biology" .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-1> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/1-3> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-2> ec:order "2"^^xsd:integer .
@@ -137,7 +137,7 @@
 <https://eliascrum.github.io/eliascrum/id/cv-detail/1-3-3> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/2-1-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/2-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/2-1-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/2-1-1> ec:text "Python, BASH, R, Java, JavaScript, TypeScript, HTML, CSS, Vue, LaTeX" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/2-1-1> ec:text "Python, BASH, R, Java, JavaScript, TypeScript, SPARQL, SHACL, HTML, CSS, Vue, LaTeX" .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/2-1-1> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/2-2-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/2-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/2-2-1> ec:order "1"^^xsd:integer .
@@ -193,50 +193,80 @@
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-2> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-3> ec:order "3"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-3> ec:text "Experience with SPARQL, RDF, Linked Data, decentralized querying, and ontology definition." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-3> ec:text "Experience with SPARQL, RDF, ODRL, Linked Data, decentralized querying, and ontology definition." .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-1-3> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-1> ec:text "Identified and characterized novel, medically relevant bacteria and bacteriophage sequences." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-1> ec:text "Hosted by the Knowledge Representation Unit (KRU); worked directly with Jerven Bolleman, Tarcisio Mendes de Farias, Ana-Claudia Sima, and Vincent Emonet." .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-1> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-2> ec:order "2"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-2> ec:text "Master's thesis: Cataloguing Coliphages of the Human Urinary Microbiome." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-2> ec:text "Gained practical knowledge of public SPARQL endpoint maintenance." .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-2> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-3> ec:order "3"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-3> ec:text "Experience with gene annotation and clustering, taxonomic classification screening, and gene-similarity network production." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-3> ec:text "Developed Solid Cockpit to perform federated queries across public SPARQL endpoints and Solid pods containing research data, as part of the CHIST-ERA TRIPLE project." .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-3> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> ec:isInternal "true"^^xsd:boolean .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> ec:order "4"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> ec:prefix "Publication:" .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> ec:text "10.1371/journal.pone.0283930" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> ec:text "Funding: FWO Long Research Stay grant V416635N; project support through CHIST-ERA TRIPLE (CHIST-ERA-22-ORD-09)." .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> rdf:type ec:CvDetail .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> schema:url <https://eliascrum.github.io/eliascrum/publications/urinary-coliphages-2023/paper> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-5> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-5> ec:isInternal "true"^^xsd:boolean .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-5> ec:order "5"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-5> ec:prefix "Direct contribution to:" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-5> ec:text "Does SPARQL federation work in the real world? A case study over large biological SPARQL endpoints (ISWC, Oct. 2026; accepted)" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-5> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-5> schema:url <https://eliascrum.github.io/eliascrum/publications/real-world-federation-iswc-2026/paper> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-6> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-6> ec:isInternal "true"^^xsd:boolean .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-6> ec:order "6"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-6> ec:prefix "Direct contribution to:" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-6> ec:text "Solid Cockpit: Data manager, privacy editor, and query facilitator for Solid pods (ESWC 2026 demo paper)" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-6> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-6> schema:url <https://eliascrum.github.io/eliascrum/publications/solid-cockpit-eswc-2026-demo/paper> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-3> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-1> ec:text "Performed independent research involving prokaryotic DNA sequencing, assembly, and analysis." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-1> ec:text "Identified and characterized novel, medically relevant bacteria and bacteriophage sequences." .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-1> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-3> .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> ec:isInternal "true"^^xsd:boolean .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> ec:order "2"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> ec:prefix "Publication:" .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> ec:text "10.1128/mSphere.00154-21" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> ec:text "Master's thesis: Cataloguing Coliphages of the Human Urinary Microbiome." .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> rdf:type ec:CvDetail .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> schema:url <https://eliascrum.github.io/eliascrum/publications/gardnerella-characterization-2021/paper> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-3> ec:text "Experience with gene annotation and clustering, taxonomic classification screening, gene-similarity network production, genetic engineering and phage virulence augmentation." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-3> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-4> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-4> ec:isInternal "true"^^xsd:boolean .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-4> ec:order "4"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-4> ec:prefix "Publication:" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-4> ec:text "10.1371/journal.pone.0283930" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-4> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-4> schema:url <https://eliascrum.github.io/eliascrum/publications/urinary-coliphages-2023/paper> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-4> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-1> ec:text "Researched the variable resistance of strains of bladder E. coli to bacteriophage infection." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-1> ec:text "Performed independent research involving prokaryotic DNA sequencing, assembly, and analysis." .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-1> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-2> ec:isInternal "true"^^xsd:boolean .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-2> ec:order "2"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-2> ec:text "Presented the outcomes of this work to the Stritch School of Medicine Microbiology and Immunology Department." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-2> ec:prefix "Publication:" .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-2> ec:text "10.1128/mSphere.00154-21" .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-2> rdf:type ec:CvDetail .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-4> .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-3> ec:order "3"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-3> ec:text "Presented a poster at the Stritch School of Medicine annual St. Albert's Day Research Celebration." .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-3> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-2> schema:url <https://eliascrum.github.io/eliascrum/publications/gardnerella-characterization-2021/paper> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-5> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-1> ec:text "Researched the variable resistance of strains of bladder E. coli to bacteriophage infection." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-1> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-5> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-2> ec:text "Presented the outcomes of this work to the Stritch School of Medicine Microbiology and Immunology Department." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-2> rdf:type ec:CvDetail .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/4-5> .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-3> ec:text "Presented a poster at the Stritch School of Medicine annual St. Albert's Day Research Celebration." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-3> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-1> ec:order "1"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-1> ec:text "Taught two sections of Biology Lab I and II each semester, with 24 students per section." .
@@ -251,7 +281,7 @@
 <https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-3> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-1> ec:text "Assisted physicians by taking notes on and charting patient visits." .
+<https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-1> ec:text "Directly assisted physician care of patients through patient intake charting, ordering tests, and other EPIC platform mediated physician logistical support." .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-1> rdf:type ec:CvDetail .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-item/5-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-detail/5-2-2> ec:order "2"^^xsd:integer .
@@ -379,7 +409,7 @@
 <https://eliascrum.github.io/eliascrum/id/cv-item/2-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/2> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/2-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/2-1-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/2-1> ec:order "1"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/2-1> ec:role "Programming Languages" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/2-1> ec:role "Programming/Querying Languages" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/2-1> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/2-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/2> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/2-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/2-2-1> .
@@ -483,35 +513,48 @@
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-1> ec:role "Ph.D. Candidate" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-1> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/4> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:dateText "Aug. 2020 - Aug. 2022" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:dateText "Mar. - Apr. 2025 (2 months)" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-3> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-4> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:location "Chicago, IL, USA" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-5> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-2-6> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:location "Lausanne, CH" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:order "2"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:organization "Master's Research, Loyola University Chicago (Putonti Lab)" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:role "Master's Researcher" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:organization "SIB Swiss Institute of Bioinformatics" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-2> ec:role "Research Stay" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/4> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:dateText "Aug. 2019 - Aug. 2020" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:dateText "Aug. 2020 - Aug. 2022" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-3-4> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:location "Chicago, IL, USA" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:order "3"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:organization "Undergraduate Research, Loyola University Chicago (Putonti Lab)" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:role "Undergraduate Researcher" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:organization "Master's Research, Loyola University Chicago (Putonti Lab)" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-3> ec:role "Master's Researcher" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-3> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-4> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/4> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:dateText "May 2019 - Aug. 2019" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:dateText "Aug. 2019 - Aug. 2020" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-1> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-2> .
-<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-4-3> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:location "Chicago, IL, USA" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:order "4"^^xsd:integer .
-<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:organization "Junior Researcher, Loyola Stritch School of Medicine (Wolfe Lab)" .
-<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:role "Junior Research Assistant" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:organization "Undergraduate Research, Loyola University Chicago (Putonti Lab)" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-4> ec:role "Undergraduate Researcher" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/4-4> rdf:type ec:CvItem .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-5> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/4> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-5> ec:dateText "May 2019 - Aug. 2019" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-5> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-1> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-5> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-2> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-5> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/4-5-3> .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-5> ec:location "Chicago, IL, USA" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-5> ec:order "5"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-5> ec:organization "Junior Researcher, Loyola Stritch School of Medicine (Wolfe Lab)" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-5> ec:role "Junior Research Assistant" .
+<https://eliascrum.github.io/eliascrum/id/cv-item/4-5> rdf:type ec:CvItem .
 <https://eliascrum.github.io/eliascrum/id/cv-item/5-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/cv-section/5> .
 <https://eliascrum.github.io/eliascrum/id/cv-item/5-1> ec:dateText "Aug. 2021 - May 2023" .
 <https://eliascrum.github.io/eliascrum/id/cv-item/5-1> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/cv-detail/5-1-1> .
@@ -682,6 +725,7 @@
 <https://eliascrum.github.io/eliascrum/id/cv-section/4> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/4-2> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/4> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/4-3> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/4> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/4-4> .
+<https://eliascrum.github.io/eliascrum/id/cv-section/4> ec:hasItem <https://eliascrum.github.io/eliascrum/id/cv-item/4-5> .
 <https://eliascrum.github.io/eliascrum/id/cv-section/4> ec:layout "timeline" .
 <https://eliascrum.github.io/eliascrum/id/cv-section/4> ec:order "4"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/cv-section/4> rdf:type ec:CvSection .
@@ -720,7 +764,7 @@
 <https://eliascrum.github.io/eliascrum/id/cv-section/8> rdf:type ec:CvSection .
 <https://eliascrum.github.io/eliascrum/id/cv-section/8> schema:name "Organizations" .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:description "RDF/Turtle projection of the TypeScript data modules under src/data." .
-<https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:modified "2026-08-25T06:49:07.360Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/dataset/website> dcterms:modified "2026-09-08T10:33:52.538Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:hasCvProfile <https://eliascrum.github.io/eliascrum/id/cv-profile/elias-crum> .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:hasExternalProfile <https://eliascrum.github.io/eliascrum/id/profile/google-scholar> .
 <https://eliascrum.github.io/eliascrum/id/dataset/website> ec:hasExternalProfile <https://eliascrum.github.io/eliascrum/id/profile/orcid> .
@@ -1226,7 +1270,7 @@
 <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/semantic-web-501ff810> .
 <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> ec:hasVenueTag <https://eliascrum.github.io/eliascrum/id/tag/venue/conference-d3a424e8> .
 <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> ec:hasVenueTag <https://eliascrum.github.io/eliascrum/id/tag/venue/swat4hcls-92e9e698> .
-<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> .
 <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer> .
 <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> ec:summary "Poster presenting a framework for semantically converting VCF genomic variant data into RDF using a dedicated ontology, HDT-based storage, and reusable mapping specifications." .
 <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> rdf:type ec:Poster .
@@ -1250,7 +1294,7 @@
 <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/semantic-web-501ff810> .
 <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> ec:hasVenueTag <https://eliascrum.github.io/eliascrum/id/tag/venue/conference-d3a424e8> .
 <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> ec:hasVenueTag <https://eliascrum.github.io/eliascrum/id/tag/venue/swat4hcls-92e9e698> .
-<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> .
+<https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> .
 <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer> .
 <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> ec:summary "Poster presenting an RML-based method for converting full VCF variant files into RDF with stronger structure, provenance, interoperability, and privacy-aware semantics." .
 <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> rdf:type ec:Poster .
@@ -1838,7 +1882,7 @@
 <https://eliascrum.github.io/eliascrum/id/publication/genomic-variant-representation-rdf-preprint-2025> ec:hasVenueTag <https://eliascrum.github.io/eliascrum/id/tag/venue/swat4hcls-92e9e698> .
 <https://eliascrum.github.io/eliascrum/id/publication/genomic-variant-representation-rdf-preprint-2025> ec:paperPdfPath "/publications/papers/variant-representation-in-rdf.pdf" .
 <https://eliascrum.github.io/eliascrum/id/publication/genomic-variant-representation-rdf-preprint-2025> ec:publicationYear "2025"^^xsd:gYear .
-<https://eliascrum.github.io/eliascrum/id/publication/genomic-variant-representation-rdf-preprint-2025> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> .
+<https://eliascrum.github.io/eliascrum/id/publication/genomic-variant-representation-rdf-preprint-2025> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> .
 <https://eliascrum.github.io/eliascrum/id/publication/genomic-variant-representation-rdf-preprint-2025> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer> .
 <https://eliascrum.github.io/eliascrum/id/publication/genomic-variant-representation-rdf-preprint-2025> ec:sortDate "2025-02-24"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/publication/genomic-variant-representation-rdf-preprint-2025> ec:summary "Reports initial BioHackathon results on aligning genomic variant RDF schemas identified at SWAT4HCLS 2025, with focus on improving interoperability and reuse of variant data for clinical applications." .
@@ -2022,7 +2066,7 @@
 <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:hasVenueTag <https://eliascrum.github.io/eliascrum/id/tag/venue/swat4hcls-92e9e698> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:paperPdfPath "/publications/papers/swat4hcls-2026-poster-paper.pdf" .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:publicationYear "2026"^^xsd:gYear .
-<https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> .
+<https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:sortDate "2026-03-24"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> ec:summary "Presents an RML-based approach for converting VCF genomic variant files into RDF using established ontologies, targeting more interoperable, queryable, and privacy-aware variant data representation." .
@@ -2051,7 +2095,7 @@
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:hasVenueTag <https://eliascrum.github.io/eliascrum/id/tag/venue/swat4hcls-92e9e698> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:paperPdfPath "/publications/papers/swat4hcls-2025-vcf-to-rdf-paper.pdf" .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:publicationYear "2025"^^xsd:gYear .
-<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> .
+<https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:relatedSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer> .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:sortDate "2025-02-24"^^xsd:date .
 <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> ec:summary "Introduces a framework for converting VCF genomic variant files into RDF, combining a comprehensive ontology, storage-efficient HDT serialization, and alignment with clinical metadata schemas to improve interoperability, data linking, querying, and semantic interpretability." .
@@ -2113,6 +2157,24 @@
 <https://eliascrum.github.io/eliascrum/id/software-detail/ontology-companion-generator-1> rdf:value "ontology-companion-generator on npm" .
 <https://eliascrum.github.io/eliascrum/id/software-detail/ontology-companion-generator-1> rdfs:label "Package Registry" .
 <https://eliascrum.github.io/eliascrum/id/software-detail/ontology-companion-generator-1> schema:url <https://www.npmjs.com/package/ontology-companion-generator> .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-1> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-1> ec:order "1"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-1> rdf:type ec:SoftwareDetail .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-1> rdf:value "https://w3id.org/vcf-core/vocab#" .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-1> rdfs:label "Namespace" .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-1> schema:url <https://w3id.org/vcf-core/vocab#> .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-2> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-2> ec:order "2"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-2> rdf:type ec:SoftwareDetail .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-2> rdf:value "v2.0.0" .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-2> rdfs:label "Version" .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-2> schema:url <https://github.com/ecrum19/vcf-core-vocabulary/releases/tag/v2.0.0> .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-3> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-3> ec:order "3"^^xsd:integer .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-3> rdf:type ec:SoftwareDetail .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-3> rdf:value "Renamed from VCF-RDFizer Vocabulary; legacy terms are deprecated and mapped to successors." .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-3> rdfs:label "Migration" .
+<https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-3> schema:url <https://github.com/ecrum19/vcf-core-vocabulary/blob/main/docs/RELEASE-NOTES-v2.0.0.md> .
 <https://eliascrum.github.io/eliascrum/id/software-release/genome-sharing-paper-webpage> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software/genome-sharing-paper-webpage> .
 <https://eliascrum.github.io/eliascrum/id/software-release/genome-sharing-paper-webpage> ec:releaseKind "repository-update" .
 <https://eliascrum.github.io/eliascrum/id/software-release/genome-sharing-paper-webpage> ec:releasePublishedAt "2026-03-19T11:59:08.000Z"^^xsd:dateTime .
@@ -2127,11 +2189,11 @@
 <https://eliascrum.github.io/eliascrum/id/software-release/ldp-permissions-notifications-specification> schema:url <https://github.com/ecrum19/ldp-permissions-notifications-specification> .
 <https://eliascrum.github.io/eliascrum/id/software-release/ontology-companion-generator> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software/ontology-companion-generator> .
 <https://eliascrum.github.io/eliascrum/id/software-release/ontology-companion-generator> ec:releaseKind "release" .
-<https://eliascrum.github.io/eliascrum/id/software-release/ontology-companion-generator> ec:releasePublishedAt "2026-08-13T07:56:36.000Z"^^xsd:dateTime .
-<https://eliascrum.github.io/eliascrum/id/software-release/ontology-companion-generator> ec:releaseTag "v1.1.1" .
+<https://eliascrum.github.io/eliascrum/id/software-release/ontology-companion-generator> ec:releasePublishedAt "2026-09-01T08:49:06.000Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/software-release/ontology-companion-generator> ec:releaseTag "v1.4.0" .
 <https://eliascrum.github.io/eliascrum/id/software-release/ontology-companion-generator> rdf:type ec:SoftwareRelease .
-<https://eliascrum.github.io/eliascrum/id/software-release/ontology-companion-generator> schema:name "v1.1.1" .
-<https://eliascrum.github.io/eliascrum/id/software-release/ontology-companion-generator> schema:url <https://github.com/ecrum19/ocg/releases/tag/v1.1.1> .
+<https://eliascrum.github.io/eliascrum/id/software-release/ontology-companion-generator> schema:name "v1.4.0" .
+<https://eliascrum.github.io/eliascrum/id/software-release/ontology-companion-generator> schema:url <https://github.com/ecrum19/ocg/releases/tag/v1.4.0> .
 <https://eliascrum.github.io/eliascrum/id/software-release/qr-code-generator> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software/qr-code-generator> .
 <https://eliascrum.github.io/eliascrum/id/software-release/qr-code-generator> ec:releaseKind "repository-update" .
 <https://eliascrum.github.io/eliascrum/id/software-release/qr-code-generator> ec:releasePublishedAt "2026-08-04T08:33:54.000Z"^^xsd:dateTime .
@@ -2140,24 +2202,31 @@
 <https://eliascrum.github.io/eliascrum/id/software-release/qr-code-generator> schema:url <https://github.com/ecrum19/qr-code-generator> .
 <https://eliascrum.github.io/eliascrum/id/software-release/solid-cockpit> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software/solid-cockpit> .
 <https://eliascrum.github.io/eliascrum/id/software-release/solid-cockpit> ec:releaseKind "release" .
-<https://eliascrum.github.io/eliascrum/id/software-release/solid-cockpit> ec:releasePublishedAt "2026-06-04T09:54:06.000Z"^^xsd:dateTime .
-<https://eliascrum.github.io/eliascrum/id/software-release/solid-cockpit> ec:releaseTag "v1.3.0" .
+<https://eliascrum.github.io/eliascrum/id/software-release/solid-cockpit> ec:releasePublishedAt "2026-08-25T12:43:18.000Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/software-release/solid-cockpit> ec:releaseTag "v1.4.0" .
 <https://eliascrum.github.io/eliascrum/id/software-release/solid-cockpit> rdf:type ec:SoftwareRelease .
-<https://eliascrum.github.io/eliascrum/id/software-release/solid-cockpit> schema:name "v1.3.0" .
-<https://eliascrum.github.io/eliascrum/id/software-release/solid-cockpit> schema:url <https://github.com/KNowledgeOnWebScale/solid-cockpit/releases/tag/v1.3.0> .
+<https://eliascrum.github.io/eliascrum/id/software-release/solid-cockpit> schema:name "v1.4.0" .
+<https://eliascrum.github.io/eliascrum/id/software-release/solid-cockpit> schema:url <https://github.com/KNowledgeOnWebScale/solid-cockpit/releases/tag/v1.4.0> .
 <https://eliascrum.github.io/eliascrum/id/software-release/sparql-view-materialization-containers> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software/sparql-view-materialization-containers> .
 <https://eliascrum.github.io/eliascrum/id/software-release/sparql-view-materialization-containers> ec:releaseKind "repository-update" .
 <https://eliascrum.github.io/eliascrum/id/software-release/sparql-view-materialization-containers> ec:releasePublishedAt "2026-02-03T09:02:44.000Z"^^xsd:dateTime .
 <https://eliascrum.github.io/eliascrum/id/software-release/sparql-view-materialization-containers> rdf:type ec:SoftwareRelease .
 <https://eliascrum.github.io/eliascrum/id/software-release/sparql-view-materialization-containers> schema:name "Latest update (main)" .
 <https://eliascrum.github.io/eliascrum/id/software-release/sparql-view-materialization-containers> schema:url <https://github.com/ecrum19/sparql-view-materialization-containers> .
+<https://eliascrum.github.io/eliascrum/id/software-release/vcf-core-vocabulary> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> .
+<https://eliascrum.github.io/eliascrum/id/software-release/vcf-core-vocabulary> ec:releaseKind "release" .
+<https://eliascrum.github.io/eliascrum/id/software-release/vcf-core-vocabulary> ec:releasePublishedAt "2026-09-07T14:40:56.000Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/software-release/vcf-core-vocabulary> ec:releaseTag "v2.0.0" .
+<https://eliascrum.github.io/eliascrum/id/software-release/vcf-core-vocabulary> rdf:type ec:SoftwareRelease .
+<https://eliascrum.github.io/eliascrum/id/software-release/vcf-core-vocabulary> schema:name "v2.0.0" .
+<https://eliascrum.github.io/eliascrum/id/software-release/vcf-core-vocabulary> schema:url <https://github.com/ecrum19/vcf-core-vocabulary/releases/tag/v2.0.0> .
 <https://eliascrum.github.io/eliascrum/id/software-release/vcf-rdfizer> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer> .
 <https://eliascrum.github.io/eliascrum/id/software-release/vcf-rdfizer> ec:releaseKind "release" .
-<https://eliascrum.github.io/eliascrum/id/software-release/vcf-rdfizer> ec:releasePublishedAt "2026-06-02T11:47:19.000Z"^^xsd:dateTime .
-<https://eliascrum.github.io/eliascrum/id/software-release/vcf-rdfizer> ec:releaseTag "v1.2.3" .
+<https://eliascrum.github.io/eliascrum/id/software-release/vcf-rdfizer> ec:releasePublishedAt "2026-08-24T13:12:48.000Z"^^xsd:dateTime .
+<https://eliascrum.github.io/eliascrum/id/software-release/vcf-rdfizer> ec:releaseTag "v2.1.0" .
 <https://eliascrum.github.io/eliascrum/id/software-release/vcf-rdfizer> rdf:type ec:SoftwareRelease .
-<https://eliascrum.github.io/eliascrum/id/software-release/vcf-rdfizer> schema:name "v1.2.3" .
-<https://eliascrum.github.io/eliascrum/id/software-release/vcf-rdfizer> schema:url <https://github.com/ecrum19/VCF-RDFizer/releases/tag/v1.2.3> .
+<https://eliascrum.github.io/eliascrum/id/software-release/vcf-rdfizer> schema:name "v2.1.0" .
+<https://eliascrum.github.io/eliascrum/id/software-release/vcf-rdfizer> schema:url <https://github.com/ecrum19/VCF-RDFizer/releases/tag/v2.1.0> .
 <https://eliascrum.github.io/eliascrum/id/software-release/vord> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software/vord> .
 <https://eliascrum.github.io/eliascrum/id/software-release/vord> ec:releaseKind "release" .
 <https://eliascrum.github.io/eliascrum/id/software-release/vord> ec:releasePublishedAt "2026-05-29T07:48:05.000Z"^^xsd:dateTime .
@@ -2195,7 +2264,7 @@
 <https://eliascrum.github.io/eliascrum/id/software-section/utilities> schema:name "Utilities" .
 <https://eliascrum.github.io/eliascrum/id/software-section/websites-companion-resources> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/dataset/website> .
 <https://eliascrum.github.io/eliascrum/id/software-section/websites-companion-resources> ec:description "Vocabulary references and publication-facing web resources for semantic technologies." .
-<https://eliascrum.github.io/eliascrum/id/software-section/websites-companion-resources> ec:hasSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> .
+<https://eliascrum.github.io/eliascrum/id/software-section/websites-companion-resources> ec:hasSoftware <https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> .
 <https://eliascrum.github.io/eliascrum/id/software-section/websites-companion-resources> ec:hasSoftware <https://eliascrum.github.io/eliascrum/id/software/vord> .
 <https://eliascrum.github.io/eliascrum/id/software-section/websites-companion-resources> ec:order "4"^^xsd:integer .
 <https://eliascrum.github.io/eliascrum/id/software-section/websites-companion-resources> rdf:type ec:SoftwareSection .
@@ -2324,29 +2393,37 @@
 <https://eliascrum.github.io/eliascrum/id/software/sparql-view-materialization-containers> schema:codeRepository <https://github.com/ecrum19/sparql-view-materialization-containers> .
 <https://eliascrum.github.io/eliascrum/id/software/sparql-view-materialization-containers> schema:name "SPARQL View Materialization Containers Specification" .
 <https://eliascrum.github.io/eliascrum/id/software/sparql-view-materialization-containers> schema:url <https://github.com/ecrum19/sparql-view-materialization-containers> .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> dcterms:identifier "vcf-rdfizer-vocabulary" .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software-section/websites-companion-resources> .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:description "This website exposes the VCF-RDFizer vocabulary in a navigable reference format so classes, properties, and ontology structure can be inspected more easily. It acts as a documentation layer for the semantic model underlying the conversion work." .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/documentation-83ae190c> .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/genomics-b19f4ebd> .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/ontology-engineering-91402f49> .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/semantic-web-501ff810> .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:purpose "Semantic Vocabulary Reference" .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:relatedPoster <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:relatedPoster <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:relatedPublication <https://eliascrum.github.io/eliascrum/id/publication/genomic-variant-representation-rdf-preprint-2025> .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:relatedPublication <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:relatedPublication <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:softwareType "Semantic Vocabulary" .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:summary "Interactive vocabulary reference for the representation of VCF as semantic linked data with browsable documentation sections." .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:webUrl <https://ecrum19.github.io/VCF-RDFizer-vocabulary/ontology-reference.html> .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> ec:year "2026" .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> rdf:type ec:Software .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> schema:name "VCF-RDFizer Vocabulary" .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer-vocabulary> schema:url <https://ecrum19.github.io/VCF-RDFizer-vocabulary/ontology-reference.html> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> dcterms:identifier "vcf-core-vocabulary" .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software-section/websites-companion-resources> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:description "VCF-Core Vocabulary is a converter-independent semantic model for VCF 4.5 files, headers, records, alleles, genotypes, indexed values, and VCF-specific structural-variant syntax. It includes SHACL shapes and provides expanded and condensed representations for genotype data at different cohort scales." .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-1> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-2> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:hasDetail <https://eliascrum.github.io/eliascrum/id/software-detail/vcf-core-vocabulary-3> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/documentation-83ae190c> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/genomics-b19f4ebd> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/ontology-engineering-91402f49> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/semantic-web-501ff810> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/shacl-59183926> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/vcf-b9afb830> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:latestRelease <https://eliascrum.github.io/eliascrum/id/software-release/vcf-core-vocabulary> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:purpose "VCF Semantic Modeling" .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:relatedPoster <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2025> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:relatedPoster <https://eliascrum.github.io/eliascrum/id/poster/swat4hcls-2026> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:relatedPublication <https://eliascrum.github.io/eliascrum/id/publication/genomic-variant-representation-rdf-preprint-2025> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:relatedPublication <https://eliascrum.github.io/eliascrum/id/publication/vcf-to-rdf-rml-swat4hcls-2026> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:relatedPublication <https://eliascrum.github.io/eliascrum/id/publication/vcf2rdf-SWAT4HCLS-2025> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:repositoryUrl <https://github.com/ecrum19/vcf-core-vocabulary> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:softwareType "Semantic Vocabulary and SHACL Shapes" .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:summary "Vocabulary and SHACL shapes for representing the logical VCF 4.5 model in RDF." .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:webUrl <https://ecrum19.github.io/vcf-core-vocabulary/> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> ec:year "2026" .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> rdf:type ec:Software .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> schema:codeRepository <https://github.com/ecrum19/vcf-core-vocabulary> .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> schema:name "VCF-Core Vocabulary" .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-core-vocabulary> schema:url <https://ecrum19.github.io/vcf-core-vocabulary/> .
 <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer> dcterms:identifier "vcf-rdfizer" .
 <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer> dcterms:isPartOf <https://eliascrum.github.io/eliascrum/id/software-section/tooling-pipelines> .
-<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer> ec:description "VCF-RDFizer converts genomic variant data into RDF using the RML mapping language and the RMLStreamer conversion engine. It utilized the VCF-RDFizer Vocabulary to represent the data semantically while offering compression options to reduce the effects of semantic inflation." .
+<https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer> ec:description "VCF-RDFizer converts genomic variant data into RDF using the RML mapping language and the RMLStreamer conversion engine. It uses the VCF Core Vocabulary as a converter-independent semantic model while offering compression options to reduce the effects of semantic inflation." .
 <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/data-conversion-bbde6203> .
 <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/genomics-b19f4ebd> .
 <https://eliascrum.github.io/eliascrum/id/software/vcf-rdfizer> ec:hasTopicTag <https://eliascrum.github.io/eliascrum/id/tag/topic/knowledge-graphs-04540ed2> .
@@ -2629,6 +2706,11 @@
 <https://eliascrum.github.io/eliascrum/id/tag/topic/semantic-web-501ff810> rdf:type ec:Tag .
 <https://eliascrum.github.io/eliascrum/id/tag/topic/semantic-web-501ff810> rdf:type ec:TopicTag .
 <https://eliascrum.github.io/eliascrum/id/tag/topic/semantic-web-501ff810> skos:prefLabel "Semantic Web" .
+<https://eliascrum.github.io/eliascrum/id/tag/topic/shacl-59183926> ec:isDeclaredOption "false"^^xsd:boolean .
+<https://eliascrum.github.io/eliascrum/id/tag/topic/shacl-59183926> ec:tagKind "topic" .
+<https://eliascrum.github.io/eliascrum/id/tag/topic/shacl-59183926> rdf:type ec:Tag .
+<https://eliascrum.github.io/eliascrum/id/tag/topic/shacl-59183926> rdf:type ec:TopicTag .
+<https://eliascrum.github.io/eliascrum/id/tag/topic/shacl-59183926> skos:prefLabel "SHACL" .
 <https://eliascrum.github.io/eliascrum/id/tag/topic/solid-01d3fe0a> ec:isDeclaredOption "false"^^xsd:boolean .
 <https://eliascrum.github.io/eliascrum/id/tag/topic/solid-01d3fe0a> ec:tagKind "topic" .
 <https://eliascrum.github.io/eliascrum/id/tag/topic/solid-01d3fe0a> rdf:type ec:Tag .
@@ -2649,6 +2731,11 @@
 <https://eliascrum.github.io/eliascrum/id/tag/topic/utilities-bf93351e> rdf:type ec:Tag .
 <https://eliascrum.github.io/eliascrum/id/tag/topic/utilities-bf93351e> rdf:type ec:TopicTag .
 <https://eliascrum.github.io/eliascrum/id/tag/topic/utilities-bf93351e> skos:prefLabel "Utilities" .
+<https://eliascrum.github.io/eliascrum/id/tag/topic/vcf-b9afb830> ec:isDeclaredOption "false"^^xsd:boolean .
+<https://eliascrum.github.io/eliascrum/id/tag/topic/vcf-b9afb830> ec:tagKind "topic" .
+<https://eliascrum.github.io/eliascrum/id/tag/topic/vcf-b9afb830> rdf:type ec:Tag .
+<https://eliascrum.github.io/eliascrum/id/tag/topic/vcf-b9afb830> rdf:type ec:TopicTag .
+<https://eliascrum.github.io/eliascrum/id/tag/topic/vcf-b9afb830> skos:prefLabel "VCF" .
 <https://eliascrum.github.io/eliascrum/id/tag/topic/view-materialization-657732c3> ec:isDeclaredOption "false"^^xsd:boolean .
 <https://eliascrum.github.io/eliascrum/id/tag/topic/view-materialization-657732c3> ec:tagKind "topic" .
 <https://eliascrum.github.io/eliascrum/id/tag/topic/view-materialization-657732c3> rdf:type ec:Tag .
