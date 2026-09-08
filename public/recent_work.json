@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T12:36:24.421Z",
+  "generatedAt": "2026-09-08T10:33:52.542Z",
   "baseIri": "https://eliascrum.github.io/eliascrum/",
   "datasetUrl": "https://eliascrum.github.io/eliascrum/recent_work.json",
   "sparqlGraphUrl": "https://eliascrum.github.io/eliascrum/recent_work.ttl",
@@ -187,12 +187,12 @@
       "sourceUrl": "https://github.com/ecrum19/ocg",
       "itemUrl": "https://eliascrum.github.io/eliascrum/software/ontology-companion-generator",
       "latestRelease": {
-        "tagName": "v1.1.1",
-        "name": "v1.1.1",
-        "url": "https://github.com/ecrum19/ocg/releases/tag/v1.1.1",
-        "publishedAt": "2026-08-13T07:56:36.000Z"
+        "tagName": "v1.4.0",
+        "name": "v1.4.0",
+        "url": "https://github.com/ecrum19/ocg/releases/tag/v1.4.0",
+        "publishedAt": "2026-09-01T08:49:06.000Z"
       },
-      "latestReleaseDateIso": "2026-08-13"
+      "latestReleaseDateIso": "2026-09-01"
     },
     {
       "id": "Software:qr-code-generator",
@@ -220,6 +220,34 @@
       "latestReleaseDateIso": "2026-08-04"
     },
     {
+      "id": "Software:vcf-core-vocabulary",
+      "type": "Software",
+      "title": "VCF-Core Vocabulary",
+      "tags": [
+        "Semantic Vocabulary and SHACL Shapes",
+        "VCF Semantic Modeling",
+        "VCF",
+        "Genomics",
+        "Semantic Web",
+        "Ontology Engineering",
+        "SHACL",
+        "Documentation"
+      ],
+      "slug": "vcf-core-vocabulary",
+      "dateIso": "2026-01-01",
+      "summary": "Vocabulary and SHACL shapes for representing the logical VCF 4.5 model in RDF.",
+      "url": "https://eliascrum.github.io/eliascrum/software/vcf-core-vocabulary",
+      "sourceUrl": "https://github.com/ecrum19/vcf-core-vocabulary",
+      "itemUrl": "https://eliascrum.github.io/eliascrum/software/vcf-core-vocabulary",
+      "latestRelease": {
+        "tagName": "v2.0.0",
+        "name": "v2.0.0",
+        "url": "https://github.com/ecrum19/vcf-core-vocabulary/releases/tag/v2.0.0",
+        "publishedAt": "2026-09-07T14:40:56.000Z"
+      },
+      "latestReleaseDateIso": "2026-09-07"
+    },
+    {
       "id": "Software:vcf-rdfizer",
       "type": "Software",
       "title": "VCF-RDFizer",
@@ -239,33 +267,12 @@
       "sourceUrl": "https://github.com/ecrum19/VCF-RDFizer",
       "itemUrl": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer",
       "latestRelease": {
-        "tagName": "v1.2.3",
-        "name": "v1.2.3",
-        "url": "https://github.com/ecrum19/VCF-RDFizer/releases/tag/v1.2.3",
-        "publishedAt": "2026-06-02T11:47:19.000Z"
+        "tagName": "v2.1.0",
+        "name": "v2.1.0",
+        "url": "https://github.com/ecrum19/VCF-RDFizer/releases/tag/v2.1.0",
+        "publishedAt": "2026-08-24T13:12:48.000Z"
       },
-      "latestReleaseDateIso": "2026-06-02"
-    },
-    {
-      "id": "Software:vcf-rdfizer-vocabulary",
-      "type": "Software",
-      "title": "VCF-RDFizer Vocabulary",
-      "tags": [
-        "Semantic Vocabulary",
-        "Semantic Vocabulary Reference",
-        "Semantic Web",
-        "Genomics",
-        "Ontology Engineering",
-        "Documentation"
-      ],
-      "slug": "vcf-rdfizer-vocabulary",
-      "dateIso": "2026-01-01",
-      "summary": "Interactive vocabulary reference for the representation of VCF as semantic linked data with browsable documentation sections.",
-      "url": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer-vocabulary",
-      "sourceUrl": "https://ecrum19.github.io/VCF-RDFizer-vocabulary/ontology-reference.html",
-      "itemUrl": "https://eliascrum.github.io/eliascrum/software/vcf-rdfizer-vocabulary",
-      "latestRelease": null,
-      "latestReleaseDateIso": null
+      "latestReleaseDateIso": "2026-08-24"
     },
     {
       "id": "Software:vord",
@@ -885,12 +892,12 @@
       "sourceUrl": "https://github.com/KNowledgeOnWebScale/solid-cockpit",
       "itemUrl": "https://eliascrum.github.io/eliascrum/software/solid-cockpit",
       "latestRelease": {
-        "tagName": "v1.3.0",
-        "name": "v1.3.0",
-        "url": "https://github.com/KNowledgeOnWebScale/solid-cockpit/releases/tag/v1.3.0",
-        "publishedAt": "2026-06-04T09:54:06.000Z"
+        "tagName": "v1.4.0",
+        "name": "v1.4.0",
+        "url": "https://github.com/KNowledgeOnWebScale/solid-cockpit/releases/tag/v1.4.0",
+        "publishedAt": "2026-08-25T12:43:18.000Z"
       },
-      "latestReleaseDateIso": "2026-06-04"
+      "latestReleaseDateIso": "2026-08-25"
     },
     {
       "id": "Poster:eswc-2026-print",

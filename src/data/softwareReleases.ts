@@ -8,7 +8,7 @@ export interface SoftwareReleaseInfo {
   publishedAt: string | null;
 }
 
-export const softwareReleaseLastUpdatedIso: string | null = "2026-08-13T12:36:24.133Z";
+export const softwareReleaseLastUpdatedIso: string | null = "2026-09-08T10:31:51.807Z";
 
 export const softwareReleasesBySoftwareId: Record<string, SoftwareReleaseInfo | null> = {
   "genome-sharing-paper-webpage": {
@@ -24,10 +24,10 @@ export const softwareReleasesBySoftwareId: Record<string, SoftwareReleaseInfo | 
     publishedAt: "2026-02-11T10:17:57.000Z",
   },
   "ontology-companion-generator": {
-    tagName: "v1.1.1",
-    name: "v1.1.1",
-    url: "https://github.com/ecrum19/ocg/releases/tag/v1.1.1",
-    publishedAt: "2026-08-13T07:56:36.000Z",
+    tagName: "v1.4.0",
+    name: "v1.4.0",
+    url: "https://github.com/ecrum19/ocg/releases/tag/v1.4.0",
+    publishedAt: "2026-09-01T08:49:06.000Z",
   },
   "qr-code-generator": {
     tagName: null,
@@ -36,10 +36,10 @@ export const softwareReleasesBySoftwareId: Record<string, SoftwareReleaseInfo | 
     publishedAt: "2026-08-04T08:33:54.000Z",
   },
   "solid-cockpit": {
-    tagName: "v1.3.0",
-    name: "v1.3.0",
-    url: "https://github.com/KNowledgeOnWebScale/solid-cockpit/releases/tag/v1.3.0",
-    publishedAt: "2026-06-04T09:54:06.000Z",
+    tagName: "v1.4.0",
+    name: "v1.4.0",
+    url: "https://github.com/KNowledgeOnWebScale/solid-cockpit/releases/tag/v1.4.0",
+    publishedAt: "2026-08-25T12:43:18.000Z",
   },
   "sparql-view-materialization-containers": {
     tagName: null,
@@ -47,11 +47,17 @@ export const softwareReleasesBySoftwareId: Record<string, SoftwareReleaseInfo | 
     url: "https://github.com/ecrum19/sparql-view-materialization-containers",
     publishedAt: "2026-02-03T09:02:44.000Z",
   },
+  "vcf-core-vocabulary": {
+    tagName: "v2.0.0",
+    name: "v2.0.0",
+    url: "https://github.com/ecrum19/vcf-core-vocabulary/releases/tag/v2.0.0",
+    publishedAt: "2026-09-07T14:40:56.000Z",
+  },
   "vcf-rdfizer": {
-    tagName: "v1.2.3",
-    name: "v1.2.3",
-    url: "https://github.com/ecrum19/VCF-RDFizer/releases/tag/v1.2.3",
-    publishedAt: "2026-06-02T11:47:19.000Z",
+    tagName: "v2.1.0",
+    name: "v2.1.0",
+    url: "https://github.com/ecrum19/VCF-RDFizer/releases/tag/v2.1.0",
+    publishedAt: "2026-08-24T13:12:48.000Z",
   },
   "vord": {
     tagName: "v0.1",

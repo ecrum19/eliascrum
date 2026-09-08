@@ -31,6 +31,37 @@
               </a>
             </div>
 
+            <section id='cv-downloads' class='cv-downloads toc-anchor' aria-labelledby='cv-downloads-title'>
+              <h2 id='cv-downloads-title'>PDF versions</h2>
+              <div class='cv-download-grid'>
+                <article v-for='document in cvDownloads' :key='document.id' class='cv-download-card'>
+                  <h3>{{ document.title }}</h3>
+                  <p>{{ document.description }}</p>
+                  <div class='cv-download-actions'>
+                    <a
+                      class='cv-download-button'
+                      :href='pdfHref(document.path)'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      :aria-label='`View ${document.title} PDF (opens in a new tab)`'
+                    >
+                      <i class='fa fa-file-pdf-o' aria-hidden='true'></i>
+                      View PDF
+                    </a>
+                    <a
+                      class='cv-download-button cv-download-button--secondary'
+                      :href='pdfHref(document.path)'
+                      :download='document.filename'
+                      :aria-label='`Download ${document.title} PDF`'
+                    >
+                      <i class='fa fa-download' aria-hidden='true'></i>
+                      Download
+                    </a>
+                  </div>
+                </article>
+              </div>
+            </section>
+
             <div id='cv-focus' class='cv-focus toc-anchor'>
               <span class='cv-focus-label'>Core Areas</span>
               <div class='cv-focus-tags'>
@@ -246,6 +277,7 @@ import type { TocEntry as WorkTocEntry } from './WorkToc.vue';
 import WorkPageLayout from './layout/WorkPageLayout.vue';
 import WorkSectionBlock from './layout/WorkSectionBlock.vue';
 import { resolvePublicAssetPath } from '../utils/publicAssetPath';
+import { cvDownloads } from '../data/cvDownloads';
 
 type CvLinkDetail = Exclude<CvDetail, string>;
 
@@ -285,6 +317,7 @@ export default defineComponent({
     return {
       cvProfile,
       cvSections,
+      cvDownloads,
       activeCoreAreaTag: null as string | null,
     };
   },
@@ -307,6 +340,7 @@ export default defineComponent({
     tocEntries(): WorkTocEntry[] {
       return [
         { id: 'cv-overview', label: 'Overview', level: 1 },
+        { id: 'cv-downloads', label: 'PDF versions', level: 2 },
         { id: 'cv-focus', label: 'Core Areas', level: 2 },
         { id: 'cv-sections', label: 'Sections', level: 1 },
         ...this.filteredCvSections.map((section) => ({
@@ -318,6 +352,9 @@ export default defineComponent({
     },
   },
   methods: {
+    pdfHref(path: string): string {
+      return resolvePublicAssetPath(path);
+    },
     toggleCoreAreaTag(tag: string) {
       this.activeCoreAreaTag = this.activeCoreAreaTag === tag ? null : tag;
     },
@@ -630,6 +667,88 @@ export default defineComponent({
   background: var(--nav-hover-bg);
   border-color: rgba(var(--accent-rgb), 0.4);
   transform: translateY(-1px);
+}
+
+.cv-downloads {
+  border-top: 1px solid var(--cv-border-strong);
+  padding-top: 16px;
+}
+
+.cv-downloads h2 {
+  margin: 0 0 12px;
+  font-family: var(--content-heading-font);
+  font-size: var(--font-size-body-xl);
+  color: var(--cv-ink);
+}
+
+.cv-download-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 12px;
+}
+
+.cv-download-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid var(--cv-border-strong);
+  border-radius: 12px;
+  background: var(--cv-surface-alt);
+  min-width: 0;
+}
+
+.cv-download-card h3,
+.cv-download-card p {
+  margin: 0;
+  color: var(--cv-ink);
+}
+
+.cv-download-card h3 {
+  font-size: var(--font-size-body-lg);
+}
+
+.cv-download-card p {
+  color: var(--cv-muted);
+  font-size: var(--font-size-body-sm);
+  line-height: 1.5;
+}
+
+.cv-download-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.cv-download-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 9px 14px;
+  border: 1px solid var(--cv-border-strong);
+  border-radius: 8px;
+  background: rgba(var(--accent-rgb), 0.16);
+  color: var(--cv-ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.cv-download-button--secondary {
+  background: transparent;
+}
+
+.cv-download-button:hover {
+  background: var(--nav-hover-bg);
+}
+
+.cv-download-button:focus-visible {
+  outline: 2px solid var(--link-color);
+  outline-offset: 3px;
 }
 
 .cv-focus {

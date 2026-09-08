@@ -98,7 +98,7 @@ export const softwareSections: SoftwareSection[] = [
         summary:
           "A CLI tool for converting genomic variant data from VCF into RDF, supporting semantically interoperable downstream workflows.",
         description:
-          "VCF-RDFizer converts genomic variant data into RDF using the RML mapping language and the RMLStreamer conversion engine. It utilized the VCF-RDFizer Vocabulary to represent the data semantically while offering compression options to reduce the effects of semantic inflation.",
+          "VCF-RDFizer converts genomic variant data into RDF using the RML mapping language and the RMLStreamer conversion engine. It uses the VCF Core Vocabulary as a converter-independent semantic model while offering compression options to reduce the effects of semantic inflation.",
         repositoryUrl: "https://github.com/ecrum19/VCF-RDFizer",
         mainTopics: ["Genomics", "Semantic Web", "RDF", "Data Conversion", "Knowledge Graphs"],
         relatedPublicationIds: ["genomic-variant-representation-rdf-preprint-2025", "vcf2rdf-SWAT4HCLS-2025", "vcf-to-rdf-rml-swat4hcls-2026"],
@@ -155,17 +155,35 @@ export const softwareSections: SoftwareSection[] = [
       "Vocabulary references and publication-facing web resources for semantic technologies.",
     entries: [
       {
-        id: "vcf-rdfizer-vocabulary",
-        title: "VCF-RDFizer Vocabulary",
-        type: "Semantic Vocabulary",
-        purpose: "Semantic Vocabulary Reference",
+        id: "vcf-core-vocabulary",
+        title: "VCF-Core Vocabulary",
+        type: "Semantic Vocabulary and SHACL Shapes",
+        purpose: "VCF Semantic Modeling",
         year: "2026",
         summary:
-          "Interactive vocabulary reference for the representation of VCF as semantic linked data with browsable documentation sections.",
+          "Vocabulary and SHACL shapes for representing the logical VCF 4.5 model in RDF.",
         description:
-          "This website exposes the VCF-RDFizer vocabulary in a navigable reference format so classes, properties, and ontology structure can be inspected more easily. It acts as a documentation layer for the semantic model underlying the conversion work.",
-        webUrl: "https://ecrum19.github.io/VCF-RDFizer-vocabulary/ontology-reference.html",
-        mainTopics: ["Semantic Web", "Genomics", "Ontology Engineering", "Documentation"],
+          "VCF-Core Vocabulary is a converter-independent semantic model for VCF 4.5 files, headers, records, alleles, genotypes, indexed values, and VCF-specific structural-variant syntax. It includes SHACL shapes and provides expanded and condensed representations for genotype data at different cohort scales.",
+        repositoryUrl: "https://github.com/ecrum19/vcf-core-vocabulary",
+        webUrl: "https://ecrum19.github.io/vcf-core-vocabulary/",
+        details: [
+          {
+            label: "Namespace",
+            value: "https://w3id.org/vcf-core/vocab#",
+            href: "https://w3id.org/vcf-core/vocab#",
+          },
+          {
+            label: "Version",
+            value: "v2.0.0",
+            href: "https://github.com/ecrum19/vcf-core-vocabulary/releases/tag/v2.0.0",
+          },
+          {
+            label: "Migration",
+            value: "Renamed from VCF-RDFizer Vocabulary; legacy terms are deprecated and mapped to successors.",
+            href: "https://github.com/ecrum19/vcf-core-vocabulary/blob/main/docs/RELEASE-NOTES-v2.0.0.md",
+          },
+        ],
+        mainTopics: ["VCF", "Genomics", "Semantic Web", "Ontology Engineering", "SHACL", "Documentation"],
         relatedPublicationIds: ["genomic-variant-representation-rdf-preprint-2025", "vcf2rdf-SWAT4HCLS-2025", "vcf-to-rdf-rml-swat4hcls-2026"],
         relatedPosterSlugs: ["swat4hcls-2025", "swat4hcls-2026"],
       },

@@ -7,12 +7,15 @@
     "npm": ">=11.0.0"
   },
   "scripts": {
+    "predev": "npm run build:cv",
     "dev": "vite",
     "preview": "vite preview",
-    "prebuild": "npm run update:software-releases && npm run recent-work:export && npm run rdf:export",
+    "prebuild": "npm run update:software-releases && npm run recent-work:export && npm run rdf:export && npm run build:cv",
     "build": "vite build",
     "lint": "eslint --ext .ts,.tsx,.vue src",
     "build:slides": "node scripts/build-slides.mjs",
+    "build:cv": "node scripts/build-cv.mjs",
+    "test:cv": "node --test scripts/cv/cv.test.mjs",
     "update:software-releases": "node scripts/update-software-releases.mjs",
     "update:alphabet-stock": "node scripts/update-alphabet-stock.mjs",
     "update:scholar": "node scripts/update-scholar-citations.mjs",
@@ -31,6 +34,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@pdf-lib/fontkit": "^1.1.1",
     "@typescript-eslint/eslint-plugin": "^8.68.0",
     "@typescript-eslint/parser": "^8.68.0",
     "@vitejs/plugin-vue": "^6.0.8",

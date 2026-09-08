@@ -210,7 +210,7 @@
                 >.
               </p>
               <p>
-                I funded through the
+                I am funded through the
                 <a href="https://www.fwo.be/en/support-programmes/all-calls/phd/phd-fellowship-strategic-basic-research/">
                   <u>PhD fellowship - strategic basic research</u>
                 </a>
