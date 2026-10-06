@@ -65,45 +65,6 @@ Optional Google Analytics is disabled by default and is loaded only after explic
 consent. The site provides a [Privacy & Analytics](https://eliascrum.info/privacy)
 page describing the information collected and allowing visitors to change their choice.
 
-## Publishing and custom domain
-
-The site is built with Vue and Vite and hosted on GitHub Pages. Pushing to `master`
-runs `.github/workflows/deploy-pages.yml`, which builds and uploads `dist/`.
-The workflow reads the base path from GitHub Pages: `/eliascrum/` for the default
-project address, or `/` when `eliascrum.info` is configured. Local builds default to `/`.
-
-To activate the Porkbun domain after merging the domain changes:
-
-1. In GitHub **account Settings → Pages → Add a domain**, verify `eliascrum.info`
-   using the TXT record GitHub provides. Add that record in Porkbun and retain it.
-2. In this repository's **Settings → Pages**, keep **Source: GitHub Actions**, set
-   **Custom domain** to `eliascrum.info`, and save. This is a repository setting;
-   GitHub Actions deployments do not use a `CNAME` file to configure the domain.
-3. Run **Actions → Deploy To GitHub Pages → Run workflow** on `master` so the
-   deployment rebuilds for the domain root.
-4. In Porkbun's **DNS Records** for `eliascrum.info`, replace conflicting parking
-   records for the root and `www` with these records. Leave the root Host field
-   blank in Porkbun (`@` in generic DNS notation). Keep unrelated email and TXT records.
-
-   | Type | Host | Answer |
-   | --- | --- | --- |
-   | A | blank (root) | `185.199.108.153` |
-   | A | blank (root) | `185.199.109.153` |
-   | A | blank (root) | `185.199.110.153` |
-   | A | blank (root) | `185.199.111.153` |
-   | CNAME | `www` | `ecrum19.github.io` |
-
-5. Once GitHub's DNS check and certificate provisioning finish, enable
-   **Enforce HTTPS**. Confirm that `https://eliascrum.info/about` and the CV
-   downloads load, and that `https://www.eliascrum.info` redirects to the root domain.
-
-See [GitHub's custom-domain instructions](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site).
-DNS propagation and certificate provisioning can take up to 24 hours.
-
-The CVs, RDF exports, vocabulary, shapes, and semantic search use
-`https://eliascrum.info/` as the public website base. RDF resource identifiers now
-use this domain too; consumers with queries against the old namespace should update them.
-
 ## Release
 
 Current release: **v1.0.0**
