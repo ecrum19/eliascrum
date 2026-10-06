@@ -15,7 +15,7 @@ const DEFAULT_PREFIXES = {
   schema: "https://schema.org/",
   dcterms: "http://purl.org/dc/terms/",
   skos: "http://www.w3.org/2004/02/skos/core#",
-  ec: "https://eliascrum.github.io/eliascrum/vocab#",
+  ec: "https://eliascrum.info/vocab#",
 };
 
 function printUsageAndExit() {

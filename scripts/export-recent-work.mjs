@@ -13,7 +13,7 @@ const publicDir = path.join(rootDir, "public");
 const outputJsonPath = path.join(publicDir, "recent_work.json");
 const outputTtlPath = path.join(publicDir, "recent_work.ttl");
 
-const BASE_IRI = process.env.RECENT_WORK_BASE_IRI ?? "https://eliascrum.github.io/eliascrum/";
+const BASE_IRI = process.env.RECENT_WORK_BASE_IRI ?? "https://eliascrum.info/";
 
 const PREFIX_ORDER = ["rdf", "rdfs", "xsd", "schema", "dcterms", "ec"];
 const PREFIXES = {

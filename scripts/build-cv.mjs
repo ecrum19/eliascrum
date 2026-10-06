@@ -39,7 +39,7 @@ function publicationHref(entry) {
   return doi?.href || (doi ? `https://doi.org/${doi.value}` : entry.url || entry.paperPdfPath || `/publications/${entry.slug || entry.id}/paper`);
 }
 
-export async function generateCv({ date = new Date(), siteUrl = process.env.CV_SITE_URL ?? 'https://eliascrum.github.io/eliascrum/' } = {}) {
+export async function generateCv({ date = new Date(), siteUrl = process.env.CV_SITE_URL ?? 'https://eliascrum.info/' } = {}) {
   if (!Number.isFinite(date.getTime())) throw new Error('Invalid CV generation date.');
   siteUrl = siteUrl.replace(/\/?$/, '/');
   if (!['https:', 'http:'].includes(new URL(siteUrl).protocol)) throw new Error('CV_SITE_URL must be an HTTP(S) URL.');
@@ -136,7 +136,7 @@ export async function generateCv({ date = new Date(), siteUrl = process.env.CV_S
       doc.section('Selected Publications', selected.map(publicationBlock));
       doc.section('Fellowship & Selected Awards', data.focusedAwards.map(awardBlock));
       doc.section('Teaching & Communication', [itemBlock({ ...data.focusedTeaching, details: data.focusedTeaching.details.slice(0, 1) })]);
-      const cvPageUrl = 'https://ecrum19.github.io/eliascrum/about/cv';
+      const cvPageUrl = absolute('/about/cv');
       doc.add(doc.paragraph(`For full interactive publication list, project links, talks, and a complete CV please visit my website: ${cvPageUrl}`, { size: 9, href: cvPageUrl, spaceBefore: 10, gap: 0 }));
     } else {
       for (const section of data.cvSections) {

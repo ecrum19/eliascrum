@@ -18,7 +18,7 @@ const shapesFilePath = path.join(rdfDir, "site-shapes.ttl");
 const publicVocabFilePath = path.join(rootDir, "public", "vocab.ttl");
 const publicShapesFilePath = path.join(rootDir, "public", "site-shapes.ttl");
 
-const BASE_IRI = process.env.RDF_BASE_IRI ?? "https://eliascrum.github.io/eliascrum/";
+const BASE_IRI = process.env.RDF_BASE_IRI ?? "https://eliascrum.info/";
 const ID_BASE_IRI = new URL("id/", BASE_IRI).href;
 const VOCAB_IRI = new URL("vocab#", BASE_IRI).href;
 

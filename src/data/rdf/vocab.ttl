@@ -4,12 +4,12 @@
 @prefix schema: <https://schema.org/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix ec: <https://eliascrum.github.io/eliascrum/vocab#> .
+@prefix ec: <https://eliascrum.info/vocab#> .
 
-<https://eliascrum.github.io/eliascrum/vocab>
+<https://eliascrum.info/vocab>
   rdfs:label "Elias Crum Website Vocabulary"@en ;
   rdfs:comment "Vocabulary for data entities and relationships used in the Elias Crum personal website RDF graph."@en ;
-  rdfs:seeAlso <https://eliascrum.github.io/eliascrum/vocab.ttl> .
+  rdfs:seeAlso <https://eliascrum.info/vocab.ttl> .
 
 # Classes
 

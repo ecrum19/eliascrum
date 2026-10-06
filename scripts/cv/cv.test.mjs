@@ -123,8 +123,8 @@ test('scoped copy, printed URLs, software replacement, and award descriptions ar
   assert.ok(links.includes('https://github.com/ecrum19/vcf-core-vocabulary'));
   for (const entry of content.focusedSoftware) assert.ok(text.includes(normalized(`(${entry.repositoryUrl.replace('https://', '')})`)), entry.title);
   for (const description of Object.values(content.awardDescriptions)) assert.ok(text.includes(normalized(description)), description);
-  assert.ok(pages[1].includes(normalized('For full interactive publication list, project links, talks, and a complete CV please visit my website: https://ecrum19.github.io/eliascrum/about/cv')), 'Closing statement and exact website URL must be readable when printed');
-  assert.ok(links.includes('https://ecrum19.github.io/eliascrum/about/cv'), 'Closing statement must link to the requested CV page');
+  assert.ok(pages[1].includes(normalized('For full interactive publication list, project links, talks, and a complete CV please visit my website: https://example.org/research/about/cv')), 'Closing statement and configured website URL must be readable when printed');
+  assert.ok(links.includes('https://example.org/research/about/cv'), 'Closing statement must respect the configured site URL');
   assert.ok(!pages[1].includes(normalized('Full publication list, project links, talks, and complete CV:')));
   assert.ok(links.some((link) => link.includes('swat4hcls-2026-poster-paper.pdf')), 'VCF software paper link');
   assert.ok(links.some((link) => link.includes('eswc-2026-demo-paper.pdf')), 'Solid Cockpit paper link');
@@ -138,7 +138,7 @@ test('both PDF headlines use the requested word order', () => {
 });
 
 test('contact icons and section rules align to visible text centers', async () => {
-  const doc = await CvPdf.create({ name: content.cvProfile.name, label: 'Test CV', date: new Date('2026-09-08'), siteUrl: 'https://eliascrum.github.io/eliascrum/', focused: true });
+  const doc = await CvPdf.create({ name: content.cvProfile.name, label: 'Test CV', date: new Date('2026-09-08'), siteUrl: 'https://eliascrum.info/', focused: true });
   const contacts = [];
   const icons = [];
   const originalText = doc.text.bind(doc);
