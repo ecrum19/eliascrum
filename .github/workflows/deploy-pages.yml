@@ -33,6 +33,7 @@ jobs:
           cache: npm
 
       - name: Configure Pages
+        id: pages
         uses: actions/configure-pages@v5
 
       - name: Install Dependencies
@@ -46,20 +47,12 @@ jobs:
             echo "Skipping build:slides because no slide source was found (expected .talk-assets/slides.tar.gz or ./slides)."
           fi
 
-      - name: Compute Vite base path
-        id: base
-        run: |
-          repo="${GITHUB_REPOSITORY#*/}"
-          if [[ "$repo" == *.github.io ]]; then
-            echo "base=/" >> "$GITHUB_OUTPUT"
-          else
-            echo "base=/$repo/" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Build
         env:
+          # Empty for eliascrum.info; /eliascrum before the domain is configured.
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
           VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
-        run: npm run build -- --base "${{ steps.base.outputs.base }}"
+        run: npm run build -- --base "${BASE_PATH}/"
 
       - name: Add SPA fallback and nojekyll marker
         run: |

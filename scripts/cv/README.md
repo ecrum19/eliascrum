@@ -33,7 +33,7 @@ grounded in the fellowship record and the supplied certificates.
 
 The complete CV is independent of the web page's active filters. PDF links use the
 site's base-path helper for local development, root hosting, and GitHub Pages.
-Inside PDFs, links default to `https://eliascrum.github.io/eliascrum/`; set
+Inside PDFs, links default to `https://eliascrum.info/`; set
 `CV_SITE_URL` when moving the public site. Set `SOURCE_DATE_EPOCH` (Unix seconds)
 for reproducible PDF timestamps. The footer uses the generation date in UTC.
 

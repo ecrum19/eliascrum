@@ -4,17 +4,17 @@ Personal academic website for Elias D. Crum, Ph.D. candidate working at the inte
 semantic web technologies, clinical genomics, bioinformatics, and privacy-aware data
 infrastructure.
 
-Visit the live website at [eliascrum.github.io/eliascrum](https://eliascrum.github.io/eliascrum/).
+Visit the live website at [eliascrum.info](https://eliascrum.info/).
 
 ## Explore
 
-- [About](https://eliascrum.github.io/eliascrum/about): background, research topics, affiliations,
+- [About](https://eliascrum.info/about): background, research topics, affiliations,
   and CV.
-- [Publications](https://eliascrum.github.io/eliascrum/publications): journal articles, conference
+- [Publications](https://eliascrum.info/publications): journal articles, conference
   papers, preprints, and linked paper materials.
-- [Talks and Posters](https://eliascrum.github.io/eliascrum/talks): presentation slides and
+- [Talks and Posters](https://eliascrum.info/talks): presentation slides and
   conference posters.
-- [Software](https://eliascrum.github.io/eliascrum/software): research tools, applications,
+- [Software](https://eliascrum.info/software): research tools, applications,
   specifications, vocabularies, and utilities.
 
 The site supports keyword and tag-based discovery across the underlying research, presentation,
@@ -22,7 +22,7 @@ publication, and software records.
 
 ## PDF CVs
 
-The [CV page](https://eliascrum.github.io/eliascrum/about/cv) offers a complete PDF
+The [CV page](https://eliascrum.info/about/cv) offers a complete PDF
 CV and a focused, two-page medical semantic web CV, with separate view and download
 buttons. Both are regenerated from the site's content on every build. Run
 `npm run build:cv` to regenerate them locally and `npm run test:cv` to verify them.
@@ -50,11 +50,11 @@ The website brings together work involving:
 
 Selected website content is available as machine-readable resources:
 
-- [Recent work JSON](https://eliascrum.github.io/eliascrum/recent_work.json)
-- [Recent work RDF](https://eliascrum.github.io/eliascrum/recent_work.ttl)
-- [Full site RDF graph](https://eliascrum.github.io/eliascrum/site-data.ttl)
-- [Site vocabulary](https://eliascrum.github.io/eliascrum/vocab.ttl)
-- [SHACL shapes](https://eliascrum.github.io/eliascrum/site-shapes.ttl)
+- [Recent work JSON](https://eliascrum.info/recent_work.json)
+- [Recent work RDF](https://eliascrum.info/recent_work.ttl)
+- [Full site RDF graph](https://eliascrum.info/site-data.ttl)
+- [Site vocabulary](https://eliascrum.info/vocab.ttl)
+- [SHACL shapes](https://eliascrum.info/site-shapes.ttl)
 
 These resources are intended to make the website easier to reuse, query, and connect with other
 research information systems.
@@ -62,7 +62,7 @@ research information systems.
 ## Privacy
 
 Optional Google Analytics is disabled by default and is loaded only after explicit visitor
-consent. The site provides a [Privacy & Analytics](https://eliascrum.github.io/eliascrum/privacy)
+consent. The site provides a [Privacy & Analytics](https://eliascrum.info/privacy)
 page describing the information collected and allowing visitors to change their choice.
 
 ## Release

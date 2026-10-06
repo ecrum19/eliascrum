@@ -8,7 +8,7 @@ import { getTalkViewEntries } from "../data/talkCatalog";
 import { talks } from "../data/talksData";
 import { resolvePublicAssetPath } from "./publicAssetPath";
 
-const WEBSITE_BASE_IRI = "https://eliascrum.github.io/eliascrum/";
+const WEBSITE_BASE_IRI = "https://eliascrum.info/";
 const BASE_ROUTE_PATH = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
 
 export type SearchMode = "keyword" | "sparql";
@@ -440,10 +440,8 @@ function mapIriToRoute(iriValue: string): string | undefined {
 }
 
 function mapBindingsToSearchResult(binding: unknown, index: number): SearchResult {
-  const bindingAny = binding as {
-    entries?: () => Iterable<[unknown, unknown]>;
-  };
-  const entries = bindingAny.entries ? [...bindingAny.entries()] : [];
+  // RDF/JS Bindings are iterable; Comunica's internal `entries` field is not a method.
+  const entries = [...(binding as Iterable<[unknown, unknown]>)];
 
   const keyValuePairs = entries.map(([variableTerm, valueTerm]) => {
     const variableLabel = String(termValue(variableTerm)).replace(/^\?/, "");
