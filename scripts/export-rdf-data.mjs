@@ -525,6 +525,7 @@ async function main() {
     addTextValue(triples, talkRef, "ec:sourceDateLabel", talk.dateLabel);
 
     addTextValue(triples, talkRef, "ec:slidePath", talk.slidePath);
+    addTextValue(triples, talkRef, "schema:encodingFormat", talk.slideFormat === "html" ? "text/html" : "application/pdf");
     addUrlValue(triples, talkRef, talk.slidePath);
     addIriValue(triples, talkRef, "schema:embedUrl", talk.slideEmbedUrl);
 
@@ -595,6 +596,7 @@ async function main() {
       addTextValue(triples, talkMetadataRef, "ec:audienceExpertise", rawMetadata.audienceExpertise);
       addIntegerValue(triples, talkMetadataRef, "ec:durationMinutes", rawMetadata.durationMinutes);
       addIntegerValue(triples, talkMetadataRef, "ec:audienceSizeApprox", rawMetadata.audienceSizeApprox);
+      addTextValue(triples, talkMetadataRef, "ec:audienceSizeEstimate", rawMetadata.audienceSizeEstimate);
       (rawMetadata.audienceGroups ?? []).forEach((tagLabel) => {
         const tagRef = makeTagRef(tagRegistry, triples, "audience-group", tagLabel);
         triples.add(`${talkMetadataRef} ec:hasAudienceGroupTag ${tagRef} .`);

@@ -20,6 +20,22 @@ Visit the live website at [eliascrum.info](https://eliascrum.info/).
 The site supports keyword and tag-based discovery across the underlying research, presentation,
 publication, and software records.
 
+## Adding talks
+
+PDF talks are generated with `npm run build:slides` from the sources in
+`.talk-assets/` (or temporary `slides/` and `posters/` directories). Add HTML-only
+decks to `src/data/htmlTalks.ts` with `slideFormat: "html"` and the hosted deck URL
+as `slidePath`. The PDF generator preserves these entries on every rebuild.
+
+For either format, add the title, date, summary, abstract, and audience details to
+`src/data/talkMetadata.ts` using the same slug. Set `slideEmbedUrl` when the deck
+needs a specific presentation URL, such as Shower's `?full#title`. HTML slides
+use an iframe preview and an HTML link without requiring a PDF.
+
+Run `npm run lint`, `npm run build`, and `npm run test:cv` before opening a pull
+request. The build refreshes recent work, RDF, and both CVs; merging into `master`
+deploys the website through the existing GitHub Pages workflow.
+
 ## PDF CVs
 
 The [CV page](https://eliascrum.info/about/cv) offers a complete PDF

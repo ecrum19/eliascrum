@@ -764,7 +764,7 @@
 <https://eliascrum.info/id/cv-section/8> rdf:type ec:CvSection .
 <https://eliascrum.info/id/cv-section/8> schema:name "Organizations" .
 <https://eliascrum.info/id/dataset/website> dcterms:description "RDF/Turtle projection of the TypeScript data modules under src/data." .
-<https://eliascrum.info/id/dataset/website> dcterms:modified "2026-10-06T15:01:03.986Z"^^xsd:dateTime .
+<https://eliascrum.info/id/dataset/website> dcterms:modified "2026-10-08T12:47:07.981Z"^^xsd:dateTime .
 <https://eliascrum.info/id/dataset/website> ec:hasCvProfile <https://eliascrum.info/id/cv-profile/elias-crum> .
 <https://eliascrum.info/id/dataset/website> ec:hasExternalProfile <https://eliascrum.info/id/profile/google-scholar> .
 <https://eliascrum.info/id/dataset/website> ec:hasExternalProfile <https://eliascrum.info/id/profile/orcid> .
@@ -826,7 +826,7 @@
 <https://eliascrum.info/id/homepage-update/publication%3Adisjointness-llm-ISWC-2024> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/publication%3Adisjointness-llm-ISWC-2024> ec:dateLabel "02 Dec 2024" .
 <https://eliascrum.info/id/homepage-update/publication%3Adisjointness-llm-ISWC-2024> ec:linkLabel "Read publication" .
-<https://eliascrum.info/id/homepage-update/publication%3Adisjointness-llm-ISWC-2024> ec:order "16"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/publication%3Adisjointness-llm-ISWC-2024> ec:order "17"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/publication%3Adisjointness-llm-ISWC-2024> ec:referencesEntity <https://eliascrum.info/id/publication/disjointness-llm-ISWC-2024> .
 <https://eliascrum.info/id/homepage-update/publication%3Adisjointness-llm-ISWC-2024> ec:summary "Investigates how large language models can propose class disjointness axioms for ontologies, with validation on DBpedia and a workflow that preserves logical consistency while reducing manual effort." .
 <https://eliascrum.info/id/homepage-update/publication%3Adisjointness-llm-ISWC-2024> ec:updateDate "2024-12-02"^^xsd:date .
@@ -838,7 +838,7 @@
 <https://eliascrum.info/id/homepage-update/publication%3Aengineering-coliphages-2022> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/publication%3Aengineering-coliphages-2022> ec:dateLabel "01 Sept 2022" .
 <https://eliascrum.info/id/homepage-update/publication%3Aengineering-coliphages-2022> ec:linkLabel "Read publication" .
-<https://eliascrum.info/id/homepage-update/publication%3Aengineering-coliphages-2022> ec:order "27"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/publication%3Aengineering-coliphages-2022> ec:order "28"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/publication%3Aengineering-coliphages-2022> ec:referencesEntity <https://eliascrum.info/id/publication/engineering-coliphages-2022> .
 <https://eliascrum.info/id/homepage-update/publication%3Aengineering-coliphages-2022> ec:summary "Builds a large-scale catalog of urinary E. coli prophages and demonstrates induction plus engineering of temperate phages into obligately lytic variants for targeted lysis of non-native urinary strains." .
 <https://eliascrum.info/id/homepage-update/publication%3Aengineering-coliphages-2022> ec:updateDate "2022-09-01"^^xsd:date .
@@ -850,7 +850,7 @@
 <https://eliascrum.info/id/homepage-update/publication%3Agardnerella-characterization-2021> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/publication%3Agardnerella-characterization-2021> ec:dateLabel "12 May 2021" .
 <https://eliascrum.info/id/homepage-update/publication%3Agardnerella-characterization-2021> ec:linkLabel "Read publication" .
-<https://eliascrum.info/id/homepage-update/publication%3Agardnerella-characterization-2021> ec:order "28"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/publication%3Agardnerella-characterization-2021> ec:order "29"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/publication%3Agardnerella-characterization-2021> ec:referencesEntity <https://eliascrum.info/id/publication/gardnerella-characterization-2021> .
 <https://eliascrum.info/id/homepage-update/publication%3Agardnerella-characterization-2021> ec:summary "Compares urinary and vaginal Gardnerella genomes, identifying species-level structure and showing that whole-genome analysis is needed for reliable differentiation across groups in urogenital microbiota." .
 <https://eliascrum.info/id/homepage-update/publication%3Agardnerella-characterization-2021> ec:updateDate "2021-05-12"^^xsd:date .
@@ -862,7 +862,7 @@
 <https://eliascrum.info/id/homepage-update/publication%3Agenome-sharing-review-2026> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/publication%3Agenome-sharing-review-2026> ec:dateLabel "01 Jan 2026" .
 <https://eliascrum.info/id/homepage-update/publication%3Agenome-sharing-review-2026> ec:linkLabel "Read publication" .
-<https://eliascrum.info/id/homepage-update/publication%3Agenome-sharing-review-2026> ec:order "6"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/publication%3Agenome-sharing-review-2026> ec:order "7"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/publication%3Agenome-sharing-review-2026> ec:referencesEntity <https://eliascrum.info/id/publication/genome-sharing-review-2026> .
 <https://eliascrum.info/id/homepage-update/publication%3Agenome-sharing-review-2026> ec:summary "Scoping review of how genomic sequence data is shared in clinical practice, surveying implementations, infrastructure, and guidance. Identifies key barriers to scalability and adoption, and proposes concrete steps toward more unified, scalable clinical genomic data sharing systems." .
 <https://eliascrum.info/id/homepage-update/publication%3Agenome-sharing-review-2026> ec:updateDate "2026-01-01"^^xsd:date .
@@ -874,7 +874,7 @@
 <https://eliascrum.info/id/homepage-update/publication%3Agenomic-variant-representation-rdf-preprint-2025> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/publication%3Agenomic-variant-representation-rdf-preprint-2025> ec:dateLabel "24 Feb 2025" .
 <https://eliascrum.info/id/homepage-update/publication%3Agenomic-variant-representation-rdf-preprint-2025> ec:linkLabel "Read publication" .
-<https://eliascrum.info/id/homepage-update/publication%3Agenomic-variant-representation-rdf-preprint-2025> ec:order "15"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/publication%3Agenomic-variant-representation-rdf-preprint-2025> ec:order "16"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/publication%3Agenomic-variant-representation-rdf-preprint-2025> ec:referencesEntity <https://eliascrum.info/id/publication/genomic-variant-representation-rdf-preprint-2025> .
 <https://eliascrum.info/id/homepage-update/publication%3Agenomic-variant-representation-rdf-preprint-2025> ec:summary "Reports initial BioHackathon results on aligning genomic variant RDF schemas identified at SWAT4HCLS 2025, with focus on improving interoperability and reuse of variant data for clinical applications." .
 <https://eliascrum.info/id/homepage-update/publication%3Agenomic-variant-representation-rdf-preprint-2025> ec:updateDate "2025-02-24"^^xsd:date .
@@ -886,7 +886,7 @@
 <https://eliascrum.info/id/homepage-update/publication%3Apengquin-eswc-2024> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/publication%3Apengquin-eswc-2024> ec:dateLabel "26 May 2024" .
 <https://eliascrum.info/id/homepage-update/publication%3Apengquin-eswc-2024> ec:linkLabel "Read publication" .
-<https://eliascrum.info/id/homepage-update/publication%3Apengquin-eswc-2024> ec:order "21"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/publication%3Apengquin-eswc-2024> ec:order "22"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/publication%3Apengquin-eswc-2024> ec:referencesEntity <https://eliascrum.info/id/publication/pengquin-eswc-2024> .
 <https://eliascrum.info/id/homepage-update/publication%3Apengquin-eswc-2024> ec:summary "Presents the PENGQUIN PhD framework for privacy-preserving genomic data sharing and querying using Solid pods, RDF/Linked Data representations, policy attachments, and link-traversal querying." .
 <https://eliascrum.info/id/homepage-update/publication%3Apengquin-eswc-2024> ec:updateDate "2024-05-26"^^xsd:date .
@@ -898,7 +898,7 @@
 <https://eliascrum.info/id/homepage-update/publication%3Apm-pods-SWAT4HCLS-2024> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/publication%3Apm-pods-SWAT4HCLS-2024> ec:dateLabel "26 Feb 2024" .
 <https://eliascrum.info/id/homepage-update/publication%3Apm-pods-SWAT4HCLS-2024> ec:linkLabel "Read publication" .
-<https://eliascrum.info/id/homepage-update/publication%3Apm-pods-SWAT4HCLS-2024> ec:order "25"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/publication%3Apm-pods-SWAT4HCLS-2024> ec:order "26"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/publication%3Apm-pods-SWAT4HCLS-2024> ec:referencesEntity <https://eliascrum.info/id/publication/pm-pods-SWAT4HCLS-2024> .
 <https://eliascrum.info/id/homepage-update/publication%3Apm-pods-SWAT4HCLS-2024> ec:summary "Describes how Solid-based personal data pods can address privacy and data-sharing bottlenecks in genomic medicine by decentralizing storage and giving patients finer control over sensitive genomic data." .
 <https://eliascrum.info/id/homepage-update/publication%3Apm-pods-SWAT4HCLS-2024> ec:updateDate "2024-02-26"^^xsd:date .
@@ -922,7 +922,7 @@
 <https://eliascrum.info/id/homepage-update/publication%3Asolid-cockpit-eswc-2026-demo> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/publication%3Asolid-cockpit-eswc-2026-demo> ec:dateLabel "01 Jun 2026" .
 <https://eliascrum.info/id/homepage-update/publication%3Asolid-cockpit-eswc-2026-demo> ec:linkLabel "Read publication" .
-<https://eliascrum.info/id/homepage-update/publication%3Asolid-cockpit-eswc-2026-demo> ec:order "2"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/publication%3Asolid-cockpit-eswc-2026-demo> ec:order "3"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/publication%3Asolid-cockpit-eswc-2026-demo> ec:referencesEntity <https://eliascrum.info/id/publication/solid-cockpit-eswc-2026-demo> .
 <https://eliascrum.info/id/homepage-update/publication%3Asolid-cockpit-eswc-2026-demo> ec:summary "Presents Solid Cockpit, a browser-based interface for managing Solid Pods that integrates data management, privacy-aware permission workflows, and embedded SPARQL querying with result materialization." .
 <https://eliascrum.info/id/homepage-update/publication%3Asolid-cockpit-eswc-2026-demo> ec:updateDate "2026-06-01"^^xsd:date .
@@ -934,7 +934,7 @@
 <https://eliascrum.info/id/homepage-update/publication%3ATRIPLE-SWAT4HCLS-2024> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/publication%3ATRIPLE-SWAT4HCLS-2024> ec:dateLabel "26 Feb 2024" .
 <https://eliascrum.info/id/homepage-update/publication%3ATRIPLE-SWAT4HCLS-2024> ec:linkLabel "Read publication" .
-<https://eliascrum.info/id/homepage-update/publication%3ATRIPLE-SWAT4HCLS-2024> ec:order "24"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/publication%3ATRIPLE-SWAT4HCLS-2024> ec:order "25"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/publication%3ATRIPLE-SWAT4HCLS-2024> ec:referencesEntity <https://eliascrum.info/id/publication/TRIPLE-SWAT4HCLS-2024> .
 <https://eliascrum.info/id/homepage-update/publication%3ATRIPLE-SWAT4HCLS-2024> ec:summary "Describes how Solid-based data pods can address privacy and data-sharing bottlenecks in academic research by allowing felxible sharing of sensitive research data and result/experimental data provenance." .
 <https://eliascrum.info/id/homepage-update/publication%3ATRIPLE-SWAT4HCLS-2024> ec:updateDate "2024-02-26"^^xsd:date .
@@ -946,7 +946,7 @@
 <https://eliascrum.info/id/homepage-update/publication%3Aurinary-coliphages-2023> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/publication%3Aurinary-coliphages-2023> ec:dateLabel "13 Apr 2023" .
 <https://eliascrum.info/id/homepage-update/publication%3Aurinary-coliphages-2023> ec:linkLabel "Read publication" .
-<https://eliascrum.info/id/homepage-update/publication%3Aurinary-coliphages-2023> ec:order "26"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/publication%3Aurinary-coliphages-2023> ec:order "27"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/publication%3Aurinary-coliphages-2023> ec:referencesEntity <https://eliascrum.info/id/publication/urinary-coliphages-2023> .
 <https://eliascrum.info/id/homepage-update/publication%3Aurinary-coliphages-2023> ec:summary "Catalogs urinary E. coli phage diversity and shows that multiple urinary and non-urinary coliphages can lyse urinary E. coli strains, supporting a role for phages in shaping urobiome composition." .
 <https://eliascrum.info/id/homepage-update/publication%3Aurinary-coliphages-2023> ec:updateDate "2023-04-13"^^xsd:date .
@@ -958,7 +958,7 @@
 <https://eliascrum.info/id/homepage-update/publication%3Avcf-to-rdf-rml-swat4hcls-2026> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/publication%3Avcf-to-rdf-rml-swat4hcls-2026> ec:dateLabel "24 Mar 2026" .
 <https://eliascrum.info/id/homepage-update/publication%3Avcf-to-rdf-rml-swat4hcls-2026> ec:linkLabel "Read publication" .
-<https://eliascrum.info/id/homepage-update/publication%3Avcf-to-rdf-rml-swat4hcls-2026> ec:order "5"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/publication%3Avcf-to-rdf-rml-swat4hcls-2026> ec:order "6"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/publication%3Avcf-to-rdf-rml-swat4hcls-2026> ec:referencesEntity <https://eliascrum.info/id/publication/vcf-to-rdf-rml-swat4hcls-2026> .
 <https://eliascrum.info/id/homepage-update/publication%3Avcf-to-rdf-rml-swat4hcls-2026> ec:summary "Presents an RML-based approach for converting VCF genomic variant files into RDF using established ontologies, targeting more interoperable, queryable, and privacy-aware variant data representation." .
 <https://eliascrum.info/id/homepage-update/publication%3Avcf-to-rdf-rml-swat4hcls-2026> ec:updateDate "2026-03-24"^^xsd:date .
@@ -970,7 +970,7 @@
 <https://eliascrum.info/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:dateLabel "24 Feb 2025" .
 <https://eliascrum.info/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:linkLabel "Read publication" .
-<https://eliascrum.info/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:order "14"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:order "15"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:referencesEntity <https://eliascrum.info/id/publication/vcf2rdf-SWAT4HCLS-2025> .
 <https://eliascrum.info/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:summary "Introduces a framework for converting VCF genomic variant files into RDF, combining a comprehensive ontology, storage-efficient HDT serialization, and alignment with clinical metadata schemas to improve interoperability, data linking, querying, and semantic interpretability." .
 <https://eliascrum.info/id/homepage-update/publication%3Avcf2rdf-SWAT4HCLS-2025> ec:updateDate "2025-02-24"^^xsd:date .
@@ -982,7 +982,7 @@
 <https://eliascrum.info/id/homepage-update/publication%3Awikidata-sparql-ISWC-2025> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/publication%3Awikidata-sparql-ISWC-2025> ec:dateLabel "02 Nov 2025" .
 <https://eliascrum.info/id/homepage-update/publication%3Awikidata-sparql-ISWC-2025> ec:linkLabel "Read publication" .
-<https://eliascrum.info/id/homepage-update/publication%3Awikidata-sparql-ISWC-2025> ec:order "8"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/publication%3Awikidata-sparql-ISWC-2025> ec:order "9"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/publication%3Awikidata-sparql-ISWC-2025> ec:referencesEntity <https://eliascrum.info/id/publication/wikidata-sparql-ISWC-2025> .
 <https://eliascrum.info/id/homepage-update/publication%3Awikidata-sparql-ISWC-2025> ec:summary "Client-side query federation can automatically combine data across the newly split Wikidata SPARQL endpoints, reducing the need for manual source annotations in queries while remaining feasible for queries that stay within client resource limits." .
 <https://eliascrum.info/id/homepage-update/publication%3Awikidata-sparql-ISWC-2025> ec:updateDate "2025-11-02"^^xsd:date .
@@ -994,7 +994,7 @@
 <https://eliascrum.info/id/homepage-update/talk%3A18m-vito-internal-jury> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/talk%3A18m-vito-internal-jury> ec:dateLabel "20 Nov 2025" .
 <https://eliascrum.info/id/homepage-update/talk%3A18m-vito-internal-jury> ec:linkLabel "View talk" .
-<https://eliascrum.info/id/homepage-update/talk%3A18m-vito-internal-jury> ec:order "7"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3A18m-vito-internal-jury> ec:order "8"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/talk%3A18m-vito-internal-jury> ec:referencesEntity <https://eliascrum.info/id/talk/18m-vito-internal-jury> .
 <https://eliascrum.info/id/homepage-update/talk%3A18m-vito-internal-jury> ec:summary "Internal PhD milestone review covering completed work, validation status, and the next research phase." .
 <https://eliascrum.info/id/homepage-update/talk%3A18m-vito-internal-jury> ec:updateDate "2025-11-20"^^xsd:date .
@@ -1006,7 +1006,7 @@
 <https://eliascrum.info/id/homepage-update/talk%3Adph-day-talk> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/talk%3Adph-day-talk> ec:dateLabel "10 Oct 2025" .
 <https://eliascrum.info/id/homepage-update/talk%3Adph-day-talk> ec:linkLabel "View talk" .
-<https://eliascrum.info/id/homepage-update/talk%3Adph-day-talk> ec:order "9"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3Adph-day-talk> ec:order "10"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/talk%3Adph-day-talk> ec:referencesEntity <https://eliascrum.info/id/talk/dph-day-talk> .
 <https://eliascrum.info/id/homepage-update/talk%3Adph-day-talk> ec:summary "Presented progress on decentralized clinical-genomics workflows and interoperability priorities in precision health." .
 <https://eliascrum.info/id/homepage-update/talk%3Adph-day-talk> ec:updateDate "2025-10-10"^^xsd:date .
@@ -1018,7 +1018,7 @@
 <https://eliascrum.info/id/homepage-update/talk%3Aedc-knows-26> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/talk%3Aedc-knows-26> ec:dateLabel "31 Mar 2026" .
 <https://eliascrum.info/id/homepage-update/talk%3Aedc-knows-26> ec:linkLabel "View talk" .
-<https://eliascrum.info/id/homepage-update/talk%3Aedc-knows-26> ec:order "4"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3Aedc-knows-26> ec:order "5"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/talk%3Aedc-knows-26> ec:referencesEntity <https://eliascrum.info/id/talk/edc-knows-26> .
 <https://eliascrum.info/id/homepage-update/talk%3Aedc-knows-26> ec:summary "KNoWS Day presentation outlining how semantic representations can improve genomic-data interoperability, privacy-aware access control, and federated querying in healthcare settings." .
 <https://eliascrum.info/id/homepage-update/talk%3Aedc-knows-26> ec:updateDate "2026-03-31"^^xsd:date .
@@ -1030,7 +1030,7 @@
 <https://eliascrum.info/id/homepage-update/talk%3Aeswc-phdsymp-pangquin> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/talk%3Aeswc-phdsymp-pangquin> ec:dateLabel "28 May 2024" .
 <https://eliascrum.info/id/homepage-update/talk%3Aeswc-phdsymp-pangquin> ec:linkLabel "View talk" .
-<https://eliascrum.info/id/homepage-update/talk%3Aeswc-phdsymp-pangquin> ec:order "20"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3Aeswc-phdsymp-pangquin> ec:order "21"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/talk%3Aeswc-phdsymp-pangquin> ec:referencesEntity <https://eliascrum.info/id/talk/eswc-phdsymp-pangquin> .
 <https://eliascrum.info/id/homepage-update/talk%3Aeswc-phdsymp-pangquin> ec:summary "PhD symposium talk on the PENGQUIN research agenda for decentralized and policy-aware genomic data use." .
 <https://eliascrum.info/id/homepage-update/talk%3Aeswc-phdsymp-pangquin> ec:updateDate "2024-05-28"^^xsd:date .
@@ -1042,7 +1042,7 @@
 <https://eliascrum.info/id/homepage-update/talk%3Afwo-interview> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/talk%3Afwo-interview> ec:dateLabel "05 Sept 2024" .
 <https://eliascrum.info/id/homepage-update/talk%3Afwo-interview> ec:linkLabel "View talk" .
-<https://eliascrum.info/id/homepage-update/talk%3Afwo-interview> ec:order "18"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3Afwo-interview> ec:order "19"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/talk%3Afwo-interview> ec:referencesEntity <https://eliascrum.info/id/talk/fwo-interview> .
 <https://eliascrum.info/id/homepage-update/talk%3Afwo-interview> ec:summary "Funding interview pitch describing the PENGQUIN PhD vision, feasibility, and expected impact." .
 <https://eliascrum.info/id/homepage-update/talk%3Afwo-interview> ec:updateDate "2024-09-05"^^xsd:date .
@@ -1054,7 +1054,7 @@
 <https://eliascrum.info/id/homepage-update/talk%3Aisws-group-project-presentation> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/talk%3Aisws-group-project-presentation> ec:dateLabel "15 Jun 2024" .
 <https://eliascrum.info/id/homepage-update/talk%3Aisws-group-project-presentation> ec:linkLabel "View talk" .
-<https://eliascrum.info/id/homepage-update/talk%3Aisws-group-project-presentation> ec:order "19"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3Aisws-group-project-presentation> ec:order "20"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/talk%3Aisws-group-project-presentation> ec:referencesEntity <https://eliascrum.info/id/talk/isws-group-project-presentation> .
 <https://eliascrum.info/id/homepage-update/talk%3Aisws-group-project-presentation> ec:summary "Final group project presentation from ISWS 2024 highlighting design choices and implementation outcomes." .
 <https://eliascrum.info/id/homepage-update/talk%3Aisws-group-project-presentation> ec:updateDate "2024-06-15"^^xsd:date .
@@ -1062,11 +1062,23 @@
 <https://eliascrum.info/id/homepage-update/talk%3Aisws-group-project-presentation> rdf:type ec:HomepageUpdate .
 <https://eliascrum.info/id/homepage-update/talk%3Aisws-group-project-presentation> schema:name "International Semantic Web Summer School (ISWS) 2024: Group Project" .
 <https://eliascrum.info/id/homepage-update/talk%3Aisws-group-project-presentation> schema:url <https://eliascrum.info/talks/isws-group-project-presentation> .
+<https://eliascrum.info/id/homepage-update/talk%3Ametabolinkai> dcterms:identifier "talk:metabolinkai" .
+<https://eliascrum.info/id/homepage-update/talk%3Ametabolinkai> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
+<https://eliascrum.info/id/homepage-update/talk%3Ametabolinkai> ec:dateLabel "08 Oct 2026" .
+<https://eliascrum.info/id/homepage-update/talk%3Ametabolinkai> ec:linkLabel "View talk" .
+<https://eliascrum.info/id/homepage-update/talk%3Ametabolinkai> ec:order "2"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3Ametabolinkai> ec:referencesEntity <https://eliascrum.info/id/talk/metabolinkai> .
+<https://eliascrum.info/id/homepage-update/talk%3Ametabolinkai> ec:summary "Invited MetaboLinkAI presentation connecting the PENGQUIN PhD project with real-world SPARQL federation, the Ontology Companion Generator, and semantic representation of genomic variant data." .
+<https://eliascrum.info/id/homepage-update/talk%3Ametabolinkai> ec:updateDate "2026-10-08"^^xsd:date .
+<https://eliascrum.info/id/homepage-update/talk%3Ametabolinkai> ec:updateType "Talk" .
+<https://eliascrum.info/id/homepage-update/talk%3Ametabolinkai> rdf:type ec:HomepageUpdate .
+<https://eliascrum.info/id/homepage-update/talk%3Ametabolinkai> schema:name "MetaboLinkAI: From personal genomes to federated queries" .
+<https://eliascrum.info/id/homepage-update/talk%3Ametabolinkai> schema:url <https://eliascrum.info/talks/metabolinkai> .
 <https://eliascrum.info/id/homepage-update/talk%3Asib-researchstay-reflection> dcterms:identifier "talk:sib-researchstay-reflection" .
 <https://eliascrum.info/id/homepage-update/talk%3Asib-researchstay-reflection> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/talk%3Asib-researchstay-reflection> ec:dateLabel "15 May 2025" .
 <https://eliascrum.info/id/homepage-update/talk%3Asib-researchstay-reflection> ec:linkLabel "View talk" .
-<https://eliascrum.info/id/homepage-update/talk%3Asib-researchstay-reflection> ec:order "10"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3Asib-researchstay-reflection> ec:order "11"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/talk%3Asib-researchstay-reflection> ec:referencesEntity <https://eliascrum.info/id/talk/sib-researchstay-reflection> .
 <https://eliascrum.info/id/homepage-update/talk%3Asib-researchstay-reflection> ec:summary "Reflected on outcomes from the SIB research stay, including technical gains and collaboration opportunities." .
 <https://eliascrum.info/id/homepage-update/talk%3Asib-researchstay-reflection> ec:updateDate "2025-05-15"^^xsd:date .
@@ -1078,7 +1090,7 @@
 <https://eliascrum.info/id/homepage-update/talk%3Asib-vital-it-talk> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/talk%3Asib-vital-it-talk> ec:dateLabel "04 Apr 2025" .
 <https://eliascrum.info/id/homepage-update/talk%3Asib-vital-it-talk> ec:linkLabel "View talk" .
-<https://eliascrum.info/id/homepage-update/talk%3Asib-vital-it-talk> ec:order "12"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3Asib-vital-it-talk> ec:order "13"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/talk%3Asib-vital-it-talk> ec:referencesEntity <https://eliascrum.info/id/talk/sib-vital-it-talk> .
 <https://eliascrum.info/id/homepage-update/talk%3Asib-vital-it-talk> ec:summary "Reviewed client-side federated SPARQL strategies for combining private Solid pod data with public knowledge graphs." .
 <https://eliascrum.info/id/homepage-update/talk%3Asib-vital-it-talk> ec:updateDate "2025-04-04"^^xsd:date .
@@ -1090,7 +1102,7 @@
 <https://eliascrum.info/id/homepage-update/talk%3Asolid-intro-triple-consortium> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/talk%3Asolid-intro-triple-consortium> ec:dateLabel "10 Oct 2024" .
 <https://eliascrum.info/id/homepage-update/talk%3Asolid-intro-triple-consortium> ec:linkLabel "View talk" .
-<https://eliascrum.info/id/homepage-update/talk%3Asolid-intro-triple-consortium> ec:order "17"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3Asolid-intro-triple-consortium> ec:order "18"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/talk%3Asolid-intro-triple-consortium> ec:referencesEntity <https://eliascrum.info/id/talk/solid-intro-triple-consortium> .
 <https://eliascrum.info/id/homepage-update/talk%3Asolid-intro-triple-consortium> ec:summary "Introductory consortium session on Solid concepts, architecture, and relevance to TRIPLE project goals." .
 <https://eliascrum.info/id/homepage-update/talk%3Asolid-intro-triple-consortium> ec:updateDate "2024-10-10"^^xsd:date .
@@ -1102,7 +1114,7 @@
 <https://eliascrum.info/id/homepage-update/talk%3Asolidsymp-genomepods> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/talk%3Asolidsymp-genomepods> ec:dateLabel "02 Apr 2024" .
 <https://eliascrum.info/id/homepage-update/talk%3Asolidsymp-genomepods> ec:linkLabel "View talk" .
-<https://eliascrum.info/id/homepage-update/talk%3Asolidsymp-genomepods> ec:order "22"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3Asolidsymp-genomepods> ec:order "23"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/talk%3Asolidsymp-genomepods> ec:referencesEntity <https://eliascrum.info/id/talk/solidsymp-genomepods> .
 <https://eliascrum.info/id/homepage-update/talk%3Asolidsymp-genomepods> ec:summary "Explored how Solid pods can host and govern personal genomic data for privacy-preserving analytics." .
 <https://eliascrum.info/id/homepage-update/talk%3Asolidsymp-genomepods> ec:updateDate "2024-04-02"^^xsd:date .
@@ -1114,7 +1126,7 @@
 <https://eliascrum.info/id/homepage-update/talk%3Asosy2026> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/talk%3Asosy2026> ec:dateLabel "30 Apr 2026" .
 <https://eliascrum.info/id/homepage-update/talk%3Asosy2026> ec:linkLabel "View talk" .
-<https://eliascrum.info/id/homepage-update/talk%3Asosy2026> ec:order "3"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3Asosy2026> ec:order "4"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/talk%3Asosy2026> ec:referencesEntity <https://eliascrum.info/id/talk/sosy2026> .
 <https://eliascrum.info/id/homepage-update/talk%3Asosy2026> ec:summary "Demonstration of Solid Cockpit as a unified web interface for Solid Pods, integrating data management, privacy and access-control editing, notification support, and in-browser SPARQL data discovery." .
 <https://eliascrum.info/id/homepage-update/talk%3Asosy2026> ec:updateDate "2026-04-30"^^xsd:date .
@@ -1126,7 +1138,7 @@
 <https://eliascrum.info/id/homepage-update/talk%3Asphn-pengquin-talk> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/talk%3Asphn-pengquin-talk> ec:dateLabel "29 Apr 2025" .
 <https://eliascrum.info/id/homepage-update/talk%3Asphn-pengquin-talk> ec:linkLabel "View talk" .
-<https://eliascrum.info/id/homepage-update/talk%3Asphn-pengquin-talk> ec:order "11"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3Asphn-pengquin-talk> ec:order "12"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/talk%3Asphn-pengquin-talk> ec:referencesEntity <https://eliascrum.info/id/talk/sphn-pengquin-talk> .
 <https://eliascrum.info/id/homepage-update/talk%3Asphn-pengquin-talk> ec:summary "Introduced the PENGQUIN approach for privacy-aware clinical genomics integration using RDF and decentralized data pods." .
 <https://eliascrum.info/id/homepage-update/talk%3Asphn-pengquin-talk> ec:updateDate "2025-04-29"^^xsd:date .
@@ -1138,7 +1150,7 @@
 <https://eliascrum.info/id/homepage-update/talk%3Aswissprot-talk> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/talk%3Aswissprot-talk> ec:dateLabel "25 Mar 2025" .
 <https://eliascrum.info/id/homepage-update/talk%3Aswissprot-talk> ec:linkLabel "View talk" .
-<https://eliascrum.info/id/homepage-update/talk%3Aswissprot-talk> ec:order "13"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3Aswissprot-talk> ec:order "14"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/talk%3Aswissprot-talk> ec:referencesEntity <https://eliascrum.info/id/talk/swissprot-talk> .
 <https://eliascrum.info/id/homepage-update/talk%3Aswissprot-talk> ec:summary "Presented semantic integration opportunities between curated protein resources and decentralized query workflows." .
 <https://eliascrum.info/id/homepage-update/talk%3Aswissprot-talk> ec:updateDate "2025-03-25"^^xsd:date .
@@ -1150,7 +1162,7 @@
 <https://eliascrum.info/id/homepage-update/talk%3Augent-genomics-talk> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/homepage-update/talk%3Augent-genomics-talk> ec:dateLabel "04 Mar 2024" .
 <https://eliascrum.info/id/homepage-update/talk%3Augent-genomics-talk> ec:linkLabel "View talk" .
-<https://eliascrum.info/id/homepage-update/talk%3Augent-genomics-talk> ec:order "23"^^xsd:integer .
+<https://eliascrum.info/id/homepage-update/talk%3Augent-genomics-talk> ec:order "24"^^xsd:integer .
 <https://eliascrum.info/id/homepage-update/talk%3Augent-genomics-talk> ec:referencesEntity <https://eliascrum.info/id/talk/ugent-genomics-talk> .
 <https://eliascrum.info/id/homepage-update/talk%3Augent-genomics-talk> ec:summary "Foundational genomics overview tailored to computer science researchers entering health-data domains." .
 <https://eliascrum.info/id/homepage-update/talk%3Augent-genomics-talk> ec:updateDate "2024-03-04"^^xsd:date .
@@ -2136,12 +2148,18 @@
 <https://eliascrum.info/id/related-resource/poster/eswc-2026-print-4> rdf:type ec:RelatedResource .
 <https://eliascrum.info/id/related-resource/poster/eswc-2026-print-4> schema:name "Related Talk" .
 <https://eliascrum.info/id/related-resource/poster/eswc-2026-print-4> schema:url <https://eliascrum.info/talks/sosy2026> .
+<https://eliascrum.info/id/related-resource/talk-metadata/metabolinkai-1> rdf:type ec:RelatedResource .
+<https://eliascrum.info/id/related-resource/talk-metadata/metabolinkai-1> schema:name "MetaboLinkAI" .
+<https://eliascrum.info/id/related-resource/talk-metadata/metabolinkai-1> schema:url <https://www.metabolinkai.net/> .
 <https://eliascrum.info/id/related-resource/talk-metadata/sosy2026-1> rdf:type ec:RelatedResource .
 <https://eliascrum.info/id/related-resource/talk-metadata/sosy2026-1> schema:name "Related Software" .
 <https://eliascrum.info/id/related-resource/talk-metadata/sosy2026-1> schema:url <https://eliascrum.info/software/solid-cockpit> .
 <https://eliascrum.info/id/related-resource/talk-metadata/sosy2026-2> rdf:type ec:RelatedResource .
 <https://eliascrum.info/id/related-resource/talk-metadata/sosy2026-2> schema:name "Related Publication" .
 <https://eliascrum.info/id/related-resource/talk-metadata/sosy2026-2> schema:url <https://eliascrum.info/publications/solid-cockpit-eswc-2026-demo/paper> .
+<https://eliascrum.info/id/related-resource/talk/metabolinkai-1> rdf:type ec:RelatedResource .
+<https://eliascrum.info/id/related-resource/talk/metabolinkai-1> schema:name "MetaboLinkAI" .
+<https://eliascrum.info/id/related-resource/talk/metabolinkai-1> schema:url <https://www.metabolinkai.net/> .
 <https://eliascrum.info/id/related-resource/talk/sosy2026-1> rdf:type ec:RelatedResource .
 <https://eliascrum.info/id/related-resource/talk/sosy2026-1> schema:name "Related Software" .
 <https://eliascrum.info/id/related-resource/talk/sosy2026-1> schema:url <https://eliascrum.info/software/solid-cockpit> .
@@ -2675,6 +2693,11 @@
 <https://eliascrum.info/id/tag/topic/ontology-engineering-91402f49> rdf:type ec:Tag .
 <https://eliascrum.info/id/tag/topic/ontology-engineering-91402f49> rdf:type ec:TopicTag .
 <https://eliascrum.info/id/tag/topic/ontology-engineering-91402f49> skos:prefLabel "Ontology Engineering" .
+<https://eliascrum.info/id/tag/topic/ontology-tooling-22940030> ec:isDeclaredOption "false"^^xsd:boolean .
+<https://eliascrum.info/id/tag/topic/ontology-tooling-22940030> ec:tagKind "topic" .
+<https://eliascrum.info/id/tag/topic/ontology-tooling-22940030> rdf:type ec:Tag .
+<https://eliascrum.info/id/tag/topic/ontology-tooling-22940030> rdf:type ec:TopicTag .
+<https://eliascrum.info/id/tag/topic/ontology-tooling-22940030> skos:prefLabel "Ontology Tooling" .
 <https://eliascrum.info/id/tag/topic/permissions-db301a42> ec:isDeclaredOption "false"^^xsd:boolean .
 <https://eliascrum.info/id/tag/topic/permissions-db301a42> ec:tagKind "topic" .
 <https://eliascrum.info/id/tag/topic/permissions-db301a42> rdf:type ec:Tag .
@@ -2721,6 +2744,11 @@
 <https://eliascrum.info/id/tag/topic/sparql-2bbe668b> rdf:type ec:Tag .
 <https://eliascrum.info/id/tag/topic/sparql-2bbe668b> rdf:type ec:TopicTag .
 <https://eliascrum.info/id/tag/topic/sparql-2bbe668b> skos:prefLabel "SPARQL" .
+<https://eliascrum.info/id/tag/topic/sparql-federation-019aa1ed> ec:isDeclaredOption "false"^^xsd:boolean .
+<https://eliascrum.info/id/tag/topic/sparql-federation-019aa1ed> ec:tagKind "topic" .
+<https://eliascrum.info/id/tag/topic/sparql-federation-019aa1ed> rdf:type ec:Tag .
+<https://eliascrum.info/id/tag/topic/sparql-federation-019aa1ed> rdf:type ec:TopicTag .
+<https://eliascrum.info/id/tag/topic/sparql-federation-019aa1ed> skos:prefLabel "SPARQL Federation" .
 <https://eliascrum.info/id/tag/topic/taxonomy-c11bd9fd> ec:isDeclaredOption "false"^^xsd:boolean .
 <https://eliascrum.info/id/tag/topic/taxonomy-c11bd9fd> ec:tagKind "topic" .
 <https://eliascrum.info/id/tag/topic/taxonomy-c11bd9fd> rdf:type ec:Tag .
@@ -2783,6 +2811,11 @@
 <https://eliascrum.info/id/tag/venue/internal-meeting-5fbf8539> rdf:type ec:Tag .
 <https://eliascrum.info/id/tag/venue/internal-meeting-5fbf8539> rdf:type ec:VenueTag .
 <https://eliascrum.info/id/tag/venue/internal-meeting-5fbf8539> skos:prefLabel "Internal Meeting" .
+<https://eliascrum.info/id/tag/venue/invited-talk-d32a584f> ec:isDeclaredOption "false"^^xsd:boolean .
+<https://eliascrum.info/id/tag/venue/invited-talk-d32a584f> ec:tagKind "venue" .
+<https://eliascrum.info/id/tag/venue/invited-talk-d32a584f> rdf:type ec:Tag .
+<https://eliascrum.info/id/tag/venue/invited-talk-d32a584f> rdf:type ec:VenueTag .
+<https://eliascrum.info/id/tag/venue/invited-talk-d32a584f> skos:prefLabel "Invited Talk" .
 <https://eliascrum.info/id/tag/venue/iswc-3b0d70a6> ec:isDeclaredOption "false"^^xsd:boolean .
 <https://eliascrum.info/id/tag/venue/iswc-3b0d70a6> ec:tagKind "venue" .
 <https://eliascrum.info/id/tag/venue/iswc-3b0d70a6> rdf:type ec:Tag .
@@ -2803,6 +2836,11 @@
 <https://eliascrum.info/id/tag/venue/knows-day-41991c51> rdf:type ec:Tag .
 <https://eliascrum.info/id/tag/venue/knows-day-41991c51> rdf:type ec:VenueTag .
 <https://eliascrum.info/id/tag/venue/knows-day-41991c51> skos:prefLabel "KNoWS Day" .
+<https://eliascrum.info/id/tag/venue/metabolinkai-e4b7ec89> ec:isDeclaredOption "false"^^xsd:boolean .
+<https://eliascrum.info/id/tag/venue/metabolinkai-e4b7ec89> ec:tagKind "venue" .
+<https://eliascrum.info/id/tag/venue/metabolinkai-e4b7ec89> rdf:type ec:Tag .
+<https://eliascrum.info/id/tag/venue/metabolinkai-e4b7ec89> rdf:type ec:VenueTag .
+<https://eliascrum.info/id/tag/venue/metabolinkai-e4b7ec89> skos:prefLabel "MetaboLinkAI" .
 <https://eliascrum.info/id/tag/venue/non-academic-event-3e10eea3> ec:isDeclaredOption "false"^^xsd:boolean .
 <https://eliascrum.info/id/tag/venue/non-academic-event-3e10eea3> ec:isDeclaredOption "true"^^xsd:boolean .
 <https://eliascrum.info/id/tag/venue/non-academic-event-3e10eea3> ec:tagKind "venue" .
@@ -2835,6 +2873,11 @@
 <https://eliascrum.info/id/tag/venue/symposium-6b20fa11> rdf:type ec:Tag .
 <https://eliascrum.info/id/tag/venue/symposium-6b20fa11> rdf:type ec:VenueTag .
 <https://eliascrum.info/id/tag/venue/symposium-6b20fa11> skos:prefLabel "Symposium" .
+<https://eliascrum.info/id/tag/venue/virtual-meeting-2065090d> ec:isDeclaredOption "false"^^xsd:boolean .
+<https://eliascrum.info/id/tag/venue/virtual-meeting-2065090d> ec:tagKind "venue" .
+<https://eliascrum.info/id/tag/venue/virtual-meeting-2065090d> rdf:type ec:Tag .
+<https://eliascrum.info/id/tag/venue/virtual-meeting-2065090d> rdf:type ec:VenueTag .
+<https://eliascrum.info/id/tag/venue/virtual-meeting-2065090d> skos:prefLabel "Virtual Meeting" .
 <https://eliascrum.info/id/tag/venue/wikidata-workshop-at-iswc-2025-5227e1fd> ec:isDeclaredOption "false"^^xsd:boolean .
 <https://eliascrum.info/id/tag/venue/wikidata-workshop-at-iswc-2025-5227e1fd> ec:tagKind "venue" .
 <https://eliascrum.info/id/tag/venue/wikidata-workshop-at-iswc-2025-5227e1fd> rdf:type ec:Tag .
@@ -2944,6 +2987,30 @@
 <https://eliascrum.info/id/talk-metadata/isws-group-project-presentation> ec:summary "Final group project presentation from ISWS 2024 highlighting design choices and implementation outcomes." .
 <https://eliascrum.info/id/talk-metadata/isws-group-project-presentation> rdf:type ec:TalkMetadata .
 <https://eliascrum.info/id/talk-metadata/isws-group-project-presentation> schema:name "International Semantic Web Summer School (ISWS) 2024: Group Project" .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:abstract "This invited presentation for a MetaboLinkAI virtual meeting connects four strands of work on making life-science data more usable. It introduces PENGQUIN and its approach to privacy-aware storage, linking, and querying of personal genomic data, then examines SPARQL federation across real public endpoints. It also presents the Ontology Companion Generator for producing browsable ontology documentation and the conversion of VCF genomic variant files into linked, queryable RDF." .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:audienceExpertise "An interdisciplinary life-science audience interested in semantic data integration and querying." .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:audienceSizeApprox "9"^^xsd:integer .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:audienceSizeEstimate "Approx. 8–10 attendees" .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:date "2026-10-08"^^xsd:date .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:description "Invited MetaboLinkAI presentation connecting the PENGQUIN PhD project with real-world SPARQL federation, the Ontology Companion Generator, and semantic representation of genomic variant data." .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:durationMinutes "90"^^xsd:integer .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:forTalk <https://eliascrum.info/id/talk/metabolinkai> .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:goal "Share how semantic web methods and practical tooling can support interoperable, privacy-aware life-science data and federated querying." .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:hasAudienceGroupTag <https://eliascrum.info/id/tag/audience-group/interdisciplinary-researchers-2e688a52> .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:hasRelatedResource <https://eliascrum.info/id/related-resource/talk-metadata/metabolinkai-1> .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:hasTopicTag <https://eliascrum.info/id/tag/topic/bioinformatics-c3c9b51f> .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:hasTopicTag <https://eliascrum.info/id/tag/topic/data-privacy-21d7a0e8> .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:hasTopicTag <https://eliascrum.info/id/tag/topic/genomics-b19f4ebd> .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:hasTopicTag <https://eliascrum.info/id/tag/topic/ontology-tooling-22940030> .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:hasTopicTag <https://eliascrum.info/id/tag/topic/semantic-web-501ff810> .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:hasTopicTag <https://eliascrum.info/id/tag/topic/sparql-federation-019aa1ed> .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:hasVenueTag <https://eliascrum.info/id/tag/venue/invited-talk-d32a584f> .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:hasVenueTag <https://eliascrum.info/id/tag/venue/metabolinkai-e4b7ec89> .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:hasVenueTag <https://eliascrum.info/id/tag/venue/virtual-meeting-2065090d> .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> ec:summary "Invited MetaboLinkAI presentation connecting the PENGQUIN PhD project with real-world SPARQL federation, the Ontology Companion Generator, and semantic representation of genomic variant data." .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> rdf:type ec:TalkMetadata .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> schema:embedUrl <https://ecrum19.github.io/MetaboLinkAI-Slides/?full#title> .
+<https://eliascrum.info/id/talk-metadata/metabolinkai> schema:name "MetaboLinkAI: From personal genomes to federated queries" .
 <https://eliascrum.info/id/talk-metadata/sib-researchstay-reflection> ec:abstract "This reflection talk synthesized the primary outcomes of a focused research stay, including prototype results, methodological lessons, and areas for follow-up collaboration. I discussed what approaches translated well into practice and what bottlenecks remained when integrating decentralized data and federation tooling. The presentation also mapped concrete next steps into the broader PhD research timeline." .
 <https://eliascrum.info/id/talk-metadata/sib-researchstay-reflection> ec:audienceExpertise "UGent ID-Lab researchers and colleagues." .
 <https://eliascrum.info/id/talk-metadata/sib-researchstay-reflection> ec:audienceSizeApprox "20"^^xsd:integer .
@@ -3112,6 +3179,7 @@
 <https://eliascrum.info/id/talk/18m-vito-internal-jury> ec:sourceTitle "EDC 18m VITO Jury" .
 <https://eliascrum.info/id/talk/18m-vito-internal-jury> ec:summary "Internal PhD milestone review covering completed work, validation status, and the next research phase." .
 <https://eliascrum.info/id/talk/18m-vito-internal-jury> rdf:type ec:Talk .
+<https://eliascrum.info/id/talk/18m-vito-internal-jury> schema:encodingFormat "application/pdf" .
 <https://eliascrum.info/id/talk/18m-vito-internal-jury> schema:name "18-Month Internal VITO PhD Jury" .
 <https://eliascrum.info/id/talk/18m-vito-internal-jury> schema:url <https://eliascrum.info/talks/slides/18m-vito-internal-jury.pdf> .
 <https://eliascrum.info/id/talk/dph-day-talk> dcterms:identifier "dph-day-talk" .
@@ -3140,6 +3208,7 @@
 <https://eliascrum.info/id/talk/dph-day-talk> ec:sourceTitle "EDC DPH 25" .
 <https://eliascrum.info/id/talk/dph-day-talk> ec:summary "Presented progress on decentralized clinical-genomics workflows and interoperability priorities in precision health." .
 <https://eliascrum.info/id/talk/dph-day-talk> rdf:type ec:Talk .
+<https://eliascrum.info/id/talk/dph-day-talk> schema:encodingFormat "application/pdf" .
 <https://eliascrum.info/id/talk/dph-day-talk> schema:name "Digital Precision Health Day" .
 <https://eliascrum.info/id/talk/dph-day-talk> schema:url <https://eliascrum.info/talks/slides/dph-day-talk.pdf> .
 <https://eliascrum.info/id/talk/edc-knows-26> dcterms:identifier "edc-knows-26" .
@@ -3169,6 +3238,7 @@
 <https://eliascrum.info/id/talk/edc-knows-26> ec:sourceTitle "EDC KNoWS 26" .
 <https://eliascrum.info/id/talk/edc-knows-26> ec:summary "KNoWS Day presentation outlining how semantic representations can improve genomic-data interoperability, privacy-aware access control, and federated querying in healthcare settings." .
 <https://eliascrum.info/id/talk/edc-knows-26> rdf:type ec:Talk .
+<https://eliascrum.info/id/talk/edc-knows-26> schema:encodingFormat "application/pdf" .
 <https://eliascrum.info/id/talk/edc-knows-26> schema:name "Genomic Data, Healthcare, and the Semantic Web" .
 <https://eliascrum.info/id/talk/edc-knows-26> schema:url <https://eliascrum.info/talks/slides/edc-knows-26.pdf> .
 <https://eliascrum.info/id/talk/eswc-phdsymp-pangquin> dcterms:identifier "eswc-phdsymp-pangquin" .
@@ -3202,6 +3272,7 @@
 <https://eliascrum.info/id/talk/eswc-phdsymp-pangquin> ec:sourceTitle "PENGQUIN ESWC 2024" .
 <https://eliascrum.info/id/talk/eswc-phdsymp-pangquin> ec:summary "PhD symposium talk on the PENGQUIN research agenda for decentralized and policy-aware genomic data use." .
 <https://eliascrum.info/id/talk/eswc-phdsymp-pangquin> rdf:type ec:Talk .
+<https://eliascrum.info/id/talk/eswc-phdsymp-pangquin> schema:encodingFormat "application/pdf" .
 <https://eliascrum.info/id/talk/eswc-phdsymp-pangquin> schema:name "ESWC - PhD Symposium" .
 <https://eliascrum.info/id/talk/eswc-phdsymp-pangquin> schema:url <https://eliascrum.info/talks/slides/eswc-phdsymp-pangquin.pdf> .
 <https://eliascrum.info/id/talk/fwo-interview> dcterms:identifier "fwo-interview" .
@@ -3232,6 +3303,7 @@
 <https://eliascrum.info/id/talk/fwo-interview> ec:sourceTitle "FWO24 Pitch EDC(Official)" .
 <https://eliascrum.info/id/talk/fwo-interview> ec:summary "Funding interview pitch describing the PENGQUIN PhD vision, feasibility, and expected impact." .
 <https://eliascrum.info/id/talk/fwo-interview> rdf:type ec:Talk .
+<https://eliascrum.info/id/talk/fwo-interview> schema:encodingFormat "application/pdf" .
 <https://eliascrum.info/id/talk/fwo-interview> schema:name "FWO Interview" .
 <https://eliascrum.info/id/talk/fwo-interview> schema:url <https://eliascrum.info/talks/slides/fwo-interview.pdf> .
 <https://eliascrum.info/id/talk/isws-group-project-presentation> dcterms:identifier "isws-group-project-presentation" .
@@ -3261,8 +3333,44 @@
 <https://eliascrum.info/id/talk/isws-group-project-presentation> ec:sourceTitle "ISWS2024 Slytherin Presentation" .
 <https://eliascrum.info/id/talk/isws-group-project-presentation> ec:summary "Final group project presentation from ISWS 2024 highlighting design choices and implementation outcomes." .
 <https://eliascrum.info/id/talk/isws-group-project-presentation> rdf:type ec:Talk .
+<https://eliascrum.info/id/talk/isws-group-project-presentation> schema:encodingFormat "application/pdf" .
 <https://eliascrum.info/id/talk/isws-group-project-presentation> schema:name "International Semantic Web Summer School (ISWS) 2024: Group Project" .
 <https://eliascrum.info/id/talk/isws-group-project-presentation> schema:url <https://eliascrum.info/talks/slides/isws-group-project-presentation.pdf> .
+<https://eliascrum.info/id/talk/metabolinkai> dcterms:identifier "metabolinkai" .
+<https://eliascrum.info/id/talk/metabolinkai> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
+<https://eliascrum.info/id/talk/metabolinkai> ec:audienceExpertise "An interdisciplinary life-science audience interested in semantic data integration and querying." .
+<https://eliascrum.info/id/talk/metabolinkai> ec:audienceSizeApprox "9"^^xsd:integer .
+<https://eliascrum.info/id/talk/metabolinkai> ec:audienceSizeCategory "Small" .
+<https://eliascrum.info/id/talk/metabolinkai> ec:audienceSizeEstimate "Approx. 8–10 attendees" .
+<https://eliascrum.info/id/talk/metabolinkai> ec:description "This invited presentation for a MetaboLinkAI virtual meeting connects four strands of work on making life-science data more usable. It introduces PENGQUIN and its approach to privacy-aware storage, linking, and querying of personal genomic data, then examines SPARQL federation across real public endpoints. It also presents the Ontology Companion Generator for producing browsable ontology documentation and the conversion of VCF genomic variant files into linked, queryable RDF." .
+<https://eliascrum.info/id/talk/metabolinkai> ec:displayDate "2026-10-08"^^xsd:date .
+<https://eliascrum.info/id/talk/metabolinkai> ec:displayDateLabel "08/10/2026" .
+<https://eliascrum.info/id/talk/metabolinkai> ec:durationCategory "Long" .
+<https://eliascrum.info/id/talk/metabolinkai> ec:durationMinutes "90"^^xsd:integer .
+<https://eliascrum.info/id/talk/metabolinkai> ec:goal "Share how semantic web methods and practical tooling can support interoperable, privacy-aware life-science data and federated querying." .
+<https://eliascrum.info/id/talk/metabolinkai> ec:hasAudienceGroupTag <https://eliascrum.info/id/tag/audience-group/interdisciplinary-researchers-2e688a52> .
+<https://eliascrum.info/id/talk/metabolinkai> ec:hasAudienceSizeTag <https://eliascrum.info/id/tag/audience-size/small-10ac854a> .
+<https://eliascrum.info/id/talk/metabolinkai> ec:hasRelatedResource <https://eliascrum.info/id/related-resource/talk/metabolinkai-1> .
+<https://eliascrum.info/id/talk/metabolinkai> ec:hasTopicTag <https://eliascrum.info/id/tag/topic/bioinformatics-c3c9b51f> .
+<https://eliascrum.info/id/talk/metabolinkai> ec:hasTopicTag <https://eliascrum.info/id/tag/topic/data-privacy-21d7a0e8> .
+<https://eliascrum.info/id/talk/metabolinkai> ec:hasTopicTag <https://eliascrum.info/id/tag/topic/genomics-b19f4ebd> .
+<https://eliascrum.info/id/talk/metabolinkai> ec:hasTopicTag <https://eliascrum.info/id/tag/topic/ontology-tooling-22940030> .
+<https://eliascrum.info/id/talk/metabolinkai> ec:hasTopicTag <https://eliascrum.info/id/tag/topic/semantic-web-501ff810> .
+<https://eliascrum.info/id/talk/metabolinkai> ec:hasTopicTag <https://eliascrum.info/id/tag/topic/sparql-federation-019aa1ed> .
+<https://eliascrum.info/id/talk/metabolinkai> ec:hasVenueTag <https://eliascrum.info/id/tag/venue/invited-talk-d32a584f> .
+<https://eliascrum.info/id/talk/metabolinkai> ec:hasVenueTag <https://eliascrum.info/id/tag/venue/metabolinkai-e4b7ec89> .
+<https://eliascrum.info/id/talk/metabolinkai> ec:hasVenueTag <https://eliascrum.info/id/tag/venue/virtual-meeting-2065090d> .
+<https://eliascrum.info/id/talk/metabolinkai> ec:slidePath "https://ecrum19.github.io/MetaboLinkAI-Slides/" .
+<https://eliascrum.info/id/talk/metabolinkai> ec:sourceDate "2026-10-08"^^xsd:date .
+<https://eliascrum.info/id/talk/metabolinkai> ec:sourceDateLabel "08/10/2026" .
+<https://eliascrum.info/id/talk/metabolinkai> ec:sourceFile "https://ecrum19.github.io/MetaboLinkAI-Slides/" .
+<https://eliascrum.info/id/talk/metabolinkai> ec:sourceTitle "From personal genomes to federated queries" .
+<https://eliascrum.info/id/talk/metabolinkai> ec:summary "Invited MetaboLinkAI presentation connecting the PENGQUIN PhD project with real-world SPARQL federation, the Ontology Companion Generator, and semantic representation of genomic variant data." .
+<https://eliascrum.info/id/talk/metabolinkai> rdf:type ec:Talk .
+<https://eliascrum.info/id/talk/metabolinkai> schema:embedUrl <https://ecrum19.github.io/MetaboLinkAI-Slides/?full#title> .
+<https://eliascrum.info/id/talk/metabolinkai> schema:encodingFormat "text/html" .
+<https://eliascrum.info/id/talk/metabolinkai> schema:name "MetaboLinkAI: From personal genomes to federated queries" .
+<https://eliascrum.info/id/talk/metabolinkai> schema:url <https://ecrum19.github.io/MetaboLinkAI-Slides/> .
 <https://eliascrum.info/id/talk/sib-researchstay-reflection> dcterms:identifier "sib-researchstay-reflection" .
 <https://eliascrum.info/id/talk/sib-researchstay-reflection> dcterms:isPartOf <https://eliascrum.info/id/dataset/website> .
 <https://eliascrum.info/id/talk/sib-researchstay-reflection> ec:audienceExpertise "UGent ID-Lab researchers and colleagues." .
@@ -3289,6 +3397,7 @@
 <https://eliascrum.info/id/talk/sib-researchstay-reflection> ec:sourceTitle "SIB ReflectionUGent" .
 <https://eliascrum.info/id/talk/sib-researchstay-reflection> ec:summary "Reflected on outcomes from the SIB research stay, including technical gains and collaboration opportunities." .
 <https://eliascrum.info/id/talk/sib-researchstay-reflection> rdf:type ec:Talk .
+<https://eliascrum.info/id/talk/sib-researchstay-reflection> schema:encodingFormat "application/pdf" .
 <https://eliascrum.info/id/talk/sib-researchstay-reflection> schema:name "SIB Research Stay Reflection" .
 <https://eliascrum.info/id/talk/sib-researchstay-reflection> schema:url <https://eliascrum.info/talks/slides/sib-researchstay-reflection.pdf> .
 <https://eliascrum.info/id/talk/sib-vital-it-talk> dcterms:identifier "sib-vital-it-talk" .
@@ -3318,6 +3427,7 @@
 <https://eliascrum.info/id/talk/sib-vital-it-talk> ec:sourceTitle "Vital IT EDC 040425" .
 <https://eliascrum.info/id/talk/sib-vital-it-talk> ec:summary "Reviewed client-side federated SPARQL strategies for combining private Solid pod data with public knowledge graphs." .
 <https://eliascrum.info/id/talk/sib-vital-it-talk> rdf:type ec:Talk .
+<https://eliascrum.info/id/talk/sib-vital-it-talk> schema:encodingFormat "application/pdf" .
 <https://eliascrum.info/id/talk/sib-vital-it-talk> schema:name "SIB Vital-IT" .
 <https://eliascrum.info/id/talk/sib-vital-it-talk> schema:url <https://eliascrum.info/talks/slides/sib-vital-it-talk.pdf> .
 <https://eliascrum.info/id/talk/solid-intro-triple-consortium> dcterms:identifier "solid-intro-triple-consortium" .
@@ -3345,6 +3455,7 @@
 <https://eliascrum.info/id/talk/solid-intro-triple-consortium> ec:sourceTitle "Solid Intro TRIPLE" .
 <https://eliascrum.info/id/talk/solid-intro-triple-consortium> ec:summary "Introductory consortium session on Solid concepts, architecture, and relevance to TRIPLE project goals." .
 <https://eliascrum.info/id/talk/solid-intro-triple-consortium> rdf:type ec:Talk .
+<https://eliascrum.info/id/talk/solid-intro-triple-consortium> schema:encodingFormat "application/pdf" .
 <https://eliascrum.info/id/talk/solid-intro-triple-consortium> schema:name "TRIPLE Consortium: Intro to Solid" .
 <https://eliascrum.info/id/talk/solid-intro-triple-consortium> schema:url <https://eliascrum.info/talks/slides/solid-intro-triple-consortium.pdf> .
 <https://eliascrum.info/id/talk/solidsymp-genomepods> dcterms:identifier "solidsymp-genomepods" .
@@ -3374,6 +3485,7 @@
 <https://eliascrum.info/id/talk/solidsymp-genomepods> ec:sourceTitle "SolidSymp2024 EDC" .
 <https://eliascrum.info/id/talk/solidsymp-genomepods> ec:summary "Explored how Solid pods can host and govern personal genomic data for privacy-preserving analytics." .
 <https://eliascrum.info/id/talk/solidsymp-genomepods> rdf:type ec:Talk .
+<https://eliascrum.info/id/talk/solidsymp-genomepods> schema:encodingFormat "application/pdf" .
 <https://eliascrum.info/id/talk/solidsymp-genomepods> schema:name "Solid Symposium" .
 <https://eliascrum.info/id/talk/solidsymp-genomepods> schema:url <https://eliascrum.info/talks/slides/solidsymp-genomepods.pdf> .
 <https://eliascrum.info/id/talk/sosy2026> dcterms:identifier "sosy2026" .
@@ -3412,6 +3524,7 @@
 <https://eliascrum.info/id/talk/sosy2026> ec:summary "Demonstration of Solid Cockpit as a unified web interface for Solid Pods, integrating data management, privacy and access-control editing, notification support, and in-browser SPARQL data discovery." .
 <https://eliascrum.info/id/talk/sosy2026> rdf:type ec:Talk .
 <https://eliascrum.info/id/talk/sosy2026> schema:embedUrl <https://docs.google.com/presentation/d/e/2PACX-1vSpl7vZPFJZhowI5LQCYgmOvjPNfESqYIHMaNdDlcJdYKvoS9PH-Fz-NWBVPwTbGmnpGbfciYG0SJDc/pubembed?start=false&loop=false&delayms=3000> .
+<https://eliascrum.info/id/talk/sosy2026> schema:encodingFormat "application/pdf" .
 <https://eliascrum.info/id/talk/sosy2026> schema:name "Solid Cockpit" .
 <https://eliascrum.info/id/talk/sosy2026> schema:url <https://eliascrum.info/talks/slides/sosy2026.pdf> .
 <https://eliascrum.info/id/talk/sphn-pengquin-talk> dcterms:identifier "sphn-pengquin-talk" .
@@ -3442,6 +3555,7 @@
 <https://eliascrum.info/id/talk/sphn-pengquin-talk> ec:sourceTitle "SPHN 290425" .
 <https://eliascrum.info/id/talk/sphn-pengquin-talk> ec:summary "Introduced the PENGQUIN approach for privacy-aware clinical genomics integration using RDF and decentralized data pods." .
 <https://eliascrum.info/id/talk/sphn-pengquin-talk> rdf:type ec:Talk .
+<https://eliascrum.info/id/talk/sphn-pengquin-talk> schema:encodingFormat "application/pdf" .
 <https://eliascrum.info/id/talk/sphn-pengquin-talk> schema:name "Swiss Public Health Network (SPHN)" .
 <https://eliascrum.info/id/talk/sphn-pengquin-talk> schema:url <https://eliascrum.info/talks/slides/sphn-pengquin-talk.pdf> .
 <https://eliascrum.info/id/talk/swissprot-talk> dcterms:identifier "swissprot-talk" .
@@ -3470,6 +3584,7 @@
 <https://eliascrum.info/id/talk/swissprot-talk> ec:sourceTitle "SwissProt" .
 <https://eliascrum.info/id/talk/swissprot-talk> ec:summary "Presented semantic integration opportunities between curated protein resources and decentralized query workflows." .
 <https://eliascrum.info/id/talk/swissprot-talk> rdf:type ec:Talk .
+<https://eliascrum.info/id/talk/swissprot-talk> schema:encodingFormat "application/pdf" .
 <https://eliascrum.info/id/talk/swissprot-talk> schema:name "SIB / SwissProt" .
 <https://eliascrum.info/id/talk/swissprot-talk> schema:url <https://eliascrum.info/talks/slides/swissprot-talk.pdf> .
 <https://eliascrum.info/id/talk/ugent-genomics-talk> dcterms:identifier "ugent-genomics-talk" .
@@ -3498,5 +3613,6 @@
 <https://eliascrum.info/id/talk/ugent-genomics-talk> ec:sourceTitle "UGent PENGQUIN Intro" .
 <https://eliascrum.info/id/talk/ugent-genomics-talk> ec:summary "Foundational genomics overview tailored to computer science researchers entering health-data domains." .
 <https://eliascrum.info/id/talk/ugent-genomics-talk> rdf:type ec:Talk .
+<https://eliascrum.info/id/talk/ugent-genomics-talk> schema:encodingFormat "application/pdf" .
 <https://eliascrum.info/id/talk/ugent-genomics-talk> schema:name "KNoWS: An Intro to Genomics for Computer Scientists" .
 <https://eliascrum.info/id/talk/ugent-genomics-talk> schema:url <https://eliascrum.info/talks/slides/ugent-genomics-talk.pdf> .
