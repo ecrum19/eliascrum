@@ -157,7 +157,7 @@ function hydrateTalkEntry(talk: TalkEntry): TalkViewEntry {
       : DEFAULT_AUDIENCE_SIZE_APPROX
   );
   const audienceSizeCategory = audienceSizeCategoryFromApprox(audienceSizeApprox);
-  const audienceSizeEstimate = `Approx. ${audienceSizeApprox} attendees`;
+  const audienceSizeEstimate = meta?.audienceSizeEstimate ?? `Approx. ${audienceSizeApprox} attendees`;
 
   return {
     ...talk,
@@ -165,7 +165,7 @@ function hydrateTalkEntry(talk: TalkEntry): TalkViewEntry {
     displayDateIso,
     displayDateLabel,
     displayDateDetailedLabel,
-    slideEmbedUrl: meta?.slideEmbedUrl,
+    slideEmbedUrl: meta?.slideEmbedUrl ?? (talk.slideFormat === "html" ? talk.slidePath : undefined),
     summary,
     abstract,
     goal,

@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-06T15:01:03.546Z",
+  "generatedAt": "2026-10-08T12:47:07.438Z",
   "baseIri": "https://eliascrum.info/",
   "datasetUrl": "https://eliascrum.info/recent_work.json",
   "sparqlGraphUrl": "https://eliascrum.info/recent_work.ttl",
-  "totalItems": 45,
+  "totalItems": 46,
   "recentWork": [
     {
       "id": "Publication:real-world-federation-iswc-2026",
@@ -22,6 +22,31 @@
       "summary": "Presents an 18-month longitudinal study of 67 real-world federated biological SPARQL queries over more than 20 public endpoints, and shows that a) execution success declines over time with very few queries functional by June 2026, b) current algorithmic federation approaches perform substantially worse than manual federation, and c) work is needed to assess how to enable federation over public endpoints in the age of the LLM.",
       "url": "https://eliascrum.info/publications/real-world-federation-iswc-2026/paper",
       "itemUrl": "https://eliascrum.info/publications/real-world-federation-iswc-2026/paper"
+    },
+    {
+      "id": "Talk:metabolinkai",
+      "type": "Talk",
+      "title": "MetaboLinkAI: From personal genomes to federated queries",
+      "tags": [
+        "Invited Talk",
+        "MetaboLinkAI",
+        "Virtual Meeting",
+        "Semantic Web",
+        "Bioinformatics",
+        "Genomics",
+        "SPARQL Federation",
+        "Ontology Tooling",
+        "Data Privacy",
+        "Interdisciplinary Researchers",
+        "Long",
+        "Small"
+      ],
+      "slug": "metabolinkai",
+      "dateIso": "2026-10-08",
+      "summary": "Invited MetaboLinkAI presentation connecting the PENGQUIN PhD project with real-world SPARQL federation, the Ontology Companion Generator, and semantic representation of genomic variant data.",
+      "url": "https://eliascrum.info/talks/metabolinkai",
+      "sourceUrl": "https://ecrum19.github.io/MetaboLinkAI-Slides/",
+      "itemUrl": "https://eliascrum.info/talks/metabolinkai"
     },
     {
       "id": "Publication:solid-cockpit-eswc-2026-demo",

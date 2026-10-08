@@ -267,8 +267,16 @@
                     >
                       {{ isPreviewOpen(item.id) ? "Hide Preview" : "Show Preview" }}
                     </button>
+                    <iframe
+                      v-if="isPreviewOpen(item.id) && item.previewEmbedUrl"
+                      :src="item.previewEmbedUrl"
+                      :title="`${item.displayTitle} — slide preview`"
+                      class="talk-preview-frame"
+                      loading="lazy"
+                      allowfullscreen
+                    ></iframe>
                     <object
-                      v-if="isPreviewOpen(item.id)"
+                      v-else-if="isPreviewOpen(item.id)"
                       :data="`${item.previewPath}#page=1&zoom=page-fit`"
                       type="application/pdf"
                       class="talk-preview-frame"
@@ -506,6 +514,7 @@ interface CatalogEntry {
   secondaryPosterPath?: string;
   relatedPublicationLinks: ResolvedPublicationLink[];
   previewPath: string;
+  previewEmbedUrl?: string;
 }
 
 interface WorkTocEntry {
@@ -610,12 +619,13 @@ export default defineComponent({
         materialTag: "Slides",
         detailRoute: `/talks/${talk.slug}`,
         primaryPath: resolvePublicAssetPath(talk.slidePath),
-        primaryActionLabel: "Open Slides PDF",
+        primaryActionLabel: talk.slideFormat === "html" ? "Open HTML Slides" : "Open Slides PDF",
         secondaryPosterPath: talk.posterPath
           ? resolvePublicAssetPath(talk.posterPath)
           : undefined,
         relatedPublicationLinks: getRelatedPublicationLinksForTalkSlug(talk.slug),
         previewPath: resolvePublicAssetPath(talk.slidePath),
+        previewEmbedUrl: talk.slideFormat === "html" ? talk.slideEmbedUrl : undefined,
       }));
 
       return [...slideEntries, ...this.posterEntries];

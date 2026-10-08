@@ -22,9 +22,9 @@
                 :rel="linkRel(slideEmbedUrl)"
                 class="action-btn btn-external"
               >
-                Open Google Slides
+                {{ talk.slideFormat === "html" ? "Open HTML Slides" : "Open Google Slides" }}
               </a>
-              <a :href="slidePdfUrl" class="action-btn btn-pdf">
+              <a v-if="slidePdfUrl" :href="slidePdfUrl" class="action-btn btn-pdf">
                 Open Slides PDF
               </a>
               <a
@@ -82,6 +82,7 @@
               <iframe
                 class="slide-embed-frame"
                 :src="slideEmbedUrl"
+                :title="`${talk.displayTitle} — slide presentation`"
                 frameborder="0"
                 allowfullscreen="true"
                 mozallowfullscreen="true"
@@ -358,7 +359,9 @@ export default defineComponent({
       return rows;
     },
     slidePdfUrl(): string {
-      return this.talk ? resolvePublicAssetPath(this.talk.slidePath) : "";
+      return this.talk && this.talk.slideFormat !== "html"
+        ? resolvePublicAssetPath(this.talk.slidePath)
+        : "";
     },
     slideEmbedUrl(): string {
       return this.talk?.slideEmbedUrl?.trim() ?? "";

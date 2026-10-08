@@ -53,6 +53,7 @@ export interface TalkMetadata {
   audienceGroups: AudienceGroupTag[];
   durationMinutes?: number;
   audienceSizeApprox?: number;
+  audienceSizeEstimate?: string;
   venueTags: VenueTag[];
   topicTags: TopicTag[];
 }
@@ -60,6 +61,28 @@ export interface TalkMetadata {
 // Edit this object to quickly update talk titles, dates, summaries, and detail metadata.
 // Keys must match talk "slug" values in src/data/talksData.ts.
 export const talkMetadataBySlug: Record<string, TalkMetadata> = {
+  "metabolinkai": {
+    title: "MetaboLinkAI: From personal genomes to federated queries",
+    dateIso: "2026-10-08",
+    slideEmbedUrl: "https://ecrum19.github.io/MetaboLinkAI-Slides/?full#title",
+    summary:
+      "Invited MetaboLinkAI presentation connecting the PENGQUIN PhD project with real-world SPARQL federation, the Ontology Companion Generator, and semantic representation of genomic variant data.",
+    abstract:
+      "This invited presentation for a MetaboLinkAI virtual meeting connects four strands of work on making life-science data more usable. It introduces PENGQUIN and its approach to privacy-aware storage, linking, and querying of personal genomic data, then examines SPARQL federation across real public endpoints. It also presents the Ontology Companion Generator for producing browsable ontology documentation and the conversion of VCF genomic variant files into linked, queryable RDF.",
+    goal:
+      "Share how semantic web methods and practical tooling can support interoperable, privacy-aware life-science data and federated querying.",
+    audienceExpertise:
+      "An interdisciplinary life-science audience interested in semantic data integration and querying.",
+    audienceGroups: ["Interdisciplinary Researchers"],
+    durationMinutes: 90,
+    audienceSizeApprox: 9,
+    audienceSizeEstimate: "Approx. 8–10 attendees",
+    venueTags: ["Invited Talk", "MetaboLinkAI", "Virtual Meeting"],
+    topicTags: ["Semantic Web", "Bioinformatics", "Genomics", "SPARQL Federation", "Ontology Tooling", "Data Privacy"],
+    relatedResources: [
+      { label: "MetaboLinkAI", url: "https://www.metabolinkai.net/" },
+    ],
+  },
   "edc-knows-26": {
     title: "Genomic Data, Healthcare, and the Semantic Web",
     dateIso: "2026-03-31",
