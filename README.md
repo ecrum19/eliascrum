@@ -20,21 +20,26 @@ Visit the live website at [eliascrum.info](https://eliascrum.info/).
 The site supports keyword and tag-based discovery across the underlying research, presentation,
 publication, and software records.
 
-## Adding talks
+## Search
 
-PDF talks are generated with `npm run build:slides` from the sources in
-`.talk-assets/` (or temporary `slides/` and `posters/` directories). Add HTML-only
-decks to `src/data/htmlTalks.ts` with `slideFormat: "html"` and the hosted deck URL
-as `slidePath`. The PDF generator preserves these entries on every rebuild.
+Open search using the magnifying-glass button in the navigation bar or
+**Ctrl+K / Cmd+K**.
 
-For either format, add the title, date, summary, abstract, and audience details to
-`src/data/talkMetadata.ts` using the same slug. Set `slideEmbedUrl` when the deck
-needs a specific presentation URL, such as Shower's `?full#title`. HTML slides
-use an iframe preview and an HTML link without requiring a PDF.
+**Keyword search** finds talks, posters, publications, software, CV entries,
+blog posts, and recent updates. Type a term such as `genomics` or `Solid` to
+search titles, descriptions, tags, and other metadata. Results update as you
+type, with title matches ranked more highly. Search ignores case and accents;
+click a result or press **Enter** to open the top result.
 
-Run `npm run lint`, `npm run build`, and `npm run test:cv` before opening a pull
-request. The build refreshes recent work, RDF, and both CVs; merging into `master`
-deploys the website through the existing GitHub Pages workflow.
+**SPARQL search** supports structured queries over the
+[site's RDF graph](https://eliascrum.info/site-data.ttl). Select **SPARQL (Comunica)**,
+enter a `SELECT` query, and click **Run SPARQL Query** to explore records and their
+relationships. Comunica executes the query in the browser and displays the
+returned variable bindings. The [site vocabulary](https://eliascrum.info/vocab.ttl)
+describes the available classes and properties.
+
+Keyword search remains available in Lite mode. To use SPARQL while Lite mode is
+active, switch the navigation bar's performance setting to **Standard**.
 
 ## PDF CVs
 
