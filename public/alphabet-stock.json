@@ -5,10 +5,10 @@
   "firstCommitDate": "2024-03-20",
   "initialPriceDate": "2024-03-20",
   "initialPrice": 148.74,
-  "currentDate": "2026-10-19",
-  "currentClose": 344.18,
-  "changeAmount": 195.44,
-  "changePercent": 131.4,
+  "currentDate": "2026-10-20",
+  "currentClose": 340.28,
+  "changeAmount": 191.54,
+  "changePercent": 128.78,
   "source": "Yahoo Finance",
   "sourceUrl": "https://finance.yahoo.com/quote/GOOGL/"
 }
