@@ -23,7 +23,7 @@ interface NavigatorWithPerformanceHints extends Navigator {
   deviceMemory?: number;
 }
 
-interface WindowWithIdleCallback extends Window {
+interface WindowWithIdleCallback {
   cancelIdleCallback?: (handle: number) => void;
   requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
 }

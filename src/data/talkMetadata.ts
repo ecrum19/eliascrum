@@ -1,3 +1,5 @@
+import type { Highlight } from "../content/types";
+
 export const VENUE_TAG_OPTIONS = [
   "Conference",
   "Symposium",
@@ -56,11 +58,32 @@ export interface TalkMetadata {
   audienceSizeEstimate?: string;
   venueTags: VenueTag[];
   topicTags: TopicTag[];
+  /** The part of this talk or poster to feature on its page (see ADDING_CONTENT.md). */
+  highlight?: Highlight;
 }
 
 // Edit this object to quickly update talk titles, dates, summaries, and detail metadata.
 // Keys must match talk "slug" values in src/data/talksData.ts.
 export const talkMetadataBySlug: Record<string, TalkMetadata> = {
+  "iswc-2026-federation": {
+    title: "Does SPARQL federation work in the real world?",
+    dateIso: "2026-10-28",
+    slideEmbedUrl: "https://ecrum19.github.io/iswc-2026-slides/?full#title",
+    summary:
+      "ISWC 2026 In-Use track presentation of a longitudinal study that ran 67 real federated SPARQL queries against more than 20 live public biological endpoints, comparing manual and algorithmic federation.",
+    abstract:
+      "This In-Use track presentation asks whether SPARQL federation works outside controlled benchmarks. It reports on 67 federated queries answering real biological questions, most written by domain experts, executed against more than 20 live public SPARQL endpoints in 25 runs over 14 months (March 2025 to June 2026). Manual federation, where SERVICE clauses name each endpoint, is compared with algorithmic federation, where Comunica selects the sources. Algorithmic source selection rarely produced results because its probing exceeds endpoint usage limits, and both approaches declined over time as endpoints changed and limits tightened. The talk closes by recommending that endpoints publish their limits, for example with VoRD, so that query engines can adapt to them.",
+    goal:
+      "Show how SPARQL federation behaves against live public endpoints over time, and what endpoint publishers and query engines can change so that federated queries keep working.",
+    audienceExpertise:
+      "Semantic web researchers and practitioners at ISWC, familiar with SPARQL and query federation.",
+    audienceGroups: ["Semantic Web Researchers", "Computer Scientists"],
+    durationMinutes: 20,
+    audienceSizeApprox: 50,
+    audienceSizeEstimate: "Approx. 50 attendees",
+    venueTags: ["Conference", "ISWC"],
+    topicTags: ["Semantic Web", "Federated Querying", "Semantic Querying", "Bioinformatics"],
+  },
   "metabolinkai": {
     title: "MetaboLinkAI: From personal genomes to federated queries",
     dateIso: "2026-10-08",

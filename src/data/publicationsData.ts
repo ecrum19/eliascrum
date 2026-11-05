@@ -1,4 +1,5 @@
 import { type TopicTag, type VenueTag } from "./talkMetadata";
+import type { Highlight } from "../content/types";
 
 export const PUBLICATION_TYPE_TAG_OPTIONS = [
   "Conference Paper",
@@ -31,6 +32,8 @@ export interface Publication {
   bibtex: string;
   details: PublicationDetail[];
   paperPdfPath?: string;
+  /** The part of this work to feature on its page (see ADDING_CONTENT.md). */
+  highlight?: Highlight;
 }
 
 export interface PublicationDetail {
@@ -112,7 +115,7 @@ export const publications: Publication[] = [
       "E. Crum, B.-E. Tam, J. Hanski, A.-C. Sima, T. Mendes de Farias, J. Bolleman, R. Taelman",
     venue: "International Semantic Web Conference (ISWC) 2026",
     year: 2026,
-    sortDate: "2026-10-27",
+    sortDate: "2026-10-28",
     type: "Conference Paper",
     venueTags: ["ISWC"],
     topicTags: [
@@ -121,7 +124,7 @@ export const publications: Publication[] = [
       "Semantic Querying",
       "Bioinformatics",
     ],
-    url: "",
+    url: "https://doi.org/10.1007/978-3-032-42029-9_17",
     summary:
       "Presents an 18-month longitudinal study of 67 real-world federated biological SPARQL queries over more than 20 public endpoints, and shows that a) execution success declines over time with very few queries functional by June 2026, b) current algorithmic federation approaches perform substantially worse than manual federation, and c) work is needed to assess how to enable federation over public endpoints in the age of the LLM.",
     abstract:
@@ -133,14 +136,22 @@ export const publications: Publication[] = [
   address={Bari, Italy},
   month={oct},
   year={2026},
-  note={Accepted conference paper},
+  doi={10.1007/978-3-032-42029-9_17},
 }`,
+    highlight: {
+      label: "Federated Query Results Explorer",
+      description:
+        "Companion website for exploring the study's outcome summaries, query-level views, endpoint breakdowns, and complexity analyses.",
+      href: "https://ecrum19.github.io/fed-survey-results/",
+      related: "software:fed-survey-results-explorer",
+    },
     details: [
       { label: "Publication Type", value: "Conference Paper" },
       { label: "Conference", value: "International Semantic Web Conference (ISWC) 2026" },
       { label: "Location", value: "Bari, Italy" },
-      { label: "Date", value: "2026-10-27" },
-      { label: "Status", value: "Accepted" },
+      { label: "Date", value: "2026-10-28" },
+      { label: "Status", value: "Published" },
+      { label: "Recognition", value: "Spotlight paper; nominated for Best In-Use Paper" },
       {
         label: "Keywords",
         value: "SPARQL Querying, Federated Querying, Real-World Querying, SPARQL Endpoints",
@@ -155,8 +166,12 @@ export const publications: Publication[] = [
         value: "fed-survey-results",
         href: "https://ecrum19.github.io/fed-survey-results/",
       },
-      { label: "DOI", value: "Not yet available" },
-      { label: "Web Version", value: "Not yet available" },
+      { label: "DOI", value: "10.1007/978-3-032-42029-9_17", href: "https://doi.org/10.1007/978-3-032-42029-9_17" },
+      {
+        label: "Web Version",
+        value: "SpringerLink",
+        href: "https://link.springer.com/chapter/10.1007/978-3-032-42029-9_17",
+      },
     ],
     paperPdfPath: "/publications/papers/iswc-2026-real-world-federation-paper.pdf",
   },
@@ -667,6 +682,13 @@ export const publicationPresentationLinksById: Record<
   string,
   PublicationPresentationLink[]
 > = {
+  "real-world-federation-iswc-2026": [
+    {
+      kind: "talk",
+      talkSlug: "iswc-2026-federation",
+      label: "Presentation (ISWC 2026)",
+    },
+  ],
   "solid-cockpit-eswc-2026-demo": [
     {
       kind: "talk",
@@ -679,7 +701,7 @@ export const publicationPresentationLinksById: Record<
       label: "Poster (ESWC 2026)",
     },
   ],
-  "pengquin-eswc-2024-paper": [
+  "pengquin-eswc-2024": [
     {
       kind: "talk",
       talkSlug: "eswc-phdsymp-pangquin",

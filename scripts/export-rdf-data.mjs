@@ -2,9 +2,10 @@
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
-import os from "node:os";
-import { fileURLToPath, pathToFileURL } from "node:url";
-import esbuild from "esbuild";
+import { fileURLToPath } from "node:url";
+import { loadSiteContent } from "./lib/load-content.mjs";
+import { writeGeneratedFile } from "./lib/write-generated.mjs";
+import { isMain } from "./lib/cli.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -253,33 +254,6 @@ function makeTagRef(tagRegistry, triples, kind, label, isDeclaredOption = false)
   return tagRef;
 }
 
-async function loadTsModule(relativeFilePath) {
-  const absoluteInputPath = path.join(dataDir, relativeFilePath);
-  const tempOutputPath = path.join(
-    os.tmpdir(),
-    `rdf-export-${slugify(relativeFilePath)}-${Date.now()}-${Math.random().toString(16).slice(2)}.mjs`,
-  );
-
-  await esbuild.build({
-    entryPoints: [absoluteInputPath],
-    bundle: true,
-    platform: "node",
-    target: ["node20"],
-    format: "esm",
-    outfile: tempOutputPath,
-    logLevel: "silent",
-    define: {
-      "import.meta.env.BASE_URL": '"/"',
-    },
-  });
-
-  try {
-    return await import(`${pathToFileURL(tempOutputPath).href}?v=${Date.now()}`);
-  } finally {
-    await fs.unlink(tempOutputPath).catch(() => {});
-  }
-}
-
 function sortTriples(triples) {
   return [...triples].sort((a, b) => a.localeCompare(b));
 }
@@ -309,38 +283,15 @@ function parseEntityReferenceFromUpdateId(id) {
   return null;
 }
 
-async function main() {
-  const [
-    cvModule,
-    blogModule,
-    talksModule,
-    talkCatalogModule,
-    posterCatalogModule,
-    talkMetadataModule,
-    publicationsModule,
-    softwareModule,
-    softwareReleasesModule,
-    fellowshipModule,
-    citationsModule,
-    homepageUpdatesModule,
-  ] = await Promise.all([
-    loadTsModule("cvData.ts"),
-    loadTsModule("blogPostsData.ts"),
-    loadTsModule("talksData.ts"),
-    loadTsModule("talkCatalog.ts"),
-    loadTsModule("posterCatalog.ts"),
-    loadTsModule("talkMetadata.ts"),
-    loadTsModule("publicationsData.ts"),
-    loadTsModule("softwareData.ts"),
-    loadTsModule("softwareReleases.ts"),
-    loadTsModule("fellowshipData.ts"),
-    loadTsModule("scholarCitations.ts"),
-    loadTsModule("homepageUpdates.ts"),
-  ]);
-
+/** Pure RDF projection; callers control content and the observation timestamp. */
+export function buildRdfData({
+  cvModule, blogModule, talksModule, talkCatalogModule, posterCatalogModule,
+  talkMetadataModule, publicationsModule, softwareModule, softwareReleasesModule,
+  fellowshipModule, citationsModule, homepageUpdatesModule,
+}, generatedAt = new Date()) {
   const triples = new Set();
   const tagRegistry = new Map();
-  const generatedAtIso = new Date().toISOString();
+  const generatedAtIso = generatedAt.toISOString();
 
   const websiteDatasetRef = ecRef("dataset", "website");
   triples.add(`${websiteDatasetRef} rdf:type schema:Dataset .`);
@@ -745,13 +696,11 @@ async function main() {
   );
 
   const softwareRefById = new Map();
-  const softwareSections = Array.isArray(softwareModule.softwareSections)
-    ? softwareModule.softwareSections
-    : [];
+  const { softwareCatalog, dateLabel, relatedIds } = softwareModule;
   const softwareReleasesBySoftwareId =
     softwareReleasesModule.softwareReleasesBySoftwareId ?? {};
 
-  softwareSections.forEach((section, sectionIndex) => {
+  softwareCatalog.sections.forEach((section, sectionIndex) => {
     const sectionRef = ecRef("software-section", section.id);
     triples.add(`${sectionRef} rdf:type ec:SoftwareSection .`);
     triples.add(`${sectionRef} dcterms:isPartOf ${websiteDatasetRef} .`);
@@ -760,8 +709,9 @@ async function main() {
     addTextValue(triples, sectionRef, "schema:name", section.title);
     addTextValue(triples, sectionRef, "ec:description", section.description);
 
-    (section.entries ?? []).forEach((software) => {
+    softwareCatalog.entries.filter((software) => software.sectionId === section.id).forEach((software) => {
       const softwareRef = ecRef("software", software.id);
+      const { repository, website } = software.links ?? {};
       softwareRefById.set(software.id, softwareRef);
       triples.add(`${softwareRef} rdf:type ec:Software .`);
       triples.add(`${softwareRef} dcterms:isPartOf ${sectionRef} .`);
@@ -770,20 +720,20 @@ async function main() {
       addTextValue(triples, softwareRef, "schema:name", software.title);
       addTextValue(triples, softwareRef, "ec:softwareType", software.type);
       addTextValue(triples, softwareRef, "ec:purpose", software.purpose);
-      addTextValue(triples, softwareRef, "ec:year", software.year);
+      addTextValue(triples, softwareRef, "ec:year", dateLabel(software.date));
       addTextValue(triples, softwareRef, "ec:summary", software.summary);
       addTextValue(triples, softwareRef, "ec:description", software.description);
-      addIriValue(triples, softwareRef, "schema:codeRepository", software.repositoryUrl);
-      addIriValue(triples, softwareRef, "ec:repositoryUrl", software.repositoryUrl);
-      addIriValue(triples, softwareRef, "ec:webUrl", software.webUrl);
-      addIriValue(triples, softwareRef, "schema:url", software.webUrl ?? software.repositoryUrl);
+      addIriValue(triples, softwareRef, "schema:codeRepository", repository);
+      addIriValue(triples, softwareRef, "ec:repositoryUrl", repository);
+      addIriValue(triples, softwareRef, "ec:webUrl", website);
+      addIriValue(triples, softwareRef, "schema:url", website ?? repository);
 
-      (software.mainTopics ?? []).forEach((tagLabel) => {
+      software.topics.forEach((tagLabel) => {
         const tagRef = makeTagRef(tagRegistry, triples, "topic", tagLabel);
         triples.add(`${softwareRef} ec:hasTopicTag ${tagRef} .`);
       });
 
-      (software.details ?? []).forEach((detail, detailIndex) => {
+      (software.extraDetails ?? []).forEach((detail, detailIndex) => {
         const detailRef = ecRef("software-detail", `${software.id}-${detailIndex + 1}`);
         triples.add(`${detailRef} rdf:type ec:SoftwareDetail .`);
         triples.add(`${detailRef} dcterms:isPartOf ${softwareRef} .`);
@@ -818,7 +768,7 @@ async function main() {
         );
       }
 
-      (software.relatedPublicationIds ?? []).forEach((publicationId) => {
+      relatedIds(software, "publication").forEach((publicationId) => {
         const relatedPublicationRef =
           publicationRefById.get(publicationId) ?? ecRef("publication", publicationId);
         if (!publicationRefById.has(publicationId)) {
@@ -830,7 +780,7 @@ async function main() {
         triples.add(`${relatedPublicationRef} ec:relatedSoftware ${softwareRef} .`);
       });
 
-      (software.relatedTalkSlugs ?? []).forEach((talkSlug) => {
+      relatedIds(software, "talk").forEach((talkSlug) => {
         const relatedTalkRef = talkRefBySlug.get(talkSlug) ?? ecRef("talk", talkSlug);
         if (!talkRefBySlug.has(talkSlug)) {
           triples.add(`${relatedTalkRef} rdf:type ec:TalkReference .`);
@@ -841,7 +791,7 @@ async function main() {
         triples.add(`${relatedTalkRef} ec:relatedSoftware ${softwareRef} .`);
       });
 
-      (software.relatedPosterSlugs ?? []).forEach((posterSlug) => {
+      relatedIds(software, "poster").forEach((posterSlug) => {
         const relatedPosterRef = ecRef("poster", posterSlug);
         triples.add(`${softwareRef} ec:relatedPoster ${relatedPosterRef} .`);
         triples.add(`${relatedPosterRef} ec:relatedSoftware ${softwareRef} .`);
@@ -990,18 +940,32 @@ async function main() {
     "",
   ].join("\n");
 
+  return { output, count: triplesSorted.length };
+}
+
+async function main() {
+  const content = await loadSiteContent();
+  let count = 0;
+  const render = (iso) => {
+    const result = buildRdfData(content, new Date(iso));
+    count = result.count;
+    return result.output;
+  };
+
   await fs.mkdir(rdfDir, { recursive: true });
-  await fs.writeFile(rdfFilePath, output, "utf8");
-  await fs.writeFile(publicRdfFilePath, output, "utf8");
+  await writeGeneratedFile(rdfFilePath, render);
+  await writeGeneratedFile(publicRdfFilePath, render);
   await fs.copyFile(vocabFilePath, publicVocabFilePath);
   await fs.copyFile(shapesFilePath, publicShapesFilePath);
 
   console.log(
-    `Wrote RDF data to ${path.relative(rootDir, rdfFilePath)} and ${path.relative(rootDir, publicRdfFilePath)} (${triplesSorted.length} triples).`,
+    `Exported RDF data to ${path.relative(rootDir, rdfFilePath)} and ${path.relative(rootDir, publicRdfFilePath)} (${count} triples).`,
   );
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+if (isMain(import.meta.url)) {
+  main().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}

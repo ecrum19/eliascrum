@@ -1,10 +1,33 @@
 {
-  "generatedAt": "2026-10-08T12:47:07.438Z",
+  "generatedAt": "2026-11-05T08:02:09.790Z",
   "baseIri": "https://eliascrum.info/",
   "datasetUrl": "https://eliascrum.info/recent_work.json",
   "sparqlGraphUrl": "https://eliascrum.info/recent_work.ttl",
-  "totalItems": 46,
+  "totalItems": 47,
   "recentWork": [
+    {
+      "id": "Talk:iswc-2026-federation",
+      "type": "Talk",
+      "title": "Does SPARQL federation work in the real world?",
+      "tags": [
+        "Conference",
+        "ISWC",
+        "Semantic Web",
+        "Federated Querying",
+        "Semantic Querying",
+        "Bioinformatics",
+        "Semantic Web Researchers",
+        "Computer Scientists",
+        "Medium",
+        "Medium"
+      ],
+      "slug": "iswc-2026-federation",
+      "dateIso": "2026-10-28",
+      "summary": "ISWC 2026 In-Use track presentation of a longitudinal study that ran 67 real federated SPARQL queries against more than 20 live public biological endpoints, comparing manual and algorithmic federation.",
+      "url": "https://eliascrum.info/talks/iswc-2026-federation",
+      "sourceUrl": "https://ecrum19.github.io/iswc-2026-slides/",
+      "itemUrl": "https://eliascrum.info/talks/iswc-2026-federation"
+    },
     {
       "id": "Publication:real-world-federation-iswc-2026",
       "type": "Publication",
@@ -18,9 +41,10 @@
         "Bioinformatics"
       ],
       "slug": "real-world-federation-iswc-2026",
-      "dateIso": "2026-10-27",
+      "dateIso": "2026-10-28",
       "summary": "Presents an 18-month longitudinal study of 67 real-world federated biological SPARQL queries over more than 20 public endpoints, and shows that a) execution success declines over time with very few queries functional by June 2026, b) current algorithmic federation approaches perform substantially worse than manual federation, and c) work is needed to assess how to enable federation over public endpoints in the age of the LLM.",
       "url": "https://eliascrum.info/publications/real-world-federation-iswc-2026/paper",
+      "sourceUrl": "https://doi.org/10.1007/978-3-032-42029-9_17",
       "itemUrl": "https://eliascrum.info/publications/real-world-federation-iswc-2026/paper"
     },
     {

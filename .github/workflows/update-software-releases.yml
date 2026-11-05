@@ -1,0 +1,53 @@
+name: Update Software Releases
+
+# Deployment builds from committed snapshots, so release observations are refreshed here weekly.
+on:
+  schedule:
+    - cron: "15 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  update-software-releases:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch latest releases from GitHub
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_RELEASE_MAX_REFRESH: "50"
+        run: npm run update:software-releases
+
+      # Release observations are part of the RDF mirror and recent-work feed, and CI requires both to match.
+      - name: Regenerate the committed projections
+        run: npm run recent-work:export && npm run rdf:export
+
+      - name: Commit, push, and redeploy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -I 'softwareReleaseLastUpdatedIso' -- src/data/softwareReleases.ts; then
+            echo "No release changes detected."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/softwareReleases.ts src/data/rdf/site-data.ttl public/site-data.ttl public/recent_work.json public/recent_work.ttl
+          git commit -m "chore: update software release snapshot"
+          git push
+          # Pushes made with GITHUB_TOKEN do not trigger workflows; a dispatch does.
+          gh workflow run site.yml --ref "${GITHUB_REF_NAME}"
