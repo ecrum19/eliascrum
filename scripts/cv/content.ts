@@ -1,12 +1,13 @@
 import { cvProfile, cvSections, type CvItem } from '../../src/data/cvData';
 import { cvDownloads } from '../../src/data/cvDownloads';
 import { publications, orcidProfileUrl, type Publication } from '../../src/data/publicationsData';
-import { softwareProjects } from '../../src/data/softwareData';
+import { relatedIds, softwareCatalog } from '../../src/content/catalog';
 import { softwareReleasesBySoftwareId } from '../../src/data/softwareReleases';
 import { getTalkViewEntries } from '../../src/data/talkCatalog';
 import { getPosterViewEntries } from '../../src/data/posterCatalog';
 
-export { cvProfile, cvSections, cvDownloads, publications, softwareProjects, orcidProfileUrl, softwareReleasesBySoftwareId };
+export { cvProfile, cvSections, cvDownloads, publications, orcidProfileUrl, relatedIds, softwareReleasesBySoftwareId };
+export const softwareProjects = softwareCatalog.entries;
 export const talks = getTalkViewEntries();
 export const posters = getPosterViewEntries();
 

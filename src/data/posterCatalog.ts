@@ -3,6 +3,7 @@ import { getTalkViewEntries, type TalkViewEntry } from "./talkCatalog";
 import {
   type AudienceGroupTag,
   talkMetadataBySlug,
+  type TalkMetadata,
   type TopicTag,
   type VenueTag,
 } from "./talkMetadata";
@@ -25,6 +26,7 @@ export interface PosterViewEntry extends PosterEntry {
   }>;
   linkedTalkSlug?: string;
   linkedTalkTitle?: string;
+  highlight?: TalkMetadata["highlight"];
 }
 
 const DEFAULT_SUMMARY = "Poster presentation materials.";
@@ -91,6 +93,7 @@ function hydratePosterEntry(
     relatedResources: metadata?.relatedResources ?? linkedTalk?.relatedResources ?? [],
     linkedTalkSlug: linkedTalk?.slug,
     linkedTalkTitle: linkedTalk?.displayTitle,
+    highlight: metadata?.highlight,
   };
 }
 

@@ -367,6 +367,7 @@ import {
 import { getTalkViewBySlug } from "../data/talkCatalog";
 import { TOPIC_TAG_OPTIONS, VENUE_TAG_OPTIONS } from "../data/talkMetadata";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
+import { linkRel, linkTarget, normalizeLinkUrl } from "../utils/links";
 import WorkPageLayout from "./layout/WorkPageLayout.vue";
 import WorkSectionBlock from "./layout/WorkSectionBlock.vue";
 
@@ -587,28 +588,9 @@ export default defineComponent({
     },
   },
   methods: {
-    isExternalUrl(url: string): boolean {
-      return /^(?:[a-z][a-z\d+\-.]*:|\/\/)/i.test(url);
-    },
-    normalizeLinkUrl(url: string): string {
-      if (!url || this.isExternalUrl(url)) {
-        return url;
-      }
-
-      const baseUrl = import.meta.env.BASE_URL || "/";
-      const normalizedBase = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
-      if (url.startsWith(normalizedBase)) {
-        return url;
-      }
-
-      return resolvePublicAssetPath(url);
-    },
-    linkTarget(url: string): string | undefined {
-      return this.isExternalUrl(url) ? "_blank" : undefined;
-    },
-    linkRel(url: string): string | undefined {
-      return this.isExternalUrl(url) ? "noopener noreferrer" : undefined;
-    },
+    normalizeLinkUrl,
+    linkTarget,
+    linkRel,
     publicationSectionId(publicationId: string): string {
       return `publication-${publicationId}`;
     },

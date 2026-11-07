@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 import fs from "node:fs/promises";
-import os from "node:os";
 import path from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
-import esbuild from "esbuild";
+import { fileURLToPath } from "node:url";
+import { loadSiteContent } from "./lib/load-content.mjs";
+import { writeGeneratedFile } from "./lib/write-generated.mjs";
+import { isMain } from "./lib/cli.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
-const dataDir = path.join(rootDir, "src", "data");
 const publicDir = path.join(rootDir, "public");
 const outputJsonPath = path.join(publicDir, "recent_work.json");
 const outputTtlPath = path.join(publicDir, "recent_work.ttl");
@@ -125,33 +125,6 @@ function sortByDateDesc(items) {
   });
 }
 
-async function loadTsModule(relativeFilePath) {
-  const absoluteInputPath = path.join(dataDir, relativeFilePath);
-  const tempOutputPath = path.join(
-    os.tmpdir(),
-    `recent-work-${sanitizeId(relativeFilePath)}-${Date.now()}-${Math.random().toString(16).slice(2)}.mjs`,
-  );
-
-  await esbuild.build({
-    entryPoints: [absoluteInputPath],
-    bundle: true,
-    platform: "node",
-    target: ["node20"],
-    format: "esm",
-    outfile: tempOutputPath,
-    logLevel: "silent",
-    define: {
-      "import.meta.env.BASE_URL": '"/"',
-    },
-  });
-
-  try {
-    return await import(`${pathToFileURL(tempOutputPath).href}?v=${Date.now()}`);
-  } finally {
-    await fs.unlink(tempOutputPath).catch(() => {});
-  }
-}
-
 function jsonItemBase(type, id, title) {
   return {
     id: `${type}:${id}`,
@@ -161,13 +134,13 @@ function jsonItemBase(type, id, title) {
   };
 }
 
-function buildRecentWorkItems({
+export function buildRecentWorkItems({
   publicationsModule,
   talkCatalogModule,
   posterCatalogModule,
   softwareModule,
   softwareReleasesModule,
-  blogsModule,
+  blogModule,
 }) {
   const publicationItems = (publicationsModule.publications ?? []).map((publication) => {
     const dateIso = normalizeDate(publication.sortDate);
@@ -233,19 +206,21 @@ function buildRecentWorkItems({
     };
   });
 
-  const softwareItems = (softwareModule.softwareProjects ?? []).map((software) => {
-    const yearDate = parseYearToDate(software.year);
+  const { softwareCatalog, dateLabel, entryPath } = softwareModule;
+  const softwareItems = softwareCatalog.entries.map((software) => {
+    const yearDate = parseYearToDate(dateLabel(software.date));
+    const { repository, website } = software.links ?? {};
     const dateIso = yearDate ? yearDate.toISOString().slice(0, 10) : undefined;
     const release = softwareReleasesModule?.softwareReleasesBySoftwareId?.[software.id] ?? null;
     return {
       ...jsonItemBase("Software", software.id, software.title),
-      slug: softwareModule.getSoftwareSlug(software),
+      slug: software.slug,
       dateIso,
       summary: software.summary ?? "",
-      url: toAbsoluteUrl(softwareModule.getSoftwarePagePath(software)),
-      sourceUrl: toAbsoluteUrl(software.repositoryUrl || software.webUrl),
-      itemUrl: toAbsoluteUrl(softwareModule.getSoftwarePagePath(software)),
-      tags: [software.type, software.purpose, ...(software.mainTopics ?? [])].filter(Boolean),
+      url: toAbsoluteUrl(entryPath(software)),
+      sourceUrl: toAbsoluteUrl(repository || website),
+      itemUrl: toAbsoluteUrl(entryPath(software)),
+      tags: [software.type, software.purpose, ...software.topics].filter(Boolean),
       latestRelease:
         release &&
         (release.tagName || release.name || release.url || release.publishedAt)
@@ -264,7 +239,7 @@ function buildRecentWorkItems({
     };
   });
 
-  const blogItems = (blogsModule.blogPosts ?? []).map((blog) => {
+  const blogItems = (blogModule.blogPosts ?? []).map((blog) => {
     const dateIso = normalizeDate(blog.dateIso);
     const parsed = dateIso ? parseIsoDate(dateIso) : null;
     return {
@@ -289,8 +264,7 @@ function buildRecentWorkItems({
   ]);
 }
 
-function buildRecentWorkJson(items) {
-  const generatedAt = new Date().toISOString();
+export function buildRecentWorkJson(items, generatedAt = new Date().toISOString()) {
   return {
     generatedAt,
     baseIri: BASE_IRI,
@@ -305,12 +279,11 @@ function addTriple(triples, subject, predicate, object) {
   triples.push(`${subject} ${predicate} ${object} .`);
 }
 
-function buildRecentWorkTtl(items) {
+export function buildRecentWorkTtl(items, generatedAt = new Date().toISOString()) {
   const triples = [];
   const datasetRef = iri(new URL("data/recent-work", BASE_IRI).href);
   const datasetJsonRef = iri(new URL("recent_work.json", BASE_IRI).href);
   const datasetTtlRef = iri(new URL("recent_work.ttl", BASE_IRI).href);
-  const generatedAt = new Date().toISOString();
 
   addTriple(triples, datasetRef, "rdf:type", "schema:Dataset");
   addTriple(triples, datasetRef, "rdf:type", "ec:WebsiteDataset");
@@ -394,49 +367,25 @@ function buildRecentWorkTtl(items) {
 }
 
 async function main() {
-  const [
-    publicationsModule,
-    talkCatalogModule,
-    posterCatalogModule,
-    softwareModule,
-    softwareReleasesModule,
-    blogsModule,
-  ] = await Promise.all([
-    loadTsModule("publicationsData.ts"),
-    loadTsModule("talkCatalog.ts"),
-    loadTsModule("posterCatalog.ts"),
-    loadTsModule("softwareData.ts"),
-    loadTsModule("softwareReleases.ts"),
-    loadTsModule("blogPostsData.ts"),
-  ]);
-
-  const items = buildRecentWorkItems({
-    publicationsModule,
-    talkCatalogModule,
-    posterCatalogModule,
-    softwareModule,
-    softwareReleasesModule,
-    blogsModule,
-  });
-
-  const jsonOutput = buildRecentWorkJson(items);
-  const ttlOutput = buildRecentWorkTtl(items);
+  const items = buildRecentWorkItems(await loadSiteContent());
 
   await fs.mkdir(publicDir, { recursive: true });
-  await fs.writeFile(outputJsonPath, `${JSON.stringify(jsonOutput, null, 2)}\n`, "utf8");
-  await fs.writeFile(outputTtlPath, ttlOutput, "utf8");
-
-  const jsonRelative = path.relative(rootDir, outputJsonPath);
-  const ttlRelative = path.relative(rootDir, outputTtlPath);
+  await writeGeneratedFile(
+    outputJsonPath,
+    (iso) => `${JSON.stringify(buildRecentWorkJson(items, iso), null, 2)}\n`,
+  );
+  await writeGeneratedFile(outputTtlPath, (iso) => buildRecentWorkTtl(items, iso));
 
   // eslint-disable-next-line no-console
-  console.log(`Wrote ${jsonRelative} (${items.length} items).`);
-  // eslint-disable-next-line no-console
-  console.log(`Wrote ${ttlRelative}.`);
+  console.log(
+    `Exported ${path.relative(rootDir, outputJsonPath)} and ${path.relative(rootDir, outputTtlPath)} (${items.length} items).`,
+  );
 }
 
-main().catch((error) => {
-  // eslint-disable-next-line no-console
-  console.error(error);
-  process.exitCode = 1;
-});
+if (isMain(import.meta.url)) {
+  main().catch((error) => {
+    // eslint-disable-next-line no-console
+    console.error(error);
+    process.exitCode = 1;
+  });
+}

@@ -1,0 +1,75 @@
+/* Global design tokens. Theme overrides belong here. */
+:root {
+  --font-family-base: "KoHo", sans-serif;
+  --font-family-heading: "KoHo", sans-serif;
+  --font-family-display: "Cinzel", serif;
+  --font-size-root: 17px;
+  --text-scale-body: 1;
+  --text-scale-small: 1;
+  --text-scale-heading: 1;
+  --font-size-micro: calc(0.72rem * var(--text-scale-small));
+  --font-size-caption: calc(0.78rem * var(--text-scale-small));
+  --font-size-label: calc(0.84rem * var(--text-scale-small));
+  --font-size-meta: calc(0.9rem * var(--text-scale-small));
+  --font-size-body-sm: calc(0.98rem * var(--text-scale-body));
+  --font-size-body: calc(1.03rem * var(--text-scale-body));
+  --font-size-body-lg: calc(1.1rem * var(--text-scale-body));
+  --font-size-body-xl: calc(1.16rem * var(--text-scale-body));
+  --font-size-subtitle: calc(1.24rem * var(--text-scale-heading));
+  --font-size-section-title: calc(1.34rem * var(--text-scale-heading));
+  --font-size-card-title: calc(1.44rem * var(--text-scale-heading));
+  --font-size-prose-xl: calc(1.72rem * var(--text-scale-body));
+  --font-size-prose-l: calc(1.42rem * var(--text-scale-body));
+  --list-date-size: var(--font-size-meta);
+  --list-title-size: calc(clamp(1.4rem, 2.25vw, 1.72rem) * var(--text-scale-heading));
+  --list-tag-size: var(--font-size-meta);
+  --list-summary-size: var(--font-size-body-sm);
+  --page-background: #000000;
+  --page-text: #f7f9fc;
+  --text-muted: #e7edf5;
+  --text-soft: #cfd8e4;
+  --surface-bg: rgba(11, 11, 12, 0.9);
+  --surface-elevated: rgba(18, 18, 20, 0.94);
+  --surface-card: rgba(255, 255, 255, 0.065);
+  --surface-outline: rgba(255, 255, 255, 0.22);
+  --header-bg: rgba(9, 9, 10, 0.86);
+  --footer-bg: rgba(8, 8, 9, 0.72);
+  --link-color: #bf5e5e;
+  --nav-hover-bg: rgba(255, 255, 255, 0.09);
+  --toggle-bg: rgba(255, 255, 255, 0.065);
+  --toggle-border: rgba(255, 255, 255, 0.28);
+  --toggle-text: #ffffff;
+  --video-opacity: 0.4;
+  --content-heading-font: var(--font-family-heading);
+  --content-h1-size: calc(clamp(1.8rem, 2.8vw, 2.5rem) * var(--text-scale-heading));
+  --content-h2-size: calc(clamp(1.25rem, 2.1vw, 1.55rem) * var(--text-scale-heading));
+  --site-title-size: calc(clamp(2.35rem, 5.4vw, 3.8rem) * var(--text-scale-heading));
+  --accent-rgb: 80, 203, 255;
+  --accent-secondary-rgb: 45, 212, 191;
+  --accent-ink-rgb: 80, 203, 255;
+  --accent-ink: #50cbff;
+}
+
+:root[data-theme="light"] {
+  --page-background: #f6f3ed;
+  --page-text: #10243b;
+  --text-muted: rgba(16, 36, 59, 0.88);
+  --text-soft: rgba(16, 36, 59, 0.74);
+  --surface-bg: rgba(253, 251, 247, 0.94);
+  --surface-elevated: rgba(253, 251, 247, 0.94);
+  --surface-card: rgba(255, 255, 255, 0.52);
+  --surface-outline: rgba(84, 66, 38, 0.22);
+  --header-bg: rgba(250, 247, 241, 0.9);
+  --footer-bg: rgba(244, 238, 229, 0.82);
+  --accent-rgb: 226, 214, 196;
+  --accent-secondary-rgb: 246, 240, 231;
+  --accent-ink-rgb: 13, 79, 136;
+  --accent-ink: #0d4f88;
+  --link-color: #8f6b1f;
+  --nav-hover-bg: rgba(var(--accent-rgb), 0.18);
+  --toggle-bg: rgba(var(--accent-rgb), 0.12);
+  --toggle-border: rgba(var(--accent-rgb), 0.34);
+  --toggle-text: #10243b;
+  --video-opacity: 0.16;
+}
+

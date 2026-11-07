@@ -62,6 +62,10 @@ test('complete CV includes every publication, software project, talk, and poster
     const title = item.displayTitle ?? item.title;
     assert.ok(text.includes(normalized(title)), title);
   }
+  // A website that differs from the linked repository gets its own printed line.
+  for (const { links } of content.softwareProjects) {
+    if (links?.website && links.repository) assert.ok(text.includes(normalized(links.website)), links.website);
+  }
 });
 
 test('focused CV stays at two readable pages with relevant experience and current publications', () => {
@@ -121,7 +125,7 @@ test('scoped copy, printed URLs, software replacement, and award descriptions ar
   assert.ok(!text.includes(normalized('QR Code Generator')));
   assert.ok(!links.some((link) => link.includes('qr-code-generator')));
   assert.ok(links.includes('https://github.com/ecrum19/vcf-core-vocabulary'));
-  for (const entry of content.focusedSoftware) assert.ok(text.includes(normalized(`(${entry.repositoryUrl.replace('https://', '')})`)), entry.title);
+  for (const entry of content.focusedSoftware) assert.ok(text.includes(normalized(`(${entry.links.repository.replace('https://', '')})`)), entry.title);
   for (const description of Object.values(content.awardDescriptions)) assert.ok(text.includes(normalized(description)), description);
   assert.ok(pages[1].includes(normalized('For full interactive publication list, project links, talks, and a complete CV please visit my website: https://example.org/research/about/cv')), 'Closing statement and configured website URL must be readable when printed');
   assert.ok(links.includes('https://example.org/research/about/cv'), 'Closing statement must respect the configured site URL');

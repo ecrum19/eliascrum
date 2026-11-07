@@ -5,6 +5,10 @@
 node_modules
 /dist
 .cache
+coverage/
+test-results/
+playwright-report/
+tests/visual/snapshots/
 /tmp/pdfs/
 
 # local env files

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { isMain } from "./lib/cli.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -38,7 +39,7 @@ function printUsageAndExit() {
   process.exit(1);
 }
 
-function parseArgs(argv) {
+export function parseArgs(argv) {
   const args = {
     updateFile: null,
     dataFile: DEFAULT_DATA_PATH,
@@ -159,7 +160,7 @@ function parseTripleLine(line, prefixMap) {
   return `<${subjectIri}> <${predicateIri}> ${objectTerm} .`;
 }
 
-function parsePrefixesFromText(text) {
+export function parsePrefixesFromText(text) {
   const prefixes = {};
   const prefixRegex = /(?:^|\n)\s*(?:@prefix|PREFIX)\s+([A-Za-z][\w-]*):\s*<([^>]+)>\s*\.\s*(?=\n|$)|(?:^|\n)\s*PREFIX\s+([A-Za-z][\w-]*):\s*<([^>]+)>\s*(?=\n|$)/gi;
   let match = prefixRegex.exec(text);
@@ -172,7 +173,7 @@ function parsePrefixesFromText(text) {
   return prefixes;
 }
 
-function extractDataBlocks(keyword, text) {
+export function extractDataBlocks(keyword, text) {
   const blocks = [];
   const regex = new RegExp(`${keyword}\\s+DATA\\s*\\{([\\s\\S]*?)\\}`, "gi");
   let match = regex.exec(text);
@@ -183,7 +184,7 @@ function extractDataBlocks(keyword, text) {
   return blocks;
 }
 
-function parseTriplesFromBlock(block, prefixMap) {
+export function parseTriplesFromBlock(block, prefixMap) {
   const triples = [];
   const lines = block
     .split(/\r?\n/)
@@ -214,7 +215,7 @@ function compactIri(iri, prefixMap) {
   return `<${iri}>`;
 }
 
-function compactCanonicalTriple(canonicalTriple, prefixMap) {
+export function compactCanonicalTriple(canonicalTriple, prefixMap) {
   const tripleMatch = canonicalTriple.match(/^<([^>]+)>\s+<([^>]+)>\s+(.+)\s+\.$/);
   if (!tripleMatch) {
     throw new Error(`Invalid canonical triple: ${canonicalTriple}`);
@@ -237,7 +238,7 @@ function compactCanonicalTriple(canonicalTriple, prefixMap) {
   return `${compactIri(subjectIri, prefixMap)} ${compactIri(predicateIri, prefixMap)} ${compactObject} .`;
 }
 
-function serializePrefixMap(prefixMap) {
+export function serializePrefixMap(prefixMap) {
   const prefixNames = Object.keys(prefixMap).sort((a, b) => a.localeCompare(b));
   return prefixNames.map((prefix) => `@prefix ${prefix}: <${prefixMap[prefix]}> .`).join("\n");
 }
@@ -328,7 +329,9 @@ async function main() {
   console.log(`Update file: ${path.relative(rootDir, absoluteUpdatePath)}`);
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+if (isMain(import.meta.url)) {
+  main().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}
