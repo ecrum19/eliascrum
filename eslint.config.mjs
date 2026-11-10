@@ -16,7 +16,6 @@ export default defineConfigWithVueTs(
     ignores: [
       "dist/**",
       "node_modules/**",
-      "node_modules.pre-upgrade-backup-20260813/**",
     ],
   },
   js.configs.recommended,

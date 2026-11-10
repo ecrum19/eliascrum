@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: "24"
           cache: npm
@@ -27,13 +27,20 @@ jobs:
       - name: Validate and build from committed content snapshots
         run: npm run build:ci
 
+      # The inventory is rebuilt from the committed talk archives and records; a diff means a commit
+      # changed talk PDFs or their records without running `npm run build:slides`.
+      - name: Check the talk asset inventory is current
+        run: |
+          npm run build:slides -- --inventory-only
+          git diff --exit-code -- src/content/generated/talkAssets.ts
+
       # Exports only change when their content does, so any diff means a commit forgot to regenerate them.
       - name: Check committed exports are current
         run: git diff --exit-code -- src/data/rdf/site-data.ttl public/site-data.ttl public/recent_work.json public/recent_work.ttl
 
       - name: Upload coverage reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage
           path: coverage/
@@ -55,17 +62,17 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: "24"
           cache: npm
 
       - name: Configure Pages
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Install Dependencies
         run: npm ci
@@ -83,10 +90,16 @@ jobs:
           touch dist/.nojekyll
 
       - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
+          # Keep the .nojekyll marker; v4+ leaves dotfiles out by default.
+          include-hidden-files: true
 
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
+        with:
+          # Pages occasionally stalls while syncing files; the 10-minute default cancelled
+          # the deploy after the #32 merge although the build itself was fine.
+          timeout: 1800000

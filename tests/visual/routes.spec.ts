@@ -1,15 +1,12 @@
 import { test, expect } from "@playwright/test";
 import { captureLayout, prepareVisualPage } from "./setup";
-import { entryPath, softwareCatalog } from "../../src/content/catalog";
 import {
-  publications,
-  getPublicationPagePath,
-} from "../../src/data/publicationsData";
-import { getTalkViewEntries } from "../../src/data/talkCatalog";
-import { getPosterViewEntries } from "../../src/data/posterCatalog";
-
-const talkViewEntries = getTalkViewEntries();
-const posterViewEntries = getPosterViewEntries();
+  entryPath,
+  posterCatalog,
+  publicationCatalog,
+  softwareCatalog,
+  talkCatalog,
+} from "../../src/content/catalog";
 
 // Every route pattern, plus each kind of detail/preview and exceptional state.
 const routes = [
@@ -25,10 +22,11 @@ const routes = [
   "/about/fellowships/fwo-phd-fellowship",
   entryPath(softwareCatalog.entries[0]),
   entryPath(softwareCatalog.entries[1]),
-  getPublicationPagePath(publications[0]),
-  `/talks/${talkViewEntries.find((talk) => !talk.slideEmbedUrl)!.slug}`,
-  `/talks/${talkViewEntries.find((talk) => talk.slideEmbedUrl)!.slug}`,
-  `/talks/posters/${posterViewEntries[0].slug}`,
+  entryPath(publicationCatalog.entries[0]),
+  entryPath(talkCatalog.entries.find((talk) => !talk.slides.embedUrl)!),
+  entryPath(talkCatalog.entries.find((talk) => talk.slides.embedUrl)!),
+  // The poster the baseline has always captured.
+  entryPath(posterCatalog.byId("e-i-xchange24-poster-edc")!),
   "/software?tag=topic&value=Solid",
   "/software?tag=topic&value=missing-topic",
   "/software/missing",

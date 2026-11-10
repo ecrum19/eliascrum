@@ -280,22 +280,6 @@ ec:TalkShape
     ]
   ) .
 
-ec:TalkMetadataShape
-  a sh:NodeShape ;
-  sh:targetClass ec:TalkMetadata ;
-  sh:property [
-    sh:path ec:forTalk ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-    sh:class ec:Talk ;
-  ] ;
-  sh:property [
-    sh:path ec:description ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-    sh:datatype xsd:string ;
-  ] .
-
 ec:SoftwareSectionShape
   a sh:NodeShape ;
   sh:targetClass ec:SoftwareSection ;
@@ -511,6 +495,31 @@ ec:RelatedResourceShape
   sh:property [
     sh:path schema:url ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+  ] .
+
+ec:HighlightShape
+  a sh:NodeShape ;
+  sh:targetClass ec:Highlight ;
+  sh:property [
+    sh:path schema:name ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:description ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path schema:url ;
+    sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ;
+  ] ;
+  sh:property [
+    sh:path ec:highlightsEntry ;
     sh:maxCount 1 ;
     sh:nodeKind sh:IRI ;
   ] .

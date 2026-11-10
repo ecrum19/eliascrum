@@ -21,7 +21,6 @@
     "update:scholar": "node scripts/update-scholar-citations.mjs",
     "recent-work:export": "node scripts/export-recent-work.mjs",
     "rdf:export": "node scripts/export-rdf-data.mjs",
-    "rdf:update": "node scripts/apply-rdf-update.mjs",
     "type-check": "vue-tsc --noEmit",
     "test:unit": "vitest run",
     "test:unit:watch": "vitest",
@@ -37,7 +36,6 @@
   },
   "dependencies": {
     "@comunica/query-sparql": "^5.4.1",
-    "core-js": "^3.51.0",
     "n3": "^2.13.12",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^6.5.438",
@@ -50,8 +48,6 @@
     "@playwright/test": "1.64.1",
     "@types/n3": "1.26.6",
     "@types/node": "24.19.2",
-    "@typescript-eslint/eslint-plugin": "^8.72.1",
-    "@typescript-eslint/parser": "^8.72.1",
     "@vitejs/plugin-vue": "^6.0.10",
     "@vitest/coverage-v8": "5.1.0",
     "@vue/eslint-config-typescript": "^14.9.0",
@@ -64,5 +60,9 @@
     "vite": "^8.3.5",
     "vitest": "5.1.0",
     "vue-tsc": "3.3.14"
+  },
+  "overrides": {
+    "glob": "14.0.3",
+    "minimatch": "11.0.4"
   }
 }

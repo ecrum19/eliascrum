@@ -4,7 +4,6 @@
 export const scholarCitationLastUpdatedIso: string | null = "2026-05-04T07:20:41.484Z";
 
 export const scholarCitationsByPublicationId: Record<string, number | null> = {
-  "google-scholar": null,
   "vcf-to-rdf-rml-swat4hcls-2026": 0,
   "genome-sharing-review-2026": 3,
   "disjointness-llm-ISWC-2024": 5,
@@ -19,7 +18,6 @@ export const scholarCitationsByPublicationId: Record<string, number | null> = {
 };
 
 export const publicationDownloadsByPublicationId: Record<string, number | null> = {
-  "google-scholar": null,
   "vcf-to-rdf-rml-swat4hcls-2026": null,
   "genome-sharing-review-2026": null,
   "disjointness-llm-ISWC-2024": null,

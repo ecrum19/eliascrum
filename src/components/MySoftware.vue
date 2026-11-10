@@ -93,6 +93,7 @@ import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { softwareCatalog } from "../content/catalog";
 import { dateLabel, dateSortValue } from "../content/dates";
+import { SORT_OPTIONS as sortOptions, choices } from "../content/listingFilters";
 import {
   defaultSoftwareFilters,
   filterSoftware,
@@ -113,16 +114,6 @@ import SoftwareCard from "./software/SoftwareCard.vue";
 const route = useRoute();
 const filters = ref(defaultSoftwareFilters());
 const filtersOpen = ref(false);
-const sortOptions = [
-  { value: "date-desc", label: "Newest First" },
-  { value: "date-asc", label: "Oldest First" },
-  { value: "title-asc", label: "Title (A-Z)" },
-  { value: "title-desc", label: "Title (Z-A)" },
-];
-const choices = (values: string[]) => [
-  "All",
-  ...new Set(values.sort((a, b) => a.localeCompare(b))),
-];
 const options = {
   types: choices(softwareCatalog.entries.map((entry) => entry.type)),
   purposes: choices(softwareCatalog.entries.map((entry) => entry.purpose)),

@@ -38,7 +38,7 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { softwareCatalog } from "../content/catalog";
 import { dateLabel } from "../content/dates";
-import { relatedItems, resolveHighlight } from "../content/relations";
+import { detailRelated, resolveHighlight } from "../content/relations";
 import { softwareDetailRows } from "../content/softwareDetails";
 import { softwareReleasesBySoftwareId } from "../data/softwareReleases";
 import DetailPage from "./detail/DetailPage.vue";
@@ -89,7 +89,9 @@ const detailRows = computed(() =>
     : [],
 );
 const related = computed(() =>
-  software.value ? relatedItems(`software:${software.value.id}`, software.value.related) : [],
+  software.value
+    ? detailRelated(`software:${software.value.id}`, software.value.related, software.value.highlight)
+    : [],
 );
 const tocEntries = computed(() =>
   detailToc([

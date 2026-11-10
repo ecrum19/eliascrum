@@ -5,13 +5,13 @@
     :toc-entries="tocEntries"
     :back="back"
     not-found-title="Talk not found"
-    not-found-message="This talk slug does not exist in the generated talks data."
+    not-found-message="No talk is recorded under this address."
   >
     <template v-if="talk">
       <detail-header
         :kicker="['Talk', ...talk.venueTags].join(' • ')"
-        :title="talk.displayTitle"
-        :date="talk.displayDateIso"
+        :title="talk.title"
+        :date="dateLabel(talk.date)"
         :back="back"
         :actions="actions"
         :tags="tags"
@@ -23,18 +23,18 @@
       <detail-section v-if="hasDistinctAbstract" id="detail-abstract" title="Abstract">
         <p>{{ talk.abstract }}</p>
       </detail-section>
-      <detail-section id="detail-metadata" title="Details">
+      <detail-section v-if="detailRows.length" id="detail-metadata" title="Details">
         <metadata-list :rows="detailRows" />
       </detail-section>
       <detail-section v-if="related.length" id="detail-related" title="Related">
         <related-links :items="related" />
       </detail-section>
       <detail-section id="detail-slides" title="Slides">
-        <template v-if="slideEmbedUrl">
+        <template v-if="embedUrl">
           <div v-if="embedRequested" class="slide-embed">
             <iframe
-              :src="slideEmbedUrl"
-              :title="`${talk.displayTitle} — slide presentation`"
+              :src="embedUrl"
+              :title="`${talk.title} — slide presentation`"
               allowfullscreen
               loading="lazy"
             ></iframe>
@@ -59,8 +59,13 @@
           keyboard-paging
         />
       </detail-section>
-      <detail-section v-if="posterPdfUrl" id="detail-poster" title="Poster">
-        <poster-preview :url="posterPdfUrl" />
+      <detail-section
+        v-for="(poster, index) in posters"
+        :id="index ? `detail-poster-${poster.id}` : 'detail-poster'"
+        :key="poster.id"
+        title="Poster"
+      >
+        <poster-preview :url="resolvePublicAssetPath(posterPdfPath(poster))" />
       </detail-section>
     </template>
   </detail-page>
@@ -69,8 +74,16 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
-import { getTalkViewBySlug } from "../data/talkCatalog";
-import { relatedItems, resolveHighlight } from "../content/relations";
+import { dateLabel, talkCatalog } from "../content/catalog";
+import {
+  audienceSizeCategory,
+  durationCategory,
+  posterPdfPath,
+  presentationDetailRows,
+  slidesUrl,
+  talkPosters,
+} from "../content/presentationDetails";
+import { detailRelated, resolveHighlight } from "../content/relations";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
 import { shouldDeferPdfPreviews } from "../utils/performanceMode";
 import DeferredPreviewNotice from "./layout/DeferredPreviewNotice.vue";
@@ -86,23 +99,21 @@ import { detailToc, listingTag, type DetailAction } from "./detail/detail";
 
 const back = { to: "/talks", label: "Back to Talks" };
 const route = useRoute();
-const talk = computed(() => getTalkViewBySlug(String(route.params.slug || "")));
-const slideEmbedUrl = computed(() => talk.value?.slideEmbedUrl?.trim() ?? "");
+const talk = computed(() => talkCatalog.bySlug(String(route.params.slug || "")));
+const embedUrl = computed(() => talk.value?.slides.embedUrl?.trim() ?? "");
 const slidePdfUrl = computed(() =>
-  talk.value && talk.value.slideFormat !== "html" ? resolvePublicAssetPath(talk.value.slidePath) : "",
+  talk.value?.slides.format === "pdf" ? resolvePublicAssetPath(slidesUrl(talk.value)) : "",
 );
-const posterPdfUrl = computed(() =>
-  talk.value?.posterPath ? resolvePublicAssetPath(talk.value.posterPath) : "",
-);
+const posters = computed(() => (talk.value ? talkPosters(talk.value) : []));
 // Embedded slide providers are opt-in while Lite mode is active, like PDF.js.
 const embedRequested = ref(!shouldDeferPdfPreviews());
 
 const actions = computed<DetailAction[]>(() => [
-  ...(slideEmbedUrl.value
+  ...(embedUrl.value
     ? [
         {
-          label: talk.value?.slideFormat === "html" ? "Open HTML Slides" : "Open Google Slides",
-          href: slideEmbedUrl.value,
+          label: talk.value?.slides.format === "html" ? "Open HTML Slides" : "Open Google Slides",
+          href: embedUrl.value,
         },
       ]
     : []),
@@ -111,41 +122,39 @@ const actions = computed<DetailAction[]>(() => [
 const tags = computed(() => {
   if (!talk.value) return [];
   const tag = (filter: string, value: string, category: string, color: Parameters<typeof listingTag>[4]) =>
-    listingTag("/talks", filter, String(value), category, color);
+    listingTag("/talks", filter, value, category, color);
+  const size = audienceSizeCategory(talk.value);
+  const duration = durationCategory(talk.value);
   return [
     tag("material", "Slides", "Type", "type"),
     ...talk.value.venueTags.map((venue) => tag("venue", venue, "Venue", "venue")),
-    ...talk.value.topicTags.map((topic) => tag("topic", topic, "Main Topic", "topic")),
+    ...talk.value.topics.map((topic) => tag("topic", topic, "Main Topic", "topic")),
     ...talk.value.audienceGroups.map((group) => tag("audienceGroup", group, "Audience Field", "audience")),
-    tag("audienceSize", talk.value.audienceSizeCategory, "Audience Size", "size"),
-    tag("duration", talk.value.durationCategory, "Duration", "duration"),
+    ...(size ? [tag("audienceSize", size, "Audience Size", "size")] : []),
+    ...(duration ? [tag("duration", duration, "Duration", "duration")] : []),
   ];
 });
 const hasDistinctAbstract = computed(
   () => talk.value?.abstract && talk.value.abstract.trim() !== talk.value.summary.trim(),
 );
-const detailRows = computed(() =>
-  talk.value
-    ? [
-        { label: "Goal", value: talk.value.goal },
-        { label: "Audience Expertise", value: talk.value.audienceExpertise },
-        { label: "Duration", value: `~ ${talk.value.durationMinutes} minutes` },
-        { label: "Audience Size", value: talk.value.audienceSizeEstimate.replace(/^Approx\.?\s*/i, "~ ") },
-        ...talk.value.relatedResources.map(({ label, url }) => ({ label, value: url, href: url })),
-      ]
-    : [],
-);
+const detailRows = computed(() => (talk.value ? presentationDetailRows(talk.value) : []));
 const highlight = computed(() => resolveHighlight(talk.value?.highlight));
-const related = computed(() => (talk.value ? relatedItems(`talk:${talk.value.slug}`) : []));
+const related = computed(() =>
+  talk.value ? detailRelated(`talk:${talk.value.id}`, talk.value.related, talk.value.highlight) : [],
+);
 const tocEntries = computed(() =>
   detailToc([
     { id: "detail-highlight", label: "Highlight", show: highlight.value },
     { id: "detail-summary", label: "Summary" },
     { id: "detail-abstract", label: "Abstract", show: hasDistinctAbstract.value },
-    { id: "detail-metadata", label: "Details" },
+    { id: "detail-metadata", label: "Details", show: detailRows.value.length },
     { id: "detail-related", label: "Related", show: related.value.length },
     { id: "detail-slides", label: "Slides", level: 1 },
-    { id: "detail-poster", label: "Poster", level: 1, show: posterPdfUrl.value },
+    ...posters.value.map((poster, index) => ({
+      id: index ? `detail-poster-${poster.id}` : "detail-poster",
+      label: "Poster",
+      level: 1 as const,
+    })),
   ]),
 );
 </script>

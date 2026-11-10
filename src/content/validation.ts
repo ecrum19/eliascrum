@@ -1,9 +1,17 @@
 import { isValidDate } from "./dates";
-import type { ContentEntry, ContentSection, Highlight, SoftwareRecord } from "./types";
+import { posterPdfPath, slidesUrl, type PresentationRecord } from "./presentationDetails";
+import { GENERATED_PUBLICATION_ROWS } from "./publicationDetails";
+import type {
+  ContentEntry,
+  ContentSection,
+  Highlight,
+  PublicationRecord,
+  SoftwareRecord,
+} from "./types";
 
 export interface ValidationContext {
   sections: ContentSection[];
-  /** Full kind:id keys let us validate links while the legacy catalogs still exist. */
+  /** Every `kind:id` a relation or highlight may point at. */
   relationKeys: ReadonlySet<string>;
   observationIds?: string[];
   localAssetExists?: (path: string) => boolean;
@@ -39,15 +47,28 @@ function createChecks(context: Omit<ValidationContext, "sections">, errors: stri
   return { checkLink, checkHighlight };
 }
 
-/** Highlights authored outside the catalog (publications, talk/poster metadata). */
-export function validateHighlights(
-  items: Array<[key: string, highlight: Highlight | undefined]>,
-  context: Omit<ValidationContext, "sections">,
-): string[] {
-  const errors: string[] = [];
-  const { checkHighlight } = createChecks(context, errors);
-  for (const [key, highlight] of items) checkHighlight(key, highlight);
-  return errors;
+/** Where a talk's PDF slides or a poster is published, if it is a file on this site. */
+export function presentationAssetPath(entry: PresentationRecord): string | undefined {
+  if (entry.kind === "poster") return posterPdfPath(entry);
+  return entry.slides.format === "pdf" ? slidesUrl(entry) : undefined;
+}
+
+/** Each PDF talk and poster must have been built by `build:slides`, and each built file must have a record. */
+export function validateTalkAssets(entries: PresentationRecord[], builtPaths: string[]): string[] {
+  const expected = new Map(
+    entries.flatMap((entry) => {
+      const path = presentationAssetPath(entry);
+      return path ? [[path, `${entry.kind}:${entry.id}`] as const] : [];
+    }),
+  );
+  return [
+    ...[...expected]
+      .filter(([path]) => !builtPaths.includes(path))
+      .map(([path, key]) => `${key}: ${path} is not built yet; run npm run build:slides`),
+    ...builtPaths
+      .filter((path) => !expected.has(path))
+      .map((path) => `talk assets: ${path} has no talk or poster record`),
+  ];
 }
 
 /** Return all actionable authoring errors together, rather than stopping at the first. */
@@ -85,15 +106,62 @@ export function validateContent(
       if (!sectionIds.has(software.sectionId))
         errors.push(`${key}: unknown section ${software.sectionId}`);
     }
+    if (entry.kind === "talk" || entry.kind === "poster") {
+      const presentation = entry as PresentationRecord;
+      for (const field of ["venueTags", "audienceGroups"] as const) {
+        if (!Array.isArray(presentation[field]) || presentation[field].some((tag) => !tag.trim()))
+          errors.push(`${key}: ${field} must be a list of nonblank values`);
+      }
+      for (const field of ["durationMinutes", "audienceSizeApprox"] as const) {
+        const value = presentation[field];
+        if (value !== undefined && !(Number.isInteger(value) && value > 0))
+          errors.push(`${key}: ${field} must be a positive whole number`);
+      }
+      for (const resource of presentation.relatedResources ?? []) {
+        if (!resource.label.trim()) errors.push(`${key}: resource label is required`);
+        checkLink(resource.url, `${key} ${resource.label}`);
+      }
+      if (presentation.kind === "poster" && !presentation.source?.trim())
+        errors.push(`${key}: source is required`);
+      if (presentation.kind === "talk") {
+        const { slides } = presentation;
+        if (slides?.format === "pdf") {
+          if (!slides.source?.trim()) errors.push(`${key}: slides.source is required`);
+        } else if (slides?.format === "html") {
+          checkLink(slides.url, `${key} slides`);
+        } else {
+          errors.push(`${key}: slides.format must be "pdf" or "html"`);
+        }
+        if (slides?.embedUrl) checkLink(slides.embedUrl, `${key} slides embed`);
+      }
+      const asset = presentationAssetPath(presentation);
+      if (asset && context.localAssetExists && !context.localAssetExists(asset))
+        errors.push(`${key}: missing local asset ${asset}; run npm run build:slides`);
+    }
+    if (entry.kind === "publication") {
+      const publication = entry as PublicationRecord;
+      for (const field of ["type", "authors", "venue", "bibtex"] as const) {
+        if (!publication[field]?.trim())
+          errors.push(`${key}: ${field} is required`);
+      }
+      for (const detail of entry.extraDetails ?? []) {
+        if (GENERATED_PUBLICATION_ROWS.includes(detail.label))
+          errors.push(`${key}: "${detail.label}" is generated from the record; remove the detail row`);
+      }
+    }
     for (const [role, url] of Object.entries(entry.links ?? {}))
       checkLink(url, `${key} ${role}`);
     for (const ref of entry.related ?? []) {
       if (!context.relationKeys.has(ref))
         errors.push(`${key}: unknown relation ${ref}`);
     }
+    // Detail labels name their RDF resources, so they must be unique per entry.
+    const labels = new Set<string>();
     for (const detail of entry.extraDetails ?? []) {
       if (!detail.label.trim() || !detail.value.trim())
         errors.push(`${key}: detail label and value are required`);
+      if (labels.has(detail.label)) errors.push(`${key}: duplicate detail label ${detail.label}`);
+      labels.add(detail.label);
       if (detail.href) checkLink(detail.href, `${key} ${detail.label}`);
     }
     checkHighlight(key, entry.highlight);

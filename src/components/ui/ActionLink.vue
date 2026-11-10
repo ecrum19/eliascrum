@@ -22,7 +22,7 @@ withDefaults(
     to?: RouteLocationRaw;
     href?: string;
     shape?: "card" | "pill";
-    intent?: "detail" | "back" | "external";
+    intent?: "detail" | "back" | "external" | "pdf";
   }>(),
   { href: "", shape: "card", intent: "external" },
 );

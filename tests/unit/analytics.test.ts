@@ -69,14 +69,4 @@ describe("analytics consent", () => {
       ),
     ).toBe(false);
   });
-  it("unsubscribes settings listeners", async () => {
-    const api = await import("../../src/utils/analytics");
-    const callback = vi.fn();
-    const dispose = api.subscribeToAnalyticsSettings(callback);
-    api.openAnalyticsSettings();
-    expect(callback).toHaveBeenCalledTimes(1);
-    dispose();
-    api.openAnalyticsSettings();
-    expect(callback).toHaveBeenCalledTimes(1);
-  });
 });

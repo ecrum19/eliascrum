@@ -6,6 +6,18 @@ export function dateLabel(date: ContentDate): string {
   return String(date);
 }
 
+/** "28/10/2026" for a day, as talk and poster listings print it; otherwise as dateLabel. */
+export function numericDateLabel(date: ContentDate): string {
+  if (typeof date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return dateLabel(date);
+  const [year, month, day] = date.split("-");
+  return `${day}/${month}/${year}`;
+}
+
+export function dateYear(date: ContentDate): number | undefined {
+  if (typeof date === "number") return date;
+  return /^\d{4}-/.test(date) ? Number(date.slice(0, 4)) : undefined;
+}
+
 /** Stable ordering only; year-only records are never exported as a fabricated full date. */
 export function dateSortValue(date: ContentDate): number {
   if (date === "ongoing") return Infinity;

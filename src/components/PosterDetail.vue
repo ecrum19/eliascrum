@@ -5,19 +5,19 @@
     :toc-entries="tocEntries"
     :back="back"
     not-found-title="Poster not found"
-    not-found-message="This poster slug does not exist in the generated poster data."
+    not-found-message="No poster is recorded under this address."
   >
     <template v-if="poster">
       <detail-header
         :kicker="['Poster', ...poster.venueTags].join(' • ')"
-        :title="poster.displayTitle"
-        :date="dateLabel"
+        :title="poster.title"
+        :date="dateLabel(poster.date)"
         :back="back"
         :actions="[{ label: 'Open Poster PDF', href: posterPdfUrl }]"
         :tags="tags"
       />
       <highlight-callout v-if="highlight" :highlight="highlight" />
-      <detail-section v-if="poster.summary" id="detail-summary" title="Summary">
+      <detail-section id="detail-summary" title="Summary">
         <p>{{ poster.summary }}</p>
       </detail-section>
       <detail-section v-if="hasDistinctAbstract" id="detail-abstract" title="Abstract">
@@ -39,8 +39,14 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { getPosterViewBySlug } from "../data/posterCatalog";
-import { relatedItems, resolveHighlight } from "../content/relations";
+import { dateLabel, posterCatalog } from "../content/catalog";
+import {
+  audienceSizeCategory,
+  durationCategory,
+  posterPdfPath,
+  presentationDetailRows,
+} from "../content/presentationDetails";
+import { detailRelated, resolveHighlight } from "../content/relations";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
 import DetailPage from "./detail/DetailPage.vue";
 import DetailHeader from "./detail/DetailHeader.vue";
@@ -53,43 +59,35 @@ import { detailToc, listingTag } from "./detail/detail";
 
 const back = { to: "/talks", label: "Back to Talks" };
 const route = useRoute();
-const poster = computed(() => getPosterViewBySlug(String(route.params.slug || "")));
-const posterPdfUrl = computed(() => (poster.value ? resolvePublicAssetPath(poster.value.path) : ""));
-const dateLabel = computed(() =>
-  !poster.value || poster.value.displayDateIso === "1900-01-01" ? "Undated" : poster.value.displayDateIso,
-);
-const tags = computed(() =>
-  poster.value
-    ? [
-        listingTag("/talks", "material", "Poster", "Type", "type"),
-        ...poster.value.venueTags.map((venue) => listingTag("/talks", "venue", String(venue), "Venue", "venue")),
-        ...poster.value.topicTags.map((topic) => listingTag("/talks", "topic", String(topic), "Main Topic", "topic")),
-        ...poster.value.audienceGroups.map((group) =>
-          listingTag("/talks", "audienceGroup", String(group), "Audience Field", "audience"),
-        ),
-      ]
-    : [],
-);
+const poster = computed(() => posterCatalog.bySlug(String(route.params.slug || "")));
+const posterPdfUrl = computed(() => (poster.value ? resolvePublicAssetPath(posterPdfPath(poster.value)) : ""));
+const tags = computed(() => {
+  if (!poster.value) return [];
+  const size = audienceSizeCategory(poster.value);
+  const duration = durationCategory(poster.value);
+  return [
+    listingTag("/talks", "material", "Poster", "Type", "type"),
+    ...poster.value.venueTags.map((venue) => listingTag("/talks", "venue", venue, "Venue", "venue")),
+    ...poster.value.topics.map((topic) => listingTag("/talks", "topic", topic, "Main Topic", "topic")),
+    ...poster.value.audienceGroups.map((group) =>
+      listingTag("/talks", "audienceGroup", group, "Audience Field", "audience"),
+    ),
+    ...(size ? [listingTag("/talks", "audienceSize", size, "Audience Size", "size")] : []),
+    ...(duration ? [listingTag("/talks", "duration", duration, "Duration", "duration")] : []),
+  ];
+});
 const hasDistinctAbstract = computed(
   () => poster.value?.abstract && poster.value.abstract.trim() !== poster.value.summary.trim(),
 );
-const detailRows = computed(() =>
-  poster.value
-    ? [
-        ...(poster.value.goal ? [{ label: "Goal", value: poster.value.goal }] : []),
-        ...(poster.value.audienceExpertise
-          ? [{ label: "Audience Expertise", value: poster.value.audienceExpertise }]
-          : []),
-        ...poster.value.relatedResources.map(({ label, url }) => ({ label, value: url, href: url })),
-      ]
-    : [],
-);
+const detailRows = computed(() => (poster.value ? presentationDetailRows(poster.value) : []));
 const highlight = computed(() => resolveHighlight(poster.value?.highlight));
-const related = computed(() => (poster.value ? relatedItems(`poster:${poster.value.slug}`) : []));
+const related = computed(() =>
+  poster.value ? detailRelated(`poster:${poster.value.id}`, poster.value.related, poster.value.highlight) : [],
+);
 const tocEntries = computed(() =>
   detailToc([
     { id: "detail-highlight", label: "Highlight", show: highlight.value },
-    { id: "detail-summary", label: "Summary", show: poster.value?.summary },
+    { id: "detail-summary", label: "Summary" },
     { id: "detail-abstract", label: "Abstract", show: hasDistinctAbstract.value },
     { id: "detail-metadata", label: "Details", show: detailRows.value.length },
     { id: "detail-related", label: "Related", show: related.value.length },

@@ -1,675 +1,252 @@
-import { isMain } from "./lib/cli.mjs";
-import { promises as fs } from "fs";
-import os from "os";
-import path from "path";
-import { spawn } from "child_process";
+#!/usr/bin/env node
+// Publishes the talk and poster PDFs named by the records in src/content/talks.ts and
+// src/content/posters.ts, and writes their asset inventory. Titles, dates, slugs, and
+// relationships are authored in those records; this script never invents them.
+//
+// Sources: .talk-assets/{slides,posters}.tar.gz, overlaid with any PDFs placed in ./slides or
+// ./posters (new or replacement files). Those are then folded into the archives.
+//
+//   npm run build:slides                     publish watermarked PDFs and write the inventory
+//   npm run build:slides -- --inventory-only only (re)write the inventory, as CI does
+import { createHash } from "node:crypto";
+import { spawn } from "node:child_process";
+import { promises as fs } from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import { isMain } from "./lib/cli.mjs";
+import { loadContentModule } from "./lib/load-content.mjs";
 
-const rootDir = process.cwd();
-// Input precedence:
-// 1) temporary ./slides + ./posters directories (for easy updates)
-// 2) archived bundles in ./.talk-assets/*.tar.gz (default long-term storage)
-const legacySlidesSourceDir = path.join(rootDir, "slides");
-const legacyPostersSourceDir = path.join(rootDir, "posters");
-const archivedSourcesDir = path.join(rootDir, ".talk-assets");
-const slidesArchivePath = path.join(archivedSourcesDir, "slides.tar.gz");
-const postersArchivePath = path.join(archivedSourcesDir, "posters.tar.gz");
-
-const talksBasePublicDir = path.join(rootDir, "public", "talks");
-const slidesPublicDir = path.join(talksBasePublicDir, "slides");
-const postersPublicDir = path.join(talksBasePublicDir, "posters");
-
-const talksDataPath = path.join(rootDir, "src", "data", "talksData.ts");
-const talkMetadataPath = path.join(rootDir, "src", "data", "talkMetadata.ts");
+const rootDir = fileURLToPath(new URL("../", import.meta.url));
+const KINDS = ["slides", "posters"];
+const archivePath = (kind) => path.join(rootDir, ".talk-assets", `${kind}.tar.gz`);
+const dropDir = (kind) => path.join(rootDir, kind);
+const inventoryPath = path.join(rootDir, "src", "content", "generated", "talkAssets.ts");
 
 const GHOSTSCRIPT_REPLACE_THRESHOLD = 0.99;
-const PDF_COLOR_DPI = "200";
-const PDF_GRAY_DPI = "200";
-const PDF_MONO_DPI = "300";
-const WATERMARK_YEAR = new Date().getUTCFullYear();
-const WATERMARK_TEXT = `© Elias Crum ${WATERMARK_YEAR}`;
-const WATERMARK_FONT_SIZE_PT = 5.5;
-const WATERMARK_GRAY = 0.78;
-const WATERMARK_OPACITY = 0.42;
-const WATERMARK_X_PT = 14;
-const WATERMARK_Y_PT = 11;
+const WATERMARK = { size: 5.5, gray: 0.78, opacity: 0.42, x: 14, y: 11 };
 
-const MANUAL_POSTER_MAP = {
-  "eswc-phdsymp-pangquin": "ESWC_24_Poster_EDC.pdf",
-  sosy2026: "eswc_2026_print.pdf",
-};
+/** A talk's material is stamped with the year it was presented, not the build year. */
+export const watermarkText = (year) => (year ? `© Elias Crum ${year}` : "© Elias Crum");
 
-// Source-file level mapping so talksData slugs stay aligned with talkMetadata keys.
-const TALK_METADATA_SLUG_BY_SOURCE_FILE = {
-  "SPHN-290425.pdf": "sphn-pengquin-talk",
-  "Vital-IT-EDC-040425.pdf": "sib-vital-it-talk",
-  "EDC-DPH-25.pdf": "dph-day-talk",
-  "FWO24_Pitch_EDC(official).pdf": "fwo-interview",
-  "ISWS2024_Slytherin_Presentation.pdf": "isws-group-project-presentation",
-  "PENGQUIN_ESWC_2024.pdf": "eswc-phdsymp-pangquin",
-  "SolidSymp2024_EDC.pdf": "solidsymp-genomepods",
-  "EDC-18m-VITO-Jury.pdf": "18m-vito-internal-jury",
-  "SIB-ReflectionUGent.pdf": "sib-researchstay-reflection",
-  "Solid_intro_TRIPLE.pdf": "solid-intro-triple-consortium",
-  "SwissProt.pdf": "swissprot-talk",
-  "UGent_PENGQUIN_Intro.pdf": "ugent-genomics-talk",
-};
-
-const STOP_WORDS = new Set([
-  "edc",
-  "poster",
-  "presentation",
-  "intro",
-  "official",
-  "pitch",
-  "the",
-  "and",
-  "for",
-  "talk",
-  "slides",
-  "slide",
-]);
-
-export function toSlug(input) {
-  return input
-    .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-export function toTitleFromStem(stem) {
-  return stem
-    .replace(/[_-]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
-}
-
-function tokenize(input) {
-  return input
-    .toLowerCase()
-    .split(/[^a-z0-9]+/g)
-    .filter((token) => token.length > 1 && !STOP_WORDS.has(token));
-}
-
-export function parseDateInfo(name) {
-  const compactDateMatch = name.match(/(^|[^0-9])(\d{2})(\d{2})(\d{2})([^0-9]|$)/);
-  if (compactDateMatch) {
-    const day = compactDateMatch[2];
-    const month = compactDateMatch[3];
-    const year = Number(compactDateMatch[4]) + 2000;
-    const iso = `${year}-${month}-${day}`;
-    const label = `${day}/${month}/${year}`;
-    return { iso, label };
+/**
+ * Match every record to its source file. Each PDF talk and poster needs a source, and each
+ * source needs a record, so nothing is published or dropped silently.
+ */
+export function planTalkAssets(content, sources) {
+  const { catalogModule, presentationDetailsModule } = content;
+  const { talkCatalog, posterCatalog, dateYear } = catalogModule;
+  const { slidesUrl, posterPdfPath } = presentationDetailsModule;
+  const wanted = [
+    ...talkCatalog.entries
+      .filter((talk) => talk.slides.format === "pdf")
+      .map((talk) => ({ entry: talk, kind: "slides", source: talk.slides.source, path: slidesUrl(talk) })),
+    ...posterCatalog.entries.map((poster) => ({
+      entry: poster,
+      kind: "posters",
+      source: poster.source,
+      path: posterPdfPath(poster),
+    })),
+  ];
+  const errors = [];
+  const assets = [];
+  for (const { entry, kind, source, path: publicPath } of wanted) {
+    const file = sources[kind].get(source);
+    if (!file) {
+      errors.push(`${entry.kind}:${entry.id}: ${kind}/${source} is in neither .talk-assets/${kind}.tar.gz nor ./${kind}`);
+      continue;
+    }
+    assets.push({
+      path: publicPath,
+      source: `${kind}/${source}`,
+      file,
+      output: path.join(rootDir, "public", decodeURIComponent(publicPath)),
+      year: dateYear(entry.date),
+    });
   }
-
-  const fourDigitYearMatch = name.match(/(20\d{2})/);
-  if (fourDigitYearMatch) {
-    const year = fourDigitYearMatch[1];
-    return { iso: `${year}-01-01`, label: year };
-  }
-
-  const twoDigitYearMatch = name.match(/(^|[^0-9])(\d{2})(?=[^a-zA-Z0-9]|$)/);
-  if (twoDigitYearMatch) {
-    const shortYear = Number(twoDigitYearMatch[2]);
-    if (shortYear >= 20 && shortYear <= 39) {
-      const year = `20${String(shortYear).padStart(2, "0")}`;
-      return { iso: `${year}-01-01`, label: year };
+  for (const kind of KINDS) {
+    const used = new Set(wanted.filter((item) => item.kind === kind).map((item) => item.source));
+    for (const source of sources[kind].keys()) {
+      if (!used.has(source))
+        errors.push(`${kind}/${source} has no record; add one to src/content/${kind === "slides" ? "talks" : "posters"}.ts`);
     }
   }
+  // Code-unit order, so every machine writes the same inventory.
+  return { assets: assets.sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0)), errors };
+}
 
+/** Technical metadata that depends only on the source file, so CI reproduces it exactly. */
+export async function describeAsset(asset) {
+  const bytes = await fs.readFile(asset.file);
+  const pdf = await PDFDocument.load(bytes, { updateMetadata: false });
   return {
-    iso: "1900-01-01",
-    label: "Undated",
+    source: asset.source,
+    pages: pdf.getPageCount(),
+    sha256: createHash("sha256").update(bytes).digest("hex"),
   };
 }
 
-function labelFromIso(dateIso) {
-  const isoMatch = dateIso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  if (!isoMatch) {
-    return dateIso;
-  }
-
-  const [, year, month, day] = isoMatch;
-  return `${day}/${month}/${year}`;
-}
-
-export function jaccardScore(tokensA, tokensB) {
-  const setA = new Set(tokensA);
-  const setB = new Set(tokensB);
-  const union = new Set([...setA, ...setB]);
-  if (union.size === 0) {
-    return 0;
-  }
-  let intersectionCount = 0;
-  setA.forEach((token) => {
-    if (setB.has(token)) {
-      intersectionCount += 1;
-    }
-  });
-  return intersectionCount / union.size;
-}
-
-function escapeForTs(value) {
-  return JSON.stringify(value);
-}
-
-function runCommand(command, args, options = {}) {
-  const stdio = options.stdio || "inherit";
-  return new Promise((resolve, reject) => {
-    const child = spawn(command, args, { stdio, cwd: options.cwd });
-    child.on("error", reject);
-    child.on("close", (code) => {
-      if (code === 0) {
-        resolve();
-        return;
-      }
-      reject(new Error(`${command} exited with code ${code}`));
-    });
-  });
-}
-
-async function commandExists(command) {
-  try {
-    await runCommand("which", [command], { stdio: "ignore" });
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-async function ensureDir(dir) {
-  await fs.mkdir(dir, { recursive: true });
-}
-
-async function clearDir(dir) {
-  await fs.rm(dir, { recursive: true, force: true });
-  await fs.mkdir(dir, { recursive: true });
-}
-
-async function listFiles(dir, extension) {
-  try {
-    const entries = await fs.readdir(dir, { withFileTypes: true });
-    return entries
-      .filter((entry) => {
-        if (!entry.isFile()) {
-          return false;
-        }
-
-        const lowerName = entry.name.toLowerCase();
-        if (!lowerName.endsWith(extension)) {
-          return false;
-        }
-
-        // Ignore hidden macOS metadata files (e.g., ._MyFile.pdf) and dotfiles.
-        if (entry.name.startsWith(".")) {
-          return false;
-        }
-
-        return true;
-      })
-      .map((entry) => entry.name)
-      .sort((a, b) => a.localeCompare(b));
-  } catch {
-    return [];
-  }
-}
-
-async function fileExists(filePath) {
-  try {
-    await fs.access(filePath);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-async function loadTalkMetadataDateBySlug() {
-  try {
-    const source = await fs.readFile(talkMetadataPath, "utf8");
-    const entryPattern = /"([^"]+)"\s*:\s*{([\s\S]*?)\n\s*},?/g;
-    const metadataDateBySlug = new Map();
-
-    let match;
-    while ((match = entryPattern.exec(source)) !== null) {
-      const slug = match[1];
-      const body = match[2];
-      const dateIsoMatch = body.match(/dateIso:\s*"([^"]+)"/);
-      const dateLabelMatch = body.match(/dateLabel:\s*"([^"]+)"/);
-
-      metadataDateBySlug.set(slug, {
-        dateIso: dateIsoMatch ? dateIsoMatch[1] : undefined,
-        dateLabel: dateLabelMatch ? dateLabelMatch[1] : undefined,
-      });
-    }
-
-    return metadataDateBySlug;
-  } catch {
-    return new Map();
-  }
-}
-
-async function extractArchive(archivePath, targetDir) {
-  await ensureDir(targetDir);
-  await runCommand("tar", ["-xzf", archivePath, "-C", targetDir], { stdio: "ignore" });
-}
-
-async function createArchiveFromDir(sourceDir, archivePath) {
-  const pdfFiles = await listFiles(sourceDir, ".pdf");
-  if (pdfFiles.length === 0) {
-    return false;
-  }
-
-  await ensureDir(path.dirname(archivePath));
-  await fs.rm(archivePath, { force: true });
-  await runCommand("tar", ["-czf", archivePath, "-C", sourceDir, ...pdfFiles], {
-    stdio: "ignore",
-  });
-  return true;
-}
-
-async function resolveSourceDir(kind, archivePath, legacyDir, tempDir) {
-  const legacyPdfFiles = await listFiles(legacyDir, ".pdf");
-  if (legacyPdfFiles.length > 0) {
-    return {
-      kind,
-      dir: legacyDir,
-      usedArchive: false,
-      archivePath,
-      legacyDir,
-    };
-  }
-
-  if (await fileExists(archivePath)) {
-    const extractedDir = path.join(tempDir, kind);
-    await extractArchive(archivePath, extractedDir);
-    return {
-      kind,
-      dir: extractedDir,
-      usedArchive: true,
-      archivePath,
-      legacyDir,
-    };
-  }
-
-  return {
-    kind,
-    dir: legacyDir,
-    usedArchive: false,
-    archivePath,
-    legacyDir,
-  };
-}
-
-export async function watermarkPdfInPlace(pdfPath) {
-  const inputBytes = await fs.readFile(pdfPath);
-  const pdfDoc = await PDFDocument.load(inputBytes, { updateMetadata: false });
-  const watermarkFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-  const watermarkColor = rgb(WATERMARK_GRAY, WATERMARK_GRAY, WATERMARK_GRAY);
-  const pages = pdfDoc.getPages();
-
-  pages.forEach((page) => {
-    page.drawText(WATERMARK_TEXT, {
-      x: WATERMARK_X_PT,
-      y: WATERMARK_Y_PT,
-      size: WATERMARK_FONT_SIZE_PT,
-      font: watermarkFont,
-      color: watermarkColor,
-      opacity: WATERMARK_OPACITY,
-    });
-  });
-
-  const tempPath = `${pdfPath}.watermarked.pdf`;
-  const outputBytes = await pdfDoc.save({
-    useObjectStreams: false,
-    addDefaultPage: false,
-    updateFieldAppearances: false,
-  });
-  await fs.writeFile(tempPath, outputBytes);
-  await fs.rm(pdfPath, { force: true });
-  await fs.rename(tempPath, pdfPath);
-
-  return { watermarked: true };
-}
-
-async function compressPdfInPlace(pdfPath, ghostscriptAvailable) {
-  if (!ghostscriptAvailable) {
-    return { processed: false, replaced: false, bytesSaved: 0 };
-  }
-
-  const tempPath = `${pdfPath}.compressed.pdf`;
-
-  try {
-    await runCommand(
-      "gs",
+export function formatInventory(described) {
+  const rows = described
+    .map(({ path: publicPath, source, pages, sha256 }) =>
       [
-        "-sDEVICE=pdfwrite",
-        "-dCompatibilityLevel=1.6",
-        "-dNOPAUSE",
-        "-dBATCH",
-        "-dQUIET",
-        "-dSAFER",
-        "-dDetectDuplicateImages=true",
-        "-dCompressFonts=true",
-        "-dSubsetFonts=true",
-        "-dAutoRotatePages=/None",
-        "-dDownsampleColorImages=true",
-        "-dColorImageDownsampleType=/Bicubic",
-        `-dColorImageResolution=${PDF_COLOR_DPI}`,
-        "-dDownsampleGrayImages=true",
-        "-dGrayImageDownsampleType=/Bicubic",
-        `-dGrayImageResolution=${PDF_GRAY_DPI}`,
-        "-dDownsampleMonoImages=true",
-        "-dMonoImageDownsampleType=/Subsample",
-        `-dMonoImageResolution=${PDF_MONO_DPI}`,
-        `-sOutputFile=${tempPath}`,
-        pdfPath,
-      ],
-      { stdio: "ignore" }
-    );
+        `  ${JSON.stringify(publicPath)}: {`,
+        `    source: ${JSON.stringify(source)},`,
+        `    pages: ${pages},`,
+        `    sha256: ${JSON.stringify(sha256)},`,
+        "  },",
+      ].join("\n"),
+    )
+    .join("\n");
+  return `// Auto-generated by scripts/build-slides.mjs from the talk and poster PDF sources.
+// Run: npm run build:slides (CI checks that this file is current).
 
-    if (!(await fileExists(tempPath))) {
-      return { processed: false, replaced: false, bytesSaved: 0 };
-    }
+export interface TalkAsset {
+  /** The file inside .talk-assets/slides.tar.gz or .talk-assets/posters.tar.gz. */
+  source: string;
+  pages: number;
+  /** SHA-256 of the source file, before watermarking and compression. */
+  sha256: string;
+}
 
-    const original = await fs.stat(pdfPath);
-    const compressed = await fs.stat(tempPath);
-    if (compressed.size < original.size * GHOSTSCRIPT_REPLACE_THRESHOLD) {
-      await fs.rm(pdfPath, { force: true });
-      await fs.rename(tempPath, pdfPath);
-      return {
-        processed: true,
-        replaced: true,
-        bytesSaved: original.size - compressed.size,
-      };
-    }
+/** Every published talk and poster PDF, keyed by its public path. */
+export const talkAssets: Record<string, TalkAsset> = {
+${rows}
+};
+`;
+}
 
-    await fs.rm(tempPath, { force: true });
-    return { processed: true, replaced: false, bytesSaved: 0 };
-  } catch (error) {
-    await fs.rm(tempPath, { force: true });
-    return { processed: false, replaced: false, bytesSaved: 0 };
+export async function watermarkPdfInPlace(pdfPath, year) {
+  const pdfDoc = await PDFDocument.load(await fs.readFile(pdfPath), { updateMetadata: false });
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  for (const page of pdfDoc.getPages()) {
+    page.drawText(watermarkText(year), {
+      x: WATERMARK.x,
+      y: WATERMARK.y,
+      size: WATERMARK.size,
+      font,
+      color: rgb(WATERMARK.gray, WATERMARK.gray, WATERMARK.gray),
+      opacity: WATERMARK.opacity,
+    });
   }
+  const output = await pdfDoc.save({ useObjectStreams: false, addDefaultPage: false, updateFieldAppearances: false });
+  await fs.writeFile(pdfPath, output);
+}
+
+function run(command, args) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, args, { stdio: "ignore" });
+    child.on("error", reject);
+    child.on("close", (code) => (code === 0 ? resolve() : reject(new Error(`${command} exited with code ${code}`))));
+  });
+}
+
+const commandExists = (command) => run("which", [command]).then(() => true, () => false);
+
+async function listPdfs(dir) {
+  const entries = await fs.readdir(dir, { withFileTypes: true }).catch(() => []);
+  return entries
+    .filter((entry) => entry.isFile() && !entry.name.startsWith(".") && entry.name.toLowerCase().endsWith(".pdf"))
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b));
+}
+
+/** Shrinks a PDF with Ghostscript when that saves at least 1%; returns the bytes saved. */
+async function compressPdfInPlace(pdfPath) {
+  const tempPath = `${pdfPath}.compressed.pdf`;
+  try {
+    await run("gs", [
+      "-sDEVICE=pdfwrite", "-dCompatibilityLevel=1.6", "-dNOPAUSE", "-dBATCH", "-dQUIET", "-dSAFER",
+      "-dDetectDuplicateImages=true", "-dCompressFonts=true", "-dSubsetFonts=true", "-dAutoRotatePages=/None",
+      "-dDownsampleColorImages=true", "-dColorImageDownsampleType=/Bicubic", "-dColorImageResolution=200",
+      "-dDownsampleGrayImages=true", "-dGrayImageDownsampleType=/Bicubic", "-dGrayImageResolution=200",
+      "-dDownsampleMonoImages=true", "-dMonoImageDownsampleType=/Subsample", "-dMonoImageResolution=300",
+      `-sOutputFile=${tempPath}`, pdfPath,
+    ]);
+    const [original, compressed] = await Promise.all([fs.stat(pdfPath), fs.stat(tempPath)]);
+    if (compressed.size < original.size * GHOSTSCRIPT_REPLACE_THRESHOLD) {
+      await fs.rename(tempPath, pdfPath);
+      return original.size - compressed.size;
+    }
+  } catch {
+    // Compression is optional; the watermarked original is kept.
+  }
+  await fs.rm(tempPath, { force: true });
+  return 0;
+}
+
+/** Archived sources overlaid with dropped-in PDFs, as kind → (file name → path). */
+async function collectSources(tempDir) {
+  const sources = {};
+  const dropped = {};
+  for (const kind of KINDS) {
+    const dir = path.join(tempDir, kind);
+    await fs.mkdir(dir, { recursive: true });
+    if (await fs.access(archivePath(kind)).then(() => true, () => false))
+      await run("tar", ["-xzf", archivePath(kind), "-C", dir]);
+    dropped[kind] = await listPdfs(dropDir(kind));
+    for (const name of dropped[kind]) await fs.copyFile(path.join(dropDir(kind), name), path.join(dir, name));
+    sources[kind] = new Map((await listPdfs(dir)).map((name) => [name, path.join(dir, name)]));
+  }
+  return { sources, dropped };
 }
 
 async function main() {
-  await ensureDir(path.dirname(talksDataPath));
-  const tarAvailable = await commandExists("tar");
-  if (!tarAvailable) {
-    throw new Error("`tar` is required but was not found on PATH.");
-  }
-
-  const tempSourcesDir = await fs.mkdtemp(path.join(os.tmpdir(), "talk-sources-"));
-
+  const inventoryOnly = process.argv.includes("--inventory-only");
+  if (!(await commandExists("tar"))) throw new Error("`tar` is required but was not found on PATH.");
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "talk-sources-"));
   try {
-    const slideSource = await resolveSourceDir(
-      "slides",
-      slidesArchivePath,
-      legacySlidesSourceDir,
-      tempSourcesDir
-    );
-    const posterSource = await resolveSourceDir(
-      "posters",
-      postersArchivePath,
-      legacyPostersSourceDir,
-      tempSourcesDir
-    );
+    // The records and path helpers only: the site content bundle imports the inventory written here.
+    const [catalogModule, presentationDetailsModule, { sources, dropped }] = await Promise.all([
+      loadContentModule(path.join(rootDir, "src/content/catalog.ts")),
+      loadContentModule(path.join(rootDir, "src/content/presentationDetails.ts")),
+      collectSources(tempDir),
+    ]);
+    const content = { catalogModule, presentationDetailsModule };
+    const { assets, errors } = planTalkAssets(content, sources);
+    if (errors.length) throw new Error(`Talk assets do not match their records:\n${errors.join("\n")}`);
 
-    const slidePdfFiles = await listFiles(slideSource.dir, ".pdf");
-    const posterFiles = await listFiles(posterSource.dir, ".pdf");
-
-    if (slidePdfFiles.length === 0) {
-      throw new Error(
-        "No slide PDFs found. Add files to ./slides once, or keep them in ./.talk-assets/slides.tar.gz."
-      );
+    const described = await Promise.all(assets.map(async (asset) => ({ path: asset.path, ...(await describeAsset(asset)) })));
+    await fs.mkdir(path.dirname(inventoryPath), { recursive: true });
+    await fs.writeFile(inventoryPath, formatInventory(described), "utf8");
+    if (inventoryOnly) {
+      console.log(`Wrote the inventory of ${assets.length} talk and poster PDFs.`);
+      return;
     }
 
-    const ghostscriptAvailable = await commandExists("gs");
-    if (!ghostscriptAvailable) {
-      console.warn(
-        "Ghostscript not found. PDF compression is skipped; watermarking still runs."
-      );
+    const ghostscript = await commandExists("gs");
+    if (!ghostscript) console.warn("Ghostscript not found: PDFs are watermarked but not compressed.");
+    for (const kind of KINDS) {
+      await fs.rm(path.join(rootDir, "public", "talks", kind), { recursive: true, force: true });
+      await fs.mkdir(path.join(rootDir, "public", "talks", kind), { recursive: true });
+    }
+    let saved = 0;
+    for (const asset of assets) {
+      await fs.copyFile(asset.file, asset.output);
+      await watermarkPdfInPlace(asset.output, asset.year);
+      if (ghostscript) saved += await compressPdfInPlace(asset.output);
     }
 
-    await clearDir(slidesPublicDir);
-    await clearDir(postersPublicDir);
-
-    const posterMeta = [];
-    const talkMetadataDateBySlug = await loadTalkMetadataDateBySlug();
-    let generatedPdfCount = 0;
-    let watermarkedPdfCount = 0;
-    let compressedPdfCount = 0;
-    let totalBytesSaved = 0;
-
-    for (const fileName of posterFiles) {
-      const sourcePath = path.join(posterSource.dir, fileName);
-      const outputPath = path.join(postersPublicDir, fileName);
-      await fs.copyFile(sourcePath, outputPath);
-
-      generatedPdfCount += 1;
-
-      const watermarking = await watermarkPdfInPlace(outputPath);
-      if (watermarking.watermarked) {
-        watermarkedPdfCount += 1;
-      }
-
-      const compression = await compressPdfInPlace(outputPath, ghostscriptAvailable);
-      if (compression.replaced) {
-        compressedPdfCount += 1;
-        totalBytesSaved += compression.bytesSaved;
-      }
-
-      const stem = fileName.replace(/\.pdf$/i, "");
-      posterMeta.push({
-        fileName,
-        slug: toSlug(stem),
-        title: toTitleFromStem(stem),
-        path: `/talks/posters/${encodeURIComponent(fileName)}`,
-        tokens: tokenize(stem),
-      });
+    // Fold dropped-in PDFs into the archives, which remain the long-term source.
+    for (const kind of KINDS) {
+      if (!dropped[kind].length) continue;
+      const dir = path.join(tempDir, kind);
+      await run("tar", ["-czf", archivePath(kind), "-C", dir, ...(await listPdfs(dir))]);
+      await fs.rm(dropDir(kind), { recursive: true, force: true });
+      console.log(`Added ${dropped[kind].length} file(s) from ./${kind} to .talk-assets/${kind}.tar.gz.`);
     }
-
-    const talks = [];
-
-    for (const fileName of slidePdfFiles) {
-      const sourcePdfPath = path.join(slideSource.dir, fileName);
-      const stem = fileName.replace(/\.pdf$/i, "");
-      const generatedSlug = toSlug(stem);
-      const mappedMetadataSlug = TALK_METADATA_SLUG_BY_SOURCE_FILE[fileName];
-      const slug = mappedMetadataSlug || generatedSlug;
-      const date = parseDateInfo(stem);
-      const metadataDate = talkMetadataDateBySlug.get(slug);
-      const resolvedDateIso = metadataDate?.dateIso ?? date.iso;
-      const resolvedDateLabel =
-        metadataDate?.dateLabel ??
-        (metadataDate?.dateIso ? labelFromIso(metadataDate.dateIso) : date.label);
-      const outputPdfPath = path.join(slidesPublicDir, `${slug}.pdf`);
-
-      await fs.copyFile(sourcePdfPath, outputPdfPath);
-
-      generatedPdfCount += 1;
-
-      const watermarking = await watermarkPdfInPlace(outputPdfPath);
-      if (watermarking.watermarked) {
-        watermarkedPdfCount += 1;
-      }
-
-      const compression = await compressPdfInPlace(outputPdfPath, ghostscriptAvailable);
-      if (compression.replaced) {
-        compressedPdfCount += 1;
-        totalBytesSaved += compression.bytesSaved;
-      }
-
-      talks.push({
-        slug,
-        title: toTitleFromStem(stem),
-        sourceFile: fileName,
-        dateIso: resolvedDateIso,
-        dateLabel: resolvedDateLabel,
-        slidePath: `/talks/slides/${slug}.pdf`,
-        posterPath: undefined,
-        posterTitle: undefined,
-        tokens: tokenize(stem),
-      });
-    }
-
-    const assignedPoster = new Set();
-
-    talks.forEach((talk) => {
-      const manualPosterFile = MANUAL_POSTER_MAP[talk.slug];
-      if (!manualPosterFile) {
-        return;
-      }
-      const poster = posterMeta.find((item) => item.fileName === manualPosterFile);
-      if (!poster) {
-        return;
-      }
-      talk.posterPath = poster.path;
-      talk.posterTitle = poster.title;
-      assignedPoster.add(poster.fileName);
-    });
-
-    talks.forEach((talk) => {
-      if (talk.posterPath) {
-        return;
-      }
-
-      let bestPoster = null;
-      let bestScore = 0;
-
-      posterMeta.forEach((poster) => {
-        if (assignedPoster.has(poster.fileName)) {
-          return;
-        }
-
-        const score = jaccardScore(talk.tokens, poster.tokens);
-        if (score > bestScore) {
-          bestScore = score;
-          bestPoster = poster;
-        }
-      });
-
-      if (bestPoster && bestScore >= 0.35) {
-        talk.posterPath = bestPoster.path;
-        talk.posterTitle = bestPoster.title;
-        assignedPoster.add(bestPoster.fileName);
-      }
-    });
-
-    talks.sort((a, b) => b.dateIso.localeCompare(a.dateIso));
-
-    const talksTsObjects = talks
-      .map((talk) => {
-        return [
-          "  {",
-          `    slug: ${escapeForTs(talk.slug)},`,
-          `    title: ${escapeForTs(talk.title)},`,
-          `    sourceFile: ${escapeForTs(talk.sourceFile)},`,
-          `    dateIso: ${escapeForTs(talk.dateIso)},`,
-          `    dateLabel: ${escapeForTs(talk.dateLabel)},`,
-          `    slidePath: ${escapeForTs(talk.slidePath)},`,
-          talk.posterPath ? `    posterPath: ${escapeForTs(talk.posterPath)},` : "",
-          talk.posterTitle ? `    posterTitle: ${escapeForTs(talk.posterTitle)},` : "",
-          "  },",
-        ]
-          .filter(Boolean)
-          .join("\n");
-      })
-      .join("\n");
-
-    const postersTsObjects = posterMeta
-      .map((poster) => {
-        return [
-          "  {",
-          `    slug: ${escapeForTs(poster.slug)},`,
-          `    title: ${escapeForTs(poster.title)},`,
-          `    path: ${escapeForTs(poster.path)},`,
-          "  },",
-        ].join("\n");
-      })
-      .join("\n");
-
-    const talksData = `// This file is auto-generated by scripts/build-slides.mjs
-// Run: npm run build:slides
-
-import { htmlTalks } from "./htmlTalks";
-
-export interface TalkEntry {
-  slug: string;
-  title: string;
-  sourceFile: string;
-  dateIso: string;
-  dateLabel: string;
-  slidePath: string;
-  slideFormat?: "pdf" | "html";
-  posterPath?: string;
-  posterTitle?: string;
-}
-
-export interface PosterEntry {
-  slug: string;
-  title: string;
-  path: string;
-}
-
-export const talks: TalkEntry[] = [
-  ...htmlTalks,
-${talksTsObjects}
-];
-
-export const posters: PosterEntry[] = [
-${postersTsObjects}
-];
-`;
-
-    await fs.writeFile(talksDataPath, talksData, "utf8");
-
-    let archivedSlides = false;
-    let archivedPosters = false;
-
-    if (!slideSource.usedArchive && (await fileExists(slideSource.legacyDir))) {
-      const createdArchive = await createArchiveFromDir(slideSource.legacyDir, slideSource.archivePath);
-      if (createdArchive) {
-        await fs.rm(slideSource.legacyDir, { recursive: true, force: true });
-        archivedSlides = true;
-      }
-    }
-
-    if (
-      posterFiles.length > 0 &&
-      !posterSource.usedArchive &&
-      (await fileExists(posterSource.legacyDir))
-    ) {
-      const createdArchive = await createArchiveFromDir(posterSource.legacyDir, posterSource.archivePath);
-      if (createdArchive) {
-        await fs.rm(posterSource.legacyDir, { recursive: true, force: true });
-        archivedPosters = true;
-      }
-    }
-
-    const mbSaved = (totalBytesSaved / (1024 * 1024)).toFixed(2);
-    const compressionSummary = ghostscriptAvailable
-      ? `Compressed ${compressedPdfCount}/${generatedPdfCount} output PDFs, saved ${mbSaved} MB.`
-      : "Compression skipped (Ghostscript unavailable).";
-    const archiveSummary = [
-      archivedSlides ? "slides archived to .talk-assets/slides.tar.gz" : null,
-      archivedPosters ? "posters archived to .talk-assets/posters.tar.gz" : null,
-    ]
-      .filter(Boolean)
-      .join("; ");
-
     console.log(
-      `Generated ${talks.length} talks and ${posterMeta.length} posters from PDF inputs. Watermarked ${watermarkedPdfCount}/${generatedPdfCount} output PDFs. ${compressionSummary}${archiveSummary ? ` ${archiveSummary}.` : ""}`
+      `Published ${assets.length} watermarked PDFs${ghostscript ? `, saving ${(saved / 2 ** 20).toFixed(2)} MB by compression` : ""}.`,
     );
   } finally {
-    await fs.rm(tempSourcesDir, { recursive: true, force: true });
+    await fs.rm(tempDir, { recursive: true, force: true });
   }
 }
 
 if (isMain(import.meta.url)) {
   main().catch((error) => {
-    console.error(error);
-    process.exit(1);
+    console.error(error instanceof Error ? error.message : error);
+    process.exitCode = 1;
   });
 }

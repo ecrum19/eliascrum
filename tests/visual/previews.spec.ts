@@ -1,13 +1,8 @@
 import { expect, test } from "@playwright/test";
 import { prepareVisualPage } from "./setup";
-import {
-  publications,
-  getPublicationPagePath,
-} from "../../src/data/publicationsData";
+import { entryPath, publicationCatalog } from "../../src/content/catalog";
 
-const paperPath = getPublicationPagePath(
-  publications.find((entry) => entry.paperPdfPath)!,
-);
+const paperPath = entryPath(publicationCatalog.entries.find((entry) => entry.links?.paper)!);
 
 for (const theme of ["light", "dark"]) {
   for (const mode of ["standard", "lite"]) {

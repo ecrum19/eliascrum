@@ -14,6 +14,7 @@ import {
   findBestScholarMatch,
   parseDownloadCountFromHtml,
   parseDownloadCountFromApiValue,
+  loadPublicationsForMatching,
 } from "../../scripts/update-scholar-citations.mjs";
 import {
   makeSnapshot,
@@ -21,20 +22,14 @@ import {
   updateExistingSnapshot,
 } from "../../scripts/update-alphabet-stock.mjs";
 import {
-  parseArgs,
-  parsePrefixesFromText,
-  parseTriplesFromBlock,
-  extractDataBlocks,
-  compactCanonicalTriple,
-  serializePrefixMap,
-} from "../../scripts/apply-rdf-update.mjs";
-import {
-  toSlug,
-  toTitleFromStem,
-  parseDateInfo,
-  jaccardScore,
+  describeAsset,
+  formatInventory,
+  planTalkAssets,
   watermarkPdfInPlace,
+  watermarkText,
 } from "../../scripts/build-slides.mjs";
+import { loadSiteContent } from "../../scripts/lib/load-content.mjs";
+import { minimalPoster, minimalTalk } from "../fixtures/minimalPresentations";
 
 beforeEach(() =>
   vi.stubGlobal(
@@ -116,6 +111,13 @@ describe("citation and download observations", () => {
     ).toBeNull();
     expect(extractScholarEntries("")).toEqual([]);
   });
+  it("matches the catalog's publications, never profile links", async () => {
+    const publications = await loadPublicationsForMatching();
+    const ids = publications.map((publication) => publication.id);
+    expect(ids).toContain("real-world-federation-iswc-2026");
+    expect(ids).not.toContain("google-scholar");
+    expect(publications[0].normalizedTitle).toBe(normalizeTitle(publications[0].title));
+  });
   it("treats missing download observations as unknown", () => {
     expect(
       parseDownloadCountFromHtml('<span id="article-downloads">1,234</span>'),
@@ -181,57 +183,58 @@ describe("stock observation math and API failures", () => {
   });
 });
 
-describe("RDF update parsing", () => {
-  it("parses DATA blocks and round-trips IRIs and typed/language literals", () => {
-    const prefixes = parsePrefixesFromText(
-      "PREFIX ex: <https://example.test/>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>",
-    );
-    const blocks = extractDataBlocks(
-      "INSERT",
-      'INSERT DATA {\nex:s ex:p "Text"@en .\nex:s ex:count "2"^^xsd:integer .\n}',
-    );
-    expect(blocks).toHaveLength(1);
-    const triples = parseTriplesFromBlock(blocks[0], prefixes);
-    expect(triples).toContain(
-      '<https://example.test/s> <https://example.test/p> "Text"@en .',
-    );
-    expect(compactCanonicalTriple(triples[0], prefixes)).toContain("ex:s");
-    expect(serializePrefixMap(prefixes)).toContain("@prefix ex:");
-    expect(() => parseTriplesFromBlock("bad data", prefixes)).toThrow();
-    expect(
-      parseArgs([
-        "node",
-        "update",
-        "--update",
-        "input.ru",
-        "--data",
-        "data.ttl",
-        "--dry-run",
-      ]),
-    ).toMatchObject({
-      updateFile: "input.ru",
-      dataFile: "data.ttl",
-      dryRun: true,
-    });
-    expect(() => parseArgs(["node", "update", "--invalid"])).toThrow(
-      "Unknown argument",
-    );
-  });
-});
+const content = await loadSiteContent();
 
 describe("slide asset helpers", () => {
-  it("preserves existing filename/slug and fallback matching conventions", () => {
-    expect(toSlug("Example Talk_2026")).toBe("example-talk-2026");
-    expect(toTitleFromStem("Example_Talk")).toContain("Example");
-    expect(parseDateInfo("Talk_091026.pdf")).toEqual({
-      iso: "2026-10-09",
-      label: "09/10/2026",
-    });
-    expect(parseDateInfo("Talk_2026.pdf").label).toBe("2026");
-    expect(parseDateInfo("Talk_25.pdf").label).toBe("2025");
-    expect(parseDateInfo("Undated.pdf").label).toBe("Undated");
-    expect(jaccardScore(["a", "b"], ["b", "c"])).toBeCloseTo(1 / 3);
-    expect(jaccardScore([], [])).toBe(0);
+  const withRecords = (talks, posters) => ({
+    ...content,
+    catalogModule: {
+      ...content.catalogModule,
+      talkCatalog: { entries: talks },
+      posterCatalog: { entries: posters },
+    },
+  });
+  const pdfTalk = { ...minimalTalk, date: 2024, slides: { format: "pdf", source: "Talk_v2.pdf" } };
+
+  it("publishes each record's own source file and names nothing itself", () => {
+    const sources = {
+      slides: new Map([["Talk_v2.pdf", "/tmp/Talk_v2.pdf"]]),
+      posters: new Map([["example_poster.pdf", "/tmp/example_poster.pdf"]]),
+    };
+    const { assets, errors } = planTalkAssets(withRecords([pdfTalk, minimalTalk], [minimalPoster]), sources);
+    expect(errors).toEqual([]);
+    expect(assets.map(({ path, source, year }) => ({ path, source, year }))).toEqual([
+      { path: "/talks/posters/example_poster.pdf", source: "posters/example_poster.pdf", year: 2026 },
+      { path: "/talks/slides/example-talk.pdf", source: "slides/Talk_v2.pdf", year: 2024 },
+    ]);
+  });
+  it("reports records without a source and sources without a record", () => {
+    const sources = { slides: new Map([["Stray.pdf", "/tmp/Stray.pdf"]]), posters: new Map() };
+    expect(planTalkAssets(withRecords([pdfTalk], [minimalPoster]), sources).errors).toEqual([
+      "talk:example-talk: slides/Talk_v2.pdf is in neither .talk-assets/slides.tar.gz nor ./slides",
+      "poster:example-poster: posters/example_poster.pdf is in neither .talk-assets/posters.tar.gz nor ./posters",
+      "slides/Stray.pdf has no record; add one to src/content/talks.ts",
+    ]);
+  });
+  it("describes sources deterministically and stamps the presentation year", async () => {
+    const directory = await mkdtemp(path.join(os.tmpdir(), "website-slides-test-"));
+    try {
+      const pdf = await PDFDocument.create();
+      pdf.addPage([640, 480]);
+      pdf.addPage([640, 480]);
+      const file = path.join(directory, "Talk.pdf");
+      await writeFile(file, await pdf.save());
+      const asset = { path: "/talks/slides/example-talk.pdf", source: "slides/Talk.pdf", file };
+      const described = { path: asset.path, ...(await describeAsset(asset)) };
+      expect(described).toMatchObject({ source: "slides/Talk.pdf", pages: 2 });
+      expect(described.sha256).toMatch(/^[0-9a-f]{64}$/);
+      expect(formatInventory([described])).toBe(formatInventory([{ ...described }]));
+      expect(formatInventory([described])).toContain('"/talks/slides/example-talk.pdf": {');
+      expect(watermarkText(2024)).toBe("© Elias Crum 2024");
+      expect(watermarkText(undefined)).toBe("© Elias Crum");
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
   });
   it("watermarks a real PDF without dropping or resizing pages", async () => {
     const directory = await mkdtemp(
@@ -242,7 +245,7 @@ describe("slide asset helpers", () => {
       pdf.addPage([640, 480]);
       const filename = path.join(directory, "slides.pdf");
       await writeFile(filename, await pdf.save());
-      await watermarkPdfInPlace(filename);
+      await watermarkPdfInPlace(filename, 2024);
       const rendered = await PDFDocument.load(await readFile(filename));
       expect(rendered.getPageCount()).toBe(1);
       expect(rendered.getPage(0).getSize()).toEqual({

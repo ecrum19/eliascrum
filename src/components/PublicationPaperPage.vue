@@ -12,7 +12,7 @@
         :kicker="`${publication.type} • ${publication.venue}`"
         :title="publication.title"
         :byline="publication.authors"
-        :date="publication.sortDate || String(publication.year)"
+        :date="dateLabel(publication.date)"
         :back="back"
         :actions="paperOpenHref ? [{ label: paperOpenLabel, href: paperOpenHref }] : []"
         :tags="tags"
@@ -68,13 +68,14 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from "vue";
 import { useRoute } from "vue-router";
-import { getPublicationBySlug } from "../data/publicationsData";
+import { dateLabel, publicationCatalog } from "../content/catalog";
 import {
-  publicationDownloadsByPublicationId,
-  scholarCitationsByPublicationId,
-} from "../data/scholarCitations";
-import { relatedItems, resolveHighlight } from "../content/relations";
-import { resolvePublicAssetPath } from "../utils/publicAssetPath";
+  publicationDetailRows,
+  publicationMetric,
+  publicationPdfUrl,
+} from "../content/publicationDetails";
+import { detailRelated, resolveHighlight } from "../content/relations";
+import { copyText } from "../utils/clipboard";
 import DetailPage from "./detail/DetailPage.vue";
 import DetailHeader from "./detail/DetailHeader.vue";
 import DetailSection from "./detail/DetailSection.vue";
@@ -86,23 +87,15 @@ import ActionLink from "./ui/ActionLink.vue";
 import { detailToc, listingTag } from "./detail/detail";
 
 const back = { to: "/publications", label: "Back to Publications" };
-const isLikelyPdfUrl = (url: string) =>
-  url.trim().toLowerCase().split(/[?#]/, 1)[0].endsWith(".pdf");
-
 const route = useRoute();
-const publication = computed(() => getPublicationBySlug(String(route.params.slug || "")));
-const paperPreviewUrl = computed(() => {
-  if (publication.value?.paperPdfPath) return resolvePublicAssetPath(publication.value.paperPdfPath);
-  return publication.value?.url && isLikelyPdfUrl(publication.value.url)
-    ? publication.value.url
-    : undefined;
-});
-const paperOpenHref = computed(() => paperPreviewUrl.value ?? (publication.value?.url || undefined));
+const publication = computed(() => publicationCatalog.bySlug(String(route.params.slug || "")));
+const paperPreviewUrl = computed(() => publication.value && publicationPdfUrl(publication.value));
+const paperOpenHref = computed(() => paperPreviewUrl.value ?? publication.value?.links?.publisher);
 const paperOpenLabel = computed(() =>
   paperPreviewUrl.value ? "Open Paper PDF" : "Open Publication Page",
 );
 const previewUnavailableLabel = computed(() =>
-  publication.value?.url
+  publication.value?.links?.publisher
     ? "A direct PDF preview is not available for this publication source."
     : "A hosted PDF has not been added for this publication yet.",
 );
@@ -113,29 +106,26 @@ const tags = computed(() =>
         ...publication.value.venueTags.map((venue) =>
           listingTag("/publications", "venue", venue, "Venue", "venue"),
         ),
-        ...publication.value.topicTags.map((topic) =>
+        ...publication.value.topics.map((topic) =>
           listingTag("/publications", "topic", topic, "Main Topic", "topic"),
         ),
       ]
     : [],
 );
-const detailRows = computed(() => {
-  if (!publication.value) return [];
-  const { id, type, details } = publication.value;
-  // Theses report repository downloads; papers report Google Scholar citations.
-  const isThesis = type === "Thesis";
-  const count = (isThesis ? publicationDownloadsByPublicationId : scholarCitationsByPublicationId)[id];
-  return [
-    ...details,
-    {
-      label: isThesis ? "Loyola eCommons Downloads" : "Google Scholar Citations",
-      value: count === null || count === undefined ? "N/A" : String(count),
-    },
-  ];
-});
+const detailRows = computed(() =>
+  publication.value
+    ? [...publicationDetailRows(publication.value), publicationMetric(publication.value)]
+    : [],
+);
 const highlight = computed(() => resolveHighlight(publication.value?.highlight));
 const related = computed(() =>
-  publication.value ? relatedItems(`publication:${publication.value.id}`) : [],
+  publication.value
+    ? detailRelated(
+        `publication:${publication.value.id}`,
+        publication.value.related,
+        publication.value.highlight,
+      )
+    : [],
 );
 const tocEntries = computed(() =>
   detailToc([
@@ -154,36 +144,12 @@ let copiedResetTimer: ReturnType<typeof setTimeout> | undefined;
 onBeforeUnmount(() => clearTimeout(copiedResetTimer));
 
 async function copyBibtex() {
-  if (!publication.value) return;
-  const bibtex = publication.value.bibtex;
-  const markCopied = () => {
-    copied.value = true;
-    clearTimeout(copiedResetTimer);
-    copiedResetTimer = setTimeout(() => {
-      copied.value = false;
-    }, 1800);
-  };
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(bibtex);
-      markCopied();
-      return;
-    }
-  } catch {
-    // Fall back to a temporary selection below.
-  }
-  const textarea = document.createElement("textarea");
-  textarea.value = bibtex;
-  textarea.setAttribute("readonly", "");
-  textarea.style.position = "fixed";
-  textarea.style.opacity = "0";
-  textarea.style.left = "-9999px";
-  document.body.appendChild(textarea);
-  textarea.select();
-  textarea.setSelectionRange(0, textarea.value.length);
-  const succeeded = document.execCommand("copy");
-  document.body.removeChild(textarea);
-  if (succeeded) markCopied();
+  if (!publication.value || !(await copyText(publication.value.bibtex))) return;
+  copied.value = true;
+  clearTimeout(copiedResetTimer);
+  copiedResetTimer = setTimeout(() => {
+    copied.value = false;
+  }, 1800);
 }
 </script>
 

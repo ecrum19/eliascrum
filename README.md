@@ -53,8 +53,8 @@ See [CV generator maintenance](scripts/cv/README.md) for content selection and f
 
 The navigation bar includes an `Auto / Standard / Lite` performance setting. Lite preserves the
 site content and keyword search while using a static background and deferring optional PDF previews
-and semantic search until requested. [Performance mode details](docs/PERFORMANCE_MODE.md) explain
-the behavior and verification steps.
+and semantic search until requested. Auto chooses Lite on slow or data-saver connections, on
+devices with little memory or few processor cores, and when reduced motion is requested.
 
 ## Research Themes
 

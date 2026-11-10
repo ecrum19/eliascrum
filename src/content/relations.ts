@@ -1,12 +1,5 @@
-import {
-  getPublicationById,
-  getPublicationPagePath,
-  publicationPresentationLinksById,
-} from "../data/publicationsData";
-import { getTalkViewBySlug } from "../data/talkCatalog";
-import { getPosterViewBySlug, getPosterViewEntries } from "../data/posterCatalog";
-import { entryPath, softwareCatalog } from "./catalog";
-import type { ContentKind, EntryRef, Highlight } from "./types";
+import { entryPath, posterCatalog, publicationCatalog, softwareCatalog, talkCatalog } from "./catalog";
+import type { ContentEntry, ContentKind, EntryRef, Highlight } from "./types";
 
 export interface RelatedItem {
   key: EntryRef;
@@ -21,71 +14,39 @@ const KIND_LABELS: Record<ContentKind, string> = {
   software: "Software",
 };
 
+/** Reverse links are listed in this order, after the entry's own. */
+const CATALOGS = {
+  publication: publicationCatalog,
+  software: softwareCatalog,
+  talk: talkCatalog,
+  poster: posterCatalog,
+} satisfies Record<ContentKind, { entries: ContentEntry[]; byId(id: string): ContentEntry | undefined }>;
+
 export function splitRef(ref: EntryRef): [ContentKind, string] {
   const separator = ref.indexOf(":");
   return [ref.slice(0, separator) as ContentKind, ref.slice(separator + 1)];
 }
 
-/** Legacy lookups stay here until publications, talks, and posters join the catalog. */
-function findTarget(kind: ContentKind, id: string) {
-  switch (kind) {
-    case "publication": {
-      const target = getPublicationById(id);
-      return target && { title: target.title, to: getPublicationPagePath(target) };
-    }
-    case "talk": {
-      const target = getTalkViewBySlug(id);
-      return target && { title: target.displayTitle, to: `/talks/${target.slug}` };
-    }
-    case "poster": {
-      const target = getPosterViewBySlug(id);
-      return target && { title: target.displayTitle, to: `/talks/posters/${target.slug}` };
-    }
-    case "software": {
-      const target = softwareCatalog.byId(id);
-      return target && { title: target.title, to: entryPath(target) };
-    }
-  }
-}
-
-export function resolveEntryRef(ref: EntryRef): RelatedItem | undefined {
+export const findEntry = (ref: EntryRef): ContentEntry | undefined => {
   const [kind, id] = splitRef(ref);
-  const target = findTarget(kind, id);
-  return target && { key: ref, label: `${KIND_LABELS[kind]}: ${target.title}`, to: target.to };
-}
-
-const posterRefForPath = (path: string): EntryRef | undefined => {
-  const poster = getPosterViewEntries().find((entry) => entry.path === path);
-  return poster && `poster:${poster.slug}`;
+  return CATALOGS[kind]?.byId(id);
 };
 
+export function resolveEntryRef(ref: EntryRef): RelatedItem | undefined {
+  const target = findEntry(ref);
+  return target && { key: ref, label: `${KIND_LABELS[target.kind]}: ${target.title}`, to: entryPath(target) };
+}
+
 /**
- * An entry's authored relationships plus every relationship stored on the other side
- * (software → anything, publication ↔ presentation, talk ↔ poster), each listed once.
+ * An entry's authored relationships plus every relationship authored on the other side
+ * (any entry that lists this one, such as a talk listing its poster), each listed once.
  */
 export function relatedItems(self: EntryRef, authored: EntryRef[] = []): RelatedItem[] {
   const refs = new Set<EntryRef>(authored);
-  for (const entry of softwareCatalog.entries) {
-    if (entry.related?.includes(self)) refs.add(`software:${entry.id}`);
-  }
-  const [kind, id] = splitRef(self);
-  for (const [publicationId, links] of Object.entries(publicationPresentationLinksById)) {
-    for (const link of links) {
-      const presentation =
-        link.kind === "talk" ? (`talk:${link.talkSlug}` as const) : posterRefForPath(link.filePath);
-      if (!presentation) continue;
-      if (kind === "publication" && publicationId === id) refs.add(presentation);
-      if (presentation === self) refs.add(`publication:${publicationId}`);
+  for (const catalog of Object.values(CATALOGS)) {
+    for (const entry of catalog.entries as ContentEntry[]) {
+      if (entry.related?.includes(self)) refs.add(`${entry.kind}:${entry.id}`);
     }
-  }
-  if (kind === "talk") {
-    const posterPath = getTalkViewBySlug(id)?.posterPath;
-    const poster = posterPath && posterRefForPath(posterPath);
-    if (poster) refs.add(poster);
-  }
-  if (kind === "poster") {
-    const talkSlug = getPosterViewBySlug(id)?.linkedTalkSlug;
-    if (talkSlug) refs.add(`talk:${talkSlug}`);
   }
   refs.delete(self);
   return [...refs].flatMap((ref) => resolveEntryRef(ref) ?? []);
@@ -99,4 +60,13 @@ export function resolveHighlight(highlight?: Highlight): ResolvedHighlight | und
   if (!highlight) return undefined;
   const { related, ...rest } = highlight;
   return { ...rest, related: related && resolveEntryRef(related) };
+}
+
+/** An item page's Related list, without the entry its highlight already features. */
+export function detailRelated(
+  self: EntryRef,
+  authored: EntryRef[] = [],
+  highlight?: Highlight,
+): RelatedItem[] {
+  return relatedItems(self, authored).filter((item) => item.key !== highlight?.related);
 }
