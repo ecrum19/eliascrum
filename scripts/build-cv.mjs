@@ -2,14 +2,13 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { build } from 'esbuild';
+import { loadContentModule } from './lib/load-content.mjs';
 import { CvPdf } from './cv/render.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 
 export async function loadCvContent() {
-  const result = await build({ entryPoints: [path.join(root, 'scripts/cv/content.ts')], bundle: true, platform: 'node', format: 'esm', write: false });
-  return import(`data:text/javascript;base64,${Buffer.from(result.outputFiles[0].text).toString('base64')}`);
+  return loadContentModule(path.join(root, 'scripts/cv/content.ts'));
 }
 
 export function siteLink(value, siteUrl) {
@@ -93,8 +92,8 @@ export async function generateCv({ date = new Date(), siteUrl = process.env.CV_S
     };
 
     const softwareBlock = (entry) => {
-      const url = absolute(entry.repositoryUrl || entry.webUrl || `/software/${entry.slug || entry.id}`);
-      const related = (entry.relatedPublicationIds ?? []).map((id) => {
+      const url = absolute(entry.links?.repository || entry.links?.website || `/software/${entry.slug}`);
+      const related = data.relatedIds(entry, 'publication').map((id) => {
         const publication = data.publications.find((item) => item.id === id);
         if (!publication) throw new Error(`Missing software publication: ${id}`);
         return publication;
@@ -112,7 +111,7 @@ export async function generateCv({ date = new Date(), siteUrl = process.env.CV_S
             { text: `${paper.type === 'Preprint' ? paper.venue : paper.venueTags[0] || paper.venue} ${paper.year}`.replace(/(\d{4}) \1/g, '$1'), size: 8.5, href: absolute(publicationHref(paper)) },
           ]),
         ], { leading: 11, gap: 0 }),
-        ...(!focused ? [doc.paragraph(entry.type, { font: 'italic', size: 9 }), ...[entry.webUrl].filter((link) => link && absolute(link) !== url).map((link) => doc.paragraph(link, { size: 8.5, href: absolute(link) }))] : []),
+        ...(!focused ? [doc.paragraph(entry.type, { font: 'italic', size: 9 }), ...[entry.links?.website].filter((link) => link && absolute(link) !== url).map((link) => doc.paragraph(link, { size: 8.5, href: absolute(link) }))] : []),
       ], focused ? 6 : 8);
     };
 

@@ -13,7 +13,7 @@ the generator never reads that private local file or copies it to the website.
   publications, the FWO fellowship, awards, and clinical/teaching experience.
 
 Edit factual records in `src/data/cvData.ts`, `publicationsData.ts`,
-`softwareData.ts`, and the talk/poster catalogs. `content.ts` holds the focused
+`src/content/software.ts`, and the talk/poster catalogs. `content.ts` holds the focused
 profile, selected experience/software, and explicit publication selections. Elias's
 requested four papers are pinned by ID, so adding newer papers cannot silently
 replace the bioinformatics or PhD Symposium entries. Accepted papers and preprints

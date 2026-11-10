@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { isMain } from "./lib/cli.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -33,7 +34,7 @@ function decodeHtml(value) {
     .replace(/&#(\d+);/g, (_, codePoint) => String.fromCharCode(Number(codePoint)));
 }
 
-function normalizeTitle(value) {
+export function normalizeTitle(value) {
   return decodeHtml(value)
     .toLowerCase()
     .replace(/<[^>]+>/g, "")
@@ -67,7 +68,7 @@ function parseCitationCount(value) {
   return Number.parseInt(digits, 10);
 }
 
-function extractScholarEntries(html) {
+export function extractScholarEntries(html) {
   const rowPattern = /<tr class="gsc_a_tr"[\s\S]*?<\/tr>/g;
   const rows = html.match(rowPattern) ?? [];
 
@@ -92,7 +93,7 @@ function extractScholarEntries(html) {
     .filter(Boolean);
 }
 
-function findBestScholarMatch(publication, scholarEntries) {
+export function findBestScholarMatch(publication, scholarEntries) {
   const exactMatch = scholarEntries.find(
     (entry) => entry.normalizedTitle === publication.normalizedTitle
   );
@@ -167,7 +168,7 @@ async function fetchScholarHtml() {
   return html;
 }
 
-function parseDownloadCountFromHtml(html) {
+export function parseDownloadCountFromHtml(html) {
   const spanMatch = html.match(
     /<span[^>]*id=["']article-downloads["'][^>]*>\s*([\d,]+)\s*<\/span>/i,
   );
@@ -190,7 +191,7 @@ function parseStatsRecordIdFromHtml(html) {
   return match[1];
 }
 
-function parseDownloadCountFromApiValue(value) {
+export function parseDownloadCountFromApiValue(value) {
   const digitsOnly = String(value ?? "").replace(/[^\d]/g, "");
   if (!digitsOnly) {
     return null;
@@ -311,7 +312,9 @@ async function main() {
   }
 }
 
-main().catch((error) => {
-  console.error(error instanceof Error ? error.message : error);
-  process.exitCode = 1;
-});
+if (isMain(import.meta.url)) {
+  main().catch((error) => {
+    console.error(error instanceof Error ? error.message : error);
+    process.exitCode = 1;
+  });
+}

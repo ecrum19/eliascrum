@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { isMain } from "./lib/cli.mjs";
 
 import { execFileSync } from "node:child_process";
 import fs from "node:fs/promises";
@@ -38,7 +39,7 @@ function toIsoDate(timestamp) {
   return new Date(timestamp * 1000).toISOString().slice(0, 10);
 }
 
-async function fetchDailyRows(period1) {
+export async function fetchDailyRows(period1) {
   const period2 = Math.floor(Date.now() / 1000) + 24 * 60 * 60;
   const url = new URL(`https://query1.finance.yahoo.com/v8/finance/chart/${ticker}`);
   url.searchParams.set("period1", String(period1));
@@ -84,7 +85,7 @@ async function fetchDailyRows(period1) {
   };
 }
 
-function makeSnapshot({ firstCommitDate, initialPrice, initialPriceDate, currentDate, currentClose, currency }) {
+export function makeSnapshot({ firstCommitDate, initialPrice, initialPriceDate, currentDate, currentClose, currency }) {
   const changeAmount = roundToCents(currentClose - initialPrice);
   const changePercent = roundToCents((changeAmount / initialPrice) * 100);
 
@@ -133,7 +134,7 @@ async function createInitialSnapshot(firstCommitIso) {
   });
 }
 
-async function updateExistingSnapshot(existing, firstCommitIso) {
+export async function updateExistingSnapshot(existing, firstCommitIso) {
   const initialPrice = Number.isFinite(existing.initialPrice)
     ? existing.initialPrice
     : existing.baselineClose;
@@ -173,10 +174,12 @@ async function writeSnapshot(snapshot) {
   );
 }
 
-const firstCommitIso = getFirstCommitIso();
-const existingSnapshot = await loadExistingSnapshot();
-const snapshot = existingSnapshot
-  ? await updateExistingSnapshot(existingSnapshot, firstCommitIso)
-  : await createInitialSnapshot(firstCommitIso);
+if (isMain(import.meta.url)) {
+  const firstCommitIso = getFirstCommitIso();
+  const existingSnapshot = await loadExistingSnapshot();
+  const snapshot = existingSnapshot
+    ? await updateExistingSnapshot(existingSnapshot, firstCommitIso)
+    : await createInitialSnapshot(firstCommitIso);
 
-await writeSnapshot(snapshot);
+  await writeSnapshot(snapshot);
+}

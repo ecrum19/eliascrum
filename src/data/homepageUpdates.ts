@@ -111,13 +111,16 @@ export function getAllHomepageUpdates(): HomepageUpdate[] {
     ...getBlogUpdates(),
   ];
 
+  // On the same day, a paper leads its own presentation.
+  const typeOrder: HomepageUpdateType[] = ["Publication", "Talk", "Blog"];
   return updates.sort((a, b) => {
     const byDate = toComparableDate(b.dateIso).localeCompare(toComparableDate(a.dateIso));
     if (byDate !== 0) {
       return byDate;
     }
 
-    return a.title.localeCompare(b.title);
+    const byType = typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type);
+    return byType || a.title.localeCompare(b.title);
   });
 }
 

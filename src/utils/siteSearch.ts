@@ -3,7 +3,8 @@ import { cvSections } from "../data/cvData";
 import { getAllHomepageUpdates } from "../data/homepageUpdates";
 import { getPosterViewEntries } from "../data/posterCatalog";
 import { getPublicationPagePath, publications } from "../data/publicationsData";
-import { getSoftwarePagePath, softwareSections } from "../data/softwareData";
+import { dateLabel, entryPath, softwareCatalog } from "../content/catalog";
+import type { SoftwareRecord } from "../content/types";
 import { getTalkViewEntries } from "../data/talkCatalog";
 import { talks } from "../data/talksData";
 import { resolvePublicAssetPath } from "./publicAssetPath";
@@ -118,7 +119,7 @@ function normalizeInternalRoute(value: string): string | undefined {
   return undefined;
 }
 
-function buildSearchDocuments(): SearchDocument[] {
+export function buildSearchDocuments(softwareSource: SoftwareRecord[] = softwareCatalog.entries): SearchDocument[] {
   const documents: SearchDocument[] = [];
 
   const talkEntries = getTalkViewEntries(talks);
@@ -191,31 +192,32 @@ function buildSearchDocuments(): SearchDocument[] {
     });
   });
 
-  softwareSections.forEach((softwareSection) => {
-    softwareSection.entries.forEach((softwareEntry) => {
-      documents.push({
-        id: `software:${softwareEntry.id}`,
-        type: "Software",
-        title: softwareEntry.title,
-        subtitle: `Software • ${softwareSection.title}`,
-        snippet: softwareEntry.summary,
-        route: getSoftwarePagePath(softwareEntry),
-        href: softwareEntry.webUrl ?? softwareEntry.repositoryUrl,
-        searchableText: [
-          softwareSection.title,
-          softwareSection.description,
-          softwareEntry.title,
-          softwareEntry.type,
-          softwareEntry.purpose,
-          softwareEntry.year,
-          softwareEntry.summary,
-          softwareEntry.description,
-          softwareEntry.mainTopics.join(" "),
-          softwareEntry.repositoryUrl ?? "",
-          softwareEntry.webUrl ?? "",
-        ].join(" "),
-        boost: 6,
-      });
+  const sectionsById = new Map(softwareCatalog.sections.map((section) => [section.id, section]));
+  softwareSource.forEach((entry) => {
+    const section = sectionsById.get(entry.sectionId);
+    const { repository, website } = entry.links ?? {};
+    documents.push({
+      id: `software:${entry.id}`,
+      type: "Software",
+      title: entry.title,
+      subtitle: `Software • ${section?.title ?? "Software"}`,
+      snippet: entry.summary,
+      route: entryPath(entry),
+      href: website ?? repository,
+      searchableText: [
+        section?.title ?? "",
+        section?.description ?? "",
+        entry.title,
+        entry.type,
+        entry.purpose,
+        dateLabel(entry.date),
+        entry.summary,
+        entry.description,
+        entry.topics.join(" "),
+        repository ?? "",
+        website ?? "",
+      ].join(" "),
+      boost: 6,
     });
   });
 
@@ -311,10 +313,6 @@ function getSearchDocuments(): SearchDocument[] {
 }
 
 function scoreDocument(document: SearchDocument, tokens: string[], normalizedQuery: string): number {
-  if (!tokens.length) {
-    return document.boost;
-  }
-
   let score = 0;
   const normalizedTitle = normalizeText(document.title);
   const normalizedSubtitle = normalizeText(document.subtitle);
@@ -341,12 +339,14 @@ function scoreDocument(document: SearchDocument, tokens: string[], normalizedQue
     }
   });
 
-  return score + document.boost;
+  // A ranking bonus must never turn an unrelated document into a match.
+  return score > 0 ? score + document.boost : 0;
 }
 
 export function searchByKeyword(query: string, limit = 18): SearchResult[] {
   const normalizedQuery = normalizeText(query);
   const tokens = tokenized(query);
+  if (!tokens.length) return [];
   const documents = getSearchDocuments();
 
   const withScores = documents
@@ -402,7 +402,12 @@ async function getComunicaStore() {
       const parser = new n3Any.Parser({ baseIRI: WEBSITE_BASE_IRI });
       const quads = parser.parse(rdfSource);
       return new n3Any.Store(quads);
-    })();
+    })().catch((error) => {
+      // Failed requests must not poison every later attempt for the lifetime of the page.
+      cachedRdfStorePromise = null;
+      cachedRdfSourcePromise = null;
+      throw error;
+    });
   }
 
   return cachedRdfStorePromise;

@@ -1,3 +1,4 @@
+import { isMain } from "./lib/cli.mjs";
 import { promises as fs } from "fs";
 import os from "os";
 import path from "path";
@@ -69,7 +70,7 @@ const STOP_WORDS = new Set([
   "slide",
 ]);
 
-function toSlug(input) {
+export function toSlug(input) {
   return input
     .toLowerCase()
     .normalize("NFKD")
@@ -77,7 +78,7 @@ function toSlug(input) {
     .replace(/^-+|-+$/g, "");
 }
 
-function toTitleFromStem(stem) {
+export function toTitleFromStem(stem) {
   return stem
     .replace(/[_-]+/g, " ")
     .replace(/\s+/g, " ")
@@ -92,7 +93,7 @@ function tokenize(input) {
     .filter((token) => token.length > 1 && !STOP_WORDS.has(token));
 }
 
-function parseDateInfo(name) {
+export function parseDateInfo(name) {
   const compactDateMatch = name.match(/(^|[^0-9])(\d{2})(\d{2})(\d{2})([^0-9]|$)/);
   if (compactDateMatch) {
     const day = compactDateMatch[2];
@@ -134,7 +135,7 @@ function labelFromIso(dateIso) {
   return `${day}/${month}/${year}`;
 }
 
-function jaccardScore(tokensA, tokensB) {
+export function jaccardScore(tokensA, tokensB) {
   const setA = new Set(tokensA);
   const setB = new Set(tokensB);
   const union = new Set([...setA, ...setB]);
@@ -301,7 +302,7 @@ async function resolveSourceDir(kind, archivePath, legacyDir, tempDir) {
   };
 }
 
-async function watermarkPdfInPlace(pdfPath) {
+export async function watermarkPdfInPlace(pdfPath) {
   const inputBytes = await fs.readFile(pdfPath);
   const pdfDoc = await PDFDocument.load(inputBytes, { updateMetadata: false });
   const watermarkFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
@@ -666,7 +667,9 @@ ${postersTsObjects}
   }
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+if (isMain(import.meta.url)) {
+  main().catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+}

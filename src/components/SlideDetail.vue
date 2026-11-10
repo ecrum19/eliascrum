@@ -1,1438 +1,175 @@
 <template>
-  <work-page-layout
-    id="slide-detail"
+  <detail-page
+    :found="Boolean(talk)"
+    toc-title="Talk"
     :toc-entries="tocEntries"
-    :show-toc="Boolean(talk)"
-    max-width="min(1780px, 97vw)"
-    page-padding="0 16px 140px"
+    :back="back"
+    not-found-title="Talk not found"
+    not-found-message="This talk slug does not exist in the generated talks data."
   >
     <template v-if="talk">
-      <section id="talk-detail-overview" class="work-section">
-          <header class="slide-header toc-anchor">
-            <div class="slide-header-top">
-              <h1>{{ talk.displayTitle }}</h1>
-              <p class="talk-date-detailed">{{ talk.displayDateIso }}</p>
-            </div>
-            <div class="slide-actions">
-              <router-link to="/talks" class="action-btn btn-back">Back to Talks</router-link>
-              <a
-                v-if="slideEmbedUrl"
-                :href="slideEmbedUrl"
-                :target="linkTarget(slideEmbedUrl)"
-                :rel="linkRel(slideEmbedUrl)"
-                class="action-btn btn-external"
-              >
-                {{ talk.slideFormat === "html" ? "Open HTML Slides" : "Open Google Slides" }}
-              </a>
-              <a v-if="slidePdfUrl" :href="slidePdfUrl" class="action-btn btn-pdf">
-                Open Slides PDF
-              </a>
-              <a
-                v-for="publicationLink in relatedPublicationLinks"
-                :key="publicationLink.key"
-                :href="toNavigableUrl(publicationLink.url)"
-                class="action-btn btn-external"
-              >
-                {{ publicationLink.label }}
-              </a>
-            </div>
-            <section id="talk-detail-abstract" class="talk-abstract-block toc-anchor">
-              <h2 class="talk-detail-heading">Abstract</h2>
-              <p class="talk-summary">{{ talk.abstract }}</p>
-            </section>
-            <dl id="talk-detail-metadata" class="talk-details-list toc-anchor">
-              <div v-for="row in talkDetailRows" :key="row.label" class="talk-detail-row">
-                <dt>{{ row.label }}</dt>
-                <dd>
-                  <a
-                    v-if="row.href"
-                    :href="toNavigableUrl(row.href)"
-                    :target="linkTarget(row.href)"
-                    :rel="linkRel(row.href)"
-                  >
-                    {{ row.value }}
-                  </a>
-                  <span v-else>{{ row.value }}</span>
-                </dd>
-              </div>
-            </dl>
-            <div id="talk-detail-tags" class="talk-tags-footer toc-anchor" v-if="detailTags.length">
-              <span class="talk-tags-label">Tags:</span>
-              <div class="talk-tags-list">
-                <router-link
-                  v-for="tag in detailTags"
-                  :key="tag.key"
-                  class="talk-tag talk-tag-link"
-                  :class="tag.className"
-                  :title="`${tag.category}: ${tag.label}`"
-                  :data-category="tag.category"
-                  :to="{ path: '/talks', query: { tag: tag.kind, value: tag.value } }"
-                >
-                  {{ tag.label }}
-                </router-link>
-              </div>
-            </div>
-          </header>
-      </section>
-
-      <section id="talk-detail-slides" class="work-section">
-        <article class="slide-panel toc-anchor">
-            <h2>Slides</h2>
-            <div v-if="useEmbeddedSlides && slidePreviewRequested" class="slide-embed-shell">
-              <iframe
-                class="slide-embed-frame"
-                :src="slideEmbedUrl"
-                :title="`${talk.displayTitle} — slide presentation`"
-                frameborder="0"
-                allowfullscreen="true"
-                mozallowfullscreen="true"
-                webkitallowfullscreen="true"
-                loading="lazy"
-              ></iframe>
-            </div>
-            <deferred-preview-notice
-              v-else-if="!slidePreviewRequested"
-              message="Lite mode pauses slide previews until you choose to load one."
-              action-label="Load Slides Preview"
-              @load="requestSlidePreview"
-            />
-            <div
-              v-else
-              ref="slideFrameShell"
-              class="slide-frame-shell"
-            >
-              <div ref="slideCanvasShell" class="slide-canvas-shell">
-                <canvas ref="slideCanvas" class="slide-canvas"></canvas>
-                <div v-if="isPdfLoading" class="slide-canvas-overlay">
-                  Loading slides...
-                </div>
-                <div v-else-if="isPdfRenderError" class="slide-canvas-overlay">
-                  <span>Preview unavailable.</span>
-                  <span v-if="pdfRenderErrorMessage" class="slide-error-text">{{ pdfRenderErrorMessage }}</span>
-                  <a :href="slidePdfUrl">Open the slides</a>
-                </div>
-              </div>
-              <div class="slide-pagination slide-pagination-footer" aria-label="Slide navigation controls">
-                <button
-                  type="button"
-                  class="slide-page-btn"
-                  @click="goToPreviousSlidePage"
-                  :disabled="currentSlidePage <= 1"
-                >
-                  Previous
-                </button>
-                <label class="slide-page-label" for="slide-page-input">
-                  <input
-                    id="slide-page-input"
-                    class="slide-page-input"
-                    type="number"
-                    min="1"
-                    :max="maxSlidePage ?? undefined"
-                    inputmode="numeric"
-                    :value="currentSlidePage"
-                    :style="slidePageInputStyle"
-                    aria-label="Current slide page"
-                    @change="onSlidePageInputChange"
-                  />
-                  <span v-if="maxSlidePage" class="slide-page-total">/ {{ maxSlidePage }}</span>
-                </label>
-                <button
-                  type="button"
-                  class="slide-page-btn"
-                  @click="goToNextSlidePage"
-                  :disabled="maxSlidePage !== null && currentSlidePage >= maxSlidePage"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-        </article>
-      </section>
-
-      <section id="talk-detail-poster" class="work-section">
-        <article v-if="talk.posterPath" class="slide-panel toc-anchor">
-            <h2>Poster</h2>
-            <p class="poster-name">{{ talk.posterTitle || "Poster PDF" }}</p>
-            <object v-if="posterPreviewRequested" :data="posterPdfUrl" type="application/pdf" class="poster-frame">
-              <p>
-                Your browser cannot render the PDF inline.
-                <a :href="posterPdfUrl">Open the poster</a>.
-              </p>
-            </object>
-            <deferred-preview-notice
-              v-else
-              message="Lite mode pauses poster previews until you choose to load one."
-              action-label="Load Poster Preview"
-              @load="requestPosterPreview"
-            />
-        </article>
-
-        <article v-else class="slide-panel muted-panel toc-anchor">
-          <h2>Poster</h2>
-          <p>No poster is currently linked to this talk.</p>
-        </article>
-      </section>
+      <detail-header
+        :kicker="['Talk', ...talk.venueTags].join(' • ')"
+        :title="talk.displayTitle"
+        :date="talk.displayDateIso"
+        :back="back"
+        :actions="actions"
+        :tags="tags"
+      />
+      <highlight-callout v-if="highlight" :highlight="highlight" />
+      <detail-section id="detail-summary" title="Summary">
+        <p>{{ talk.summary }}</p>
+      </detail-section>
+      <detail-section v-if="hasDistinctAbstract" id="detail-abstract" title="Abstract">
+        <p>{{ talk.abstract }}</p>
+      </detail-section>
+      <detail-section id="detail-metadata" title="Details">
+        <metadata-list :rows="detailRows" />
+      </detail-section>
+      <detail-section v-if="related.length" id="detail-related" title="Related">
+        <related-links :items="related" />
+      </detail-section>
+      <detail-section id="detail-slides" title="Slides">
+        <template v-if="slideEmbedUrl">
+          <div v-if="embedRequested" class="slide-embed">
+            <iframe
+              :src="slideEmbedUrl"
+              :title="`${talk.displayTitle} — slide presentation`"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+          <deferred-preview-notice
+            v-else
+            message="Lite mode pauses slide previews until you choose to load one."
+            action-label="Load Slides Preview"
+            @load="embedRequested = true"
+          />
+        </template>
+        <pdf-viewer
+          v-else
+          :url="slidePdfUrl"
+          :open-href="slidePdfUrl"
+          open-label="Open Slides PDF"
+          loading-label="Loading slides..."
+          defer-message="Lite mode pauses slide previews until you choose to load one."
+          defer-action-label="Load Slides Preview"
+          :zoomable="false"
+          variant="slides"
+          keyboard-paging
+        />
+      </detail-section>
+      <detail-section v-if="posterPdfUrl" id="detail-poster" title="Poster">
+        <poster-preview :url="posterPdfUrl" />
+      </detail-section>
     </template>
-
-    <div v-else class="slide-shell">
-      <article class="slide-panel">
-        <h1>Talk not found</h1>
-        <p>This talk slug does not exist in the generated talks data.</p>
-        <router-link to="/talks" class="action-btn btn-back">Back to Talks</router-link>
-      </article>
-    </div>
-  </work-page-layout>
+  </detail-page>
 </template>
 
-<script lang="ts">
-import { defineComponent, markRaw } from "vue";
-import { getTalkViewBySlug, type TalkViewEntry } from "../data/talkCatalog";
-import {
-  getRelatedPublicationLinksForPresentationFile,
-  getRelatedPublicationLinksForTalkSlug,
-  type ResolvedPublicationLink,
-} from "../data/publicationsData";
+<script setup lang="ts">
+import { computed, ref } from "vue";
+import { useRoute } from "vue-router";
+import { getTalkViewBySlug } from "../data/talkCatalog";
+import { relatedItems, resolveHighlight } from "../content/relations";
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
-import {
-  loadPdfJs,
-  type PDFDocumentLoadingTask,
-  type PDFDocumentProxy,
-  type RenderTask,
-} from "../utils/pdfJs";
 import { shouldDeferPdfPreviews } from "../utils/performanceMode";
 import DeferredPreviewNotice from "./layout/DeferredPreviewNotice.vue";
-import WorkPageLayout from "./layout/WorkPageLayout.vue";
+import DetailPage from "./detail/DetailPage.vue";
+import DetailHeader from "./detail/DetailHeader.vue";
+import DetailSection from "./detail/DetailSection.vue";
+import HighlightCallout from "./detail/HighlightCallout.vue";
+import MetadataList from "./detail/MetadataList.vue";
+import PdfViewer from "./detail/PdfViewer.vue";
+import PosterPreview from "./detail/PosterPreview.vue";
+import RelatedLinks from "./detail/RelatedLinks.vue";
+import { detailToc, listingTag, type DetailAction } from "./detail/detail";
 
-type TalkDetailFilterKind =
-  | "venue"
-  | "topic"
-  | "audienceGroup"
-  | "audienceSize"
-  | "duration";
+const back = { to: "/talks", label: "Back to Talks" };
+const route = useRoute();
+const talk = computed(() => getTalkViewBySlug(String(route.params.slug || "")));
+const slideEmbedUrl = computed(() => talk.value?.slideEmbedUrl?.trim() ?? "");
+const slidePdfUrl = computed(() =>
+  talk.value && talk.value.slideFormat !== "html" ? resolvePublicAssetPath(talk.value.slidePath) : "",
+);
+const posterPdfUrl = computed(() =>
+  talk.value?.posterPath ? resolvePublicAssetPath(talk.value.posterPath) : "",
+);
+// Embedded slide providers are opt-in while Lite mode is active, like PDF.js.
+const embedRequested = ref(!shouldDeferPdfPreviews());
 
-interface TalkDetailTag {
-  key: string;
-  kind: TalkDetailFilterKind;
-  value: string;
-  category: string;
-  label: string;
-  className: string;
-}
-
-interface WorkTocEntry {
-  id: string;
-  label: string;
-  level?: number;
-}
-
-interface TalkDetailRow {
-  label: string;
-  value: string;
-  href?: string;
-}
-
-export default defineComponent({
-  name: "SlideDetail",
-  components: {
-    DeferredPreviewNotice,
-    WorkPageLayout,
-  },
-  data() {
-    return {
-      currentSlidePage: 1,
-      maxSlidePage: null as number | null,
-      isPdfLoading: false,
-      isPdfRenderError: false,
-      pdfRenderErrorMessage: "",
-      pdfLoadingTask: null as PDFDocumentLoadingTask | null,
-      pdfDocument: null as PDFDocumentProxy | null,
-      pdfRenderTask: null as RenderTask | null,
-      pdfLoadToken: 0,
-      slideRenderToken: 0,
-      pendingSlideRenderFrame: null as number | null,
-      slideResizeObserver: null as ResizeObserver | null,
-      // Both PDF.js and embedded slide providers are opt-in while Lite mode is active.
-      slidePreviewRequested: !shouldDeferPdfPreviews(),
-      posterPreviewRequested: !shouldDeferPdfPreviews(),
-    };
-  },
-  computed: {
-    tocEntries(): WorkTocEntry[] {
-      if (!this.talk) {
-        return [];
-      }
-
-      const entries: WorkTocEntry[] = [
-        { id: "talk-detail-overview", label: "Overview", level: 1 },
-        { id: "talk-detail-abstract", label: "Abstract", level: 2 },
-        { id: "talk-detail-metadata", label: "Details", level: 2 },
-      ];
-
-      if (this.detailTags.length) {
-        entries.push({ id: "talk-detail-tags", label: "Tags", level: 2 });
-      }
-
-      entries.push(
-        { id: "talk-detail-slides", label: "Slides", level: 1 },
-        { id: "talk-detail-poster", label: "Poster", level: 1 }
-      );
-
-      return entries;
-    },
-    talk(): TalkViewEntry | undefined {
-      const routeSlug = String(this.$route.params.slug || "");
-      return getTalkViewBySlug(routeSlug);
-    },
-    relatedPublicationLinks(): ResolvedPublicationLink[] {
-      if (!this.talk) {
-        return [];
-      }
-
-      const talkLinks = getRelatedPublicationLinksForTalkSlug(this.talk.slug);
-      const fileLinks = getRelatedPublicationLinksForPresentationFile(this.talk.slidePath);
-      const uniqueByPublicationId = new Map<string, ResolvedPublicationLink>();
-
-      [...talkLinks, ...fileLinks].forEach((link) => {
-        if (!uniqueByPublicationId.has(link.publicationId)) {
-          uniqueByPublicationId.set(link.publicationId, link);
-        }
-      });
-
-      return Array.from(uniqueByPublicationId.values());
-    },
-    detailTags(): TalkDetailTag[] {
-      if (!this.talk) {
-        return [];
-      }
-
-      const tags: TalkDetailTag[] = [];
-      const pushTag = (
-        kind: TalkDetailFilterKind,
-        category: string,
-        label: string,
-        className: string
-      ) => {
-        tags.push({
-          key: `${kind}:${label}`,
-          kind,
-          value: label,
-          category,
-          label,
-          className,
-        });
-      };
-
-      this.talk.venueTags.forEach((venueTag) => {
-        pushTag("venue", "Venue", venueTag, "talk-tag-venue");
-      });
-      this.talk.topicTags.forEach((topicTag) => {
-        pushTag("topic", "Main Topic", topicTag, "talk-tag-topic");
-      });
-      this.talk.audienceGroups.forEach((audienceGroupTag) => {
-        pushTag("audienceGroup", "Audience Field", audienceGroupTag, "talk-tag-audience-group");
-      });
-      pushTag("audienceSize", "Audience Size", this.talk.audienceSizeCategory, "talk-tag-audience-size");
-      pushTag("duration", "Duration", this.talk.durationCategory, "talk-tag-duration");
-
-      return tags;
-    },
-    talkDetailRows(): TalkDetailRow[] {
-      if (!this.talk) {
-        return [];
-      }
-
-      const rows: TalkDetailRow[] = [
-        { label: "Goal", value: this.talk.goal },
-        { label: "Audience Expertise", value: this.talk.audienceExpertise },
-        { label: "Duration", value: `~ ${this.talk.durationMinutes} minutes` },
-        { label: "Audience Size", value: this.talk.audienceSizeEstimate.replace(/^Approx\\.?\\s*/i, "~ ") },
-      ];
-
-      this.talk.relatedResources.forEach((resource) => {
-        rows.push({
-          label: resource.label,
-          value: resource.url,
-          href: resource.url,
-        });
-      });
-
-      return rows;
-    },
-    slidePdfUrl(): string {
-      return this.talk && this.talk.slideFormat !== "html"
-        ? resolvePublicAssetPath(this.talk.slidePath)
-        : "";
-    },
-    slideEmbedUrl(): string {
-      return this.talk?.slideEmbedUrl?.trim() ?? "";
-    },
-    useEmbeddedSlides(): boolean {
-      return Boolean(this.slideEmbedUrl);
-    },
-    slidePageInputStyle(): Record<string, string> {
-      const digitCount = String(Math.max(1, this.currentSlidePage)).length;
-      const widthCh = Math.min(4.4, Math.max(1.7, digitCount + 0.35));
-      return {
-        width: `${widthCh}ch`,
-      };
-    },
-    posterPdfUrl(): string {
-      return this.talk?.posterPath ? resolvePublicAssetPath(this.talk.posterPath) : "";
-    },
-  },
-  beforeUnmount() {
-    window.removeEventListener("keydown", this.onSlideKeyboardNav);
-    if (this.pendingSlideRenderFrame !== null) {
-      window.cancelAnimationFrame(this.pendingSlideRenderFrame);
-      this.pendingSlideRenderFrame = null;
-    }
-    if (this.slideResizeObserver) {
-      this.slideResizeObserver.disconnect();
-      this.slideResizeObserver = null;
-    }
-    if (this.pdfLoadingTask) {
-      void this.pdfLoadingTask.destroy();
-      this.pdfLoadingTask = null;
-    }
-    if (this.pdfRenderTask) {
-      this.pdfRenderTask.cancel();
-      this.pdfRenderTask = null;
-    }
-    if (this.pdfDocument) {
-      void this.pdfDocument.destroy();
-      this.pdfDocument = null;
-    }
-  },
-  mounted() {
-    window.addEventListener("keydown", this.onSlideKeyboardNav);
-    this.$nextTick(() => {
-      if (this.useEmbeddedSlides || !this.slidePreviewRequested) {
-        return;
-      }
-      this.initSlideResizeObserver();
-      this.queueSlideRender();
-    });
-  },
-  watch: {
-    slidePdfUrl: {
-      immediate: true,
-      handler(nextUrl: string) {
-        this.currentSlidePage = 1;
-        this.maxSlidePage = null;
-        if (this.useEmbeddedSlides || !this.slidePreviewRequested) {
-          this.isPdfLoading = false;
-          this.isPdfRenderError = false;
-          this.pdfRenderErrorMessage = "";
-          return;
-        }
-        void this.loadSlidePdfDocument(nextUrl);
-      },
-    },
-    useEmbeddedSlides: {
-      immediate: true,
-      handler(useEmbedded: boolean) {
-        if (useEmbedded || !this.slidePreviewRequested) {
-          this.isPdfLoading = false;
-          this.isPdfRenderError = false;
-          this.pdfRenderErrorMessage = "";
-          return;
-        }
-        this.$nextTick(() => {
-          this.initSlideResizeObserver();
-          this.queueSlideRender();
-        });
-      },
-    },
-    "$route.params.slug"() {
-      this.currentSlidePage = 1;
-    },
-    currentSlidePage() {
-      this.queueSlideRender();
-    },
-  },
-  methods: {
-    isExternalUrl(url: string): boolean {
-      return /^(?:[a-z][a-z\d+\-.]*:|\/\/)/i.test(url);
-    },
-    toNavigableUrl(url: string): string {
-      return this.isExternalUrl(url) ? url : resolvePublicAssetPath(url);
-    },
-    linkTarget(url: string): string | undefined {
-      return this.isExternalUrl(url) ? "_blank" : undefined;
-    },
-    linkRel(url: string): string | undefined {
-      return this.isExternalUrl(url) ? "noopener noreferrer" : undefined;
-    },
-    isPdfCancellationError(error: unknown): boolean {
-      const errorName = (error as { name?: string })?.name;
-      return (
-        errorName === "RenderingCancelledException" ||
-        errorName === "AbortException" ||
-        errorName === "CancelledException"
-      );
-    },
-    stringifyPdfError(error: unknown): string {
-      if (!error) {
-        return "Unknown rendering error.";
-      }
-
-      if (typeof error === "string") {
-        return error;
-      }
-
-      if (typeof error === "object") {
-        const candidate = error as { message?: unknown; name?: unknown };
-        if (typeof candidate.message === "string" && candidate.message.trim().length > 0) {
-          return candidate.message;
-        }
-        if (typeof candidate.name === "string" && candidate.name.trim().length > 0) {
-          return candidate.name;
-        }
-      }
-
-      return "PDF preview failed to render.";
-    },
-    initSlideResizeObserver() {
-      if (typeof ResizeObserver === "undefined") {
-        return;
-      }
-      const shell = this.$refs.slideCanvasShell as HTMLElement | undefined;
-      if (!shell) {
-        return;
-      }
-      if (this.slideResizeObserver) {
-        this.slideResizeObserver.disconnect();
-      }
-      this.slideResizeObserver = markRaw(new ResizeObserver(() => {
-        this.queueSlideRender();
-      }));
-      this.slideResizeObserver.observe(shell);
-    },
-    requestSlidePreview() {
-      if (this.slidePreviewRequested) {
-        return;
-      }
-
-      this.slidePreviewRequested = true;
-      this.$nextTick(() => {
-        if (this.useEmbeddedSlides) {
-          return;
-        }
-        this.initSlideResizeObserver();
-        void this.loadSlidePdfDocument(this.slidePdfUrl);
-      });
-    },
-    requestPosterPreview() {
-      this.posterPreviewRequested = true;
-    },
-    async loadSlidePdfDocument(pdfUrl: string) {
-      const loadToken = ++this.pdfLoadToken;
-      this.isPdfLoading = Boolean(pdfUrl);
-      this.isPdfRenderError = false;
-      this.pdfRenderErrorMessage = "";
-      this.maxSlidePage = null;
-      this.slideRenderToken += 1;
-
-      if (this.pdfLoadingTask) {
-        try {
-          await this.pdfLoadingTask.destroy();
-        } catch {
-          // Ignore cancellation cleanup errors.
-        }
-        this.pdfLoadingTask = null;
-      }
-      if (this.pdfRenderTask) {
-        this.pdfRenderTask.cancel();
-        this.pdfRenderTask = null;
-      }
-      if (this.pdfDocument) {
-        try {
-          await this.pdfDocument.destroy();
-        } catch {
-          // Ignore cleanup errors.
-        }
-        this.pdfDocument = null;
-      }
-
-      if (!pdfUrl) {
-        this.isPdfLoading = false;
-        return;
-      }
-
-      let loadingTask: PDFDocumentLoadingTask | null = null;
-      try {
-        const { getDocument } = await loadPdfJs();
-        loadingTask = getDocument({ url: pdfUrl });
-        this.pdfLoadingTask = markRaw(loadingTask);
-        const nextDocument = await loadingTask.promise;
-        if (this.pdfLoadingTask === loadingTask) {
-          this.pdfLoadingTask = null;
-        }
-        if (loadToken !== this.pdfLoadToken) {
-          void nextDocument.destroy();
-          return;
-        }
-
-        this.pdfDocument = markRaw(nextDocument);
-        this.maxSlidePage = nextDocument.numPages;
-        this.currentSlidePage = Math.min(Math.max(1, this.currentSlidePage), nextDocument.numPages);
-        this.$nextTick(() => {
-          this.initSlideResizeObserver();
-          this.queueSlideRender();
-        });
-      } catch (error) {
-        if (loadToken !== this.pdfLoadToken) {
-          return;
-        }
-        if (this.isPdfCancellationError(error)) {
-          return;
-        }
-        this.isPdfRenderError = true;
-        this.pdfRenderErrorMessage = this.stringifyPdfError(error);
-        console.error("Slide preview load failed:", error);
-      } finally {
-        if (this.pdfLoadingTask === loadingTask) {
-          this.pdfLoadingTask = null;
-        }
-        if (loadToken === this.pdfLoadToken) {
-          this.isPdfLoading = false;
-        }
-      }
-    },
-    queueSlideRender() {
-      if (!this.pdfDocument || this.isPdfLoading) {
-        return;
-      }
-
-      const nextRenderToken = ++this.slideRenderToken;
-      if (this.pendingSlideRenderFrame !== null) {
-        window.cancelAnimationFrame(this.pendingSlideRenderFrame);
-      }
-      this.pendingSlideRenderFrame = window.requestAnimationFrame(() => {
-        this.pendingSlideRenderFrame = null;
-        void this.renderCurrentSlidePage(nextRenderToken);
-      });
-    },
-    async renderCurrentSlidePage(renderToken: number) {
-      const activeDocument = this.pdfDocument;
-      if (!activeDocument || renderToken !== this.slideRenderToken) {
-        return;
-      }
-
-      const canvasShell = this.$refs.slideCanvasShell as HTMLElement | undefined;
-      const canvas = this.$refs.slideCanvas as HTMLCanvasElement | undefined;
-      if (!canvasShell || !canvas) {
-        return;
-      }
-
-      const shellWidth = canvasShell.clientWidth;
-      const shellHeight = canvasShell.clientHeight;
-      if (shellWidth < 2 || shellHeight < 2) {
-        return;
-      }
-
-      const maxPage = activeDocument.numPages;
-      const normalizedPage = Math.min(maxPage, Math.max(1, this.currentSlidePage));
-      if (normalizedPage !== this.currentSlidePage) {
-        this.currentSlidePage = normalizedPage;
-        return;
-      }
-
-      if (this.pdfRenderTask) {
-        const runningTask = this.pdfRenderTask;
-        runningTask.cancel();
-        try {
-          await runningTask.promise;
-        } catch (error) {
-          if (!this.isPdfCancellationError(error)) {
-            this.isPdfRenderError = true;
-            this.pdfRenderErrorMessage = this.stringifyPdfError(error);
-            console.error("Slide preview cancellation failed:", error);
-            return;
-          }
-        } finally {
-          if (this.pdfRenderTask === runningTask) {
-            this.pdfRenderTask = null;
-          }
-        }
-      }
-
-      if (renderToken !== this.slideRenderToken || this.pdfDocument !== activeDocument) {
-        return;
-      }
-
-      let page;
-      try {
-        page = await activeDocument.getPage(normalizedPage);
-      } catch (error) {
-        if (this.isPdfCancellationError(error)) {
-          return;
-        }
-        this.isPdfRenderError = true;
-        this.pdfRenderErrorMessage = this.stringifyPdfError(error);
-        console.error("Slide preview getPage failed:", error);
-        return;
-      }
-
-      if (renderToken !== this.slideRenderToken || this.pdfDocument !== activeDocument) {
-        return;
-      }
-
-      const viewportBase = page.getViewport({ scale: 1 });
-      const widthScale = shellWidth / viewportBase.width;
-      const heightScale = shellHeight / viewportBase.height;
-      const fitScale = Math.max(0.1, Math.min(widthScale, heightScale));
-      const devicePixelRatio = Math.min(1.5, Math.max(1, window.devicePixelRatio || 1));
-
-      const cssViewport = page.getViewport({ scale: fitScale });
-      const renderViewport = page.getViewport({ scale: fitScale * devicePixelRatio });
-
-      canvas.width = Math.max(1, Math.floor(renderViewport.width));
-      canvas.height = Math.max(1, Math.floor(renderViewport.height));
-      canvas.style.width = `${Math.floor(cssViewport.width)}px`;
-      canvas.style.height = `${Math.floor(cssViewport.height)}px`;
-
-      const context = canvas.getContext("2d");
-      if (!context) {
-        this.isPdfRenderError = true;
-        this.pdfRenderErrorMessage = "Canvas context unavailable.";
-        return;
-      }
-
-      context.setTransform(1, 0, 0, 1, 0, 0);
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
-      const renderTask = page.render({
-        canvasContext: context,
-        viewport: renderViewport,
-      });
-      this.pdfRenderTask = markRaw(renderTask);
-      this.isPdfRenderError = false;
-      this.pdfRenderErrorMessage = "";
-
-      try {
-        await renderTask.promise;
-      } catch (error) {
-        if (!this.isPdfCancellationError(error)) {
-          this.isPdfRenderError = true;
-          this.pdfRenderErrorMessage = this.stringifyPdfError(error);
-          console.error("Slide preview render failed:", error);
-        }
-      } finally {
-        if (this.pdfRenderTask === renderTask) {
-          this.pdfRenderTask = null;
-        }
-      }
-    },
-    goToPreviousSlidePage() {
-      this.currentSlidePage = Math.max(1, this.currentSlidePage - 1);
-    },
-    goToNextSlidePage() {
-      if (this.maxSlidePage !== null) {
-        this.currentSlidePage = Math.min(this.maxSlidePage, this.currentSlidePage + 1);
-        return;
-      }
-      this.currentSlidePage += 1;
-    },
-    onSlidePageInputChange(event: Event) {
-      const target = event.target as HTMLInputElement | null;
-      const parsed = Number.parseInt(target?.value ?? "1", 10);
-      const normalized = Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
-      const maxPage = this.maxSlidePage;
-      this.currentSlidePage = maxPage !== null ? Math.min(maxPage, normalized) : normalized;
-      if (target) {
-        target.value = String(this.currentSlidePage);
-      }
-    },
-    onSlideKeyboardNav(event: KeyboardEvent) {
-      if (!this.talk || !this.slidePreviewRequested || this.useEmbeddedSlides) {
-        return;
-      }
-
-      if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) {
-        return;
-      }
-
-      const target = event.target as HTMLElement | null;
-      const tagName = target?.tagName?.toLowerCase() || "";
-      const isTypingTarget =
-        tagName === "input" ||
-        tagName === "textarea" ||
-        tagName === "select" ||
-        Boolean(target?.isContentEditable);
-
-      if (isTypingTarget) {
-        return;
-      }
-
-      if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        this.goToPreviousSlidePage();
-      } else if (event.key === "ArrowRight") {
-        event.preventDefault();
-        this.goToNextSlidePage();
-      }
-    },
-  },
+const actions = computed<DetailAction[]>(() => [
+  ...(slideEmbedUrl.value
+    ? [
+        {
+          label: talk.value?.slideFormat === "html" ? "Open HTML Slides" : "Open Google Slides",
+          href: slideEmbedUrl.value,
+        },
+      ]
+    : []),
+  ...(slidePdfUrl.value ? [{ label: "Open Slides PDF", href: slidePdfUrl.value }] : []),
+]);
+const tags = computed(() => {
+  if (!talk.value) return [];
+  const tag = (filter: string, value: string, category: string, color: Parameters<typeof listingTag>[4]) =>
+    listingTag("/talks", filter, String(value), category, color);
+  return [
+    tag("material", "Slides", "Type", "type"),
+    ...talk.value.venueTags.map((venue) => tag("venue", venue, "Venue", "venue")),
+    ...talk.value.topicTags.map((topic) => tag("topic", topic, "Main Topic", "topic")),
+    ...talk.value.audienceGroups.map((group) => tag("audienceGroup", group, "Audience Field", "audience")),
+    tag("audienceSize", talk.value.audienceSizeCategory, "Audience Size", "size"),
+    tag("duration", talk.value.durationCategory, "Duration", "duration"),
+  ];
 });
+const hasDistinctAbstract = computed(
+  () => talk.value?.abstract && talk.value.abstract.trim() !== talk.value.summary.trim(),
+);
+const detailRows = computed(() =>
+  talk.value
+    ? [
+        { label: "Goal", value: talk.value.goal },
+        { label: "Audience Expertise", value: talk.value.audienceExpertise },
+        { label: "Duration", value: `~ ${talk.value.durationMinutes} minutes` },
+        { label: "Audience Size", value: talk.value.audienceSizeEstimate.replace(/^Approx\.?\s*/i, "~ ") },
+        ...talk.value.relatedResources.map(({ label, url }) => ({ label, value: url, href: url })),
+      ]
+    : [],
+);
+const highlight = computed(() => resolveHighlight(talk.value?.highlight));
+const related = computed(() => (talk.value ? relatedItems(`talk:${talk.value.slug}`) : []));
+const tocEntries = computed(() =>
+  detailToc([
+    { id: "detail-highlight", label: "Highlight", show: highlight.value },
+    { id: "detail-summary", label: "Summary" },
+    { id: "detail-abstract", label: "Abstract", show: hasDistinctAbstract.value },
+    { id: "detail-metadata", label: "Details" },
+    { id: "detail-related", label: "Related", show: related.value.length },
+    { id: "detail-slides", label: "Slides", level: 1 },
+    { id: "detail-poster", label: "Poster", level: 1, show: posterPdfUrl.value },
+  ]),
+);
 </script>
 
 <style scoped>
-#slide-detail {
-  --work-main-gap: 18px;
-}
-
-.work-section {
-  min-width: 0;
-  display: grid;
-  gap: 12px;
-}
-
-.toc-anchor {
-  scroll-margin-top: 92px;
-}
-
-.slide-shell {
-  display: grid;
-  gap: 18px;
-}
-
-.slide-header,
-.slide-panel {
-  background: var(--surface-elevated);
-  outline: 2px solid var(--surface-outline);
-  border-radius: 14px;
-  padding: 16px 20px;
-}
-
-.slide-header {
-  display: grid;
-  gap: 12px;
-}
-
-.slide-header-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.slide-header h1 {
-  margin: 0;
-  font-family: var(--content-heading-font);
-  font-size: var(--content-h1-size);
-}
-
-.talk-date-detailed {
-  margin: 0;
-  border: 1px solid var(--surface-outline);
-  border-radius: 999px;
-  background: var(--toggle-bg);
-  padding: 7px 14px;
-  font-size: var(--font-size-body);
-  font-weight: 700;
-  white-space: nowrap;
-  line-height: 1.2;
-  opacity: 0.94;
-}
-
-.talk-detail-heading {
-  margin: 0;
-  color: var(--text-muted);
-  font-family: var(--content-heading-font);
-  font-size: var(--font-size-label);
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  opacity: 1;
-}
-
-.talk-abstract-block {
-  margin: 0;
-  display: grid;
-  gap: 8px;
-}
-
-.talk-summary {
-  margin: 0;
-  width: 100%;
-  line-height: 1.56;
-  padding-left: 12px;
-  border-left: 3px solid rgba(var(--accent-rgb), 0.45);
-  opacity: 0.96;
-}
-
-.talk-details-list {
-  margin: 0;
-  display: grid;
-  gap: 0;
-}
-
-.talk-detail-row {
-  margin: 0;
-  display: grid;
-  grid-template-columns: minmax(170px, 0.32fr) minmax(0, 1fr);
-  gap: 10px;
-  align-items: baseline;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.talk-detail-row:last-child {
-  border-bottom: none;
-}
-
-.talk-detail-row dt {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: var(--font-size-meta);
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  opacity: 1;
-}
-
-.talk-detail-row dd {
-  margin: 2px 0 0;
-  font-size: var(--font-size-body);
-  font-weight: 430;
-  line-height: 1.48;
-}
-
-[data-theme="light"] .talk-detail-row {
-  border-bottom-color: rgba(16, 36, 59, 0.16);
-}
-
-.talk-tags-footer {
-  margin-top: 10px;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  position: relative;
-  z-index: 2;
-  isolation: isolate;
-}
-
-.talk-tags-label {
-  padding: 6px 0;
-  font-size: var(--font-size-meta);
-  font-weight: 800;
-  line-height: 1.2;
-}
-
-.talk-tags-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  min-width: 0;
-}
-
-.talk-tag {
-  --tag-bg: rgba(148, 163, 184, 0.16);
-  --tag-border: rgba(148, 163, 184, 0.38);
-  --tag-text: var(--page-text);
-  --tag-tooltip-bg: rgba(100, 116, 139, 0.96);
-  --tag-tooltip-border: rgba(100, 116, 139, 0.98);
-  --tag-tooltip-text: #f8fafc;
-
-  display: inline-flex;
-  align-items: center;
-  border: 1px solid var(--tag-border);
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-size: var(--font-size-meta);
-  font-weight: 650;
-  line-height: 1.2;
-  color: var(--tag-text);
-  background: var(--tag-bg);
-}
-
-.talk-tag-link {
-  position: relative;
-  text-decoration: none;
-  z-index: 0;
-  transition: transform 0.16s ease, box-shadow 0.18s ease;
-}
-
-.talk-tag-link::after {
-  content: attr(data-category);
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 8px);
-  transform: translate(-50%, 4px);
-  border: 1px solid var(--tag-tooltip-border);
-  border-radius: 7px;
-  padding: 3px 7px;
-  background: var(--tag-tooltip-bg);
-  color: var(--tag-tooltip-text);
-  box-shadow: 0 8px 18px rgba(8, 15, 31, 0.24);
-  font-size: var(--font-size-micro);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.16s ease, transform 0.16s ease;
-  z-index: 1001;
-}
-
-.talk-tag-link:hover,
-.talk-tag-link:focus-visible {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(8, 15, 31, 0.12);
-  z-index: 1000;
-}
-
-.talk-tag-link:hover::after,
-.talk-tag-link:focus-visible::after {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
-.talk-tag-link:focus-visible {
-  outline: none;
-}
-
-.talk-tag-material {
-  --tag-bg: rgba(245, 158, 11, 0.18);
-  --tag-border: rgba(245, 158, 11, 0.44);
-  --tag-text: #5f3a00;
-  --tag-tooltip-bg: rgba(245, 158, 11, 0.96);
-  --tag-tooltip-border: rgba(161, 98, 7, 0.96);
-  --tag-tooltip-text: #251401;
-}
-
-.talk-tag-venue {
-  --tag-bg: rgba(56, 189, 248, 0.16);
-  --tag-border: rgba(56, 189, 248, 0.44);
-  --tag-text: #053a52;
-  --tag-tooltip-bg: rgba(56, 189, 248, 0.96);
-  --tag-tooltip-border: rgba(2, 132, 199, 0.96);
-  --tag-tooltip-text: #052634;
-}
-
-.talk-tag-topic {
-  --tag-bg: rgba(20, 184, 166, 0.16);
-  --tag-border: rgba(20, 184, 166, 0.44);
-  --tag-text: #06453f;
-  --tag-tooltip-bg: rgba(20, 184, 166, 0.96);
-  --tag-tooltip-border: rgba(13, 148, 136, 0.96);
-  --tag-tooltip-text: #042320;
-}
-
-.talk-tag-audience-size {
-  --tag-bg: rgba(249, 115, 22, 0.16);
-  --tag-border: rgba(249, 115, 22, 0.44);
-  --tag-text: #6d2600;
-  --tag-tooltip-bg: rgba(249, 115, 22, 0.96);
-  --tag-tooltip-border: rgba(194, 65, 12, 0.96);
-  --tag-tooltip-text: #2b0c01;
-}
-
-.talk-tag-audience-group {
-  --tag-bg: rgba(100, 116, 139, 0.18);
-  --tag-border: rgba(100, 116, 139, 0.44);
-  --tag-text: #1f334f;
-  --tag-tooltip-bg: rgba(100, 116, 139, 0.96);
-  --tag-tooltip-border: rgba(71, 85, 105, 0.96);
-  --tag-tooltip-text: #f8fafc;
-}
-
-.talk-tag-duration {
-  --tag-bg: rgba(168, 85, 247, 0.16);
-  --tag-border: rgba(168, 85, 247, 0.44);
-  --tag-text: #3d1362;
-  --tag-tooltip-bg: rgba(168, 85, 247, 0.96);
-  --tag-tooltip-border: rgba(147, 51, 234, 0.96);
-  --tag-tooltip-text: #12031f;
-}
-
-[data-theme="dark"] .talk-tag-material {
-  --tag-bg: rgba(245, 158, 11, 0.3);
-  --tag-border: rgba(245, 158, 11, 0.62);
-  --tag-text: #ffe7a8;
-  --tag-tooltip-bg: rgba(245, 158, 11, 0.98);
-  --tag-tooltip-border: rgba(251, 191, 36, 0.98);
-  --tag-tooltip-text: #1f1300;
-}
-
-[data-theme="dark"] .talk-tag-venue {
-  --tag-bg: rgba(56, 189, 248, 0.3);
-  --tag-border: rgba(56, 189, 248, 0.62);
-  --tag-text: #d3f4ff;
-  --tag-tooltip-bg: rgba(56, 189, 248, 0.98);
-  --tag-tooltip-border: rgba(125, 211, 252, 0.98);
-  --tag-tooltip-text: #041b25;
-}
-
-[data-theme="dark"] .talk-tag-topic {
-  --tag-bg: rgba(20, 184, 166, 0.3);
-  --tag-border: rgba(20, 184, 166, 0.62);
-  --tag-text: #d2fff4;
-  --tag-tooltip-bg: rgba(20, 184, 166, 0.98);
-  --tag-tooltip-border: rgba(var(--accent-secondary-rgb), 0.98);
-  --tag-tooltip-text: #021413;
-}
-
-[data-theme="dark"] .talk-tag-audience-size {
-  --tag-bg: rgba(249, 115, 22, 0.3);
-  --tag-border: rgba(249, 115, 22, 0.64);
-  --tag-text: #ffe0c2;
-  --tag-tooltip-bg: rgba(249, 115, 22, 0.98);
-  --tag-tooltip-border: rgba(251, 146, 60, 0.98);
-  --tag-tooltip-text: #200700;
-}
-
-[data-theme="dark"] .talk-tag-audience-group {
-  --tag-bg: rgba(100, 116, 139, 0.3);
-  --tag-border: rgba(100, 116, 139, 0.62);
-  --tag-text: #e4ebf4;
-  --tag-tooltip-bg: rgba(100, 116, 139, 0.98);
-  --tag-tooltip-border: rgba(148, 163, 184, 0.98);
-  --tag-tooltip-text: #f8fafc;
-}
-
-[data-theme="dark"] .talk-tag-duration {
-  --tag-bg: rgba(168, 85, 247, 0.3);
-  --tag-border: rgba(168, 85, 247, 0.62);
-  --tag-text: #ece4ff;
-  --tag-tooltip-bg: rgba(168, 85, 247, 0.98);
-  --tag-tooltip-border: rgba(192, 132, 252, 0.98);
-  --tag-tooltip-text: #11021f;
-}
-
-.slide-actions {
-  display: flex;
-  flex-wrap: wrap;
-  row-gap: 10px;
-  column-gap: 14px;
-}
-
-.action-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: var(--page-text);
-  border: 1px solid var(--surface-outline);
-  background: rgba(148, 163, 184, 0.07);
-  border-radius: 10px;
-  padding: 8px 14px;
-  font-weight: 600;
-  min-width: 0;
-  line-height: 1.2;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.16s ease, box-shadow 0.2s ease;
-}
-
-.action-btn:hover {
-  background: var(--nav-hover-bg);
-  border-color: rgba(var(--accent-rgb), 0.45);
-  box-shadow: 0 4px 12px rgba(8, 15, 31, 0.12);
-  transform: translateY(-1px);
-}
-
-.action-btn:focus-visible {
-  outline: none;
-  border-color: rgba(var(--accent-rgb), 0.78);
-  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.24);
-}
-
-[data-theme="light"] .action-btn {
-  background: rgba(16, 36, 59, 0.04);
-}
-
-.slide-panel h2 {
-  margin: 0 0 10px;
-  font-family: var(--content-heading-font);
-  font-size: var(--content-h2-size);
-}
-
-.slide-pagination {
-  display: grid;
-  grid-template-columns: minmax(92px, 132px) auto minmax(92px, 132px);
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 0;
-  padding: 12px 14px 14px;
-  border-top: 1px solid var(--surface-outline);
-  background: var(--surface-bg);
-}
-
-.slide-pagination-footer {
-  flex: 0 0 auto;
-}
-
-.slide-page-btn {
-  border: 1px solid var(--surface-outline);
-  border-radius: 999px;
-  background: var(--toggle-bg);
-  color: var(--page-text);
-  width: 100%;
-  min-width: 0;
-  padding: 7px 14px;
-  font-size: var(--font-size-meta);
-  font-weight: 650;
-  letter-spacing: 0.01em;
-  line-height: 1.2;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.16s ease,
-    opacity 0.2s ease;
-}
-
-.slide-page-btn:hover:not(:disabled) {
-  background: rgba(var(--accent-rgb), 0.24);
-  border-color: rgba(var(--accent-rgb), 0.54);
-  box-shadow: 0 3px 10px rgba(8, 15, 31, 0.28);
-  transform: translateY(-1px);
-}
-
-.slide-page-btn:focus-visible {
-  outline: none;
-  border-color: rgba(var(--accent-rgb), 0.86);
-  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.28);
-}
-
-.slide-page-btn:disabled {
-  opacity: 0.48;
-  cursor: default;
-  transform: none;
-  box-shadow: none;
-}
-
-.slide-page-label {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border: 1px solid var(--surface-outline);
-  border-radius: 999px;
-  background: var(--toggle-bg);
-  color: var(--page-text);
-  font-size: var(--font-size-meta);
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  line-height: 1.2;
-}
-
-.slide-page-input {
-  width: auto;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--page-text);
-  padding: 0;
-  font-size: var(--font-size-meta);
-  font-weight: 700;
-  line-height: 1;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-}
-
-.slide-page-input::-webkit-outer-spin-button,
-.slide-page-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.slide-page-input[type="number"] {
-  appearance: textfield;
-  -moz-appearance: textfield;
-}
-
-.slide-page-total {
-  opacity: 0.88;
-  font-weight: 650;
-  white-space: nowrap;
-}
-
-.slide-page-input:focus-visible {
-  outline: none;
-}
-
-.slide-page-label:focus-within {
-  outline: none;
-  border-color: rgba(var(--accent-rgb), 0.86);
-  box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.28);
-}
-
-.slide-frame-shell {
-  width: 100%;
-  height: clamp(560px, 80vh, 980px);
-  min-height: 520px;
-  max-height: 95vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border: 1px solid var(--surface-outline);
-  border-radius: 10px;
-  background: #0f0f0f;
-  resize: vertical;
-}
-
-.slide-embed-shell {
-  width: 100%;
+.slide-embed {
   border: 1px solid var(--surface-outline);
   border-radius: 10px;
   overflow: hidden;
   background: #0f0f0f;
 }
 
-.slide-embed-frame {
+.slide-embed iframe {
   width: 100%;
   height: clamp(560px, 80vh, 980px);
   display: block;
   border: 0;
-}
-
-.slide-canvas-shell {
-  width: 100%;
-  flex: 1 1 auto;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  background: #0f0f0f;
-}
-
-.slide-canvas {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  border: 0;
-}
-
-.slide-canvas-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: rgba(15, 15, 15, 0.68);
-  color: #f0f5ff;
-  font-size: var(--font-size-meta);
-  text-align: center;
-  padding: 14px;
-}
-
-.slide-canvas-overlay a {
-  color: #9adfff;
-  text-decoration: underline;
-}
-
-.slide-error-text {
-  font-size: var(--font-size-micro);
-  opacity: 0.84;
-}
-
-.poster-name {
-  margin: 0 0 10px;
-  opacity: 0.88;
-}
-
-.poster-frame {
-  width: 100%;
-  min-height: 75vh;
-  border: 1px solid var(--surface-outline);
-  border-radius: 10px;
-}
-
-.muted-panel p {
-  margin: 0;
-  color: var(--text-soft);
-  opacity: 1;
 }
 
 @media (max-width: 768px) {
-  #slide-detail {
-    padding: 0 10px 132px;
-  }
-
-  .slide-header,
-  .slide-panel {
-    padding: 14px;
-  }
-
-  .slide-header-top {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .talk-date-detailed {
-    white-space: normal;
-  }
-
-  .talk-detail-row {
-    grid-template-columns: 1fr;
-    gap: 4px;
-    padding: 9px 0;
-  }
-
-  .talk-detail-row dd {
-    margin-top: 0;
-  }
-
-  .talk-tags-footer {
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .talk-tags-label {
-    padding: 0;
-  }
-
-  .action-btn {
-    width: 100%;
-  }
-
-  .slide-pagination {
-    padding: 10px;
-    gap: 8px;
-    grid-template-columns: minmax(78px, 1fr) auto minmax(78px, 1fr);
-  }
-
-  .slide-page-btn {
-    padding: 6px 10px;
-    font-size: var(--font-size-micro);
-  }
-
-  .slide-page-label {
-    padding: 5px 9px;
-    gap: 5px;
-  }
-
-  .slide-frame-shell {
+  .slide-embed iframe {
     min-height: 56vh;
     height: 62vh;
     max-height: 78vh;
-    resize: none;
-  }
-
-  .slide-embed-frame {
-    min-height: 56vh;
-    height: 62vh;
-    max-height: 78vh;
-  }
-
-  .slide-canvas-shell {
-    min-height: 0;
-  }
-
-  .poster-frame {
-    min-height: 62vh;
-  }
-
-  .slide-pagination {
-    padding: 8px 10px calc(10px + env(safe-area-inset-bottom, 0px));
   }
 }
-
 </style>

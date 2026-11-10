@@ -43,6 +43,7 @@ export interface TalkViewEntry extends TalkEntry {
     label: string;
     url: string;
   }>;
+  highlight?: TalkMetadata["highlight"];
 }
 
 const DEFAULT_SUMMARY =
@@ -181,6 +182,7 @@ function hydrateTalkEntry(talk: TalkEntry): TalkViewEntry {
     venueTags: meta?.venueTags ?? [],
     topicTags: meta?.topicTags ?? [],
     relatedResources: meta?.relatedResources ?? [],
+    highlight: meta?.highlight,
   };
 }
 

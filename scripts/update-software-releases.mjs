@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import fs from "node:fs/promises";
-import os from "node:os";
 import path from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
-import esbuild from "esbuild";
+import { fileURLToPath } from "node:url";
+import { loadSiteContent } from "./lib/load-content.mjs";
+import { isMain } from "./lib/cli.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,42 +15,7 @@ const cachePath = path.join(cacheDir, "github-releases-cache.json");
 const CACHE_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 const MAX_REFRESH_PER_RUN = Number.parseInt(process.env.GITHUB_RELEASE_MAX_REFRESH ?? "6", 10);
 
-function slugify(value) {
-  return String(value)
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-async function loadTsModule(relativeFilePath) {
-  const absoluteInputPath = path.join(dataDir, relativeFilePath);
-  const tempOutputPath = path.join(
-    os.tmpdir(),
-    `software-release-${slugify(relativeFilePath)}-${Date.now()}-${Math.random().toString(16).slice(2)}.mjs`,
-  );
-
-  await esbuild.build({
-    entryPoints: [absoluteInputPath],
-    bundle: true,
-    platform: "node",
-    target: ["node20"],
-    format: "esm",
-    outfile: tempOutputPath,
-    logLevel: "silent",
-    define: {
-      "import.meta.env.BASE_URL": '"/"',
-    },
-  });
-
-  try {
-    return await import(`${pathToFileURL(tempOutputPath).href}?v=${Date.now()}`);
-  } finally {
-    await fs.unlink(tempOutputPath).catch(() => {});
-  }
-}
-
-function parseGitHubRepo(repositoryUrl) {
+export function parseGitHubRepo(repositoryUrl) {
   if (!repositoryUrl || typeof repositoryUrl !== "string") {
     return null;
   }
@@ -74,7 +39,7 @@ function parseGitHubRepo(repositoryUrl) {
   }
 }
 
-function normalizeIsoDate(value) {
+export function normalizeIsoDate(value) {
   if (!value || typeof value !== "string") {
     return null;
   }
@@ -109,7 +74,7 @@ function createHeaders(etag) {
   return headers;
 }
 
-async function fetchLatestRelease(owner, repo, etag = null) {
+export async function fetchLatestRelease(owner, repo, etag = null) {
   const endpoint = `https://api.github.com/repos/${owner}/${repo}/releases/latest`;
   const response = await fetch(endpoint, { headers: createHeaders(etag) });
 
@@ -248,14 +213,12 @@ ${body}
 }
 
 async function main() {
-  const [softwareModule, existingOutput, cacheData] = await Promise.all([
-    loadTsModule("softwareData.ts"),
-    loadTsModule("softwareReleases.ts").catch(() => null),
+  const [{ softwareModule, softwareReleasesModule }, cacheData] = await Promise.all([
+    loadSiteContent(),
     readJsonIfExists(cachePath),
   ]);
 
-  const existingMap = existingOutput?.softwareReleasesBySoftwareId ?? {};
-  const softwareProjects = softwareModule.softwareProjects ?? [];
+  const existingMap = softwareReleasesModule.softwareReleasesBySoftwareId ?? {};
   const releasesBySoftwareId = { ...existingMap };
   const now = Date.now();
   const nextCache = {
@@ -264,8 +227,8 @@ async function main() {
   const repoResultByKey = {};
   let refreshCount = 0;
 
-  for (const software of softwareProjects) {
-    const repo = parseGitHubRepo(software.repositoryUrl);
+  for (const software of softwareModule.softwareCatalog.entries) {
+    const repo = parseGitHubRepo(software.links?.repository);
     if (!repo) {
       continue;
     }
@@ -348,8 +311,10 @@ async function main() {
   console.log(`Wrote ${path.relative(rootDir, outputPath)}.`);
 }
 
-main().catch((error) => {
-  // eslint-disable-next-line no-console
-  console.error(error);
-  process.exitCode = 1;
-});
+if (isMain(import.meta.url)) {
+  main().catch((error) => {
+    // eslint-disable-next-line no-console
+    console.error(error);
+    process.exitCode = 1;
+  });
+}
