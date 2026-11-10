@@ -1,12 +1,18 @@
 import { blogPosts } from "../data/blogPostsData";
 import { cvSections } from "../data/cvData";
 import { getAllHomepageUpdates } from "../data/homepageUpdates";
-import { getPosterViewEntries } from "../data/posterCatalog";
-import { getPublicationPagePath, publications } from "../data/publicationsData";
-import { dateLabel, entryPath, softwareCatalog } from "../content/catalog";
+import {
+  dateLabel,
+  dateYear,
+  entryPath,
+  numericDateLabel,
+  posterCatalog,
+  publicationCatalog,
+  softwareCatalog,
+  talkCatalog,
+} from "../content/catalog";
+import { posterPdfPath, slidesUrl } from "../content/presentationDetails";
 import type { SoftwareRecord } from "../content/types";
-import { getTalkViewEntries } from "../data/talkCatalog";
-import { talks } from "../data/talksData";
 import { resolvePublicAssetPath } from "./publicAssetPath";
 
 const WEBSITE_BASE_IRI = "https://eliascrum.info/";
@@ -122,61 +128,63 @@ function normalizeInternalRoute(value: string): string | undefined {
 export function buildSearchDocuments(softwareSource: SoftwareRecord[] = softwareCatalog.entries): SearchDocument[] {
   const documents: SearchDocument[] = [];
 
-  const talkEntries = getTalkViewEntries(talks);
-  talkEntries.forEach((talkEntry) => {
+  talkCatalog.entries.forEach((talkEntry) => {
+    const dateText = numericDateLabel(talkEntry.date);
     documents.push({
-      id: `talk:${talkEntry.slug}`,
+      id: `talk:${talkEntry.id}`,
       type: "Talk",
-      title: talkEntry.displayTitle,
-      subtitle: `Talk • ${talkEntry.displayDateLabel}`,
-      snippet: talkEntry.description,
-      route: `/talks/${talkEntry.slug}`,
-      href: resolvePublicAssetPath(talkEntry.slidePath),
+      title: talkEntry.title,
+      subtitle: `Talk • ${dateText}`,
+      snippet: talkEntry.summary,
+      route: entryPath(talkEntry),
+      href: resolvePublicAssetPath(slidesUrl(talkEntry)),
       searchableText: [
-        talkEntry.displayTitle,
-        talkEntry.description,
-        talkEntry.displayDateLabel,
-        talkEntry.sourceFile,
+        talkEntry.title,
+        talkEntry.summary,
+        dateText,
+        talkEntry.slides.format === "pdf" ? talkEntry.slides.source : talkEntry.slides.url,
         talkEntry.venueTags.join(" "),
-        talkEntry.topicTags.join(" "),
+        talkEntry.topics.join(" "),
       ].join(" "),
       boost: 9,
     });
   });
 
-  getPosterViewEntries().forEach((posterEntry) => {
+  posterCatalog.entries.forEach((posterEntry) => {
+    const dateText = numericDateLabel(posterEntry.date);
+    const path = posterPdfPath(posterEntry);
     documents.push({
-      id: `poster:${posterEntry.slug}`,
+      id: `poster:${posterEntry.id}`,
       type: "Poster",
-      title: posterEntry.displayTitle,
-      subtitle: `Poster • ${posterEntry.displayDateLabel}`,
+      title: posterEntry.title,
+      subtitle: `Poster • ${dateText}`,
       snippet: posterEntry.summary,
-      route: `/talks/posters/${posterEntry.slug}`,
-      href: resolvePublicAssetPath(posterEntry.path),
+      route: entryPath(posterEntry),
+      href: resolvePublicAssetPath(path),
       searchableText: [
-        posterEntry.displayTitle,
+        posterEntry.title,
         posterEntry.summary,
-        posterEntry.abstract,
-        posterEntry.displayDateLabel,
-        posterEntry.path,
+        posterEntry.abstract ?? "",
+        dateText,
+        path,
         posterEntry.slug,
         posterEntry.venueTags.join(" "),
-        posterEntry.topicTags.join(" "),
+        posterEntry.topics.join(" "),
         "poster talk",
       ].join(" "),
       boost: 7,
     });
   });
 
-  publications.forEach((publicationEntry) => {
+  publicationCatalog.entries.forEach((publicationEntry) => {
     documents.push({
       id: `publication:${publicationEntry.id}`,
       type: "Publication",
       title: publicationEntry.title,
-      subtitle: `Publication • ${publicationEntry.year} • ${publicationEntry.type}`,
+      subtitle: `Publication • ${dateYear(publicationEntry.date)} • ${publicationEntry.type}`,
       snippet: publicationEntry.summary,
-      route: getPublicationPagePath(publicationEntry),
-      href: publicationEntry.url,
+      route: entryPath(publicationEntry),
+      href: publicationEntry.links?.publisher,
       searchableText: [
         publicationEntry.title,
         publicationEntry.authors,
@@ -185,7 +193,7 @@ export function buildSearchDocuments(softwareSource: SoftwareRecord[] = software
         publicationEntry.abstract || "",
         publicationEntry.type,
         publicationEntry.venueTags.join(" "),
-        publicationEntry.topicTags.join(" "),
+        publicationEntry.topics.join(" "),
         publicationEntry.bibtex,
       ].join(" "),
       boost: 10,
@@ -432,8 +440,17 @@ function mapIriToRoute(iriValue: string): string | undefined {
   if (iriValue.includes("/id/talk/")) {
     return `/talks/${iriValue.split("/id/talk/")[1]}`;
   }
+  const [kind, id] = iriValue.slice(WEBSITE_BASE_IRI.length).split("/").slice(1).map(decodeURIComponent);
   if (iriValue.includes("/id/publication/")) {
-    return "/publications";
+    const publication = publicationCatalog.byId(id);
+    return publication ? entryPath(publication) : "/publications";
+  }
+  if (kind === "software") {
+    const software = softwareCatalog.byId(id);
+    return software ? entryPath(software) : "/software";
+  }
+  if (kind === "poster") {
+    return `/talks/posters/${id}`;
   }
   if (iriValue.includes("/id/blog-post/")) {
     return "/blogs";

@@ -1,8 +1,6 @@
 import { resolvePublicAssetPath } from "../utils/publicAssetPath";
 import { blogPosts, type BlogPost } from "./blogPostsData";
-import { getPublicationPagePath, publications, type Publication } from "./publicationsData";
-import { getTalkViewEntries, type TalkViewEntry } from "./talkCatalog";
-import { talks } from "./talksData";
+import { entryPath, publicationCatalog, talkCatalog } from "../content/catalog";
 
 export type HomepageUpdateType = "Publication" | "Talk" | "Blog";
 
@@ -18,14 +16,6 @@ export interface HomepageUpdate {
 }
 
 // Required source fields for automatic "Recent Work" generation.
-export type RequiredPublicationUpdateFields = Pick<
-  Publication,
-  "id" | "slug" | "title" | "sortDate" | "summary" | "url"
->;
-export type RequiredTalkUpdateFields = Pick<
-  TalkViewEntry,
-  "slug" | "displayTitle" | "displayDateIso" | "summary"
->;
 export type RequiredBlogUpdateFields = Pick<
   BlogPost,
   "id" | "title" | "dateIso" | "summary" | "url" | "linkLabel"
@@ -66,27 +56,27 @@ function resolveUpdateLink(url: string): string {
 }
 
 function getPublicationUpdates(): HomepageUpdate[] {
-  return publications.map((publication: RequiredPublicationUpdateFields) => ({
+  return publicationCatalog.entries.map((publication) => ({
     id: `publication:${publication.id}`,
     type: "Publication",
-    dateIso: publication.sortDate,
-    dateLabel: toDateLabel(publication.sortDate),
+    dateIso: String(publication.date),
+    dateLabel: toDateLabel(String(publication.date)),
     title: publication.title,
     summary: publication.summary,
-    link: resolvePublicAssetPath(getPublicationPagePath(publication)),
+    link: resolvePublicAssetPath(entryPath(publication)),
     linkLabel: "Read publication",
   }));
 }
 
 function getTalkUpdates(): HomepageUpdate[] {
-  return getTalkViewEntries(talks).map((talk: RequiredTalkUpdateFields) => ({
-    id: `talk:${talk.slug}`,
+  return talkCatalog.entries.map((talk) => ({
+    id: `talk:${talk.id}`,
     type: "Talk",
-    dateIso: talk.displayDateIso,
-    dateLabel: toDateLabel(talk.displayDateIso),
-    title: talk.displayTitle,
+    dateIso: String(talk.date),
+    dateLabel: toDateLabel(String(talk.date)),
+    title: talk.title,
     summary: talk.summary,
-    link: resolvePublicAssetPath(`/talks/${talk.slug}`),
+    link: resolvePublicAssetPath(entryPath(talk)),
     linkLabel: "View talk",
   }));
 }

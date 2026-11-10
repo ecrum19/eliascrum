@@ -135,78 +135,59 @@ function jsonItemBase(type, id, title) {
 }
 
 export function buildRecentWorkItems({
-  publicationsModule,
-  talkCatalogModule,
-  posterCatalogModule,
-  softwareModule,
+  catalogModule,
+  presentationDetailsModule,
   softwareReleasesModule,
   blogModule,
 }) {
-  const publicationItems = (publicationsModule.publications ?? []).map((publication) => {
-    const dateIso = normalizeDate(publication.sortDate);
+  const { publicationCatalog, softwareCatalog, talkCatalog, posterCatalog, dateLabel, entryPath } =
+    catalogModule;
+  const publicationItems = publicationCatalog.entries.map((publication) => {
+    const dateIso = normalizeDate(dateLabel(publication.date));
     const parsed = dateIso ? parseIsoDate(dateIso) : null;
     return {
       ...jsonItemBase("Publication", publication.id, publication.title),
-      slug: publicationsModule.getPublicationSlug(publication),
+      slug: publication.slug,
       dateIso,
       summary: publication.summary ?? "",
-      url: toAbsoluteUrl(publicationsModule.getPublicationPagePath(publication)),
-      sourceUrl: toAbsoluteUrl(publication.url),
-      itemUrl: toAbsoluteUrl(publicationsModule.getPublicationPagePath(publication)),
-      tags: [
-        publication.type,
-        ...(publication.venueTags ?? []),
-        ...(publication.topicTags ?? []),
-      ].filter(Boolean),
+      url: toAbsoluteUrl(entryPath(publication)),
+      sourceUrl: toAbsoluteUrl(publication.links?.publisher),
+      itemUrl: toAbsoluteUrl(entryPath(publication)),
+      tags: [publication.type, ...publication.venueTags, ...publication.topics].filter(Boolean),
       sortTimestamp: parsed ? parsed.getTime() : null,
     };
   });
 
-  const talkItems = (talkCatalogModule.getTalkViewEntries?.() ?? []).map((talk) => {
-    const dateIso = normalizeDate(talk.displayDateIso);
+  const { slidesUrl, posterPdfPath, durationCategory, audienceSizeCategory } = presentationDetailsModule;
+  const presentationItem = (entry, type, materialTag, sourcePath) => {
+    const dateIso = normalizeDate(dateLabel(entry.date));
     const parsed = dateIso ? parseIsoDate(dateIso) : null;
     return {
-      ...jsonItemBase("Talk", talk.slug, talk.displayTitle),
-      slug: talk.slug,
+      ...jsonItemBase(type, entry.id, entry.title),
+      slug: entry.slug,
       dateIso,
-      summary: talk.summary ?? "",
-      url: toAbsoluteUrl(`/talks/${talk.slug}`),
-      sourceUrl: toAbsoluteUrl(talk.slidePath),
-      itemUrl: toAbsoluteUrl(`/talks/${talk.slug}`),
+      summary: entry.summary ?? "",
+      url: toAbsoluteUrl(entryPath(entry)),
+      sourceUrl: toAbsoluteUrl(sourcePath),
+      itemUrl: toAbsoluteUrl(entryPath(entry)),
       tags: [
-        talk.materialTag,
-        ...(talk.venueTags ?? []),
-        ...(talk.topicTags ?? []),
-        ...(talk.audienceGroups ?? []),
-        talk.durationCategory,
-        talk.audienceSizeCategory,
+        materialTag,
+        ...entry.venueTags,
+        ...entry.topics,
+        ...entry.audienceGroups,
+        durationCategory(entry),
+        audienceSizeCategory(entry),
       ].filter(Boolean),
       sortTimestamp: parsed ? parsed.getTime() : null,
     };
-  });
+  };
+  const talkItems = talkCatalog.entries.map((talk) =>
+    presentationItem(talk, "Talk", "Slides", slidesUrl(talk)),
+  );
+  const posterItems = posterCatalog.entries.map((poster) =>
+    presentationItem(poster, "Poster", "Poster", posterPdfPath(poster)),
+  );
 
-  const posterItems = (posterCatalogModule.getPosterViewEntries?.() ?? []).map((poster) => {
-    const dateIso = normalizeDate(poster.dateIso);
-    const parsed = dateIso ? parseIsoDate(dateIso) : null;
-    return {
-      ...jsonItemBase("Poster", poster.slug, poster.displayTitle),
-      slug: poster.slug,
-      dateIso,
-      summary: poster.summary ?? poster.abstract ?? "",
-      url: toAbsoluteUrl(`/talks/${poster.slug}`),
-      sourceUrl: toAbsoluteUrl(poster.path),
-      itemUrl: toAbsoluteUrl(`/talks/${poster.slug}`),
-      tags: [
-        "Poster",
-        ...(poster.venueTags ?? []),
-        ...(poster.topicTags ?? []),
-        ...(poster.audienceGroups ?? []),
-      ].filter(Boolean),
-      sortTimestamp: parsed ? parsed.getTime() : null,
-    };
-  });
-
-  const { softwareCatalog, dateLabel, entryPath } = softwareModule;
   const softwareItems = softwareCatalog.entries.map((software) => {
     const yearDate = parseYearToDate(dateLabel(software.date));
     const { repository, website } = software.links ?? {};

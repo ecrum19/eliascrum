@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { isMain } from "./lib/cli.mjs";
+import { loadContentModule } from "./lib/load-content.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -8,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
 
-const publicationsDataPath = path.join(repoRoot, "src", "data", "publicationsData.ts");
+const catalogPath = path.join(repoRoot, "src", "content", "catalog.ts");
 const scholarCitationsPath = path.join(repoRoot, "src", "data", "scholarCitations.ts");
 const scholarUrl =
   "https://scholar.google.com/citations?user=fAJsN2kAAAAJ&hl=en&cstart=0&pagesize=100";
@@ -42,21 +43,14 @@ export function normalizeTitle(value) {
     .trim();
 }
 
-function extractPublicationsFromData(source) {
-  const publicationPattern = /id:\s*"([^"]+)"[\s\S]*?title:\s*"([^"]+)"/g;
-  const entries = [];
-  let match;
-
-  while ((match = publicationPattern.exec(source)) !== null) {
-    const [, id, title] = match;
-    entries.push({
-      id,
-      title,
-      normalizedTitle: normalizeTitle(title),
-    });
-  }
-
-  return entries;
+/** Publications as the citation matcher sees them: ID plus a comparable title. */
+export async function loadPublicationsForMatching() {
+  const { publicationCatalog } = await loadContentModule(catalogPath);
+  return publicationCatalog.entries.map(({ id, title }) => ({
+    id,
+    title,
+    normalizedTitle: normalizeTitle(title),
+  }));
 }
 
 function parseCitationCount(value) {
@@ -247,11 +241,10 @@ async function fetchThesisDownloadCount(url) {
 }
 
 async function main() {
-  const publicationsSource = await fs.readFile(publicationsDataPath, "utf8");
-  const publications = extractPublicationsFromData(publicationsSource);
+  const publications = await loadPublicationsForMatching();
 
   if (publications.length === 0) {
-    throw new Error("No publications found in publicationsData.ts");
+    throw new Error("No publications found in the publication catalog");
   }
 
   const scholarHtml = await fetchScholarHtml();

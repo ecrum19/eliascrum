@@ -13,10 +13,16 @@ import TheFooter from "../../src/components/TheFooter.vue";
 import AnalyticsConsentBanner from "../../src/components/AnalyticsConsentBanner.vue";
 import WorkSectionBlock from "../../src/components/layout/WorkSectionBlock.vue";
 import DeferredPreviewNotice from "../../src/components/layout/DeferredPreviewNotice.vue";
-import { getPosterViewEntries } from "../../src/data/posterCatalog";
 import { getRecentHomepageUpdates } from "../../src/data/homepageUpdates";
-import { publications, type Publication } from "../../src/data/publicationsData";
-import { getTalkViewEntries } from "../../src/data/talkCatalog";
+import {
+  dateYear,
+  entryPath,
+  posterCatalog,
+  publicationCatalog,
+  talkCatalog,
+} from "../../src/content/catalog";
+import type { PresentationRecord } from "../../src/content/presentationDetails";
+import type { PublicationRecord as Publication } from "../../src/content/types";
 import {
   getAnalyticsConsent,
   openAnalyticsSettings,
@@ -49,22 +55,23 @@ describe("page content and navigation", () => {
   });
   it("filters publications by each dimension to exactly the matching records", async () => {
     const { wrapper, router } = await mountPage(MyPublications, "/publications");
+    const publications = publicationCatalog.entries;
     const cards = () => wrapper.findAll(".publication-card:not(.empty-state)");
     expect(cards()).toHaveLength(publications.length);
     await wrapper.get(".filter-toggle").trigger("click");
     const [venue, topic, type, year] = wrapper.findAll("select");
-    const sample = publications.find((entry) => entry.venueTags.length && entry.topicTags.length)!;
-    const sampleYear = sample.sortDate.slice(0, 4);
+    const sample = publications.find((entry) => entry.venueTags.length)!;
+    const sampleYear = String(dateYear(sample.date));
     const dimensions = [
       { select: venue, value: sample.venueTags[0], matches: (entry: Publication) => entry.venueTags.includes(sample.venueTags[0]) },
-      { select: topic, value: sample.topicTags[0], matches: (entry: Publication) => entry.topicTags.includes(sample.topicTags[0]) },
+      { select: topic, value: sample.topics[0], matches: (entry: Publication) => entry.topics.includes(sample.topics[0]) },
       { select: type, value: sample.type, matches: (entry: Publication) => entry.type === sample.type },
-      { select: year, value: sampleYear, matches: (entry: Publication) => entry.sortDate.startsWith(`${sampleYear}-`) },
+      { select: year, value: sampleYear, matches: (entry: Publication) => String(dateYear(entry.date)) === sampleYear },
     ];
     for (const { select, value, matches } of dimensions) {
       await select.setValue(value);
       const expected = publications.filter(matches);
-      expect(cards().map((card) => card.get(".publication-title").text())).toEqual(
+      expect(cards().map((card) => card.get(".listing-title").text())).toEqual(
         expect.arrayContaining(expected.map((entry) => entry.title)),
       );
       expect(cards()).toHaveLength(expected.length);
@@ -79,18 +86,19 @@ describe("page content and navigation", () => {
     expect(cards()).toHaveLength(0);
   });
   it("filters talks and posters together by venue, topic, and year", async () => {
-    const { wrapper } = await mountPage(MySlides, "/talks");
-    const items = [...getTalkViewEntries(), ...getPosterViewEntries()];
-    const titles = () =>
-      wrapper.findAll(".talk-card:not(.empty-state) .talk-card-title").map((title) => title.text());
+    const { wrapper, router } = await mountPage(MySlides, "/talks");
+    const items: PresentationRecord[] = [...talkCatalog.entries, ...posterCatalog.entries];
+    type Item = PresentationRecord;
+    const titles = () => wrapper.findAll(".presentation-title").map((title) => title.text());
     await wrapper.get(".filter-toggle").trigger("click");
     const selects = wrapper.findAll("select");
-    const sample = items.find((entry) => entry.venueTags.length && entry.topicTags.length)!;
-    const sampleYear = sample.displayDateIso.slice(0, 4);
+    const sample = items.find((entry) => entry.venueTags.length && entry.topics.length)!;
+    const sampleYear = String(dateYear(sample.date));
     const dimensions = [
-      { select: selects[0], value: sample.venueTags[0], matches: (entry: (typeof items)[number]) => entry.venueTags.includes(sample.venueTags[0]) },
-      { select: selects[1], value: sample.topicTags[0], matches: (entry: (typeof items)[number]) => entry.topicTags.includes(sample.topicTags[0]) },
-      { select: selects[6], value: sampleYear, matches: (entry: (typeof items)[number]) => entry.displayDateIso.startsWith(`${sampleYear}-`) },
+      { select: selects[0], value: sample.venueTags[0], matches: (entry: Item) => entry.venueTags.includes(sample.venueTags[0]) },
+      { select: selects[1], value: sample.topics[0], matches: (entry: Item) => entry.topics.includes(sample.topics[0]) },
+      { select: selects[2], value: "Poster", matches: (entry: Item) => entry.kind === "poster" },
+      { select: selects[6], value: sampleYear, matches: (entry: Item) => String(dateYear(entry.date)) === sampleYear },
     ];
     for (const { select, value, matches } of dimensions) {
       await select.setValue(value);
@@ -98,18 +106,24 @@ describe("page content and navigation", () => {
       expect(wrapper.get(".filter-result").text()).toBe(
         `Showing ${expected.length} of ${items.length} items.`,
       );
-      expect(titles()).toEqual(expect.arrayContaining(expected.map((entry) => entry.displayTitle)));
+      expect(titles()).toHaveLength(expected.length);
+      expect(titles()).toEqual(expect.arrayContaining(expected.map((entry) => entry.title)));
       await wrapper.get(".filter-clear-btn").trigger("click");
     }
     expect(wrapper.get(".filter-result").text()).toBe(`Showing ${items.length} of ${items.length} items.`);
+    // A tag chip filters by its tag; a duration filter leaves out entries without a duration.
+    await wrapper.get('.presentation-card [data-category="Duration"]').trigger("click");
+    expect(titles().length).toBeGreaterThan(0);
+    expect(titles().length).toBeLessThan(items.filter((entry) => entry.durationMinutes !== undefined).length + 1);
+    await router.push("/talks?tag=venue&value=zzzzunmatchedzzzz");
+    await flushPromises();
+    expect(titles()).toEqual([]);
+    expect(wrapper.text()).toContain("No Items Match Current Filters");
   });
   it("keeps poster media unloaded until explicitly requested in Lite mode", async () => {
-    const poster = getPosterViewEntries()[0];
-    const { wrapper, router } = await mountPage(
-      PosterDetail,
-      `/talks/posters/${poster.slug}`,
-    );
-    expect(wrapper.get("h1").text()).toBe(poster.displayTitle);
+    const poster = posterCatalog.entries[0];
+    const { wrapper, router } = await mountPage(PosterDetail, entryPath(poster));
+    expect(wrapper.get("h1").text()).toBe(poster.title);
     expect(wrapper.find("object").exists()).toBe(false);
     await wrapper.get(".deferred-preview button").trigger("click");
     expect(wrapper.get("object").attributes("data")).toContain(".pdf");

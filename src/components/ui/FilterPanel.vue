@@ -83,7 +83,8 @@ defineEmits<{ "update:open": [value: boolean]; clear: [] }>();
 
 .filter-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  /* Pages with a fixed number of filters can set --filter-columns. */
+  grid-template-columns: var(--filter-columns, repeat(auto-fit, minmax(180px, 1fr)));
   gap: 7px;
 }
 

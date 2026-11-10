@@ -1,28 +1,42 @@
 import { describe, it, expect } from "vitest";
 import {
+  posterCatalog,
+  publicationCatalog,
   softwareCatalog,
+  talkCatalog,
   entryPath,
   relatedIds,
 } from "../../src/content/catalog";
 import { dateLabel, dateSortValue } from "../../src/content/dates";
 import {
   validateContent,
-  validateHighlights,
+  validateTalkAssets,
   type ValidationContext,
 } from "../../src/content/validation";
-import type { ContentDate, SoftwareRecord } from "../../src/content/types";
-import { publications } from "../../src/data/publicationsData";
-import { talks, posters } from "../../src/data/talksData";
+import { talkAssets } from "../../src/content/generated/talkAssets";
+import type {
+  ContentDate,
+  PosterRecord,
+  PublicationRecord,
+  SoftwareRecord,
+  TalkRecord,
+} from "../../src/content/types";
+import {
+  publicationDownloadsByPublicationId,
+  scholarCitationsByPublicationId,
+} from "../../src/data/scholarCitations";
 import { softwareReleasesBySoftwareId } from "../../src/data/softwareReleases";
 import { buildSearchDocuments } from "../../src/utils/siteSearch";
 import { minimalSoftware as minimal } from "../fixtures/minimalSoftware";
+import { minimalPublication } from "../fixtures/minimalPublication";
+import { minimalPoster, minimalTalk } from "../fixtures/minimalPresentations";
 
 const context: ValidationContext = {
   sections: softwareCatalog.sections,
   relationKeys: new Set([
-    ...publications.map((entry) => `publication:${entry.id}`),
-    ...talks.map((entry) => `talk:${entry.slug}`),
-    ...posters.map((entry) => `poster:${entry.slug}`),
+    ...publicationCatalog.entries.map((entry) => `publication:${entry.id}`),
+    ...talkCatalog.entries.map((entry) => `talk:${entry.id}`),
+    ...posterCatalog.entries.map((entry) => `poster:${entry.id}`),
     ...softwareCatalog.entries.map((entry) => `software:${entry.id}`),
   ]),
 };
@@ -107,7 +121,7 @@ describe("authoring a software record", () => {
       ).toBe(true);
     }
   });
-  it("validates highlights on catalog entries and on legacy content", () => {
+  it("validates highlights", () => {
     expect(
       validateContent(
         [{ ...minimal, highlight: { label: "Demo", related: "publication:solid-cockpit-eswc-2026-demo" } }],
@@ -124,8 +138,8 @@ describe("authoring a software record", () => {
       "software:example highlight: expected an http(s) URL or local asset path",
       "software:example: unknown highlight entry software:missing",
     ]);
-    expect(validateHighlights([["publication:x", { label: "Site" }]], context)).toEqual([
-      "publication:x: highlight needs an href or a related entry",
+    expect(validateContent([{ ...minimal, highlight: { label: "Site" } }], context)).toEqual([
+      "software:example: highlight needs an href or a related entry",
     ]);
   });
   it("accepts every date form and existing local assets, and rejects impossible dates", () => {
@@ -163,5 +177,94 @@ describe("authoring a software record", () => {
     expect(entryPath({ ...minimal, kind: "poster" })).toBe(
       "/talks/posters/example",
     );
+  });
+});
+
+describe("authoring a publication record", () => {
+  it("accepts the minimal record and routes it to its paper page", () => {
+    expect(validateContent([minimalPublication], context)).toEqual([]);
+    expect(entryPath(minimalPublication)).toBe("/publications/example-paper/paper");
+  });
+  it("validates all authored publications and their citation and download IDs", () => {
+    expect(
+      validateContent(publicationCatalog.entries, {
+        ...context,
+        observationIds: [
+          ...Object.keys(scholarCitationsByPublicationId),
+          ...Object.keys(publicationDownloadsByPublicationId),
+        ],
+      }),
+    ).toEqual([]);
+    for (const entry of publicationCatalog.entries) {
+      expect(publicationCatalog.byId(entry.id)).toBe(entry);
+      expect(publicationCatalog.bySlug(entry.slug)).toBe(entry);
+    }
+    expect(publicationCatalog.byId("missing")).toBeUndefined();
+  });
+  it("requires citation fields and rejects generated or repeated detail rows", () => {
+    const invalid = {
+      ...minimalPublication,
+      authors: "",
+      bibtex: " ",
+      extraDetails: [
+        { label: "Date", value: "2026" },
+        { label: "DOI", value: "10.1/a" },
+        { label: "DOI", value: "10.1/b" },
+      ],
+    } as PublicationRecord;
+    expect(validateContent([invalid], context)).toEqual([
+      "publication:example-paper-2026: authors is required",
+      "publication:example-paper-2026: bibtex is required",
+      'publication:example-paper-2026: "Date" is generated from the record; remove the detail row',
+      "publication:example-paper-2026: duplicate detail label DOI",
+    ]);
+  });
+});
+
+describe("authoring a talk or poster", () => {
+  const presentations = [...talkCatalog.entries, ...posterCatalog.entries];
+  it("accepts the minimal records, which need no duration, audience, or abstract", () => {
+    expect(validateContent([minimalTalk, minimalPoster], context)).toEqual([]);
+    expect(entryPath(minimalTalk)).toBe("/talks/example-talk");
+    expect(entryPath(minimalPoster)).toBe("/talks/posters/example-poster");
+  });
+  it("validates all authored talks and posters against their built assets", () => {
+    expect(
+      validateContent(presentations, { ...context, localAssetExists: () => true }),
+    ).toEqual([]);
+    expect(validateTalkAssets(presentations, Object.keys(talkAssets))).toEqual([]);
+  });
+  it("reports PDFs that were not built, and built files without a record", () => {
+    const pdfTalk: TalkRecord = { ...minimalTalk, slides: { format: "pdf", source: "Example.pdf" } };
+    expect(validateTalkAssets([pdfTalk, minimalTalk, minimalPoster], ["/talks/posters/example_poster.pdf", "/talks/slides/old.pdf"])).toEqual([
+      "talk:example-talk: /talks/slides/example-talk.pdf is not built yet; run npm run build:slides",
+      "talk assets: /talks/slides/old.pdf has no talk or poster record",
+    ]);
+    expect(
+      validateContent([pdfTalk], { ...context, localAssetExists: () => false }),
+    ).toEqual([
+      "talk:example-talk: missing local asset /talks/slides/example-talk.pdf; run npm run build:slides",
+    ]);
+  });
+  it("rejects malformed slides, posters, and presentation values", () => {
+    const talk = {
+      ...minimalTalk,
+      slides: { format: "pptx" },
+      durationMinutes: 0,
+      audienceSizeApprox: 12.5,
+      venueTags: [" "],
+      relatedResources: [{ label: "", url: "ftp://example.org" }],
+    } as unknown as TalkRecord;
+    const poster = { ...minimalPoster, source: "", audienceGroups: undefined } as unknown as PosterRecord;
+    expect(validateContent([talk, poster], context)).toEqual([
+      "talk:example-talk: venueTags must be a list of nonblank values",
+      "talk:example-talk: durationMinutes must be a positive whole number",
+      "talk:example-talk: audienceSizeApprox must be a positive whole number",
+      "talk:example-talk: resource label is required",
+      "talk:example-talk : expected an http(s) URL or local asset path",
+      'talk:example-talk: slides.format must be "pdf" or "html"',
+      "poster:example-poster: audienceGroups must be a list of nonblank values",
+      "poster:example-poster: source is required",
+    ]);
   });
 });

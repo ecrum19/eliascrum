@@ -12,8 +12,8 @@ the generator never reads that private local file or copies it to the website.
   clinical genomics, semantic technologies, relevant research software, selected
   publications, the FWO fellowship, awards, and clinical/teaching experience.
 
-Edit factual records in `src/data/cvData.ts`, `publicationsData.ts`,
-`src/content/software.ts`, and the talk/poster catalogs. `content.ts` holds the focused
+Edit factual records in `src/data/cvData.ts`, `src/content/publications.ts`,
+`src/content/software.ts`, `src/content/talks.ts`, and `src/content/posters.ts`. `content.ts` holds the focused
 profile, selected experience/software, and explicit publication selections. Elias's
 requested four papers are pinned by ID, so adding newer papers cannot silently
 replace the bioinformatics or PhD Symposium entries. Accepted papers and preprints
@@ -23,7 +23,7 @@ target. The PDFs are current to the site's maintained records, not an external
 profile lookup. Add any new career information to those records first.
 
 Software titles include printable URLs in parentheses. Related papers come from
-each project's `relatedPublicationIds`, with DOI or direct PDF links when available.
+each project's `publication:` entries in `related`, with DOI or direct PDF links when available.
 The activity metadata in `content.ts` records public GitHub `pushed_at` dates and
 archive flags checked on 8 September 2026. Newer dates from the site's release
 updater take precedence. "Active" means activity within 180 days; "No recent

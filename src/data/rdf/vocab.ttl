@@ -4,6 +4,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix ec: <https://eliascrum.info/vocab#> .
 
 <https://eliascrum.info/vocab>
@@ -88,7 +89,9 @@ ec:Talk
 ec:TalkMetadata
   a rdfs:Class ;
   rdfs:label "Talk Metadata"@en ;
-  rdfs:comment "Editable metadata node containing curated talk overrides and descriptors."@en .
+  rdfs:comment "Editable metadata node containing curated talk overrides and descriptors."@en ;
+  owl:deprecated true ;
+  skos:editorialNote "No longer exported: talks and posters are authored as single records, so there is no separate source layer."@en .
 
 ec:TalkReference
   a rdfs:Class ;
@@ -158,6 +161,11 @@ ec:RelatedResource
   a rdfs:Class ;
   rdfs:label "Related Resource"@en ;
   rdfs:comment "Named external or internal resource related to a talk or poster."@en .
+
+ec:Highlight
+  a rdfs:Class ;
+  rdfs:label "Highlight"@en ;
+  rdfs:comment "The one part of a website entry its page emphasizes, such as a companion website that is a key part of a paper's contribution."@en .
 
 ec:BlogPost
   a rdfs:Class ;
@@ -357,6 +365,8 @@ ec:forTalk
   a rdf:Property ;
   rdfs:label "for talk"@en ;
   rdfs:comment "Associates a talk metadata node with a talk."@en ;
+  owl:deprecated true ;
+  skos:editorialNote "No longer exported: talks and posters are authored as single records, so there is no separate source layer."@en ;
   rdfs:domain ec:TalkMetadata ;
   rdfs:range ec:Talk .
 
@@ -452,6 +462,18 @@ ec:hasRelatedResource
   rdfs:label "has related resource"@en ;
   rdfs:comment "Links a talk or poster to a named resource."@en ;
   rdfs:range ec:RelatedResource .
+
+ec:hasHighlight
+  a rdf:Property ;
+  rdfs:label "has highlight"@en ;
+  rdfs:comment "Links a publication, software project, talk, or poster to the part of it the website emphasizes."@en ;
+  rdfs:range ec:Highlight .
+
+ec:highlightsEntry
+  a rdf:Property ;
+  rdfs:label "highlights entry"@en ;
+  rdfs:comment "Links a highlight to the website entry it features."@en ;
+  rdfs:domain ec:Highlight .
 
 ec:hasSoftware
   a rdf:Property ;
@@ -684,7 +706,7 @@ ec:relatedFellowship
 ec:relatedPoster
   a rdf:Property ;
   rdfs:label "related poster"@en ;
-  rdfs:comment "Associates software with a related poster."@en ;
+  rdfs:comment "Associates software or a publication with a related poster."@en ;
   rdfs:range ec:Poster .
 
 ec:relatedSoftware
@@ -798,6 +820,8 @@ ec:sourceDate
   a rdf:Property ;
   rdfs:label "source date"@en ;
   rdfs:comment "Date extracted from source talk data before display overrides."@en ;
+  owl:deprecated true ;
+  skos:editorialNote "No longer exported: talks and posters are authored as single records, so there is no separate source layer."@en ;
   rdfs:domain ec:Talk ;
   rdfs:range xsd:date .
 
@@ -805,6 +829,8 @@ ec:sourceDateLabel
   a rdf:Property ;
   rdfs:label "source date label"@en ;
   rdfs:comment "Source date display label from generated talk data."@en ;
+  owl:deprecated true ;
+  skos:editorialNote "No longer exported: talks and posters are authored as single records, so there is no separate source layer."@en ;
   rdfs:domain ec:Talk ;
   rdfs:range xsd:string .
 
@@ -812,6 +838,8 @@ ec:sourceDateText
   a rdf:Property ;
   rdfs:label "source date text"@en ;
   rdfs:comment "Fallback textual source date for talks."@en ;
+  owl:deprecated true ;
+  skos:editorialNote "No longer exported: talks and posters are authored as single records, so there is no separate source layer."@en ;
   rdfs:domain ec:Talk ;
   rdfs:range xsd:string .
 
@@ -825,7 +853,7 @@ ec:sourceDirectory
 ec:sourceFile
   a rdf:Property ;
   rdfs:label "source file"@en ;
-  rdfs:comment "Source filename for a talk's slide input."@en ;
+  rdfs:comment "Slide PDF file name in the talk asset archive, or the URL of an HTML slide deck."@en ;
   rdfs:domain ec:Talk ;
   rdfs:range xsd:string .
 
@@ -833,6 +861,8 @@ ec:sourceTitle
   a rdf:Property ;
   rdfs:label "source title"@en ;
   rdfs:comment "Source title from generated talk data before metadata override."@en ;
+  owl:deprecated true ;
+  skos:editorialNote "No longer exported: talks and posters are authored as single records, so there is no separate source layer."@en ;
   rdfs:domain ec:Talk ;
   rdfs:range xsd:string .
 

@@ -6,11 +6,7 @@ import FellowshipDetail from "../../src/components/FellowshipDetail.vue";
 import PublicationPaperPage from "../../src/components/PublicationPaperPage.vue";
 import SlideDetail from "../../src/components/SlideDetail.vue";
 import PdfViewer from "../../src/components/detail/PdfViewer.vue";
-import {
-  publications,
-  getPublicationPagePath,
-} from "../../src/data/publicationsData";
-import { getTalkViewEntries } from "../../src/data/talkCatalog";
+import { entryPath, publicationCatalog, talkCatalog } from "../../src/content/catalog";
 import { loadPdfJs } from "../../src/utils/pdfJs";
 
 vi.mock("../../src/utils/pdfJs", () => ({ loadPdfJs: vi.fn() }));
@@ -60,15 +56,13 @@ const cases = [
   },
   {
     component: PublicationPaperPage,
-    path: getPublicationPagePath(
-      publications.find((entry) => entry.paperPdfPath)!,
-    ),
+    path: entryPath(publicationCatalog.entries.find((entry) => entry.links?.paper)!),
     noun: "Paper",
     zoom: true,
   },
   {
     component: SlideDetail,
-    path: `/talks/${getTalkViewEntries().find((entry) => !entry.slideEmbedUrl)!.slug}`,
+    path: entryPath(talkCatalog.entries.find((entry) => !entry.slides.embedUrl)!),
     noun: "Slide",
     zoom: false,
   },
@@ -150,17 +144,17 @@ it("shows every publication source and copies BibTeX using the clipboard API", a
   vi.stubGlobal("navigator", { ...navigator, clipboard: { writeText } });
   const { wrapper, router } = await mountPage(
     PublicationPaperPage,
-    getPublicationPagePath(publications[0]),
+    entryPath(publicationCatalog.entries[0]),
   );
-  for (const entry of publications) {
-    await router.push(getPublicationPagePath(entry));
+  for (const entry of publicationCatalog.entries) {
+    await router.push(entryPath(entry));
     await flushPromises();
     expect(wrapper.get("h1").text()).toBe(entry.title);
   }
   const copy = wrapper.get('[aria-label="Copy BibTeX citation"]');
   await copy.trigger("click");
   await flushPromises();
-  expect(writeText).toHaveBeenCalledWith(publications.at(-1)!.bibtex);
+  expect(writeText).toHaveBeenCalledWith(publicationCatalog.entries.at(-1)!.bibtex);
   await router.push("/publications/missing/paper");
   await flushPromises();
   expect(wrapper.text()).toContain("could not be resolved");

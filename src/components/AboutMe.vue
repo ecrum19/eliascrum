@@ -248,11 +248,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { getRecentHomepageUpdates, type HomepageUpdate } from "../data/homepageUpdates";
-import {
-  publicationProfileLinks,
-  researchPortalProfileUrl,
-  type ExternalProfileLink,
-} from "../data/publicationsData";
+import { researchProfileLinks, type ExternalProfileLink } from "../content/profiles";
 import { getFellowshipDetailPath } from "../data/fellowshipData";
 
 interface ResearchTopicLink {
@@ -271,17 +267,7 @@ export default defineComponent({
   name: "AboutMe",
   computed: {
     publicationProfileLinks(): ExternalProfileLink[] {
-      return [
-        ...publicationProfileLinks,
-        {
-          id: "research-portal",
-          label: "Research Portal",
-          url: researchPortalProfileUrl,
-          iconUrl:
-            "https://www.datocms-assets.com/53443/1747235092-monogram-vlaamse-overheid.svg?auto=format&fit=max&w=1200",
-          variant: "research-portal",
-        },
-      ];
+      return researchProfileLinks;
     },
     recentUpdates(): HomepageUpdate[] {
       return getRecentHomepageUpdates(1);

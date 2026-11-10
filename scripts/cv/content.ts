@@ -1,15 +1,48 @@
 import { cvProfile, cvSections, type CvItem } from '../../src/data/cvData';
 import { cvDownloads } from '../../src/data/cvDownloads';
-import { publications, orcidProfileUrl, type Publication } from '../../src/data/publicationsData';
-import { relatedIds, softwareCatalog } from '../../src/content/catalog';
+import {
+  dateLabel,
+  dateYear,
+  entryPath,
+  numericDateLabel,
+  posterCatalog,
+  publicationCatalog,
+  relatedIds,
+  softwareCatalog,
+  talkCatalog,
+} from '../../src/content/catalog';
+import { posterPdfPath, slidesUrl, type PresentationRecord } from '../../src/content/presentationDetails';
+import { publicationDetailRows } from '../../src/content/publicationDetails';
+import { orcidProfileUrl } from '../../src/content/profiles';
+import type { PublicationRecord } from '../../src/content/types';
 import { softwareReleasesBySoftwareId } from '../../src/data/softwareReleases';
-import { getTalkViewEntries } from '../../src/data/talkCatalog';
-import { getPosterViewEntries } from '../../src/data/posterCatalog';
 
-export { cvProfile, cvSections, cvDownloads, publications, orcidProfileUrl, relatedIds, softwareReleasesBySoftwareId };
+export { cvProfile, cvSections, cvDownloads, orcidProfileUrl, relatedIds, softwareReleasesBySoftwareId };
 export const softwareProjects = softwareCatalog.entries;
-export const talks = getTalkViewEntries();
-export const posters = getPosterViewEntries();
+
+/** A talk or poster as the CV prints it: dated like the talks page, linking its page and material. */
+const cvPresentation = (entry: PresentationRecord, materialUrl: string) => ({
+  ...entry,
+  dateText: numericDateLabel(entry.date),
+  pageUrl: entryPath(entry),
+  materialUrl,
+});
+export const talks = talkCatalog.entries.map((talk) => cvPresentation(talk, slidesUrl(talk)));
+export const posters = posterCatalog.entries.map((poster) => cvPresentation(poster, posterPdfPath(poster)));
+
+/** The fields the CV prints, with the same detail rows (DOI, Status) the site shows. */
+function cvPublication(entry: PublicationRecord) {
+  return {
+    ...entry,
+    details: publicationDetailRows(entry),
+    year: dateYear(entry.date),
+    sortDate: dateLabel(entry.date),
+    url: entry.links?.publisher,
+    paperPdfPath: entry.links?.paper,
+  };
+}
+export type CvPublication = ReturnType<typeof cvPublication>;
+export const publications = publicationCatalog.entries.map(cvPublication);
 
 // Editorial choices for medical semantic web applications. Facts, dates, degree names,
 // publication status, and project descriptions continue to come from the site records.
@@ -72,7 +105,7 @@ export const scopedPublicationIds = [
   'pengquin-eswc-2024',
   'urinary-coliphages-2023',
 ];
-export function selectPublications(source: Publication[] = publications) {
+export function selectPublications(source: CvPublication[] = publications) {
   return scopedPublicationIds.map((id) => {
     const result = source.find((entry) => entry.id === id);
     if (!result) throw new Error(`Missing scoped CV publication: ${id}`);

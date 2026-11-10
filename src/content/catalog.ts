@@ -1,7 +1,11 @@
+import { posterEntries } from "./posters";
+import { publicationEntries } from "./publications";
 import { softwareEntries, softwareSectionDefinitions } from "./software";
+import { talkEntries } from "./talks";
 import type { ContentEntry, ContentKind } from "./types";
 
-export { dateLabel } from "./dates";
+export { dateLabel, dateYear, numericDateLabel } from "./dates";
+export { PUBLICATION_TYPE_OPTIONS } from "./publications";
 
 /** IDs of the related entries of one kind, in authored order. */
 export function relatedIds(entry: ContentEntry, kind: ContentKind): string[] {
@@ -25,10 +29,16 @@ export function entryPath(entry: ContentEntry): string {
 }
 
 /** Pure selectors: safe for both Vue and Node build scripts. */
-export const softwareCatalog = {
-  entries: softwareEntries,
-  sections: softwareSectionDefinitions,
-  byId: (id: string) => softwareEntries.find((entry) => entry.id === id),
-  bySlug: (slug: string) =>
-    softwareEntries.find((entry) => entry.slug === slug),
-};
+function catalogOf<T extends ContentEntry>(entries: T[]) {
+  return {
+    entries,
+    byId: (id: string) => entries.find((entry) => entry.id === id),
+    bySlug: (slug: string) => entries.find((entry) => entry.slug === slug),
+  };
+}
+
+export const publicationCatalog = catalogOf(publicationEntries);
+export const softwareCatalog = { ...catalogOf(softwareEntries), sections: softwareSectionDefinitions };
+/** Talk and poster IDs are their slugs, which also name their RDF resources. */
+export const talkCatalog = catalogOf(talkEntries);
+export const posterCatalog = catalogOf(posterEntries);

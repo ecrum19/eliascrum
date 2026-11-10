@@ -115,11 +115,11 @@ export async function generateCv({ date = new Date(), siteUrl = process.env.CV_S
       ], focused ? 6 : 8);
     };
 
-    const presentationBlock = (entry, kind) => doc.block([
-      doc.row(entry.displayTitle, entry.displayDateLabel, { href: absolute(kind === 'talk' ? `/talks/${entry.slug}` : `/talks/posters/${entry.slug}`) }),
+    const presentationBlock = (entry) => doc.block([
+      doc.row(entry.title, entry.dateText, { href: absolute(entry.pageUrl) }),
       doc.paragraph(entry.venueTags.join(' · '), { size: 9, font: 'italic' }),
       doc.paragraph(entry.summary),
-      doc.paragraph(kind === 'talk' ? 'Presentation slides' : 'Poster', { size: 8.8, href: absolute(kind === 'talk' ? entry.slidePath : entry.path) }),
+      doc.paragraph(entry.kind === 'talk' ? 'Presentation slides' : 'Poster', { size: 8.8, href: absolute(entry.materialUrl) }),
     ]);
 
     if (focused) {
@@ -153,8 +153,9 @@ export async function generateCv({ date = new Date(), siteUrl = process.env.CV_S
       doc.section('Publications', [...data.publications].sort((a, b) => b.sortDate.localeCompare(a.sortDate)).map(publicationBlock));
       doc.add(doc.paragraph(`ORCID: ${data.orcidProfileUrl.replace('https://orcid.org/', '')}`, { size: 9, href: data.orcidProfileUrl }));
       doc.section('Software & Semantic Resources', data.softwareProjects.map(softwareBlock));
-      doc.section('Talks', [...data.talks].sort((a, b) => b.displayDateIso.localeCompare(a.displayDateIso)).map((entry) => presentationBlock(entry, 'talk')));
-      doc.section('Posters', [...data.posters].sort((a, b) => b.displayDateIso.localeCompare(a.displayDateIso)).map((entry) => presentationBlock(entry, 'poster')));
+      const newestFirst = (entries) => [...entries].sort((a, b) => String(b.date).localeCompare(String(a.date)));
+      doc.section('Talks', newestFirst(data.talks).map(presentationBlock));
+      doc.section('Posters', newestFirst(data.posters).map(presentationBlock));
     }
     const bytes = await doc.save();
     results.push({ ...variant, bytes, pages: doc.pdf.getPageCount(), headings: doc.headings });

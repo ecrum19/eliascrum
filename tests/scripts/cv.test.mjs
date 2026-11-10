@@ -47,6 +47,11 @@ it("runs the authoring validator as an import-safe read-only check", async () =>
   );
   expect(await validateSiteContent()).toEqual({
     errors: [],
-    count: content.softwareProjects.length,
+    counts: {
+      software: content.softwareProjects.length,
+      publications: content.publications.length,
+      talks: content.talks.length,
+      posters: content.posters.length,
+    },
   });
 });

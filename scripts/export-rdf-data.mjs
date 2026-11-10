@@ -153,23 +153,37 @@ function addIntegerValue(triples, subject, predicate, value) {
   }
 }
 
-function addRelatedResource(
-  triples,
-  parentRef,
-  resourceKind,
-  resourceKey,
-  index,
-  resource,
-) {
-  if (!resource || typeof resource.url !== "string" || resource.url.length === 0) {
+function addRelatedResources(triples, parentRef, resourceKind, resourceKey, resources = []) {
+  const used = new Set();
+  resources.forEach((resource, index) => {
+    if (!resource || typeof resource.url !== "string" || resource.url.length === 0) {
+      return;
+    }
+    const resourceRef = ecRef("related-resource", resourceKind, resourceKey, stableKey(resource.label, used));
+    triples.add(`${resourceRef} rdf:type ec:RelatedResource .`);
+    triples.add(`${parentRef} ec:hasRelatedResource ${resourceRef} .`);
+    triples.add(`${resourceRef} ec:order ${integerLiteral(index + 1)} .`);
+    addTextValue(triples, resourceRef, "schema:name", resource.label);
+    addIriValue(triples, resourceRef, "schema:url", resource.url);
+  });
+}
+
+/** The one part of an entry its page emphasizes; one per entry, so it is named after its owner. */
+function addHighlight(triples, ownerRef, kind, id, highlight) {
+  if (!highlight) {
     return;
   }
-
-  const resourceRef = ecRef("related-resource", resourceKind, `${resourceKey}-${index + 1}`);
-  triples.add(`${resourceRef} rdf:type ec:RelatedResource .`);
-  triples.add(`${parentRef} ec:hasRelatedResource ${resourceRef} .`);
-  addTextValue(triples, resourceRef, "schema:name", resource.label);
-  addIriValue(triples, resourceRef, "schema:url", resource.url);
+  const highlightRef = ecRef("highlight", kind, id);
+  triples.add(`${highlightRef} rdf:type ec:Highlight .`);
+  triples.add(`${ownerRef} ec:hasHighlight ${highlightRef} .`);
+  addTextValue(triples, highlightRef, "schema:name", highlight.label);
+  addTextValue(triples, highlightRef, "schema:description", highlight.description);
+  addUrlValue(triples, highlightRef, highlight.href);
+  if (highlight.related) {
+    const separator = highlight.related.indexOf(":");
+    const relatedRef = ecRef(highlight.related.slice(0, separator), highlight.related.slice(separator + 1));
+    triples.add(`${highlightRef} ec:highlightsEntry ${relatedRef} .`);
+  }
 }
 
 function addDateValue(triples, subject, predicate, value, fallbackPredicate) {
@@ -212,6 +226,19 @@ function slugify(label) {
     .replace(/-+$/, "")
     .replace(/-{2,}/g, "-")
     .slice(0, 64) || "tag";
+}
+
+/**
+ * Names a sub-resource by what it is rather than where it sits, so reordering or removing
+ * a sibling never renames it. Order is kept separately as ec:order.
+ */
+function stableKey(label, used) {
+  const key = slugify(label);
+  if (used.has(key)) {
+    throw new Error(`Two sibling resources would both be named "${key}"; give them distinct labels.`);
+  }
+  used.add(key);
+  return key;
 }
 
 function shortHash(value) {
@@ -285,9 +312,9 @@ function parseEntityReferenceFromUpdateId(id) {
 
 /** Pure RDF projection; callers control content and the observation timestamp. */
 export function buildRdfData({
-  cvModule, blogModule, talksModule, talkCatalogModule, posterCatalogModule,
-  talkMetadataModule, publicationsModule, softwareModule, softwareReleasesModule,
-  fellowshipModule, citationsModule, homepageUpdatesModule,
+  cvModule, blogModule, catalogModule, publicationDetailsModule, presentationDetailsModule,
+  tagsModule, profilesModule,
+  softwareReleasesModule, fellowshipModule, citationsModule, homepageUpdatesModule,
 }, generatedAt = new Date()) {
   const triples = new Set();
   const tagRegistry = new Map();
@@ -326,8 +353,9 @@ export function buildRdfData({
       const tagRef = makeTagRef(tagRegistry, triples, "cv-focus", tagLabel);
       triples.add(`${cvProfileRef} ec:hasFocusTag ${tagRef} .`);
     });
+    const contactKeys = new Set();
     (cvProfile.contacts ?? []).forEach((contact, contactIndex) => {
-      const contactRef = ecRef("cv-contact", `${contactIndex + 1}`);
+      const contactRef = ecRef("cv-contact", stableKey(contact.label, contactKeys));
       triples.add(`${contactRef} rdf:type ec:CvContact .`);
       triples.add(`${contactRef} dcterms:isPartOf ${cvProfileRef} .`);
       triples.add(`${cvProfileRef} ec:hasContact ${contactRef} .`);
@@ -340,8 +368,10 @@ export function buildRdfData({
   }
 
   const cvSections = Array.isArray(cvModule.cvSections) ? cvModule.cvSections : [];
+  const sectionKeys = new Set();
   cvSections.forEach((section, sectionIndex) => {
-    const sectionRef = ecRef("cv-section", String(sectionIndex + 1));
+    const sectionKey = stableKey(section.title, sectionKeys);
+    const sectionRef = ecRef("cv-section", sectionKey);
     triples.add(`${sectionRef} rdf:type ec:CvSection .`);
     triples.add(`${sectionRef} dcterms:isPartOf ${websiteDatasetRef} .`);
     triples.add(`${sectionRef} ec:order ${integerLiteral(sectionIndex + 1)} .`);
@@ -349,8 +379,10 @@ export function buildRdfData({
     addTextValue(triples, sectionRef, "ec:layout", section.layout);
 
     const sectionItems = Array.isArray(section.items) ? section.items : [];
+    const itemKeys = new Set();
     sectionItems.forEach((item, itemIndex) => {
-      const itemRef = ecRef("cv-item", `${sectionIndex + 1}-${itemIndex + 1}`);
+      const itemKey = stableKey([item.organization, item.role].filter(Boolean).join(" "), itemKeys);
+      const itemRef = ecRef("cv-item", sectionKey, itemKey);
       triples.add(`${itemRef} rdf:type ec:CvItem .`);
       triples.add(`${itemRef} dcterms:isPartOf ${sectionRef} .`);
       triples.add(`${itemRef} ec:order ${integerLiteral(itemIndex + 1)} .`);
@@ -363,8 +395,9 @@ export function buildRdfData({
       addTextValue(triples, itemRef, "ec:group", item.group);
 
       const artifacts = Array.isArray(item.artifacts) ? item.artifacts : [];
+      const artifactKeys = new Set();
       artifacts.forEach((artifact, artifactIndex) => {
-        const artifactRef = ecRef("cv-artifact", `${sectionIndex + 1}-${itemIndex + 1}-${artifactIndex + 1}`);
+        const artifactRef = ecRef("cv-artifact", sectionKey, itemKey, stableKey(artifact.label, artifactKeys));
         triples.add(`${artifactRef} rdf:type ec:CvArtifact .`);
         triples.add(`${artifactRef} dcterms:isPartOf ${itemRef} .`);
         triples.add(`${itemRef} ec:hasArtifact ${artifactRef} .`);
@@ -375,8 +408,10 @@ export function buildRdfData({
       });
 
       const itemDetails = Array.isArray(item.details) ? item.details : [];
+      const detailKeys = new Set();
       itemDetails.forEach((detail, detailIndex) => {
-        const detailRef = ecRef("cv-detail", `${sectionIndex + 1}-${itemIndex + 1}-${detailIndex + 1}`);
+        const detailText = typeof detail === "string" ? detail : detail.text;
+        const detailRef = ecRef("cv-detail", sectionKey, itemKey, stableKey(detailText, detailKeys));
         triples.add(`${detailRef} rdf:type ec:CvDetail .`);
         triples.add(`${detailRef} dcterms:isPartOf ${itemRef} .`);
         triples.add(`${detailRef} ec:order ${integerLiteral(detailIndex + 1)} .`);
@@ -397,251 +432,151 @@ export function buildRdfData({
     });
   });
 
-  const talksRaw = Array.isArray(talksModule.talks) ? talksModule.talks : [];
-  const postersRaw = Array.isArray(talksModule.posters) ? talksModule.posters : [];
-  const talkViewEntries =
-    typeof talkCatalogModule.getTalkViewEntries === "function"
-      ? talkCatalogModule.getTalkViewEntries(talksRaw)
-      : talksRaw;
-  const posterViewEntries =
-    typeof posterCatalogModule.getPosterViewEntries === "function"
-      ? posterCatalogModule.getPosterViewEntries(postersRaw)
-      : postersRaw;
-  const posterRefByPath = new Map();
+  const {
+    publicationCatalog, softwareCatalog, talkCatalog, posterCatalog,
+    dateLabel, dateYear, numericDateLabel, relatedIds,
+  } = catalogModule;
+  const {
+    slidesUrl, posterPdfPath, durationCategory, audienceSizeCategory, audienceSizeEstimate,
+  } = presentationDetailsModule;
+  // Looked up in the entries given, so an exported catalog never mixes in another one.
+  const posterById = new Map(posterCatalog.entries.map((poster) => [poster.id, poster]));
 
-  posterViewEntries.forEach((poster) => {
-    const posterRef = ecRef("poster", poster.slug);
-    posterRefByPath.set(poster.path, posterRef);
+  // What talks and posters share: dates, audience, venue and topic tags, resources.
+  const addPresentation = (ref, kind, entry) => {
+    triples.add(`${ref} dcterms:isPartOf ${websiteDatasetRef} .`);
+    addTextValue(triples, ref, "dcterms:identifier", entry.slug);
+    addTextValue(triples, ref, "schema:name", entry.title);
+    addHighlight(triples, ref, kind, entry.id, entry.highlight);
+    addDateValue(triples, ref, "ec:displayDate", dateLabel(entry.date), "ec:displayDateText");
+    addTextValue(triples, ref, "ec:displayDateLabel", numericDateLabel(entry.date));
+    addTextValue(triples, ref, "ec:summary", entry.summary);
+    addTextValue(triples, ref, "ec:goal", entry.goal);
+    addTextValue(triples, ref, "ec:audienceExpertise", entry.audienceExpertise);
+    addIntegerValue(triples, ref, "ec:durationMinutes", entry.durationMinutes);
+    addTextValue(triples, ref, "ec:durationCategory", durationCategory(entry));
+    addIntegerValue(triples, ref, "ec:audienceSizeApprox", entry.audienceSizeApprox);
+    addTextValue(triples, ref, "ec:audienceSizeCategory", audienceSizeCategory(entry));
+    addTextValue(triples, ref, "ec:audienceSizeEstimate", audienceSizeEstimate(entry));
+    const sizeTag = audienceSizeCategory(entry);
+    if (sizeTag) {
+      triples.add(`${ref} ec:hasAudienceSizeTag ${makeTagRef(tagRegistry, triples, "audience-size", sizeTag)} .`);
+    }
+    entry.venueTags.forEach((tagLabel) => {
+      triples.add(`${ref} ec:hasVenueTag ${makeTagRef(tagRegistry, triples, "venue", tagLabel)} .`);
+    });
+    entry.topics.forEach((tagLabel) => {
+      triples.add(`${ref} ec:hasTopicTag ${makeTagRef(tagRegistry, triples, "topic", tagLabel)} .`);
+    });
+    entry.audienceGroups.forEach((tagLabel) => {
+      triples.add(`${ref} ec:hasAudienceGroupTag ${makeTagRef(tagRegistry, triples, "audience-group", tagLabel)} .`);
+    });
+    addRelatedResources(triples, ref, kind, entry.slug, entry.relatedResources);
+    // Talks and posters can also point at papers and software; those sides link back.
+    const inverse = kind === "talk" ? "ec:relatedTalk" : "ec:relatedPoster";
+    relatedIds(entry, "publication").forEach((id) => {
+      triples.add(`${ref} ec:relatedPublication ${ecRef("publication", id)} .`);
+      triples.add(`${ecRef("publication", id)} ${inverse} ${ref} .`);
+    });
+    relatedIds(entry, "software").forEach((id) => {
+      triples.add(`${ref} ec:relatedSoftware ${ecRef("software", id)} .`);
+      triples.add(`${ecRef("software", id)} ${inverse} ${ref} .`);
+    });
+  };
 
+  const detailedDate = (date) =>
+    /^\d{4}-\d{2}-\d{2}$/.test(String(date))
+      ? new Intl.DateTimeFormat("en-GB", {
+          weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "UTC",
+        }).format(new Date(`${date}T12:00:00Z`))
+      : dateLabel(date);
+
+  posterCatalog.entries.forEach((poster) => {
+    const posterRef = ecRef("poster", poster.id);
+    const path = posterPdfPath(poster);
     triples.add(`${posterRef} rdf:type ec:Poster .`);
-    triples.add(`${posterRef} dcterms:isPartOf ${websiteDatasetRef} .`);
-    addTextValue(triples, posterRef, "dcterms:identifier", poster.slug);
-    addTextValue(triples, posterRef, "schema:name", poster.displayTitle ?? poster.title);
-    addTextValue(triples, posterRef, "ec:filePath", poster.path);
-    addUrlValue(triples, posterRef, poster.path);
-    addDateValue(triples, posterRef, "ec:displayDate", poster.displayDateIso, "ec:displayDateText");
-    addTextValue(triples, posterRef, "ec:displayDateLabel", poster.displayDateLabel);
-    addTextValue(triples, posterRef, "ec:displayDateDetailedLabel", poster.displayDateDetailedLabel);
-    addTextValue(triples, posterRef, "ec:summary", poster.summary);
+    addPresentation(posterRef, "poster", poster);
+    addTextValue(triples, posterRef, "ec:filePath", path);
+    addUrlValue(triples, posterRef, path);
+    addTextValue(triples, posterRef, "ec:displayDateDetailedLabel", detailedDate(poster.date));
     addTextValue(triples, posterRef, "ec:abstract", poster.abstract);
-    addTextValue(triples, posterRef, "ec:goal", poster.goal);
-    addTextValue(triples, posterRef, "ec:audienceExpertise", poster.audienceExpertise);
-
-    (poster.venueTags ?? []).forEach((tagLabel) => {
-      const tagRef = makeTagRef(tagRegistry, triples, "venue", tagLabel);
-      triples.add(`${posterRef} ec:hasVenueTag ${tagRef} .`);
-    });
-    (poster.topicTags ?? []).forEach((tagLabel) => {
-      const tagRef = makeTagRef(tagRegistry, triples, "topic", tagLabel);
-      triples.add(`${posterRef} ec:hasTopicTag ${tagRef} .`);
-    });
-    (poster.audienceGroups ?? []).forEach((tagLabel) => {
-      const tagRef = makeTagRef(tagRegistry, triples, "audience-group", tagLabel);
-      triples.add(`${posterRef} ec:hasAudienceGroupTag ${tagRef} .`);
-    });
-    (poster.relatedResources ?? []).forEach((resource, resourceIndex) => {
-      addRelatedResource(triples, posterRef, "poster", poster.slug, resourceIndex, resource);
-    });
-
-    if (poster.linkedTalkSlug) {
-      const linkedTalkRef = ecRef("talk", poster.linkedTalkSlug);
-      triples.add(`${posterRef} ec:isPosterForTalk ${linkedTalkRef} .`);
-      triples.add(`${linkedTalkRef} ec:hasPoster ${posterRef} .`);
-    }
   });
 
-  const talkMetadataBySlug = talkMetadataModule.talkMetadataBySlug ?? {};
-  talkViewEntries.forEach((talk) => {
-    const talkRef = ecRef("talk", talk.slug);
+  talkCatalog.entries.forEach((talk) => {
+    const talkRef = ecRef("talk", talk.id);
+    const { slides } = talk;
+    const url = slidesUrl(talk);
     triples.add(`${talkRef} rdf:type ec:Talk .`);
-    triples.add(`${talkRef} dcterms:isPartOf ${websiteDatasetRef} .`);
-
-    addTextValue(triples, talkRef, "dcterms:identifier", talk.slug);
-    addTextValue(triples, talkRef, "schema:name", talk.displayTitle ?? talk.title);
-    addTextValue(triples, talkRef, "ec:sourceTitle", talk.title);
-    addTextValue(triples, talkRef, "ec:summary", talk.summary ?? talk.description);
-    addTextValue(triples, talkRef, "ec:description", talk.abstract ?? talk.description);
-    addTextValue(triples, talkRef, "ec:goal", talk.goal);
-    addTextValue(triples, talkRef, "ec:audienceExpertise", talk.audienceExpertise);
-    addTextValue(triples, talkRef, "ec:sourceFile", talk.sourceFile);
-    addIntegerValue(triples, talkRef, "ec:durationMinutes", talk.durationMinutes);
-    addTextValue(triples, talkRef, "ec:durationCategory", talk.durationCategory);
-    addIntegerValue(triples, talkRef, "ec:audienceSizeApprox", talk.audienceSizeApprox);
-    addTextValue(triples, talkRef, "ec:audienceSizeCategory", talk.audienceSizeCategory);
-    addTextValue(triples, talkRef, "ec:audienceSizeEstimate", talk.audienceSizeEstimate);
-
-    addDateValue(triples, talkRef, "ec:displayDate", talk.displayDateIso, "ec:displayDateText");
-    addTextValue(triples, talkRef, "ec:displayDateLabel", talk.displayDateLabel);
-    addDateValue(triples, talkRef, "ec:sourceDate", talk.dateIso, "ec:sourceDateText");
-    addTextValue(triples, talkRef, "ec:sourceDateLabel", talk.dateLabel);
-
-    addTextValue(triples, talkRef, "ec:slidePath", talk.slidePath);
-    addTextValue(triples, talkRef, "schema:encodingFormat", talk.slideFormat === "html" ? "text/html" : "application/pdf");
-    addUrlValue(triples, talkRef, talk.slidePath);
-    addIriValue(triples, talkRef, "schema:embedUrl", talk.slideEmbedUrl);
-
-    (talk.relatedResources ?? []).forEach((resource, resourceIndex) => {
-      addRelatedResource(triples, talkRef, "talk", talk.slug, resourceIndex, resource);
+    addPresentation(talkRef, "talk", talk);
+    addTextValue(triples, talkRef, "ec:description", talk.abstract ?? talk.summary);
+    addTextValue(triples, talkRef, "ec:sourceFile", slides.format === "pdf" ? slides.source : slides.url);
+    addTextValue(triples, talkRef, "ec:slidePath", url);
+    addTextValue(triples, talkRef, "schema:encodingFormat", slides.format === "html" ? "text/html" : "application/pdf");
+    addUrlValue(triples, talkRef, url);
+    addIriValue(triples, talkRef, "schema:embedUrl", slides.embedUrl ?? (slides.format === "html" ? slides.url : undefined));
+    relatedIds(talk, "poster").flatMap((id) => posterById.get(id) ?? []).forEach((poster) => {
+      const posterRef = ecRef("poster", poster.id);
+      addTextValue(triples, talkRef, "ec:posterPath", posterPdfPath(poster));
+      addTextValue(triples, talkRef, "ec:posterTitle", poster.title);
+      triples.add(`${talkRef} ec:hasPoster ${posterRef} .`);
+      triples.add(`${posterRef} ec:isPosterForTalk ${talkRef} .`);
     });
-
-    if (talk.posterPath) {
-      addTextValue(triples, talkRef, "ec:posterPath", talk.posterPath);
-      addTextValue(triples, talkRef, "ec:posterTitle", talk.posterTitle);
-      const linkedPosterRef = posterRefByPath.get(talk.posterPath);
-      if (linkedPosterRef) {
-        triples.add(`${talkRef} ec:hasPoster ${linkedPosterRef} .`);
-        triples.add(`${linkedPosterRef} ec:isPosterForTalk ${talkRef} .`);
-      }
-    }
-
-    const venueTags = Array.isArray(talk.venueTags) ? talk.venueTags : [];
-    venueTags.forEach((tagLabel) => {
-      const tagRef = makeTagRef(tagRegistry, triples, "venue", tagLabel);
-      triples.add(`${talkRef} ec:hasVenueTag ${tagRef} .`);
-    });
-
-    const topicTags = Array.isArray(talk.topicTags) ? talk.topicTags : [];
-    topicTags.forEach((tagLabel) => {
-      const tagRef = makeTagRef(tagRegistry, triples, "topic", tagLabel);
-      triples.add(`${talkRef} ec:hasTopicTag ${tagRef} .`);
-    });
-
-    const audienceSizeTag = talk.audienceSizeCategory;
-    if (audienceSizeTag) {
-      const tagRef = makeTagRef(tagRegistry, triples, "audience-size", audienceSizeTag);
-      triples.add(`${talkRef} ec:hasAudienceSizeTag ${tagRef} .`);
-    }
-
-    const audienceGroupTags = Array.isArray(talk.audienceGroups) ? talk.audienceGroups : [];
-    audienceGroupTags.forEach((tagLabel) => {
-      const tagRef = makeTagRef(tagRegistry, triples, "audience-group", tagLabel);
-      triples.add(`${talkRef} ec:hasAudienceGroupTag ${tagRef} .`);
-    });
-
-    const talkMetadataRef = ecRef("talk-metadata", talk.slug);
-    const rawMetadata = talkMetadataBySlug[talk.slug];
-    if (rawMetadata) {
-      triples.add(`${talkMetadataRef} rdf:type ec:TalkMetadata .`);
-      triples.add(`${talkMetadataRef} ec:forTalk ${talkRef} .`);
-      addTextValue(triples, talkMetadataRef, "schema:name", rawMetadata.title);
-      addDateValue(triples, talkMetadataRef, "ec:date", rawMetadata.dateIso, "ec:dateText");
-      addTextValue(triples, talkMetadataRef, "ec:dateLabel", rawMetadata.dateLabel);
-      addTextValue(
-        triples,
-        talkMetadataRef,
-        "ec:description",
-        rawMetadata.summary ?? rawMetadata.description,
-      );
-      addTextValue(triples, talkMetadataRef, "ec:summary", rawMetadata.summary);
-      addTextValue(triples, talkMetadataRef, "ec:abstract", rawMetadata.abstract);
-      addIriValue(triples, talkMetadataRef, "schema:embedUrl", rawMetadata.slideEmbedUrl);
-      (rawMetadata.venueTags ?? []).forEach((tagLabel) => {
-        const tagRef = makeTagRef(tagRegistry, triples, "venue", tagLabel);
-        triples.add(`${talkMetadataRef} ec:hasVenueTag ${tagRef} .`);
-      });
-      (rawMetadata.topicTags ?? []).forEach((tagLabel) => {
-        const tagRef = makeTagRef(tagRegistry, triples, "topic", tagLabel);
-        triples.add(`${talkMetadataRef} ec:hasTopicTag ${tagRef} .`);
-      });
-      addTextValue(triples, talkMetadataRef, "ec:goal", rawMetadata.goal);
-      addTextValue(triples, talkMetadataRef, "ec:audienceExpertise", rawMetadata.audienceExpertise);
-      addIntegerValue(triples, talkMetadataRef, "ec:durationMinutes", rawMetadata.durationMinutes);
-      addIntegerValue(triples, talkMetadataRef, "ec:audienceSizeApprox", rawMetadata.audienceSizeApprox);
-      addTextValue(triples, talkMetadataRef, "ec:audienceSizeEstimate", rawMetadata.audienceSizeEstimate);
-      (rawMetadata.audienceGroups ?? []).forEach((tagLabel) => {
-        const tagRef = makeTagRef(tagRegistry, triples, "audience-group", tagLabel);
-        triples.add(`${talkMetadataRef} ec:hasAudienceGroupTag ${tagRef} .`);
-      });
-      (rawMetadata.relatedResources ?? []).forEach((resource, resourceIndex) => {
-        addRelatedResource(triples, talkMetadataRef, "talk-metadata", talk.slug, resourceIndex, resource);
-      });
-    }
   });
 
-  const venueOptions = Array.isArray(talkMetadataModule.VENUE_TAG_OPTIONS)
-    ? talkMetadataModule.VENUE_TAG_OPTIONS
-    : [];
-  venueOptions.forEach((optionLabel) => {
-    makeTagRef(tagRegistry, triples, "venue", optionLabel, true);
-  });
+  const { VENUE_TAG_OPTIONS, TOPIC_TAG_OPTIONS, AUDIENCE_SIZE_TAG_OPTIONS, AUDIENCE_GROUP_TAG_OPTIONS } = tagsModule;
+  VENUE_TAG_OPTIONS.forEach((optionLabel) => makeTagRef(tagRegistry, triples, "venue", optionLabel, true));
+  TOPIC_TAG_OPTIONS.forEach((optionLabel) => makeTagRef(tagRegistry, triples, "topic", optionLabel, true));
+  AUDIENCE_SIZE_TAG_OPTIONS.forEach((optionLabel) =>
+    makeTagRef(tagRegistry, triples, "audience-size", optionLabel, true),
+  );
+  AUDIENCE_GROUP_TAG_OPTIONS.forEach((optionLabel) =>
+    makeTagRef(tagRegistry, triples, "audience-group", optionLabel, true),
+  );
 
-  const topicOptions = Array.isArray(talkMetadataModule.TOPIC_TAG_OPTIONS)
-    ? talkMetadataModule.TOPIC_TAG_OPTIONS
-    : [];
-  topicOptions.forEach((optionLabel) => {
-    makeTagRef(tagRegistry, triples, "topic", optionLabel, true);
-  });
-
-  const audienceSizeOptions = Array.isArray(talkMetadataModule.AUDIENCE_SIZE_TAG_OPTIONS)
-    ? talkMetadataModule.AUDIENCE_SIZE_TAG_OPTIONS
-    : [];
-  audienceSizeOptions.forEach((optionLabel) => {
-    makeTagRef(tagRegistry, triples, "audience-size", optionLabel, true);
-  });
-
-  const audienceGroupOptions = Array.isArray(talkMetadataModule.AUDIENCE_GROUP_TAG_OPTIONS)
-    ? talkMetadataModule.AUDIENCE_GROUP_TAG_OPTIONS
-    : [];
-  audienceGroupOptions.forEach((optionLabel) => {
-    makeTagRef(tagRegistry, triples, "audience-group", optionLabel, true);
-  });
-
-  const publicationTypeOptions = Array.isArray(publicationsModule.PUBLICATION_TYPE_TAG_OPTIONS)
-    ? publicationsModule.PUBLICATION_TYPE_TAG_OPTIONS
-    : [];
-  publicationTypeOptions.forEach((optionLabel) => {
+  catalogModule.PUBLICATION_TYPE_OPTIONS.forEach((optionLabel) => {
     makeTagRef(tagRegistry, triples, "publication-type", optionLabel, true);
   });
 
-  const publications = Array.isArray(publicationsModule.publications)
-    ? publicationsModule.publications
-    : [];
   const publicationRefById = new Map();
-  const talkRefBySlug = new Map();
-
-  talkViewEntries.forEach((talk) => {
-    talkRefBySlug.set(talk.slug, ecRef("talk", talk.slug));
-  });
-
-  publications.forEach((publication) => {
+  const talkRefBySlug = new Map(talkCatalog.entries.map((talk) => [talk.slug, ecRef("talk", talk.id)]));
+  publicationCatalog.entries.forEach((publication) => {
     const publicationRef = ecRef("publication", publication.id);
     publicationRefById.set(publication.id, publicationRef);
+    const { paper, publisher } = publication.links ?? {};
+    const year = dateYear(publication.date);
 
     triples.add(`${publicationRef} rdf:type ec:Publication .`);
     triples.add(`${publicationRef} dcterms:isPartOf ${websiteDatasetRef} .`);
     addTextValue(triples, publicationRef, "dcterms:identifier", publication.id);
+    addHighlight(triples, publicationRef, "publication", publication.id, publication.highlight);
     addTextValue(triples, publicationRef, "schema:name", publication.title);
     addTextValue(triples, publicationRef, "ec:authors", publication.authors);
     addTextValue(triples, publicationRef, "ec:venue", publication.venue);
-    if (typeof publication.year === "number") {
-      triples.add(`${publicationRef} ec:publicationYear ${gYearLiteral(publication.year)} .`);
+    if (year !== undefined) {
+      triples.add(`${publicationRef} ec:publicationYear ${gYearLiteral(year)} .`);
     }
-    addDateValue(triples, publicationRef, "ec:sortDate", publication.sortDate, "ec:sortDateText");
-    addUrlValue(triples, publicationRef, publication.url);
+    addDateValue(triples, publicationRef, "ec:sortDate", dateLabel(publication.date), "ec:sortDateText");
+    addUrlValue(triples, publicationRef, publisher);
     addTextValue(triples, publicationRef, "ec:summary", publication.summary);
     addTextValue(triples, publicationRef, "ec:abstract", publication.abstract);
     addTextValue(triples, publicationRef, "ec:bibtex", publication.bibtex);
-    addTextValue(triples, publicationRef, "ec:paperPdfPath", publication.paperPdfPath);
-    addUrlValue(triples, publicationRef, publication.paperPdfPath);
+    addTextValue(triples, publicationRef, "ec:paperPdfPath", paper);
+    addUrlValue(triples, publicationRef, paper);
 
     const typeTagRef = makeTagRef(tagRegistry, triples, "publication-type", publication.type);
     triples.add(`${publicationRef} ec:hasPublicationTypeTag ${typeTagRef} .`);
-
-    const venueTags = Array.isArray(publication.venueTags) ? publication.venueTags : [];
-    venueTags.forEach((tagLabel) => {
+    publication.venueTags.forEach((tagLabel) => {
       const tagRef = makeTagRef(tagRegistry, triples, "venue", tagLabel);
       triples.add(`${publicationRef} ec:hasVenueTag ${tagRef} .`);
     });
-
-    const topicTags = Array.isArray(publication.topicTags) ? publication.topicTags : [];
-    topicTags.forEach((tagLabel) => {
+    publication.topics.forEach((tagLabel) => {
       const tagRef = makeTagRef(tagRegistry, triples, "topic", tagLabel);
       triples.add(`${publicationRef} ec:hasTopicTag ${tagRef} .`);
     });
 
-    const publicationDetails = Array.isArray(publication.details) ? publication.details : [];
-    publicationDetails.forEach((detail, detailIndex) => {
-      const detailRef = ecRef("publication-detail", `${publication.id}-${detailIndex + 1}`);
+    const detailKeys = new Set();
+    publicationDetailsModule.publicationDetailRows(publication).forEach((detail, detailIndex) => {
+      const detailRef = ecRef("publication-detail", publication.id, stableKey(detail.label, detailKeys));
       triples.add(`${detailRef} rdf:type ec:PublicationDetail .`);
       triples.add(`${detailRef} dcterms:isPartOf ${publicationRef} .`);
       triples.add(`${detailRef} ec:order ${integerLiteral(detailIndex + 1)} .`);
@@ -650,53 +585,36 @@ export function buildRdfData({
       addTextValue(triples, detailRef, "rdf:value", detail.value);
       addUrlValue(triples, detailRef, detail.href);
     });
+
+    // Presentation links are the paper's related talks and posters, named by their target.
+    const presentations = [
+      ...relatedIds(publication, "talk").map((id) => ["talk", id]),
+      ...relatedIds(publication, "poster").map((id) => ["poster", id]),
+    ];
+    presentations.forEach(([kind, id], linkIndex) => {
+      const linkRef = ecRef("publication-presentation-link", publication.id, kind, id);
+      triples.add(`${linkRef} rdf:type ec:PublicationPresentationLink .`);
+      triples.add(`${linkRef} ec:forPublication ${publicationRef} .`);
+      triples.add(`${publicationRef} ec:hasPresentationLink ${linkRef} .`);
+      triples.add(`${linkRef} ec:order ${integerLiteral(linkIndex + 1)} .`);
+      addTextValue(triples, linkRef, "schema:name", kind === "talk" ? "Presentation" : "Poster");
+      if (kind === "talk") {
+        const talkRef = talkRefBySlug.get(id) ?? ecRef("talk", id);
+        triples.add(`${linkRef} ec:linksTalk ${talkRef} .`);
+        triples.add(`${publicationRef} ec:relatedTalk ${talkRef} .`);
+        triples.add(`${talkRef} ec:relatedPublication ${publicationRef} .`);
+      } else {
+        const posterRef = ecRef("poster", id);
+        const poster = posterById.get(id);
+        addTextValue(triples, linkRef, "ec:filePath", poster && posterPdfPath(poster));
+        addUrlValue(triples, linkRef, poster && posterPdfPath(poster));
+        triples.add(`${publicationRef} ec:relatedPoster ${posterRef} .`);
+        triples.add(`${posterRef} ec:relatedPublication ${publicationRef} .`);
+      }
+    });
   });
 
-  const publicationPresentationLinksById =
-    publicationsModule.publicationPresentationLinksById ?? {};
-  Object.entries(publicationPresentationLinksById).forEach(
-    ([publicationId, presentationLinks]) => {
-      if (!Array.isArray(presentationLinks)) {
-        return;
-      }
-
-      const publicationRef =
-        publicationRefById.get(publicationId) ?? ecRef("publication", publicationId);
-
-      if (!publicationRefById.has(publicationId)) {
-        triples.add(`${publicationRef} rdf:type ec:PublicationReference .`);
-        addTextValue(triples, publicationRef, "dcterms:identifier", publicationId);
-        triples.add(`${publicationRef} ec:isResolved ${booleanLiteral(false)} .`);
-      }
-
-      presentationLinks.forEach((presentationLink, linkIndex) => {
-        const linkRef = ecRef("publication-presentation-link", `${publicationId}-${linkIndex + 1}`);
-        triples.add(`${linkRef} rdf:type ec:PublicationPresentationLink .`);
-        triples.add(`${linkRef} ec:forPublication ${publicationRef} .`);
-        triples.add(`${publicationRef} ec:hasPresentationLink ${linkRef} .`);
-        triples.add(`${linkRef} ec:order ${integerLiteral(linkIndex + 1)} .`);
-        addTextValue(triples, linkRef, "schema:name", presentationLink.label);
-
-        if (presentationLink.kind === "talk") {
-          const talkRef = talkRefBySlug.get(presentationLink.talkSlug) ?? ecRef("talk", presentationLink.talkSlug);
-          if (!talkRefBySlug.has(presentationLink.talkSlug)) {
-            triples.add(`${talkRef} rdf:type ec:TalkReference .`);
-            addTextValue(triples, talkRef, "dcterms:identifier", presentationLink.talkSlug);
-            triples.add(`${talkRef} ec:isResolved ${booleanLiteral(false)} .`);
-          }
-          triples.add(`${linkRef} ec:linksTalk ${talkRef} .`);
-          triples.add(`${publicationRef} ec:relatedTalk ${talkRef} .`);
-          triples.add(`${talkRef} ec:relatedPublication ${publicationRef} .`);
-        } else if (presentationLink.kind === "file") {
-          addTextValue(triples, linkRef, "ec:filePath", presentationLink.filePath);
-          addUrlValue(triples, linkRef, presentationLink.filePath);
-        }
-      });
-    },
-  );
-
   const softwareRefById = new Map();
-  const { softwareCatalog, dateLabel, relatedIds } = softwareModule;
   const softwareReleasesBySoftwareId =
     softwareReleasesModule.softwareReleasesBySoftwareId ?? {};
 
@@ -713,6 +631,7 @@ export function buildRdfData({
       const softwareRef = ecRef("software", software.id);
       const { repository, website } = software.links ?? {};
       softwareRefById.set(software.id, softwareRef);
+      addHighlight(triples, softwareRef, "software", software.id, software.highlight);
       triples.add(`${softwareRef} rdf:type ec:Software .`);
       triples.add(`${softwareRef} dcterms:isPartOf ${sectionRef} .`);
       triples.add(`${sectionRef} ec:hasSoftware ${softwareRef} .`);
@@ -733,8 +652,9 @@ export function buildRdfData({
         triples.add(`${softwareRef} ec:hasTopicTag ${tagRef} .`);
       });
 
+      const detailKeys = new Set();
       (software.extraDetails ?? []).forEach((detail, detailIndex) => {
-        const detailRef = ecRef("software-detail", `${software.id}-${detailIndex + 1}`);
+        const detailRef = ecRef("software-detail", software.id, stableKey(detail.label, detailKeys));
         triples.add(`${detailRef} rdf:type ec:SoftwareDetail .`);
         triples.add(`${detailRef} dcterms:isPartOf ${softwareRef} .`);
         triples.add(`${softwareRef} ec:hasDetail ${detailRef} .`);
@@ -822,8 +742,9 @@ export function buildRdfData({
       triples.add(`${defenseTalkRef} ec:relatedFellowship ${fellowshipRef} .`);
     }
 
+    const detailKeys = new Set();
     (fellowship.details ?? []).forEach((detail, detailIndex) => {
-      const detailRef = ecRef("fellowship-detail", `${fellowship.id}-${detailIndex + 1}`);
+      const detailRef = ecRef("fellowship-detail", fellowship.id, stableKey(detail.label, detailKeys));
       triples.add(`${detailRef} rdf:type ec:FellowshipDetail .`);
       triples.add(`${detailRef} dcterms:isPartOf ${fellowshipRef} .`);
       triples.add(`${fellowshipRef} ec:hasDetail ${detailRef} .`);
@@ -833,20 +754,7 @@ export function buildRdfData({
     });
   }
 
-  const profileLinks = Array.isArray(publicationsModule.publicationProfileLinks)
-    ? [
-        ...publicationsModule.publicationProfileLinks,
-        {
-          id: "research-portal",
-          label: "Research Portal",
-          url: publicationsModule.researchPortalProfileUrl,
-          variant: "research-portal",
-        },
-      ]
-    : [
-        { id: "google-scholar", label: "Google Scholar", url: publicationsModule.scholarProfileUrl },
-        { id: "semantic-scholar", label: "Semantic Scholar", url: publicationsModule.semanticScholarUrl },
-      ];
+  const profileLinks = profilesModule.researchProfileLinks;
   profileLinks.forEach((profile) => {
     const profileRef = ecRef("profile", profile.id);
     triples.add(`${profileRef} rdf:type ec:ExternalProfile .`);
