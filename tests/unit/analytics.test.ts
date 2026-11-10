@@ -1,5 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+/** The queued gtag commands, as plain lists. */
+const commands = () => window.dataLayer.map((entry) => Array.from(entry as ArrayLike<unknown>));
+
 beforeEach(() => {
   vi.resetModules();
   document.head
@@ -31,9 +34,16 @@ describe("analytics consent", () => {
       .dispatchEvent(new Event("load"));
     await Promise.all([consent, sameInitialization]);
     api.trackPageView();
-    expect(window.dataLayer).toContainEqual(
-      expect.arrayContaining(["event", "page_view"]),
-    );
+    expect(commands().map((command) => command.slice(0, 2))).toEqual([
+      ["consent", "default"],
+      ["js", expect.any(Date)],
+      ["config", "G-TEST"],
+      ["consent", "update"],
+      ["event", "page_view"],
+    ]);
+    // gtag.js ignores anything but `arguments` objects, exactly as Google's snippet pushes.
+    for (const entry of window.dataLayer)
+      expect(Object.prototype.toString.call(entry)).toBe("[object Arguments]");
     document.cookie = "_ga_test=present; path=/";
     await api.setAnalyticsConsent("denied");
     const count = window.dataLayer.length;
@@ -64,9 +74,7 @@ describe("analytics consent", () => {
     await consent;
     api.trackPageView();
     expect(
-      window.dataLayer.some(
-        (value) => Array.isArray(value) && value[0] === "event",
-      ),
+      commands().some((command) => command[0] === "event"),
     ).toBe(false);
   });
 });

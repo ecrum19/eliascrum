@@ -33,11 +33,19 @@ function storeConsent(consent: Exclude<AnalyticsConsent, null>): void {
   }
 }
 
+/**
+ * Google's own snippet: gtag.js runs only `arguments` objects from the data layer as
+ * commands. An array of the same values (as rest parameters would push) is silently
+ * ignored, so no configuration or page view would ever reach Analytics.
+ */
 function queueGoogleTag(...args: unknown[]): void {
   window.dataLayer = window.dataLayer || [];
-  window.gtag = window.gtag || ((...queuedArgs: unknown[]) => {
-    window.dataLayer.push(queuedArgs);
-  });
+  window.gtag =
+    window.gtag ||
+    function gtag() {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer.push(arguments);
+    };
   window.gtag(...args);
 }
 
