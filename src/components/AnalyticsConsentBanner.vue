@@ -36,32 +36,15 @@ import { defineComponent } from "vue";
 import {
   getAnalyticsConsent,
   setAnalyticsConsent,
-  subscribeToAnalyticsSettings,
   trackPageView,
 } from "../utils/analytics";
 
 export default defineComponent({
   name: "AnalyticsConsentBanner",
-  data(): { isVisible: boolean; unsubscribe: (() => void) | null } {
-    return {
-      isVisible: false,
-      unsubscribe: null,
-    };
-  },
-  mounted() {
-    this.unsubscribe = subscribeToAnalyticsSettings(this.expand);
-
-    if (getAnalyticsConsent() === null) {
-      this.isVisible = true;
-    }
-  },
-  beforeUnmount() {
-    this.unsubscribe?.();
+  data(): { isVisible: boolean } {
+    return { isVisible: getAnalyticsConsent() === null };
   },
   methods: {
-    expand() {
-      this.isVisible = true;
-    },
     close() {
       this.isVisible = false;
     },

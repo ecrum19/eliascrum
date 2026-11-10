@@ -25,7 +25,6 @@ import type { PresentationRecord } from "../../src/content/presentationDetails";
 import type { PublicationRecord as Publication } from "../../src/content/types";
 import {
   getAnalyticsConsent,
-  openAnalyticsSettings,
 } from "../../src/utils/analytics";
 
 describe("page content and navigation", () => {
@@ -161,17 +160,15 @@ describe("page content and navigation", () => {
 });
 
 describe("consent and reusable layout", () => {
-  it("rejects, reopens, and closes the consent banner without granting consent", async () => {
-    const { wrapper } = await mountPage(AnalyticsConsentBanner);
-    await wrapper.get(".analytics-consent__button--quiet").trigger("click");
+  it("closes or rejects the consent banner without granting consent, and stays closed once chosen", async () => {
+    const closed = (await mountPage(AnalyticsConsentBanner)).wrapper;
+    await closed.get('[aria-label="Close analytics notice"]').trigger("click");
+    expect([getAnalyticsConsent(), closed.find("aside").exists()]).toEqual([null, false]);
+    const rejected = (await mountPage(AnalyticsConsentBanner)).wrapper;
+    await rejected.get(".analytics-consent__button--quiet").trigger("click");
     await flushPromises();
-    expect(getAnalyticsConsent()).toBe("denied");
-    expect(wrapper.find("aside").exists()).toBe(false);
-    openAnalyticsSettings();
-    await flushPromises();
-    expect(wrapper.find("aside").exists()).toBe(true);
-    await wrapper.get('[aria-label="Close analytics notice"]').trigger("click");
-    expect(getAnalyticsConsent()).toBe("denied");
+    expect([getAnalyticsConsent(), rejected.find("aside").exists()]).toEqual(["denied", false]);
+    expect((await mountPage(AnalyticsConsentBanner)).wrapper.find("aside").exists()).toBe(false);
   });
   it("shows stock context and changes analytics choice", async () => {
     vi.stubEnv("VITE_GA_MEASUREMENT_ID", "");

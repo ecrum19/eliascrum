@@ -70,5 +70,7 @@ CI regenerates both and fails on any difference from the committed files
 exports. CV PDFs embed their generation date and are not part of that check; use a
 fixed date through `generateCv()` when comparing PDF content.
 
-The Software pilot preserves existing exports. Existing limitations recorded in
-`REFACTOR_BASELINE.md` remain assigned to their later migration steps.
+CI also rebuilds the talk and poster asset inventory with
+`npm run build:slides -- --inventory-only` and fails if
+`src/content/generated/talkAssets.ts` changes: talk PDFs and their records must be
+committed together with the inventory `npm run build:slides` writes.

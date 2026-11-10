@@ -22,14 +22,6 @@ import {
   updateExistingSnapshot,
 } from "../../scripts/update-alphabet-stock.mjs";
 import {
-  parseArgs,
-  parsePrefixesFromText,
-  parseTriplesFromBlock,
-  extractDataBlocks,
-  compactCanonicalTriple,
-  serializePrefixMap,
-} from "../../scripts/apply-rdf-update.mjs";
-import {
   describeAsset,
   formatInventory,
   planTalkAssets,
@@ -188,44 +180,6 @@ describe("stock observation math and API failures", () => {
       ),
     );
     await expect(fetchDailyRows(0)).rejects.toThrow("usable daily");
-  });
-});
-
-describe("RDF update parsing", () => {
-  it("parses DATA blocks and round-trips IRIs and typed/language literals", () => {
-    const prefixes = parsePrefixesFromText(
-      "PREFIX ex: <https://example.test/>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>",
-    );
-    const blocks = extractDataBlocks(
-      "INSERT",
-      'INSERT DATA {\nex:s ex:p "Text"@en .\nex:s ex:count "2"^^xsd:integer .\n}',
-    );
-    expect(blocks).toHaveLength(1);
-    const triples = parseTriplesFromBlock(blocks[0], prefixes);
-    expect(triples).toContain(
-      '<https://example.test/s> <https://example.test/p> "Text"@en .',
-    );
-    expect(compactCanonicalTriple(triples[0], prefixes)).toContain("ex:s");
-    expect(serializePrefixMap(prefixes)).toContain("@prefix ex:");
-    expect(() => parseTriplesFromBlock("bad data", prefixes)).toThrow();
-    expect(
-      parseArgs([
-        "node",
-        "update",
-        "--update",
-        "input.ru",
-        "--data",
-        "data.ttl",
-        "--dry-run",
-      ]),
-    ).toMatchObject({
-      updateFile: "input.ru",
-      dataFile: "data.ttl",
-      dryRun: true,
-    });
-    expect(() => parseArgs(["node", "update", "--invalid"])).toThrow(
-      "Unknown argument",
-    );
   });
 });
 

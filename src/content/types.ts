@@ -30,7 +30,7 @@ export interface Highlight {
   related?: EntryRef;
 }
 
-/** The core contract shared by the forthcoming publication and talk migrations. */
+/** The core every record shares, whatever its kind. */
 export interface ContentEntry {
   kind: ContentKind;
   id: string;

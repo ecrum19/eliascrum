@@ -1,5 +1,4 @@
 const ANALYTICS_CONSENT_KEY = "site-analytics-consent";
-const ANALYTICS_SETTINGS_EVENT = "open-analytics-settings";
 
 export type AnalyticsConsent = "granted" | "denied" | null;
 
@@ -168,11 +167,3 @@ export function trackPageView(): void {
   });
 }
 
-export function openAnalyticsSettings(): void {
-  window.dispatchEvent(new Event(ANALYTICS_SETTINGS_EVENT));
-}
-
-export function subscribeToAnalyticsSettings(callback: () => void): () => void {
-  window.addEventListener(ANALYTICS_SETTINGS_EVENT, callback);
-  return () => window.removeEventListener(ANALYTICS_SETTINGS_EVENT, callback);
-}

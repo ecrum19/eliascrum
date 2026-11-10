@@ -11,7 +11,7 @@ import type {
 
 export interface ValidationContext {
   sections: ContentSection[];
-  /** Full kind:id keys let us validate links while the legacy catalogs still exist. */
+  /** Every `kind:id` a relation or highlight may point at. */
   relationKeys: ReadonlySet<string>;
   observationIds?: string[];
   localAssetExists?: (path: string) => boolean;
